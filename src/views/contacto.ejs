@@ -1,0 +1,28 @@
+<%- include('partials/header') %>
+
+<h1>Contacto</h1>
+
+<% if (enviado) { %>
+    <p class="exito">¡Gracias! Tu mensaje fue enviado, pronto te responderemos.</p>
+<% } else { %>
+    <% if (error) { %>
+        <p class="error"><%= error %></p>
+    <% } %>
+    <form method="POST" action="/contacto" class="form">
+        <label>
+            Nombre
+            <input type="text" name="nombre" required>
+        </label>
+        <label>
+            Correo
+            <input type="email" name="email" required>
+        </label>
+        <label>
+            Mensaje
+            <textarea name="mensaje" rows="4" required></textarea>
+        </label>
+        <button type="submit">Enviar mensaje</button>
+    </form>
+<% } %>
+
+<%- include('partials/footer') %>

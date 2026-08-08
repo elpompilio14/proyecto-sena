@@ -1,0 +1,24 @@
+<%- include('partials/header') %>
+
+<h1>Equipos deportivos</h1>
+
+<% if (equipos.length === 0) { %>
+    <p>Aún no hay equipos registrados.</p>
+<% } else { %>
+    <div class="card-grid">
+        <% equipos.forEach(function(eq) { %>
+            <article class="card">
+                <% if (eq.foto_url) { %>
+                    <img src="<%= eq.foto_url %>" alt="<%= eq.nombre %>" class="card-img">
+                <% } %>
+                <span class="badge"><%= eq.deporte_nombre %></span>
+                <h3><%= eq.nombre %></h3>
+                <% if (eq.categoria) { %><p class="fecha">Categoría: <%= eq.categoria %></p><% } %>
+                <% if (eq.entrenador) { %><p class="fecha">Entrenador: <%= eq.entrenador %></p><% } %>
+                <p><%- formatearTexto(eq.descripcion) %></p>
+            </article>
+        <% }) %>
+    </div>
+<% } %>
+
+<%- include('partials/footer') %>

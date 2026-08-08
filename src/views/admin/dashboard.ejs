@@ -1,0 +1,27 @@
+<%- include('../partials/header') %>
+
+<div class="admin-header">
+    <h1>Panel de administración</h1>
+    <form method="POST" action="/logout">
+        <button type="submit" class="btn-secondary">Cerrar sesión</button>
+    </form>
+</div>
+
+<p>Hola, <%= usuario.nombre %>.</p>
+
+<div class="grid-links">
+    <a href="/admin/institucion" class="card-link">🏫 Información institucional</a>
+    <a href="/admin/noticias" class="card-link">📰 Noticias</a>
+    <a href="/admin/eventos" class="card-link">📅 Eventos</a>
+    <a href="/admin/fotos" class="card-link">📷 Galería</a>
+    <a href="/admin/equipos" class="card-link">🏆 Equipos deportivos</a>
+    <a href="/admin/deportes" class="card-link">🏸 Deportes</a>
+    <a href="/admin/campeonatos" class="card-link">⚽ Campeonatos</a>
+    <a href="/admin/resultados" class="card-link">📊 Resultados</a>
+    <a href="/admin/estudiantes" class="card-link">🎓 Estudiantes</a>
+    <a href="/admin/grados" class="card-link">🏫 Grados y cursos</a>
+    <a href="/admin/mejores-puestos" class="card-link">🏅 Puestos de honor</a>
+    <a href="/admin/mensajes" class="card-link">✉️ Mensajes de contacto <% if (mensajesNoLeidos > 0) { %>(<%= mensajesNoLeidos %> nuevos)<% } %></a>
+</div>
+
+<%- include('../partials/footer') %>

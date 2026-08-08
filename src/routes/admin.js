@@ -1,0 +1,91 @@
+const express = require('express');
+const router = express.Router();
+const requireAdmin = require('../middlewares/requireAdmin');
+const upload = require('../config/upload');
+
+const dashboardController = require('../controllers/admin/dashboardController');
+const eventosController = require('../controllers/admin/eventosController');
+const noticiasController = require('../controllers/admin/noticiasController');
+const fotosController = require('../controllers/admin/fotosController');
+const equiposController = require('../controllers/admin/equiposController');
+const campeonatosController = require('../controllers/admin/campeonatosController');
+const resultadosController = require('../controllers/admin/resultadosController');
+const estudiantesController = require('../controllers/admin/estudiantesController');
+const mejoresPuestosController = require('../controllers/admin/mejoresPuestosController');
+const institucionController = require('../controllers/admin/institucionController');
+const mensajesController = require('../controllers/admin/mensajesController');
+const gradosController = require('../controllers/admin/gradosController');
+const deportesController = require('../controllers/admin/deportesController');
+
+router.use(requireAdmin);
+
+router.get('/', dashboardController.index);
+
+router.get('/eventos', eventosController.index);
+router.post('/eventos', upload.single('imagen'), eventosController.crear);
+router.get('/eventos/:id/editar', eventosController.editarForm);
+router.post('/eventos/:id/editar', upload.single('imagen'), eventosController.editar);
+router.post('/eventos/:id/eliminar', eventosController.eliminar);
+
+router.get('/noticias', noticiasController.index);
+router.post('/noticias', upload.single('imagen'), noticiasController.crear);
+router.get('/noticias/:id/editar', noticiasController.editarForm);
+router.post('/noticias/:id/editar', upload.single('imagen'), noticiasController.editar);
+router.post('/noticias/:id/eliminar', noticiasController.eliminar);
+
+router.get('/fotos', fotosController.index);
+router.post('/fotos', upload.galeria.array('imagenes', 20), fotosController.crear);
+router.get('/fotos/:id/editar', fotosController.editarForm);
+router.post('/fotos/:id/editar', upload.galeria.single('imagen'), fotosController.editar);
+router.post('/fotos/:id/eliminar', fotosController.eliminar);
+
+router.get('/equipos', equiposController.index);
+router.post('/equipos', upload.single('imagen'), equiposController.crear);
+router.get('/equipos/:id/editar', equiposController.editarForm);
+router.post('/equipos/:id/editar', upload.single('imagen'), equiposController.editar);
+router.post('/equipos/:id/eliminar', equiposController.eliminar);
+
+router.get('/campeonatos', campeonatosController.index);
+router.post('/campeonatos', campeonatosController.crear);
+router.get('/campeonatos/:id/editar', campeonatosController.editarForm);
+router.post('/campeonatos/:id/editar', campeonatosController.editar);
+router.post('/campeonatos/:id/eliminar', campeonatosController.eliminar);
+
+router.get('/resultados', resultadosController.index);
+router.post('/resultados', resultadosController.crear);
+router.get('/resultados/:id/editar', resultadosController.editarForm);
+router.post('/resultados/:id/editar', resultadosController.editar);
+router.post('/resultados/:id/eliminar', resultadosController.eliminar);
+
+router.get('/estudiantes', estudiantesController.index);
+router.post('/estudiantes', upload.single('imagen'), estudiantesController.crear);
+router.get('/estudiantes/:id/editar', estudiantesController.editarForm);
+router.post('/estudiantes/:id/editar', upload.single('imagen'), estudiantesController.editar);
+router.post('/estudiantes/:id/eliminar', estudiantesController.eliminar);
+
+router.get('/mejores-puestos', mejoresPuestosController.index);
+router.post('/mejores-puestos', mejoresPuestosController.crear);
+router.get('/mejores-puestos/:id/editar', mejoresPuestosController.editarForm);
+router.post('/mejores-puestos/:id/editar', mejoresPuestosController.editar);
+router.post('/mejores-puestos/:id/eliminar', mejoresPuestosController.eliminar);
+
+router.get('/institucion', institucionController.index);
+router.post('/institucion', upload.fields([{ name: 'escudo', maxCount: 1 }, { name: 'bandera', maxCount: 1 }]), institucionController.actualizar);
+
+router.get('/mensajes', mensajesController.index);
+router.post('/mensajes/:id/leido', mensajesController.marcarLeido);
+router.post('/mensajes/:id/eliminar', mensajesController.eliminar);
+
+router.get('/grados', gradosController.index);
+router.post('/grados', gradosController.crear);
+router.get('/grados/:id/editar', gradosController.editarForm);
+router.post('/grados/:id/editar', gradosController.editar);
+router.post('/grados/:id/eliminar', gradosController.eliminar);
+
+router.get('/deportes', deportesController.index);
+router.post('/deportes', deportesController.crear);
+router.get('/deportes/:id/editar', deportesController.editarForm);
+router.post('/deportes/:id/editar', deportesController.editar);
+router.post('/deportes/:id/eliminar', deportesController.eliminar);
+
+module.exports = router;

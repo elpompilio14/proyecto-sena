@@ -1,0 +1,25 @@
+<%- include('partials/header') %>
+
+<h1>Eventos del colegio</h1>
+
+<% if (eventos.length === 0) { %>
+    <p>Aún no hay eventos registrados.</p>
+<% } else { %>
+    <div class="card-grid">
+        <% eventos.forEach(function(ev) { %>
+            <article class="card">
+                <a href="/eventos/<%= ev.id %>">
+                    <% if (ev.imagen_url) { %>
+                        <img src="<%= ev.imagen_url %>" alt="<%= ev.titulo %>" class="card-img">
+                    <% } %>
+                    <h3><%= ev.titulo %></h3>
+                </a>
+                <p class="fecha"><%= new Date(ev.fecha).toLocaleDateString('es-CO') %></p>
+                <p><%- formatearTexto(ev.descripcion) %></p>
+                <a href="/eventos/<%= ev.id %>">Ver fotos &rarr;</a>
+            </article>
+        <% }) %>
+    </div>
+<% } %>
+
+<%- include('partials/footer') %>

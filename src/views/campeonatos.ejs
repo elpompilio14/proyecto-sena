@@ -1,0 +1,24 @@
+<%- include('partials/header') %>
+
+<h1>Campeonatos de intercursos</h1>
+
+<% if (campeonatos.length === 0) { %>
+    <p>Aún no hay campeonatos registrados.</p>
+<% } else { %>
+    <div class="card-grid">
+        <% campeonatos.forEach(function(c) { %>
+            <article class="card">
+                <span class="badge"><%= c.deporte_nombre %></span>
+                <h3><a href="/campeonatos/<%= c.id %>"><%= c.nombre %></a></h3>
+                <p class="fecha">
+                    <%= c.fecha_inicio ? new Date(c.fecha_inicio).toLocaleDateString('es-CO') : '' %>
+                    <% if (c.fecha_fin) { %> - <%= new Date(c.fecha_fin).toLocaleDateString('es-CO') %><% } %>
+                </p>
+                <p><%- formatearTexto(c.descripcion) %></p>
+                <a href="/campeonatos/<%= c.id %>">Ver resultados &rarr;</a>
+            </article>
+        <% }) %>
+    </div>
+<% } %>
+
+<%- include('partials/footer') %>

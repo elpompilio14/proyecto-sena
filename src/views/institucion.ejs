@@ -1,0 +1,59 @@
+<%- include('partials/header') %>
+
+<h1>Nuestra institución</h1>
+
+<% if (!info) { %>
+    <p>Aún no hay información institucional registrada.</p>
+<% } else { %>
+    <section class="card">
+        <h2>Historia</h2>
+        <p><%- formatearTexto(info.historia) %></p>
+    </section>
+    <section class="card">
+        <h2>Misión</h2>
+        <p><%- formatearTexto(info.mision) %></p>
+    </section>
+    <section class="card">
+        <h2>Visión</h2>
+        <p><%- formatearTexto(info.vision) %></p>
+    </section>
+    <section class="card">
+        <h2>Principios</h2>
+        <p><%- formatearTexto(info.principios) %></p>
+    </section>
+    <section class="card">
+        <h2>Valores</h2>
+        <p><%- formatearTexto(info.valores) %></p>
+    </section>
+
+    <% if (info.escudo_texto || info.escudo_url) { %>
+        <section class="card simbolo">
+            <% if (info.escudo_url) { %>
+                <img src="<%= info.escudo_url %>" alt="Escudo institucional" class="simbolo-imagen">
+            <% } %>
+            <div class="simbolo-texto">
+                <h2>Escudo</h2>
+                <p><%- formatearTexto(info.escudo_texto) %></p>
+            </div>
+        </section>
+    <% } %>
+
+    <% if (info.bandera_texto || info.bandera_url) { %>
+        <section class="card simbolo simbolo-invertido">
+            <div class="simbolo-texto">
+                <h2>Bandera</h2>
+                <p><%- formatearTexto(info.bandera_texto) %></p>
+            </div>
+            <% if (info.bandera_url) { %>
+                <img src="<%= info.bandera_url %>" alt="Bandera institucional" class="simbolo-imagen">
+            <% } %>
+        </section>
+    <% } %>
+
+    <section class="card">
+        <h2>Ubicación</h2>
+        <p><%- formatearTexto(info.ubicacion) %></p>
+    </section>
+<% } %>
+
+<%- include('partials/footer') %>

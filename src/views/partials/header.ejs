@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= titulo %> · IED Talento Humano</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <header class="site-header">
+        <div class="container header-inner">
+            <a class="brand" href="/">IED Técnica para el Desarrollo del Talento Humano</a>
+            <nav class="nav">
+                <a href="/">Inicio</a>
+                <a href="/institucion">Institución</a>
+                <a href="/himno">Himno Escolar</a>
+                <a href="/noticias">Noticias</a>
+                <a href="/eventos">Eventos</a>
+                <a href="/deportes">Deportes</a>
+                <a href="/campeonatos">Intercursos</a>
+                <a href="/mejores-puestos">Puestos de honor</a>
+                <a href="/galeria">Galería</a>
+                <a href="/contacto">Contacto</a>
+                <% if (usuario && usuario.rol === 'admin') { %>
+                    <a href="/admin">Panel admin</a>
+                    <form method="POST" action="/logout" class="nav-form"><button type="submit" class="link-btn">Salir</button></form>
+                <% } else if (usuario) { %>
+                    <span>Hola, <%= usuario.nombre %></span>
+                    <form method="POST" action="/logout" class="nav-form"><button type="submit" class="link-btn">Salir</button></form>
+                <% } else { %>
+                    <a href="/login">Ingresar</a>
+                    <a href="/registro">Registrarse</a>
+                <% } %>
+            </nav>
+        </div>
+    </header>
+    <main class="container main-content">

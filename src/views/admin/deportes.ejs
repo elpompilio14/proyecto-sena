@@ -1,0 +1,32 @@
+<%- include('../partials/header') %>
+
+<p><a href="/admin">&larr; Panel admin</a></p>
+<h1>Deportes</h1>
+
+<form method="POST" action="/admin/deportes" class="form">
+    <label>Nombre del deporte<input type="text" name="nombre" required></label>
+    <button type="submit">Crear deporte</button>
+</form>
+
+<% if (deportes.length === 0) { %>
+    <p>Aún no hay deportes registrados.</p>
+<% } else { %>
+    <table class="tabla">
+        <thead><tr><th>Nombre</th><th></th></tr></thead>
+        <tbody>
+            <% deportes.forEach(function(d) { %>
+                <tr>
+                    <td><%= d.nombre %></td>
+                    <td class="acciones">
+                        <a href="/admin/deportes/<%= d.id %>/editar" class="btn-editar">Editar</a>
+                        <form method="POST" action="/admin/deportes/<%= d.id %>/eliminar">
+                            <button type="submit" class="btn-danger">Eliminar</button>
+                        </form>
+                    </td>
+                </tr>
+            <% }) %>
+        </tbody>
+    </table>
+<% } %>
+
+<%- include('../partials/footer') %>

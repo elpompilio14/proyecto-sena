@@ -1,0 +1,18 @@
+<%- include('../partials/header') %>
+
+<p><a href="/admin/eventos">&larr; Eventos</a></p>
+<h1>Editar evento</h1>
+
+<form method="POST" action="/admin/eventos/<%= evento.id %>/editar" class="form" enctype="multipart/form-data">
+    <label>Título<input type="text" name="titulo" value="<%= evento.titulo %>" required></label>
+    <label>Fecha<input type="date" name="fecha" value="<%= evento.fecha.toISOString().split('T')[0] %>" required></label>
+    <label>Descripción<textarea name="descripcion" rows="3"><%= evento.descripcion || '' %></textarea></label>
+    <% if (evento.imagen_url) { %>
+        <img src="<%= evento.imagen_url %>" alt="Foto actual" class="card-img">
+    <% } %>
+    <label>Cambiar foto (opcional)<input type="file" name="imagen" accept="image/*"></label>
+    <input type="hidden" name="imagen_actual" value="<%= evento.imagen_url || '' %>">
+    <button type="submit">Guardar cambios</button>
+</form>
+
+<%- include('../partials/footer') %>

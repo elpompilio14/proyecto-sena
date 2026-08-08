@@ -1,0 +1,25 @@
+<%- include('partials/header') %>
+
+<h1>Noticias</h1>
+
+<% if (noticias.length === 0) { %>
+    <p>Aún no hay noticias publicadas.</p>
+<% } else { %>
+    <div class="card-grid">
+        <% noticias.forEach(function(n) { %>
+            <article class="card">
+                <a href="/noticias/<%= n.id %>">
+                    <% if (n.imagen_url) { %>
+                        <img src="<%= n.imagen_url %>" alt="<%= n.titulo %>" class="card-img">
+                    <% } %>
+                    <h3><%= n.titulo %></h3>
+                </a>
+                <p class="fecha"><%= new Date(n.fecha).toLocaleDateString('es-CO') %></p>
+                <p><%- formatearTexto(n.contenido) %></p>
+                <a href="/noticias/<%= n.id %>">Ver fotos &rarr;</a>
+            </article>
+        <% }) %>
+    </div>
+<% } %>
+
+<%- include('partials/footer') %>

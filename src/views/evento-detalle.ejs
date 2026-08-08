@@ -1,0 +1,32 @@
+<%- include('partials/header') %>
+
+<p><a href="/eventos">&larr; Volver a Eventos</a></p>
+
+<h1><%= evento.titulo %></h1>
+<p class="fecha"><%= new Date(evento.fecha).toLocaleDateString('es-CO') %></p>
+<p><%- formatearTexto(evento.descripcion) %></p>
+
+<% if (evento.imagen_url) { %>
+    <img src="<%= evento.imagen_url %>" alt="<%= evento.titulo %>" class="card-img">
+<% } %>
+
+<% if (fotos.length > 0) { %>
+    <h2 class="evento-mural-titulo">Fotos de <%= evento.titulo %></h2>
+    <div class="mural">
+        <% fotos.forEach(function(f) { %>
+            <figure>
+                <% if (esVideo(f.url)) { %>
+                    <div class="miniatura-video">
+                        <video src="<%= f.url %>#t=0.5" data-url="<%= f.url %>" preload="metadata" muted playsinline></video>
+                        <span class="icono-play">&#9658;</span>
+                    </div>
+                <% } else { %>
+                    <img src="<%= f.url %>" data-url="<%= f.url %>" alt="<%= f.titulo || evento.titulo %>">
+                <% } %>
+                <% if (f.titulo) { %><figcaption><%= f.titulo %></figcaption><% } %>
+            </figure>
+        <% }) %>
+    </div>
+<% } %>
+
+<%- include('partials/footer') %>
