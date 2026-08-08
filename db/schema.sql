@@ -27,6 +27,8 @@ CREATE TABLE institucion_info (
     ubicacion TEXT,
     ubicacion_sede1 TEXT,
     ubicacion_sede2 TEXT,
+    telefono TEXT,
+    correo TEXT,
     himno_url TEXT,
     himno_letra TEXT,
     fondo_url TEXT,

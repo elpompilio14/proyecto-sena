@@ -602,3 +602,8 @@ button:hover { background: var(--azul-oscuro); transform: translateY(-1px); }
     height: 100%;
     border: none;
 }
+
+.footer-contacto {
+    font-weight: 600;
+    margin-bottom: 4px;
+}

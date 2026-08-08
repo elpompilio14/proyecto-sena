@@ -10,6 +10,7 @@ const formatearTexto = require('./utils/formatearTexto');
 const esVideo = require('./utils/esVideo');
 const youtubeEmbedUrl = require('./utils/youtubeEmbedUrl');
 const googleMapsEmbedUrl = require('./utils/googleMapsEmbedUrl');
+const pool = require('./config/db');
 
 const app = express();
 
@@ -33,6 +34,16 @@ app.use(session({
 
 app.use((req, res, next) => {
     res.locals.usuario = req.session.usuario || null;
+    next();
+});
+
+app.use(async (req, res, next) => {
+    try {
+        const { rows } = await pool.query('SELECT telefono, correo FROM institucion_info ORDER BY id LIMIT 1');
+        res.locals.contacto = rows[0] || {};
+    } catch (err) {
+        res.locals.contacto = {};
+    }
     next();
 });
 
