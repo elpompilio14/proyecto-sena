@@ -6,8 +6,8 @@
     <p>Aún no hay equipos registrados.</p>
 <% } else { %>
     <div class="card-grid">
-        <% equipos.forEach(function(eq) { %>
-            <article class="card">
+        <% equipos.forEach(function(eq, i) { %>
+            <article class="card aparece" style="transition-delay: <%= Math.min(i, 5) * 70 %>ms">
                 <% if (eq.foto_url) { %>
                     <img src="<%= eq.foto_url %>" alt="<%= eq.nombre %>" class="card-img">
                 <% } %>

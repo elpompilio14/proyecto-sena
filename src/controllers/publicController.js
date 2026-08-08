@@ -7,12 +7,13 @@ exports.home = async (req, res) => {
     const noticias = await pool.query(
         'SELECT * FROM noticias ORDER BY fecha DESC LIMIT 3'
     );
-    const info = await pool.query('SELECT himno_url FROM institucion_info ORDER BY id LIMIT 1');
+    const info = await pool.query('SELECT himno_url, fondo_url FROM institucion_info ORDER BY id LIMIT 1');
     res.render('home', {
         titulo: 'Inicio',
         eventos: eventos.rows,
         noticias: noticias.rows,
         himnoUrl: info.rows[0] ? info.rows[0].himno_url : null,
+        fondoUrl: info.rows[0] ? info.rows[0].fondo_url : null,
     });
 };
 

@@ -4,7 +4,7 @@
 
 <% const embedUrl = himnoUrl ? youtubeEmbedUrl(himnoUrl) : null; %>
 <% if (embedUrl) { %>
-    <div class="video-himno">
+    <div class="video-himno aparece">
         <iframe src="<%= embedUrl %>" title="Himno Escolar" allowfullscreen></iframe>
     </div>
 <% } else { %>
@@ -12,7 +12,7 @@
 <% } %>
 
 <% if (himnoLetra) { %>
-    <div class="letra-himno">
+    <div class="letra-himno aparece">
         <p><%- formatearTexto(himnoLetra) %></p>
     </div>
 <% } %>

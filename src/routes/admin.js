@@ -70,7 +70,7 @@ router.post('/mejores-puestos/:id/editar', mejoresPuestosController.editar);
 router.post('/mejores-puestos/:id/eliminar', mejoresPuestosController.eliminar);
 
 router.get('/institucion', institucionController.index);
-router.post('/institucion', upload.fields([{ name: 'escudo', maxCount: 1 }, { name: 'bandera', maxCount: 1 }]), institucionController.actualizar);
+router.post('/institucion', upload.fields([{ name: 'escudo', maxCount: 1 }, { name: 'bandera', maxCount: 1 }, { name: 'fondo', maxCount: 1 }]), institucionController.actualizar);
 
 router.get('/mensajes', mensajesController.index);
 router.post('/mensajes/:id/leido', mensajesController.marcarLeido);

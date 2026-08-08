@@ -1,11 +1,11 @@
 <%- include('partials/header') %>
 
-<section class="hero">
+<section class="hero" <% if (fondoUrl) { %>style="background-image: url('<%= fondoUrl %>')"<% } %>>
     <h1>Institución Educativa Distrital Técnica para el Desarrollo del Talento Humano</h1>
     <p>Formando talento humano con proyección técnica y humana. Conoce nuestra comunidad educativa, sus logros, deportes y eventos.</p>
 </section>
 
-<section class="grid-links">
+<section class="grid-links aparece">
     <a href="/eventos" class="card-link">Eventos del colegio</a>
     <a href="/deportes" class="card-link">Equipos deportivos</a>
     <a href="/campeonatos" class="card-link">Intercursos</a>
@@ -13,7 +13,7 @@
     <a href="/galeria" class="card-link">Galería de fotos</a>
 </section>
 
-<section class="seccion-himno">
+<section class="seccion-himno aparece">
     <h2>Himno Escolar</h2>
     <% const embedUrl = himnoUrl ? youtubeEmbedUrl(himnoUrl) : null; %>
     <% if (embedUrl) { %>
@@ -31,8 +31,8 @@
         <p>Aún no hay eventos registrados.</p>
     <% } else { %>
         <div class="card-grid">
-            <% eventos.forEach(function(ev) { %>
-                <article class="card">
+            <% eventos.forEach(function(ev, i) { %>
+                <article class="card aparece" style="transition-delay: <%= Math.min(i, 5) * 70 %>ms">
                     <a href="/eventos/<%= ev.id %>">
                         <% if (ev.imagen_url) { %>
                             <img src="<%= ev.imagen_url %>" alt="<%= ev.titulo %>" class="card-img">
@@ -53,8 +53,8 @@
         <p>Aún no hay noticias registradas.</p>
     <% } else { %>
         <div class="card-grid">
-            <% noticias.forEach(function(n) { %>
-                <article class="card">
+            <% noticias.forEach(function(n, i) { %>
+                <article class="card aparece" style="transition-delay: <%= Math.min(i, 5) * 70 %>ms">
                     <a href="/noticias/<%= n.id %>">
                         <% if (n.imagen_url) { %>
                             <img src="<%= n.imagen_url %>" alt="<%= n.titulo %>" class="card-img">

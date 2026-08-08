@@ -9,6 +9,7 @@ const adminRoutes = require('./routes/admin');
 const formatearTexto = require('./utils/formatearTexto');
 const esVideo = require('./utils/esVideo');
 const youtubeEmbedUrl = require('./utils/youtubeEmbedUrl');
+const googleMapsEmbedUrl = require('./utils/googleMapsEmbedUrl');
 
 const app = express();
 
@@ -17,6 +18,7 @@ app.set('views', path.join(__dirname, 'views'));
 app.locals.formatearTexto = formatearTexto;
 app.locals.esVideo = esVideo;
 app.locals.youtubeEmbedUrl = youtubeEmbedUrl;
+app.locals.googleMapsEmbedUrl = googleMapsEmbedUrl;
 
 app.use(express.static(path.join(__dirname, '..', 'public')));
 app.use(express.urlencoded({ extended: true }));

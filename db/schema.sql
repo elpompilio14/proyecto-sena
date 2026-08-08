@@ -25,8 +25,11 @@ CREATE TABLE institucion_info (
     bandera_texto TEXT,
     bandera_url TEXT,
     ubicacion TEXT,
+    ubicacion_sede1 TEXT,
+    ubicacion_sede2 TEXT,
     himno_url TEXT,
     himno_letra TEXT,
+    fondo_url TEXT,
     actualizado_en TIMESTAMP NOT NULL DEFAULT NOW()
 );
 

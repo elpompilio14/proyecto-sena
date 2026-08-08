@@ -5,29 +5,29 @@
 <% if (!info) { %>
     <p>Aún no hay información institucional registrada.</p>
 <% } else { %>
-    <section class="card">
+    <section class="card aparece">
         <h2>Historia</h2>
         <p><%- formatearTexto(info.historia) %></p>
     </section>
-    <section class="card">
+    <section class="card aparece">
         <h2>Misión</h2>
         <p><%- formatearTexto(info.mision) %></p>
     </section>
-    <section class="card">
+    <section class="card aparece">
         <h2>Visión</h2>
         <p><%- formatearTexto(info.vision) %></p>
     </section>
-    <section class="card">
+    <section class="card aparece">
         <h2>Principios</h2>
         <p><%- formatearTexto(info.principios) %></p>
     </section>
-    <section class="card">
+    <section class="card aparece">
         <h2>Valores</h2>
         <p><%- formatearTexto(info.valores) %></p>
     </section>
 
     <% if (info.escudo_texto || info.escudo_url) { %>
-        <section class="card simbolo">
+        <section class="card simbolo aparece">
             <% if (info.escudo_url) { %>
                 <img src="<%= info.escudo_url %>" alt="Escudo institucional" class="simbolo-imagen">
             <% } %>
@@ -39,7 +39,7 @@
     <% } %>
 
     <% if (info.bandera_texto || info.bandera_url) { %>
-        <section class="card simbolo simbolo-invertido">
+        <section class="card simbolo simbolo-invertido aparece">
             <div class="simbolo-texto">
                 <h2>Bandera</h2>
                 <p><%- formatearTexto(info.bandera_texto) %></p>
@@ -50,10 +50,27 @@
         </section>
     <% } %>
 
-    <section class="card">
-        <h2>Ubicación</h2>
-        <p><%- formatearTexto(info.ubicacion) %></p>
-    </section>
+    <h2>Nuestras sedes</h2>
+    <div class="sedes-grid">
+        <% if (info.ubicacion_sede1) { %>
+            <div class="card aparece">
+                <h3>Sede 1</h3>
+                <p><%- formatearTexto(info.ubicacion_sede1) %></p>
+                <div class="mapa-embed">
+                    <iframe src="<%= googleMapsEmbedUrl(info.ubicacion_sede1) %>" title="Mapa Sede 1" loading="lazy"></iframe>
+                </div>
+            </div>
+        <% } %>
+        <% if (info.ubicacion_sede2) { %>
+            <div class="card aparece">
+                <h3>Sede 2</h3>
+                <p><%- formatearTexto(info.ubicacion_sede2) %></p>
+                <div class="mapa-embed">
+                    <iframe src="<%= googleMapsEmbedUrl(info.ubicacion_sede2) %>" title="Mapa Sede 2" loading="lazy"></iframe>
+                </div>
+            </div>
+        <% } %>
+    </div>
 <% } %>
 
 <%- include('partials/footer') %>

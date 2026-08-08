@@ -6,8 +6,8 @@
     <p>Aún no hay noticias publicadas.</p>
 <% } else { %>
     <div class="card-grid">
-        <% noticias.forEach(function(n) { %>
-            <article class="card">
+        <% noticias.forEach(function(n, i) { %>
+            <article class="card aparece" style="transition-delay: <%= Math.min(i, 5) * 70 %>ms">
                 <a href="/noticias/<%= n.id %>">
                     <% if (n.imagen_url) { %>
                         <img src="<%= n.imagen_url %>" alt="<%= n.titulo %>" class="card-img">

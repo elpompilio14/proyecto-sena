@@ -6,8 +6,8 @@
     <p>Aún no hay eventos registrados.</p>
 <% } else { %>
     <div class="card-grid">
-        <% eventos.forEach(function(ev) { %>
-            <article class="card">
+        <% eventos.forEach(function(ev, i) { %>
+            <article class="card aparece" style="transition-delay: <%= Math.min(i, 5) * 70 %>ms">
                 <a href="/eventos/<%= ev.id %>">
                     <% if (ev.imagen_url) { %>
                         <img src="<%= ev.imagen_url %>" alt="<%= ev.titulo %>" class="card-img">

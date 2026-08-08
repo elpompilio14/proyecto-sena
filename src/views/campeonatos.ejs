@@ -6,8 +6,8 @@
     <p>Aún no hay campeonatos registrados.</p>
 <% } else { %>
     <div class="card-grid">
-        <% campeonatos.forEach(function(c) { %>
-            <article class="card">
+        <% campeonatos.forEach(function(c, i) { %>
+            <article class="card aparece" style="transition-delay: <%= Math.min(i, 5) * 70 %>ms">
                 <span class="badge"><%= c.deporte_nombre %></span>
                 <h3><a href="/campeonatos/<%= c.id %>"><%= c.nombre %></a></h3>
                 <p class="fecha">

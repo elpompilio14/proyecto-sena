@@ -13,8 +13,8 @@
 <% if (fotos.length > 0) { %>
     <h2 class="evento-mural-titulo">Fotos de <%= evento.titulo %></h2>
     <div class="mural">
-        <% fotos.forEach(function(f) { %>
-            <figure>
+        <% fotos.forEach(function(f, i) { %>
+            <figure class="aparece" style="transition-delay: <%= Math.min(i, 7) * 50 %>ms">
                 <% if (esVideo(f.url)) { %>
                     <div class="miniatura-video">
                         <video src="<%= f.url %>#t=0.5" data-url="<%= f.url %>" preload="metadata" muted playsinline></video>
