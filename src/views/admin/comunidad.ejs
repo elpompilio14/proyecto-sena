@@ -1,0 +1,35 @@
+<%- include('../partials/header') %>
+
+<p><a href="/admin">&larr; Panel admin</a></p>
+<h1>Comunidad Educativa</h1>
+
+<form method="POST" action="/admin/comunidad-educativa" class="form" enctype="multipart/form-data">
+    <label>Nombre<input type="text" name="nombre" required></label>
+    <label>Cargo (ej: Rectora, Coordinadora, Docente, Servicios generales)<input type="text" name="cargo"></label>
+    <label>Foto (opcional)<input type="file" name="imagen" accept="image/*"></label>
+    <button type="submit">Agregar persona</button>
+</form>
+
+<% if (personas.length === 0) { %>
+    <p>Aún no hay nadie registrado.</p>
+<% } else { %>
+    <table class="tabla">
+        <thead><tr><th>Nombre</th><th>Cargo</th><th></th></tr></thead>
+        <tbody>
+            <% personas.forEach(function(p) { %>
+                <tr>
+                    <td><%= p.nombre %></td>
+                    <td><%= p.cargo || '-' %></td>
+                    <td class="acciones">
+                        <a href="/admin/comunidad-educativa/<%= p.id %>/editar" class="btn-editar">Editar</a>
+                        <form method="POST" action="/admin/comunidad-educativa/<%= p.id %>/eliminar">
+                            <button type="submit" class="btn-danger">Eliminar</button>
+                        </form>
+                    </td>
+                </tr>
+            <% }) %>
+        </tbody>
+    </table>
+<% } %>
+
+<%- include('../partials/footer') %>

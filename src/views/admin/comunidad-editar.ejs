@@ -1,0 +1,17 @@
+<%- include('../partials/header') %>
+
+<p><a href="/admin/comunidad-educativa">&larr; Comunidad Educativa</a></p>
+<h1>Editar persona</h1>
+
+<form method="POST" action="/admin/comunidad-educativa/<%= persona.id %>/editar" class="form" enctype="multipart/form-data">
+    <label>Nombre<input type="text" name="nombre" value="<%= persona.nombre %>" required></label>
+    <label>Cargo<input type="text" name="cargo" value="<%= persona.cargo || '' %>"></label>
+    <% if (persona.foto_url) { %>
+        <img src="<%= persona.foto_url %>" alt="Foto actual" class="card-img">
+    <% } %>
+    <label>Cambiar foto (opcional)<input type="file" name="imagen" accept="image/*"></label>
+    <input type="hidden" name="foto_actual" value="<%= persona.foto_url || '' %>">
+    <button type="submit">Guardar cambios</button>
+</form>
+
+<%- include('../partials/footer') %>

@@ -16,6 +16,7 @@ const institucionController = require('../controllers/admin/institucionControlle
 const mensajesController = require('../controllers/admin/mensajesController');
 const gradosController = require('../controllers/admin/gradosController');
 const deportesController = require('../controllers/admin/deportesController');
+const comunidadController = require('../controllers/admin/comunidadController');
 
 router.use(requireAdmin);
 
@@ -87,5 +88,11 @@ router.post('/deportes', deportesController.crear);
 router.get('/deportes/:id/editar', deportesController.editarForm);
 router.post('/deportes/:id/editar', deportesController.editar);
 router.post('/deportes/:id/eliminar', deportesController.eliminar);
+
+router.get('/comunidad-educativa', comunidadController.index);
+router.post('/comunidad-educativa', upload.single('imagen'), comunidadController.crear);
+router.get('/comunidad-educativa/:id/editar', comunidadController.editarForm);
+router.post('/comunidad-educativa/:id/editar', upload.single('imagen'), comunidadController.editar);
+router.post('/comunidad-educativa/:id/eliminar', comunidadController.eliminar);
 
 module.exports = router;

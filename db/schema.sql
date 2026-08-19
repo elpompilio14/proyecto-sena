@@ -132,6 +132,14 @@ CREATE TABLE galeria_fotos (
     creado_en TIMESTAMP NOT NULL DEFAULT NOW()
 );
 
+CREATE TABLE comunidad_educativa (
+    id SERIAL PRIMARY KEY,
+    nombre VARCHAR(150) NOT NULL,
+    cargo VARCHAR(150), -- ej: "Rectora", "Coordinadora", "Docente", "Servicios generales"
+    foto_url TEXT,
+    creado_en TIMESTAMP NOT NULL DEFAULT NOW()
+);
+
 CREATE TABLE mensajes_contacto (
     id SERIAL PRIMARY KEY,
     nombre VARCHAR(100) NOT NULL,
