@@ -17,8 +17,14 @@
                     <p class="error"><%= errorLogin %></p>
                 <% } %>
 
-                <input type="email" name="email" placeholder="Correo electrónico" required>
-                <input type="password" name="password" placeholder="Contraseña" required>
+                <div class="auth-input-wrap">
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                    <input type="email" name="email" placeholder="Correo electrónico" required>
+                </div>
+                <div class="auth-input-wrap">
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                    <input type="password" name="password" placeholder="Contraseña" required>
+                </div>
                 <button type="submit" class="auth-submit">Ingresar</button>
 
                 <p class="auth-mobile-switch">¿No tienes cuenta? <a href="#" data-mostrar="registro">Regístrate</a></p>
@@ -39,11 +45,26 @@
                     <p class="error"><%= errorRegistro %></p>
                 <% } %>
 
-                <input type="text" name="nombre" placeholder="Nombre" required>
-                <input type="text" name="apellido" placeholder="Apellido" required>
-                <input type="email" name="email" placeholder="Correo electrónico" required>
-                <input type="password" name="password" placeholder="Contraseña" required minlength="6">
-                <input type="password" name="password_confirmar" placeholder="Confirmar contraseña" required minlength="6">
+                <div class="auth-input-wrap">
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                    <input type="text" name="nombre" placeholder="Nombre" required>
+                </div>
+                <div class="auth-input-wrap">
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                    <input type="text" name="apellido" placeholder="Apellido" required>
+                </div>
+                <div class="auth-input-wrap">
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                    <input type="email" name="email" placeholder="Correo electrónico" required>
+                </div>
+                <div class="auth-input-wrap">
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                    <input type="password" name="password" placeholder="Contraseña" required minlength="6">
+                </div>
+                <div class="auth-input-wrap">
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                    <input type="password" name="password_confirmar" placeholder="Confirmar contraseña" required minlength="6">
+                </div>
                 <button type="submit" class="auth-submit">Crear cuenta</button>
 
                 <p class="auth-mobile-switch">¿Ya tienes cuenta? <a href="#" data-mostrar="login">Inicia sesión</a></p>
@@ -51,17 +72,20 @@
         </div>
 
         <div class="auth-overlay-container">
-            <div class="auth-overlay">
-                <div class="auth-overlay-panel auth-overlay-left">
-                    <h2>¡Hola de nuevo!</h2>
-                    <p>Si ya tienes una cuenta, inicia sesión aquí para continuar</p>
-                    <button type="button" class="auth-ghost-btn" data-mostrar="login">Iniciar sesión</button>
-                </div>
-                <div class="auth-overlay-panel auth-overlay-right">
-                    <h2>¡Bienvenido!</h2>
-                    <p>Regístrate con tus datos para conocer más de nuestra comunidad</p>
-                    <button type="button" class="auth-ghost-btn" data-mostrar="registro">Registrarse</button>
-                </div>
+            <div class="auth-overlay-fondo"></div>
+            <div class="auth-blob b1"></div>
+            <div class="auth-blob b2"></div>
+            <div class="auth-blob b3"></div>
+            <div class="auth-blob b4"></div>
+            <div class="auth-overlay-panel auth-overlay-left">
+                <h2>¡Hola de nuevo!</h2>
+                <p>Si ya tienes una cuenta, inicia sesión aquí para continuar</p>
+                <button type="button" class="auth-ghost-btn" data-mostrar="login">Iniciar sesión</button>
+            </div>
+            <div class="auth-overlay-panel auth-overlay-right">
+                <h2>¡Bienvenido!</h2>
+                <p>Regístrate con tus datos para conocer más de nuestra comunidad</p>
+                <button type="button" class="auth-ghost-btn" data-mostrar="registro">Registrarse</button>
             </div>
         </div>
 
