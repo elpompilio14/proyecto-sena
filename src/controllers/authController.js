@@ -6,14 +6,23 @@ exports.registroForm = (req, res) => {
 };
 
 exports.registro = async (req, res) => {
-    const { nombre, email, password } = req.body;
+    const { nombre, apellido, email, password, password_confirmar } = req.body;
 
-    if (!nombre || !email || !password) {
+    if (!nombre || !apellido || !email || !password || !password_confirmar) {
         return res.status(400).render('auth', {
             titulo: 'Crear cuenta',
             tabActiva: 'registro',
             errorLogin: null,
             errorRegistro: 'Todos los campos son obligatorios',
+        });
+    }
+
+    if (password !== password_confirmar) {
+        return res.status(400).render('auth', {
+            titulo: 'Crear cuenta',
+            tabActiva: 'registro',
+            errorLogin: null,
+            errorRegistro: 'Las contraseñas no coinciden',
         });
     }
 
@@ -29,10 +38,10 @@ exports.registro = async (req, res) => {
 
     const password_hash = await bcrypt.hash(password, 10);
     const resultado = await pool.query(
-        `INSERT INTO usuarios (nombre, email, password_hash, rol)
-         VALUES ($1, $2, $3, 'usuario')
+        `INSERT INTO usuarios (nombre, apellido, email, password_hash, rol)
+         VALUES ($1, $2, $3, $4, 'usuario')
          RETURNING id, nombre, rol`,
-        [nombre, email, password_hash]
+        [nombre, apellido, email, password_hash]
     );
 
     req.session.usuario = resultado.rows[0];

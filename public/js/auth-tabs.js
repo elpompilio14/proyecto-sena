@@ -1,19 +1,33 @@
 document.addEventListener('DOMContentLoaded', function () {
-    const pestanas = document.querySelectorAll('.auth-tab');
-    if (pestanas.length === 0) return;
+    const contenedor = document.getElementById('auth-container');
+    if (!contenedor) return;
 
-    pestanas.forEach(function (pestana) {
-        pestana.addEventListener('click', function () {
-            const objetivo = pestana.dataset.tab;
+    const cajaLogin = document.getElementById('caja-login');
+    const cajaRegistro = document.getElementById('caja-registro');
 
-            document.querySelectorAll('.auth-tab').forEach(function (t) {
-                t.classList.remove('activo');
-            });
-            pestana.classList.add('activo');
+    function mostrarRegistro() {
+        contenedor.classList.add('right-active');
+        cajaLogin.classList.remove('auth-visible-mobile');
+        cajaRegistro.classList.add('auth-visible-mobile');
+    }
 
-            document.querySelectorAll('.auth-panel').forEach(function (panel) {
-                panel.classList.toggle('oculto', panel.id !== 'panel-' + objetivo);
-            });
+    function mostrarLogin() {
+        contenedor.classList.remove('right-active');
+        cajaRegistro.classList.remove('auth-visible-mobile');
+        cajaLogin.classList.add('auth-visible-mobile');
+    }
+
+    document.querySelectorAll('[data-mostrar="registro"]').forEach(function (el) {
+        el.addEventListener('click', function (evento) {
+            evento.preventDefault();
+            mostrarRegistro();
+        });
+    });
+
+    document.querySelectorAll('[data-mostrar="login"]').forEach(function (el) {
+        el.addEventListener('click', function (evento) {
+            evento.preventDefault();
+            mostrarLogin();
         });
     });
 });
