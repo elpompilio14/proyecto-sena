@@ -26,21 +26,6 @@
         <p><%- formatearTexto(info.valores) %></p>
     </section>
 
-    <% if (comunidad.length > 0) { %>
-        <h2>Comunidad Educativa</h2>
-        <div class="card-grid">
-            <% comunidad.forEach(function(persona, i) { %>
-                <article class="card aparece" style="transition-delay: <%= Math.min(i, 5) * 70 %>ms">
-                    <% if (persona.foto_url) { %>
-                        <img src="<%= persona.foto_url %>" alt="<%= persona.nombre %>" class="card-img">
-                    <% } %>
-                    <h3><%= persona.nombre %></h3>
-                    <% if (persona.cargo) { %><p class="fecha"><%= persona.cargo %></p><% } %>
-                </article>
-            <% }) %>
-        </div>
-    <% } %>
-
     <% if (info.escudo_texto || info.escudo_url) { %>
         <section class="card simbolo aparece">
             <% if (info.escudo_url) { %>

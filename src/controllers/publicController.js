@@ -111,8 +111,12 @@ exports.galeria = async (req, res) => {
 
 exports.institucion = async (req, res) => {
     const info = await pool.query('SELECT * FROM institucion_info ORDER BY id LIMIT 1');
+    res.render('institucion', { titulo: 'Institución', info: info.rows[0] || null });
+};
+
+exports.comunidadEducativa = async (req, res) => {
     const comunidad = await pool.query('SELECT * FROM comunidad_educativa ORDER BY nombre');
-    res.render('institucion', { titulo: 'Institución', info: info.rows[0] || null, comunidad: comunidad.rows });
+    res.render('comunidad-educativa', { titulo: 'Comunidad Educativa', comunidad: comunidad.rows });
 };
 
 exports.himno = async (req, res) => {
