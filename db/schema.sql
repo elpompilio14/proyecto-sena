@@ -9,8 +9,12 @@ CREATE TABLE usuarios (
     nombre VARCHAR(100) NOT NULL,
     apellido VARCHAR(100),
     email VARCHAR(150) UNIQUE NOT NULL,
-    password_hash VARCHAR(255) NOT NULL,
+    password_hash VARCHAR(255), -- null para cuentas creadas con Google
     rol VARCHAR(20) NOT NULL DEFAULT 'usuario' CHECK (rol IN ('admin', 'usuario')),
+    verificado BOOLEAN NOT NULL DEFAULT true, -- false mientras un registro por correo no confirme su codigo
+    codigo_verificacion VARCHAR(6),
+    codigo_expira TIMESTAMP,
+    google_id VARCHAR(255) UNIQUE,
     creado_en TIMESTAMP NOT NULL DEFAULT NOW()
 );
 
