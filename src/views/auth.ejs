@@ -1,0 +1,52 @@
+<%- include('partials/header') %>
+
+<div class="auth-wrapper">
+    <div class="auth-card aparece">
+        <h1 class="auth-titulo">Mi cuenta</h1>
+
+        <div class="auth-tabs">
+            <button type="button" class="auth-tab <%= tabActiva === 'login' ? 'activo' : '' %>" data-tab="login">Iniciar sesión</button>
+            <button type="button" class="auth-tab <%= tabActiva === 'registro' ? 'activo' : '' %>" data-tab="registro">Registrarse</button>
+        </div>
+
+        <div id="panel-login" class="auth-panel <%= tabActiva === 'login' ? '' : 'oculto' %>">
+            <% if (errorLogin) { %>
+                <p class="error"><%= errorLogin %></p>
+            <% } %>
+            <form method="POST" action="/login" class="form form-auth">
+                <label>
+                    Correo
+                    <input type="email" name="email" required>
+                </label>
+                <label>
+                    Contraseña
+                    <input type="password" name="password" required>
+                </label>
+                <button type="submit">Ingresar</button>
+            </form>
+        </div>
+
+        <div id="panel-registro" class="auth-panel <%= tabActiva === 'registro' ? '' : 'oculto' %>">
+            <% if (errorRegistro) { %>
+                <p class="error"><%= errorRegistro %></p>
+            <% } %>
+            <form method="POST" action="/registro" class="form form-auth">
+                <label>
+                    Nombre
+                    <input type="text" name="nombre" required>
+                </label>
+                <label>
+                    Correo
+                    <input type="email" name="email" required>
+                </label>
+                <label>
+                    Contraseña
+                    <input type="password" name="password" required minlength="6">
+                </label>
+                <button type="submit">Crear cuenta</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<%- include('partials/footer') %>

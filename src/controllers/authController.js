@@ -2,24 +2,28 @@ const bcrypt = require('bcryptjs');
 const pool = require('../config/db');
 
 exports.registroForm = (req, res) => {
-    res.render('registro', { titulo: 'Crear cuenta', error: null });
+    res.render('auth', { titulo: 'Crear cuenta', tabActiva: 'registro', errorLogin: null, errorRegistro: null });
 };
 
 exports.registro = async (req, res) => {
     const { nombre, email, password } = req.body;
 
     if (!nombre || !email || !password) {
-        return res.status(400).render('registro', {
+        return res.status(400).render('auth', {
             titulo: 'Crear cuenta',
-            error: 'Todos los campos son obligatorios',
+            tabActiva: 'registro',
+            errorLogin: null,
+            errorRegistro: 'Todos los campos son obligatorios',
         });
     }
 
     const existente = await pool.query('SELECT id FROM usuarios WHERE email = $1', [email]);
     if (existente.rows.length > 0) {
-        return res.status(400).render('registro', {
+        return res.status(400).render('auth', {
             titulo: 'Crear cuenta',
-            error: 'Ese correo ya está registrado',
+            tabActiva: 'registro',
+            errorLogin: null,
+            errorRegistro: 'Ese correo ya está registrado',
         });
     }
 
@@ -36,7 +40,7 @@ exports.registro = async (req, res) => {
 };
 
 exports.loginForm = (req, res) => {
-    res.render('login', { titulo: 'Iniciar sesión', error: null });
+    res.render('auth', { titulo: 'Iniciar sesión', tabActiva: 'login', errorLogin: null, errorRegistro: null });
 };
 
 exports.login = async (req, res) => {
@@ -45,9 +49,11 @@ exports.login = async (req, res) => {
     const usuario = resultado.rows[0];
 
     if (!usuario || !(await bcrypt.compare(password, usuario.password_hash))) {
-        return res.status(401).render('login', {
+        return res.status(401).render('auth', {
             titulo: 'Iniciar sesión',
-            error: 'Correo o contraseña incorrectos',
+            tabActiva: 'login',
+            errorLogin: 'Correo o contraseña incorrectos',
+            errorRegistro: null,
         });
     }
 

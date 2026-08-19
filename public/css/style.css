@@ -607,3 +607,69 @@ button:hover { background: var(--azul-oscuro); transform: translateY(-1px); }
     font-weight: 600;
     margin-bottom: 4px;
 }
+
+.auth-wrapper {
+    display: flex;
+    justify-content: center;
+    padding: 20px 0 40px;
+}
+
+.auth-card {
+    background: #fff;
+    border-radius: 18px;
+    box-shadow: var(--sombra-hover);
+    padding: 36px 32px;
+    width: 100%;
+    max-width: 420px;
+}
+
+.auth-titulo {
+    text-align: center;
+    margin: 0 0 24px;
+    font-size: 1.4rem;
+}
+
+.auth-tabs {
+    display: flex;
+    background: var(--fondo);
+    border-radius: 999px;
+    padding: 4px;
+    margin-bottom: 24px;
+}
+
+.auth-tab {
+    flex: 1;
+    background: none;
+    border: none;
+    border-radius: 999px;
+    padding: 10px;
+    font-family: var(--fuente);
+    font-weight: 700;
+    font-size: 0.82rem;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    color: var(--texto);
+    cursor: pointer;
+    transition: background .2s ease, color .2s ease;
+}
+
+.auth-tab:hover { background: rgba(10, 94, 196, 0.08); }
+
+.auth-tab.activo {
+    background: var(--azul);
+    color: #fff;
+}
+
+.auth-tab.activo:hover { background: var(--azul); }
+
+.auth-panel.oculto {
+    display: none;
+}
+
+.form-auth {
+    max-width: none;
+    box-shadow: none;
+    border: none;
+    padding: 0;
+    margin-bottom: 0;
+}
