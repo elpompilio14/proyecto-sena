@@ -931,3 +931,84 @@ button:hover { background: var(--azul-oscuro); transform: translateY(-1px); }
     font-size: 1.5rem;
     letter-spacing: 8px;
 }
+
+/* Transicion tipo ola: capas que barren la tarjeta para tapar el cambio de contenido */
+.auth-ola {
+    position: absolute;
+    inset: 0;
+    z-index: 300;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+.auth-ola-capa {
+    position: absolute;
+    top: -25%;
+    left: -60%;
+    width: 160%;
+    height: 150%;
+    display: block;
+    transform: translateX(-130%) skewX(-9deg);
+    transition: transform 0.55s cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+.auth-ola-capa.c1 {
+    background: var(--azul-oscuro);
+    border-radius: 48% 52% 45% 55% / 60% 40% 65% 35%;
+    opacity: 0.96;
+}
+
+.auth-ola-capa.c2 {
+    background: var(--azul);
+    border-radius: 55% 45% 60% 40% / 45% 60% 40% 55%;
+    opacity: 0.9;
+    transition-delay: 0.07s;
+}
+
+.auth-ola-capa.c3 {
+    background: var(--azul-claro);
+    border-radius: 42% 58% 50% 50% / 55% 45% 62% 38%;
+    opacity: 0.85;
+    transition-delay: 0.14s;
+}
+
+.auth-ola-cubriendo .auth-ola-capa {
+    transform: translateX(0%) skewX(-9deg);
+}
+
+.auth-ola-saliendo .auth-ola-capa {
+    transform: translateX(130%) skewX(-9deg);
+    transition-delay: 0s;
+}
+
+.auth-ola-saliendo .auth-ola-capa.c2 { transition-delay: 0.07s; }
+.auth-ola-saliendo .auth-ola-capa.c3 { transition-delay: 0.14s; }
+
+/* Letras del titulo y campos: aparecen escalonados cuando termina de pasar la ola */
+.auth-letra {
+    display: inline-block;
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 0.35s ease, transform 0.35s ease;
+}
+
+.auth-letra-oculta {
+    opacity: 0;
+    transform: translateY(16px);
+    transition: none;
+}
+
+.auth-input-wrap,
+.auth-submit,
+.auth-google-btn,
+.auth-separador {
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+.auth-campo-oculto {
+    opacity: 0;
+    transform: translateY(12px);
+    transition: none;
+}
