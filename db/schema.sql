@@ -150,6 +150,11 @@ CREATE TABLE comunidad_educativa (
     id SERIAL PRIMARY KEY,
     nombre VARCHAR(150) NOT NULL,
     cargo VARCHAR(150), -- ej: "Rectora", "Coordinadora", "Docente", "Servicios generales"
+    categoria VARCHAR(20) NOT NULL DEFAULT 'docente', -- 'rectoria', 'coordinacion' o 'docente'
+    area VARCHAR(50), -- ej: "Ciencias", "Humanidades", "Tecnología", "Artes y Ed. Física" (solo docentes, para filtrar)
+    materia VARCHAR(100), -- ej: "Física y Química" (etiqueta que se muestra en la tarjeta)
+    anios_experiencia INTEGER,
+    descripcion TEXT, -- biografía corta / frase
     foto_url TEXT,
     creado_en TIMESTAMP NOT NULL DEFAULT NOW()
 );

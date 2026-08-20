@@ -1,16 +1,21 @@
 const pool = require('../../config/db');
 
 exports.index = async (req, res) => {
-    const personas = await pool.query('SELECT * FROM comunidad_educativa ORDER BY nombre');
+    const personas = await pool.query(`
+        SELECT * FROM comunidad_educativa
+        ORDER BY CASE categoria WHEN 'rectoria' THEN 1 WHEN 'coordinacion' THEN 2 ELSE 3 END, nombre
+    `);
     res.render('admin/comunidad', { titulo: 'Admin · Comunidad Educativa', personas: personas.rows });
 };
 
 exports.crear = async (req, res) => {
-    const { nombre, cargo } = req.body;
+    const { nombre, cargo, categoria, area, materia, anios_experiencia, descripcion } = req.body;
     const foto_url = req.file ? `/images/${req.file.filename}` : null;
     await pool.query(
-        'INSERT INTO comunidad_educativa (nombre, cargo, foto_url) VALUES ($1, $2, $3)',
-        [nombre, cargo || null, foto_url]
+        `INSERT INTO comunidad_educativa (nombre, cargo, categoria, area, materia, anios_experiencia, descripcion, foto_url)
+         VALUES ($1, $2, $3, $4, $5, $6, $7, $8)`,
+        [nombre, cargo || null, categoria || 'docente', area || null, materia || null,
+            anios_experiencia || null, descripcion || null, foto_url]
     );
     res.redirect('/admin/comunidad-educativa');
 };
@@ -29,11 +34,15 @@ exports.editarForm = async (req, res) => {
 };
 
 exports.editar = async (req, res) => {
-    const { nombre, cargo, foto_actual } = req.body;
+    const { nombre, cargo, categoria, area, materia, anios_experiencia, descripcion, foto_actual } = req.body;
     const foto_url = req.file ? `/images/${req.file.filename}` : (foto_actual || null);
     await pool.query(
-        'UPDATE comunidad_educativa SET nombre = $1, cargo = $2, foto_url = $3 WHERE id = $4',
-        [nombre, cargo || null, foto_url, req.params.id]
+        `UPDATE comunidad_educativa
+         SET nombre = $1, cargo = $2, categoria = $3, area = $4, materia = $5,
+             anios_experiencia = $6, descripcion = $7, foto_url = $8
+         WHERE id = $9`,
+        [nombre, cargo || null, categoria || 'docente', area || null, materia || null,
+            anios_experiencia || null, descripcion || null, foto_url, req.params.id]
     );
     res.redirect('/admin/comunidad-educativa');
 };

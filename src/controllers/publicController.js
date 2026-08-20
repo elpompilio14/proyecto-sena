@@ -120,8 +120,33 @@ exports.institucion = async (req, res) => {
 };
 
 exports.comunidadEducativa = async (req, res) => {
-    const comunidad = await pool.query('SELECT * FROM comunidad_educativa ORDER BY nombre');
-    res.render('comunidad-educativa', { titulo: 'Comunidad Educativa', comunidad: comunidad.rows });
+    const rectoria = await pool.query("SELECT * FROM comunidad_educativa WHERE categoria = 'rectoria' ORDER BY nombre");
+    const coordinacion = await pool.query("SELECT * FROM comunidad_educativa WHERE categoria = 'coordinacion' ORDER BY nombre");
+    const docentesPreview = await pool.query("SELECT * FROM comunidad_educativa WHERE categoria = 'docente' ORDER BY nombre LIMIT 4");
+    const totalDocentes = await pool.query("SELECT COUNT(*) FROM comunidad_educativa WHERE categoria = 'docente'");
+
+    res.render('comunidad-educativa', {
+        titulo: 'Comunidad Educativa',
+        rectoria: rectoria.rows,
+        coordinacion: coordinacion.rows,
+        docentesPreview: docentesPreview.rows,
+        totalDocentes: parseInt(totalDocentes.rows[0].count, 10),
+    });
+};
+
+exports.docentes = async (req, res) => {
+    const docentes = await pool.query("SELECT * FROM comunidad_educativa WHERE categoria = 'docente' ORDER BY nombre");
+    const areas = [...new Set(docentes.rows.map((d) => d.area).filter(Boolean))];
+    const materias = new Set(docentes.rows.map((d) => d.materia).filter(Boolean));
+    const aniosCombinados = docentes.rows.reduce((total, d) => total + (d.anios_experiencia || 0), 0);
+
+    res.render('comunidad-docentes', {
+        titulo: 'Nuestro Cuerpo de Docentes',
+        docentes: docentes.rows,
+        areas,
+        totalAsignaturas: materias.size,
+        aniosCombinados,
+    });
 };
 
 exports.himno = async (req, res) => {

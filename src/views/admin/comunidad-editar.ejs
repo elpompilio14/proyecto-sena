@@ -6,6 +6,25 @@
 <form method="POST" action="/admin/comunidad-educativa/<%= persona.id %>/editar" class="form" enctype="multipart/form-data">
     <label>Nombre<input type="text" name="nombre" value="<%= persona.nombre %>" required></label>
     <label>Cargo<input type="text" name="cargo" value="<%= persona.cargo || '' %>"></label>
+    <label>Categoría (dónde aparece en la página)
+        <select name="categoria">
+            <option value="rectoria" <%= persona.categoria === 'rectoria' ? 'selected' : '' %>>Rectoría</option>
+            <option value="coordinacion" <%= persona.categoria === 'coordinacion' ? 'selected' : '' %>>Coordinación</option>
+            <option value="docente" <%= persona.categoria === 'docente' ? 'selected' : '' %>>Cuerpo docente</option>
+        </select>
+    </label>
+    <label>Área (solo para docentes, se usa para filtrar)
+        <select name="area">
+            <option value="" <%= !persona.area ? 'selected' : '' %>>-- Ninguna --</option>
+            <option value="Ciencias" <%= persona.area === 'Ciencias' ? 'selected' : '' %>>Ciencias</option>
+            <option value="Humanidades" <%= persona.area === 'Humanidades' ? 'selected' : '' %>>Humanidades</option>
+            <option value="Tecnología" <%= persona.area === 'Tecnología' ? 'selected' : '' %>>Tecnología</option>
+            <option value="Artes y Ed. Física" <%= persona.area === 'Artes y Ed. Física' ? 'selected' : '' %>>Artes y Ed. Física</option>
+        </select>
+    </label>
+    <label>Materia o especialidad<input type="text" name="materia" value="<%= persona.materia || '' %>"></label>
+    <label>Años de experiencia<input type="number" name="anios_experiencia" min="0" value="<%= persona.anios_experiencia || '' %>"></label>
+    <label>Descripción / frase corta (opcional)<textarea name="descripcion" rows="3"><%= persona.descripcion || '' %></textarea></label>
     <% if (persona.foto_url) { %>
         <img src="<%= persona.foto_url %>" alt="Foto actual" class="card-img">
     <% } %>

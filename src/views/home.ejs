@@ -68,7 +68,7 @@
                 <article class="card aparece" style="transition-delay: <%= Math.min(i, 5) * 70 %>ms">
                     <a href="/eventos/<%= ev.id %>">
                         <% if (ev.imagen_url) { %>
-                            <img src="<%= ev.imagen_url %>" alt="<%= ev.titulo %>" class="card-img">
+                            <img src="<%= ev.imagen_url %>" alt="<%= ev.titulo %>" class="card-img card-img-uniforme">
                         <% } %>
                         <h3><%= ev.titulo %></h3>
                     </a>
@@ -90,7 +90,7 @@
                 <article class="card aparece" style="transition-delay: <%= Math.min(i, 5) * 70 %>ms">
                     <a href="/noticias/<%= n.id %>">
                         <% if (n.imagen_url) { %>
-                            <img src="<%= n.imagen_url %>" alt="<%= n.titulo %>" class="card-img">
+                            <img src="<%= n.imagen_url %>" alt="<%= n.titulo %>" class="card-img card-img-uniforme">
                         <% } %>
                         <h3><%= n.titulo %></h3>
                     </a>
