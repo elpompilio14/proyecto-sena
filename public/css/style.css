@@ -934,6 +934,24 @@ button:hover { background: var(--azul-oscuro); transform: translateY(-1px); }
     margin: 8px 0 0;
 }
 
+.auth-olvido {
+    text-align: right;
+    font-size: 0.8rem;
+    margin: -6px 0 4px;
+}
+
+.auth-olvido a {
+    color: var(--azul);
+    text-decoration: none;
+    font-weight: 600;
+    transition: color .15s ease;
+}
+
+.auth-olvido a:hover {
+    text-decoration: underline;
+    color: var(--azul-oscuro);
+}
+
 @media (max-width: 760px) {
     .auth-container {
         min-height: 0;
