@@ -1073,17 +1073,21 @@ button:hover { background: var(--azul-oscuro); transform: translateY(-1px); }
     position: absolute;
     top: 100%;
     left: 0;
-    margin-top: 10px;
-    background: #fff;
-    border-radius: 10px;
-    box-shadow: var(--sombra-hover);
-    min-width: 210px;
-    padding: 8px;
+    margin-top: 0;
+    padding-top: 10px;
     opacity: 0;
     pointer-events: none;
     transform: translateY(8px);
     transition: opacity .2s ease, transform .2s ease;
     z-index: 200;
+}
+
+.nav-dropdown-menu-tarjeta {
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: var(--sombra-hover);
+    min-width: 210px;
+    padding: 8px;
 }
 
 .nav-dropdown:hover .nav-dropdown-menu,
@@ -1221,6 +1225,14 @@ button:hover { background: var(--azul-oscuro); transform: translateY(-1px); }
         transition: max-height .25s ease;
         background: var(--azul-pastel);
         border-radius: 8px;
+    }
+
+    .nav-dropdown-menu-tarjeta {
+        background: none;
+        border-radius: 0;
+        box-shadow: none;
+        min-width: 0;
+        padding: 0;
     }
 
     .nav-dropdown.abierto .nav-dropdown-menu {
