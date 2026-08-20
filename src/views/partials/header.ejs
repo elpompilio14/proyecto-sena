@@ -12,9 +12,12 @@
 <body>
     <div class="encabezado-fijo">
     <div class="topbar">
-        <div class="container topbar-inner">
+        <div class="topbar-inner">
             <div class="topbar-links">
-                <a href="/alianzas" class="topbar-link">🤝 Alianzas</a>
+                <a href="/alianzas" class="topbar-link">
+                    <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+                    Alianzas
+                </a>
             </div>
             <% if (sitio && (sitio.instagram_url || sitio.facebook_url)) { %>
                 <div class="topbar-social">
@@ -33,7 +36,7 @@
         </div>
     </div>
     <header class="site-header">
-        <div class="container header-inner">
+        <div class="header-inner">
             <a class="brand" href="/">
                 <% if (sitio && sitio.logo_url) { %>
                     <img src="<%= sitio.logo_url %>" alt="IED Técnica para el Desarrollo del Talento Humano" class="brand-logo">
@@ -72,8 +75,6 @@
 
                 <a href="/galeria">Galería</a>
 
-                <a href="/contacto" class="nav-contacto-btn">Contáctanos</a>
-
                 <% if (usuario && usuario.rol === 'admin') { %>
                     <a href="/admin">Panel admin</a>
                     <form method="POST" action="/logout" class="nav-form"><button type="submit" class="link-btn">Salir</button></form>
@@ -83,6 +84,8 @@
                 <% } else { %>
                     <a href="/login">Mi cuenta</a>
                 <% } %>
+
+                <a href="/contacto" class="nav-contacto-btn">Contáctanos</a>
             </nav>
         </div>
     </header>

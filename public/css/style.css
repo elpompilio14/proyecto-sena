@@ -51,7 +51,9 @@ h1, h2, h3 {
     justify-content: space-between;
     flex-wrap: wrap;
     gap: 8px;
-    padding: 8px 20px;
+    max-width: 1600px;
+    margin: 0 auto;
+    padding: 10px 40px;
 }
 
 .topbar-link {
@@ -94,7 +96,9 @@ h1, h2, h3 {
     align-items: center;
     justify-content: space-between;
     flex-wrap: wrap;
-    padding: 16px 20px;
+    max-width: 1600px;
+    margin: 0 auto;
+    padding: 24px 40px;
 }
 
 .brand {
@@ -997,9 +1001,9 @@ button:hover { background: var(--azul-oscuro); transform: translateY(-1px); }
 /* ===================== Encabezado: logo, insignia de años, redes ===================== */
 
 .brand-logo {
-    height: 74px;
+    height: 86px;
     width: auto;
-    max-width: 420px;
+    max-width: 460px;
     object-fit: contain;
     flex-shrink: 0;
     mix-blend-mode: multiply;
@@ -1119,7 +1123,7 @@ button:hover { background: var(--azul-oscuro); transform: translateY(-1px); }
 .nav-contacto-btn {
     display: inline-flex;
     align-items: center;
-    margin-left: 18px;
+    margin-left: 40px;
     padding: 10px 26px;
     border-radius: 999px;
     background: var(--azul);
@@ -1177,7 +1181,8 @@ button:hover { background: var(--azul-oscuro); transform: translateY(-1px); }
 @media (max-width: 900px) {
     .hamburger-btn { display: flex; order: 2; }
 
-    .header-inner { justify-content: space-between; }
+    .header-inner { justify-content: space-between; padding: 14px 20px; }
+    .topbar-inner { padding: 8px 20px; }
 
     .brand-texto { max-width: 160px; font-size: 0.85rem; }
     .brand-logo { height: 50px; max-width: 230px; }
