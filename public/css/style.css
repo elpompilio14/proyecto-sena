@@ -1068,16 +1068,23 @@ button:hover { background: var(--azul-oscuro); transform: translateY(-1px); }
     letter-spacing: 0.02em;
     text-transform: uppercase;
     margin-left: 18px;
-    padding: 0;
+    padding: 9px 18px;
+    border-radius: 999px;
     cursor: pointer;
     display: inline-flex;
     align-items: center;
-    gap: 4px;
+    gap: 5px;
     font-family: inherit;
-    transition: color .15s ease;
+    transition: color .15s ease, background .15s ease;
 }
 
-.nav-dropdown-btn:hover { color: var(--azul); }
+.nav-dropdown-btn:hover,
+.nav-dropdown-btn:focus,
+.nav-dropdown.abierto .nav-dropdown-btn {
+    background: var(--azul);
+    color: #fff;
+    outline: none;
+}
 
 .nav-caret {
     font-size: 0.65rem;
@@ -1892,6 +1899,24 @@ button:hover { background: var(--azul-oscuro); transform: translateY(-1px); }
 
 .home-card-caption h3 a { color: var(--texto); text-decoration: none; }
 .home-card-caption h3 a:hover { color: var(--azul); }
+
+.home-card-caption p:not(.fecha) {
+    font-size: 0.85rem;
+    color: var(--texto);
+    opacity: 0.85;
+    margin: 8px 0 0;
+}
+
+.home-card-ver-fotos {
+    display: inline-block;
+    margin-top: 10px;
+    color: var(--azul);
+    font-weight: 700;
+    font-size: 0.85rem;
+    text-decoration: none;
+}
+
+.home-card-ver-fotos:hover { color: var(--azul-oscuro); text-decoration: underline; }
 
 .home-ver-todas {
     text-align: center;
