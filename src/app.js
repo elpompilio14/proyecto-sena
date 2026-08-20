@@ -10,6 +10,7 @@ const formatearTexto = require('./utils/formatearTexto');
 const esVideo = require('./utils/esVideo');
 const youtubeEmbedUrl = require('./utils/youtubeEmbedUrl');
 const googleMapsEmbedUrl = require('./utils/googleMapsEmbedUrl');
+const whatsappNumero = require('./utils/whatsappNumero');
 const pool = require('./config/db');
 
 const app = express();
@@ -20,6 +21,7 @@ app.locals.formatearTexto = formatearTexto;
 app.locals.esVideo = esVideo;
 app.locals.youtubeEmbedUrl = youtubeEmbedUrl;
 app.locals.googleMapsEmbedUrl = googleMapsEmbedUrl;
+app.locals.whatsappNumero = whatsappNumero;
 
 app.use(express.static(path.join(__dirname, '..', 'public')));
 app.use(express.urlencoded({ extended: true }));

@@ -18,7 +18,7 @@
     <label>Cantidad de profesores<input type="number" name="num_profesores" min="0" value="<%= info && info.num_profesores ? info.num_profesores : '' %>" placeholder="Ej: 27"></label>
 
     <h2>WhatsApp y redes sociales</h2>
-    <label>Número de WhatsApp institucional (solo números, con indicativo de país. Ej: 573001234567)<input type="text" name="whatsapp_numero" value="<%= info && info.whatsapp_numero ? info.whatsapp_numero : '' %>" placeholder="573001234567"></label>
+    <label>Número de WhatsApp institucional (celular a 10 dígitos, con o sin el indicativo 57, se limpia automáticamente. Ej: 3001234567)<input type="text" name="whatsapp_numero" value="<%= info && info.whatsapp_numero ? info.whatsapp_numero : '' %>" placeholder="3001234567"></label>
 
     <label>Link de Instagram<input type="text" name="instagram_url" value="<%= info && info.instagram_url ? info.instagram_url : '' %>" placeholder="https://instagram.com/tuColegio"></label>
     <% if (info && info.instagram_imagen_url) { %>

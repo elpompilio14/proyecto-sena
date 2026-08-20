@@ -26,7 +26,7 @@
         <div class="contacto-info-card">
             <span class="contacto-info-icono">💬</span>
             <h3>WhatsApp</h3>
-            <p><a href="https://wa.me/<%= sitio.whatsapp_numero %>" target="_blank" rel="noopener">Enviar mensaje</a></p>
+            <p><a href="https://wa.me/<%= whatsappNumero(sitio.whatsapp_numero) %>" target="_blank" rel="noopener">Enviar mensaje</a></p>
         </div>
     <% } %>
     <% if (sitio.correo) { %>
@@ -80,7 +80,7 @@
 
     <aside class="contacto-sidebar aparece">
         <% if (sitio.whatsapp_numero) { %>
-            <a href="https://wa.me/<%= sitio.whatsapp_numero %>" target="_blank" rel="noopener" class="contacto-sidebar-btn contacto-sidebar-whatsapp">💬 Escríbenos por WhatsApp</a>
+            <a href="https://wa.me/<%= whatsappNumero(sitio.whatsapp_numero) %>" target="_blank" rel="noopener" class="contacto-sidebar-btn contacto-sidebar-whatsapp">💬 Escríbenos por WhatsApp</a>
         <% } %>
         <% if (sitio.correo) { %>
             <a href="mailto:<%= sitio.correo %>" class="contacto-sidebar-btn contacto-sidebar-correo">✉️ Escríbenos por correo</a>
