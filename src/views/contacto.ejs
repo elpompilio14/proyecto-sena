@@ -42,22 +42,29 @@
 <section class="redes-grid aparece">
     <% if (sitio.instagram_imagen_url) { %>
         <a href="<%= sitio.instagram_url || '#' %>" target="_blank" rel="noopener" class="red-social-card">
-            <img src="<%= sitio.instagram_imagen_url %>" alt="Instagram del colegio">
             <span class="red-social-etiqueta">📷 Instagram</span>
+            <img src="<%= sitio.instagram_imagen_url %>" alt="Instagram del colegio">
         </a>
     <% } %>
     <% if (sitio.facebook_imagen_url) { %>
         <a href="<%= sitio.facebook_url || '#' %>" target="_blank" rel="noopener" class="red-social-card">
-            <img src="<%= sitio.facebook_imagen_url %>" alt="Facebook del colegio">
             <span class="red-social-etiqueta">👍 Facebook</span>
+            <img src="<%= sitio.facebook_imagen_url %>" alt="Facebook del colegio">
         </a>
     <% } %>
 </section>
 <% } %>
 
-<section class="contacto-form-grid">
+<section class="contacto-botones aparece">
+    <a href="#formulario-contacto" class="contacto-boton-pill">✉️ Envíanos un mensaje</a>
+    <% if (sitio.whatsapp_numero) { %>
+        <a href="https://wa.me/<%= whatsappNumero(sitio.whatsapp_numero) %>" target="_blank" rel="noopener" class="contacto-boton-pill contacto-boton-pill-oscuro">💬 Escríbenos al WhatsApp</a>
+    <% } %>
+</section>
+
+<section class="contacto-form-seccion" id="formulario-contacto">
     <div class="contacto-form-box aparece">
-        <h2>Envíanos un mensaje</h2>
+        <h2>Envíanos un Mensaje</h2>
         <p>Completa el formulario y nos pondremos en contacto contigo a la brevedad posible.</p>
 
         <% if (enviado) { %>
@@ -71,21 +78,12 @@
                     <label>Nombre<input type="text" name="nombre" required></label>
                     <label>Apellido<input type="text" name="apellido"></label>
                 </div>
-                <label>Correo<input type="email" name="email" required></label>
-                <label>Mensaje<textarea name="mensaje" rows="4" required></textarea></label>
-                <button type="submit">Enviar mensaje</button>
+                <label>Correo electrónico<input type="email" name="email" required></label>
+                <label>Mensaje<textarea name="mensaje" rows="5" required></textarea></label>
+                <button type="submit">📨 Enviar mensaje</button>
             </form>
         <% } %>
     </div>
-
-    <aside class="contacto-sidebar aparece">
-        <% if (sitio.whatsapp_numero) { %>
-            <a href="https://wa.me/<%= whatsappNumero(sitio.whatsapp_numero) %>" target="_blank" rel="noopener" class="contacto-sidebar-btn contacto-sidebar-whatsapp">💬 Escríbenos por WhatsApp</a>
-        <% } %>
-        <% if (sitio.correo) { %>
-            <a href="mailto:<%= sitio.correo %>" class="contacto-sidebar-btn contacto-sidebar-correo">✉️ Escríbenos por correo</a>
-        <% } %>
-    </aside>
 </section>
 
 <%- include('partials/footer') %>
