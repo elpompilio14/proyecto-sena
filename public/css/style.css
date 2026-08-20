@@ -48,19 +48,12 @@ h1, h2, h3 {
 .topbar-inner {
     display: flex;
     align-items: center;
-    justify-content: flex-start;
+    justify-content: space-between;
     flex-wrap: wrap;
     gap: 8px;
     max-width: 1600px;
     margin: 0 auto;
     padding: 10px 40px;
-}
-
-.topbar-izquierda {
-    display: flex;
-    align-items: center;
-    gap: 18px;
-    flex-wrap: wrap;
 }
 
 .topbar-link {
