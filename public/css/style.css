@@ -997,11 +997,12 @@ button:hover { background: var(--azul-oscuro); transform: translateY(-1px); }
 /* ===================== Encabezado: logo, insignia de años, redes ===================== */
 
 .brand-logo {
-    height: 58px;
+    height: 74px;
     width: auto;
-    max-width: 360px;
+    max-width: 420px;
     object-fit: contain;
     flex-shrink: 0;
+    mix-blend-mode: multiply;
 }
 
 .anios-badge {
@@ -1179,7 +1180,7 @@ button:hover { background: var(--azul-oscuro); transform: translateY(-1px); }
     .header-inner { justify-content: space-between; }
 
     .brand-texto { max-width: 160px; font-size: 0.85rem; }
-    .brand-logo { height: 42px; max-width: 190px; }
+    .brand-logo { height: 50px; max-width: 230px; }
 
     .nav {
         display: none;
