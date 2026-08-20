@@ -14,6 +14,7 @@ router.get('/deportes', publicController.deportes);
 router.get('/campeonatos', publicController.campeonatos);
 router.get('/campeonatos/:id', publicController.campeonatoDetalle);
 router.get('/mejores-puestos', publicController.mejoresPuestos);
+router.get('/icfes', publicController.icfes);
 router.get('/galeria', publicController.galeria);
 router.get('/contacto', publicController.contactoForm);
 router.post('/contacto', publicController.contacto);

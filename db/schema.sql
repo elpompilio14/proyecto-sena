@@ -37,6 +37,15 @@ CREATE TABLE institucion_info (
     himno_url TEXT,
     himno_letra TEXT,
     fondo_url TEXT,
+    logo_url TEXT,
+    anios_fundacion INTEGER,
+    num_estudiantes INTEGER,
+    num_profesores INTEGER,
+    whatsapp_numero TEXT,
+    instagram_url TEXT,
+    instagram_imagen_url TEXT,
+    facebook_url TEXT,
+    facebook_imagen_url TEXT,
     actualizado_en TIMESTAMP NOT NULL DEFAULT NOW()
 );
 
@@ -148,9 +157,20 @@ CREATE TABLE comunidad_educativa (
 CREATE TABLE mensajes_contacto (
     id SERIAL PRIMARY KEY,
     nombre VARCHAR(100) NOT NULL,
+    apellido VARCHAR(100),
     email VARCHAR(150) NOT NULL,
     mensaje TEXT NOT NULL,
     leido BOOLEAN NOT NULL DEFAULT FALSE,
+    creado_en TIMESTAMP NOT NULL DEFAULT NOW()
+);
+
+CREATE TABLE icfes_resultados (
+    id SERIAL PRIMARY KEY,
+    estudiante_nombre VARCHAR(150) NOT NULL,
+    puntaje INTEGER NOT NULL,
+    anio INTEGER NOT NULL,
+    foto_url TEXT,
+    descripcion TEXT,
     creado_en TIMESTAMP NOT NULL DEFAULT NOW()
 );
 

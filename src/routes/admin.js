@@ -17,6 +17,7 @@ const mensajesController = require('../controllers/admin/mensajesController');
 const gradosController = require('../controllers/admin/gradosController');
 const deportesController = require('../controllers/admin/deportesController');
 const comunidadController = require('../controllers/admin/comunidadController');
+const icfesController = require('../controllers/admin/icfesController');
 
 router.use(requireAdmin);
 
@@ -71,7 +72,14 @@ router.post('/mejores-puestos/:id/editar', mejoresPuestosController.editar);
 router.post('/mejores-puestos/:id/eliminar', mejoresPuestosController.eliminar);
 
 router.get('/institucion', institucionController.index);
-router.post('/institucion', upload.fields([{ name: 'escudo', maxCount: 1 }, { name: 'bandera', maxCount: 1 }, { name: 'fondo', maxCount: 1 }]), institucionController.actualizar);
+router.post('/institucion', upload.fields([
+    { name: 'escudo', maxCount: 1 },
+    { name: 'bandera', maxCount: 1 },
+    { name: 'fondo', maxCount: 1 },
+    { name: 'logo', maxCount: 1 },
+    { name: 'instagram_imagen', maxCount: 1 },
+    { name: 'facebook_imagen', maxCount: 1 },
+]), institucionController.actualizar);
 
 router.get('/mensajes', mensajesController.index);
 router.post('/mensajes/:id/leido', mensajesController.marcarLeido);
@@ -94,5 +102,11 @@ router.post('/comunidad-educativa', upload.single('imagen'), comunidadController
 router.get('/comunidad-educativa/:id/editar', comunidadController.editarForm);
 router.post('/comunidad-educativa/:id/editar', upload.single('imagen'), comunidadController.editar);
 router.post('/comunidad-educativa/:id/eliminar', comunidadController.eliminar);
+
+router.get('/icfes', icfesController.index);
+router.post('/icfes', upload.single('imagen'), icfesController.crear);
+router.get('/icfes/:id/editar', icfesController.editarForm);
+router.post('/icfes/:id/editar', upload.single('imagen'), icfesController.editar);
+router.post('/icfes/:id/eliminar', icfesController.eliminar);
 
 module.exports = router;

@@ -4,6 +4,37 @@
 <h1>Información institucional</h1>
 
 <form method="POST" action="/admin/institucion" class="form" enctype="multipart/form-data">
+    <h2>Encabezado del sitio</h2>
+    <% if (info && info.logo_url) { %>
+        <img src="<%= info.logo_url %>" alt="Logo actual" class="card-img" style="max-width:120px;">
+    <% } %>
+    <label>Logo del colegio (se muestra pequeño en la esquina superior izquierda)<input type="file" name="logo" accept="image/*"></label>
+    <input type="hidden" name="logo_url_actual" value="<%= info && info.logo_url ? info.logo_url : '' %>">
+
+    <label>Años del colegio (se muestra junto al logo y en la sección "Nuestra institución")<input type="number" name="anios_fundacion" min="0" value="<%= info && info.anios_fundacion ? info.anios_fundacion : '' %>" placeholder="Ej: 63"></label>
+
+    <h2>Estadísticas ("Nuestra Institución")</h2>
+    <label>Cantidad de estudiantes<input type="number" name="num_estudiantes" min="0" value="<%= info && info.num_estudiantes ? info.num_estudiantes : '' %>" placeholder="Ej: 819"></label>
+    <label>Cantidad de profesores<input type="number" name="num_profesores" min="0" value="<%= info && info.num_profesores ? info.num_profesores : '' %>" placeholder="Ej: 27"></label>
+
+    <h2>WhatsApp y redes sociales</h2>
+    <label>Número de WhatsApp institucional (solo números, con indicativo de país. Ej: 573001234567)<input type="text" name="whatsapp_numero" value="<%= info && info.whatsapp_numero ? info.whatsapp_numero : '' %>" placeholder="573001234567"></label>
+
+    <label>Link de Instagram<input type="text" name="instagram_url" value="<%= info && info.instagram_url ? info.instagram_url : '' %>" placeholder="https://instagram.com/tuColegio"></label>
+    <% if (info && info.instagram_imagen_url) { %>
+        <img src="<%= info.instagram_imagen_url %>" alt="Imagen de Instagram actual" class="card-img">
+    <% } %>
+    <label>Imagen/captura de la página de Instagram (se muestra como tarjeta que lleva al perfil)<input type="file" name="instagram_imagen" accept="image/*"></label>
+    <input type="hidden" name="instagram_imagen_url_actual" value="<%= info && info.instagram_imagen_url ? info.instagram_imagen_url : '' %>">
+
+    <label>Link de Facebook<input type="text" name="facebook_url" value="<%= info && info.facebook_url ? info.facebook_url : '' %>" placeholder="https://facebook.com/tuColegio"></label>
+    <% if (info && info.facebook_imagen_url) { %>
+        <img src="<%= info.facebook_imagen_url %>" alt="Imagen de Facebook actual" class="card-img">
+    <% } %>
+    <label>Imagen/captura de la página de Facebook (se muestra como tarjeta que lleva al perfil)<input type="file" name="facebook_imagen" accept="image/*"></label>
+    <input type="hidden" name="facebook_imagen_url_actual" value="<%= info && info.facebook_imagen_url ? info.facebook_imagen_url : '' %>">
+
+    <h2>Portada e información general</h2>
     <% if (info && info.fondo_url) { %>
         <img src="<%= info.fondo_url %>" alt="Fondo actual" class="card-img">
     <% } %>

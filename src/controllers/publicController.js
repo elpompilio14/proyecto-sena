@@ -102,6 +102,11 @@ exports.mejoresPuestos = async (req, res) => {
     res.render('mejores-puestos', { titulo: 'Puestos de honor', puestos: puestos.rows });
 };
 
+exports.icfes = async (req, res) => {
+    const resultados = await pool.query('SELECT * FROM icfes_resultados ORDER BY anio DESC, puntaje DESC');
+    res.render('icfes', { titulo: 'Mejores ICFES', resultados: resultados.rows });
+};
+
 exports.galeria = async (req, res) => {
     const fotos = await pool.query(
         'SELECT * FROM galeria_fotos ORDER BY creado_en DESC'
@@ -157,7 +162,7 @@ exports.contactoForm = (req, res) => {
 };
 
 exports.contacto = async (req, res) => {
-    const { nombre, email, mensaje } = req.body;
+    const { nombre, apellido, email, mensaje } = req.body;
 
     if (!nombre || !email || !mensaje) {
         return res.status(400).render('contacto', {
@@ -168,8 +173,8 @@ exports.contacto = async (req, res) => {
     }
 
     await pool.query(
-        'INSERT INTO mensajes_contacto (nombre, email, mensaje) VALUES ($1, $2, $3)',
-        [nombre, email, mensaje]
+        'INSERT INTO mensajes_contacto (nombre, apellido, email, mensaje) VALUES ($1, $2, $3, $4)',
+        [nombre, apellido || null, email, mensaje]
     );
 
     res.render('contacto', { titulo: 'Contacto', enviado: true, error: null });

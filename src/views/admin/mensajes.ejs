@@ -11,7 +11,7 @@
         <tbody>
             <% mensajes.forEach(function(m) { %>
                 <tr>
-                    <td><%= m.nombre %></td>
+                    <td><%= m.nombre %> <%= m.apellido || '' %></td>
                     <td><%= m.email %></td>
                     <td><%= m.mensaje %></td>
                     <td><%= new Date(m.creado_en).toLocaleDateString('es-CO') %></td>

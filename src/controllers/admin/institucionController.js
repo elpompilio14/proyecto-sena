@@ -11,28 +11,47 @@ exports.actualizar = async (req, res) => {
         ubicacion_sede1, ubicacion_sede2, telefono, correo,
         himno_url, himno_letra,
         escudo_texto, bandera_texto,
-        escudo_url_actual, bandera_url_actual, fondo_url_actual,
+        escudo_url_actual, bandera_url_actual, fondo_url_actual, logo_url_actual,
+        instagram_imagen_url_actual, facebook_imagen_url_actual,
+        anios_fundacion, num_estudiantes, num_profesores, whatsapp_numero,
+        instagram_url, facebook_url,
     } = req.body;
 
     const archivoEscudo = req.files && req.files.escudo ? req.files.escudo[0] : null;
     const archivoBandera = req.files && req.files.bandera ? req.files.bandera[0] : null;
     const archivoFondo = req.files && req.files.fondo ? req.files.fondo[0] : null;
+    const archivoLogo = req.files && req.files.logo ? req.files.logo[0] : null;
+    const archivoInstagram = req.files && req.files.instagram_imagen ? req.files.instagram_imagen[0] : null;
+    const archivoFacebook = req.files && req.files.facebook_imagen ? req.files.facebook_imagen[0] : null;
 
     const escudo_url = archivoEscudo ? `/images/${archivoEscudo.filename}` : (escudo_url_actual || null);
     const bandera_url = archivoBandera ? `/images/${archivoBandera.filename}` : (bandera_url_actual || null);
     const fondo_url = archivoFondo ? `/images/${archivoFondo.filename}` : (fondo_url_actual || null);
+    const logo_url = archivoLogo ? `/images/${archivoLogo.filename}` : (logo_url_actual || null);
+    const instagram_imagen_url = archivoInstagram ? `/images/${archivoInstagram.filename}` : (instagram_imagen_url_actual || null);
+    const facebook_imagen_url = archivoFacebook ? `/images/${archivoFacebook.filename}` : (facebook_imagen_url_actual || null);
 
     const existente = await pool.query('SELECT id FROM institucion_info ORDER BY id LIMIT 1');
+
+    const valores_comunes = [
+        historia, mision, vision, principios, valores, ubicacion_sede1, ubicacion_sede2,
+        telefono || null, correo || null, himno_url || null, himno_letra || null,
+        escudo_texto || null, escudo_url, bandera_texto || null, bandera_url, fondo_url,
+        logo_url, anios_fundacion || null, num_estudiantes || null, num_profesores || null,
+        whatsapp_numero || null, instagram_url || null, instagram_imagen_url,
+        facebook_url || null, facebook_imagen_url,
+    ];
 
     if (existente.rows.length === 0) {
         await pool.query(
             `INSERT INTO institucion_info
                 (historia, mision, vision, principios, valores, ubicacion_sede1, ubicacion_sede2,
-                 telefono, correo, himno_url, himno_letra, escudo_texto, escudo_url, bandera_texto, bandera_url, fondo_url)
-             VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16)`,
-            [historia, mision, vision, principios, valores, ubicacion_sede1, ubicacion_sede2,
-                telefono || null, correo || null, himno_url || null, himno_letra || null,
-                escudo_texto || null, escudo_url, bandera_texto || null, bandera_url, fondo_url]
+                 telefono, correo, himno_url, himno_letra, escudo_texto, escudo_url, bandera_texto, bandera_url, fondo_url,
+                 logo_url, anios_fundacion, num_estudiantes, num_profesores, whatsapp_numero,
+                 instagram_url, instagram_imagen_url, facebook_url, facebook_imagen_url)
+             VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16,
+                     $17, $18, $19, $20, $21, $22, $23, $24, $25)`,
+            valores_comunes
         );
     } else {
         await pool.query(
@@ -41,11 +60,12 @@ exports.actualizar = async (req, res) => {
                  ubicacion_sede1 = $6, ubicacion_sede2 = $7, telefono = $8, correo = $9,
                  himno_url = $10, himno_letra = $11,
                  escudo_texto = $12, escudo_url = $13, bandera_texto = $14, bandera_url = $15,
-                 fondo_url = $16, actualizado_en = NOW()
-             WHERE id = $17`,
-            [historia, mision, vision, principios, valores, ubicacion_sede1, ubicacion_sede2,
-                telefono || null, correo || null, himno_url || null, himno_letra || null,
-                escudo_texto || null, escudo_url, bandera_texto || null, bandera_url, fondo_url, existente.rows[0].id]
+                 fondo_url = $16, logo_url = $17, anios_fundacion = $18, num_estudiantes = $19,
+                 num_profesores = $20, whatsapp_numero = $21, instagram_url = $22,
+                 instagram_imagen_url = $23, facebook_url = $24, facebook_imagen_url = $25,
+                 actualizado_en = NOW()
+             WHERE id = $26`,
+            [...valores_comunes, existente.rows[0].id]
         );
     }
 

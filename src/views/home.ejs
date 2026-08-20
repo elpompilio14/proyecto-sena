@@ -1,15 +1,48 @@
 <%- include('partials/header') %>
 
-<section class="hero" <% if (fondoUrl) { %>style="background-image: url('<%= fondoUrl %>')"<% } %>>
-    <h1>Institución Educativa Distrital Técnica para el Desarrollo del Talento Humano</h1>
-    <p>Formando talento humano con proyección técnica y humana. Conoce nuestra comunidad educativa, sus logros, deportes y eventos.</p>
+<section class="hero hero-grande" <% if (fondoUrl) { %>style="background-image: url('<%= fondoUrl %>')"<% } %>>
+    <div class="hero-contenido">
+        <h1>Institución Educativa Distrital Técnica para el Desarrollo del Talento Humano</h1>
+        <p>Formando talento humano con proyección técnica y humana. Conoce nuestra comunidad educativa, sus logros, deportes y eventos.</p>
+    </div>
 </section>
+
+<% if (sitio && (sitio.num_estudiantes || sitio.num_profesores || sitio.anios_fundacion)) { %>
+<section class="stats-section aparece">
+    <span class="badge-pill">En números</span>
+    <h2>Nuestra Institución</h2>
+    <div class="stats-grid">
+        <% if (sitio.num_estudiantes) { %>
+            <div class="stat-item">
+                <span class="stat-icono">🎓</span>
+                <span class="stat-numero" data-meta="<%= sitio.num_estudiantes %>">0</span>
+                <span class="stat-etiqueta">Estudiantes</span>
+            </div>
+        <% } %>
+        <% if (sitio.num_profesores) { %>
+            <div class="stat-item">
+                <span class="stat-icono">🧑‍🏫</span>
+                <span class="stat-numero" data-meta="<%= sitio.num_profesores %>">0</span>
+                <span class="stat-etiqueta">Docentes</span>
+            </div>
+        <% } %>
+        <% if (sitio.anios_fundacion) { %>
+            <div class="stat-item">
+                <span class="stat-icono">📅</span>
+                <span class="stat-numero" data-meta="<%= sitio.anios_fundacion %>">0</span>
+                <span class="stat-etiqueta">Años de Trayectoria</span>
+            </div>
+        <% } %>
+    </div>
+</section>
+<% } %>
 
 <section class="grid-links aparece">
     <a href="/eventos" class="card-link">Eventos del colegio</a>
     <a href="/deportes" class="card-link">Equipos deportivos</a>
     <a href="/campeonatos" class="card-link">Intercursos</a>
     <a href="/mejores-puestos" class="card-link">Puestos de honor</a>
+    <a href="/icfes" class="card-link">Mejores ICFES</a>
     <a href="/galeria" class="card-link">Galería de fotos</a>
 </section>
 

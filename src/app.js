@@ -39,10 +39,12 @@ app.use((req, res, next) => {
 
 app.use(async (req, res, next) => {
     try {
-        const { rows } = await pool.query('SELECT telefono, correo FROM institucion_info ORDER BY id LIMIT 1');
+        const { rows } = await pool.query('SELECT * FROM institucion_info ORDER BY id LIMIT 1');
         res.locals.contacto = rows[0] || {};
+        res.locals.sitio = rows[0] || {};
     } catch (err) {
         res.locals.contacto = {};
+        res.locals.sitio = {};
     }
     next();
 });

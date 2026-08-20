@@ -12,19 +12,71 @@
 <body>
     <header class="site-header">
         <div class="container header-inner">
-            <a class="brand" href="/">IED Técnica para el Desarrollo del Talento Humano</a>
-            <nav class="nav">
+            <a class="brand" href="/">
+                <% if (sitio && sitio.logo_url) { %>
+                    <img src="<%= sitio.logo_url %>" alt="Logo del colegio" class="brand-logo">
+                <% } %>
+                <% if (sitio && sitio.anios_fundacion) { %>
+                    <span class="anios-badge">
+                        <span class="anios-badge-num"><%= sitio.anios_fundacion %></span>
+                        <span class="anios-badge-txt">años</span>
+                    </span>
+                <% } %>
+                <span class="brand-texto">IED Técnica para el Desarrollo del Talento Humano</span>
+            </a>
+
+            <button type="button" class="hamburger-btn" id="btn-hamburguesa" aria-label="Abrir menú" aria-expanded="false" aria-controls="nav-principal">
+                <span></span><span></span><span></span>
+            </button>
+
+            <nav class="nav" id="nav-principal">
                 <a href="/">Inicio</a>
-                <a href="/institucion">Institución</a>
-                <a href="/comunidad-educativa">Comunidad Educativa</a>
-                <a href="/himno">Himno Escolar</a>
-                <a href="/noticias">Noticias</a>
-                <a href="/eventos">Eventos</a>
-                <a href="/deportes">Deportes</a>
-                <a href="/campeonatos">Intercursos</a>
-                <a href="/mejores-puestos">Puestos de honor</a>
+
+                <div class="nav-dropdown">
+                    <button type="button" class="nav-dropdown-btn">Quiénes somos<span class="nav-caret">▾</span></button>
+                    <div class="nav-dropdown-menu">
+                        <a href="/institucion">Institución</a>
+                        <a href="/comunidad-educativa">Comunidad Educativa</a>
+                        <a href="/himno">Himno Escolar</a>
+                    </div>
+                </div>
+
+                <div class="nav-dropdown">
+                    <button type="button" class="nav-dropdown-btn">Conócenos<span class="nav-caret">▾</span></button>
+                    <div class="nav-dropdown-menu">
+                        <a href="/noticias">Noticias</a>
+                        <a href="/eventos">Eventos</a>
+                        <a href="/deportes">Deportes</a>
+                        <a href="/campeonatos">Intercursos</a>
+                        <a href="/mejores-puestos">Puestos de honor</a>
+                        <a href="/icfes">Mejores ICFES</a>
+                    </div>
+                </div>
+
                 <a href="/galeria">Galería</a>
-                <a href="/contacto">Contacto</a>
+
+                <a href="/contacto" class="nav-contacto-btn">
+                    <span class="nav-burbuja b1"></span>
+                    <span class="nav-burbuja b2"></span>
+                    <span class="nav-burbuja b3"></span>
+                    <span class="nav-contacto-texto">Contáctanos</span>
+                </a>
+
+                <% if (sitio && (sitio.instagram_url || sitio.facebook_url)) { %>
+                    <span class="nav-social-icons">
+                        <% if (sitio.instagram_url) { %>
+                            <a href="<%= sitio.instagram_url %>" target="_blank" rel="noopener" aria-label="Instagram" class="nav-social-icon">
+                                <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+                            </a>
+                        <% } %>
+                        <% if (sitio.facebook_url) { %>
+                            <a href="<%= sitio.facebook_url %>" target="_blank" rel="noopener" aria-label="Facebook" class="nav-social-icon">
+                                <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+                            </a>
+                        <% } %>
+                    </span>
+                <% } %>
+
                 <% if (usuario && usuario.rol === 'admin') { %>
                     <a href="/admin">Panel admin</a>
                     <form method="POST" action="/logout" class="nav-form"><button type="submit" class="link-btn">Salir</button></form>

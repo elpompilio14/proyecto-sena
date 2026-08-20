@@ -1,28 +1,91 @@
 <%- include('partials/header') %>
 
-<h1>Contacto</h1>
+<section class="contacto-intro aparece">
+    <span class="badge-pill">Información de contacto</span>
+    <h1>¿Cómo podemos ayudarte?</h1>
+    <p>Encuentra todas las formas de comunicarte con nuestra institución educativa.</p>
+</section>
 
-<% if (enviado) { %>
-    <p class="exito">¡Gracias! Tu mensaje fue enviado, pronto te responderemos.</p>
-<% } else { %>
-    <% if (error) { %>
-        <p class="error"><%= error %></p>
+<section class="contacto-info-grid aparece">
+    <% if (sitio.ubicacion_sede1 || sitio.ubicacion_sede2) { %>
+        <div class="contacto-info-card">
+            <span class="contacto-info-icono">📍</span>
+            <h3>Dirección</h3>
+            <% if (sitio.ubicacion_sede1) { %><p><%= sitio.ubicacion_sede1 %></p><% } %>
+            <% if (sitio.ubicacion_sede2) { %><p><%= sitio.ubicacion_sede2 %></p><% } %>
+        </div>
     <% } %>
-    <form method="POST" action="/contacto" class="form">
-        <label>
-            Nombre
-            <input type="text" name="nombre" required>
-        </label>
-        <label>
-            Correo
-            <input type="email" name="email" required>
-        </label>
-        <label>
-            Mensaje
-            <textarea name="mensaje" rows="4" required></textarea>
-        </label>
-        <button type="submit">Enviar mensaje</button>
-    </form>
+    <% if (sitio.telefono) { %>
+        <div class="contacto-info-card">
+            <span class="contacto-info-icono">📞</span>
+            <h3>Teléfono</h3>
+            <p><%= sitio.telefono %></p>
+        </div>
+    <% } %>
+    <% if (sitio.whatsapp_numero) { %>
+        <div class="contacto-info-card">
+            <span class="contacto-info-icono">💬</span>
+            <h3>WhatsApp</h3>
+            <p><a href="https://wa.me/<%= sitio.whatsapp_numero %>" target="_blank" rel="noopener">Enviar mensaje</a></p>
+        </div>
+    <% } %>
+    <% if (sitio.correo) { %>
+        <div class="contacto-info-card">
+            <span class="contacto-info-icono">✉️</span>
+            <h3>Correo electrónico</h3>
+            <p><a href="mailto:<%= sitio.correo %>"><%= sitio.correo %></a></p>
+        </div>
+    <% } %>
+</section>
+
+<% if (sitio.instagram_imagen_url || sitio.facebook_imagen_url) { %>
+<section class="redes-grid aparece">
+    <% if (sitio.instagram_imagen_url) { %>
+        <a href="<%= sitio.instagram_url || '#' %>" target="_blank" rel="noopener" class="red-social-card">
+            <img src="<%= sitio.instagram_imagen_url %>" alt="Instagram del colegio">
+            <span class="red-social-etiqueta">📷 Instagram</span>
+        </a>
+    <% } %>
+    <% if (sitio.facebook_imagen_url) { %>
+        <a href="<%= sitio.facebook_url || '#' %>" target="_blank" rel="noopener" class="red-social-card">
+            <img src="<%= sitio.facebook_imagen_url %>" alt="Facebook del colegio">
+            <span class="red-social-etiqueta">👍 Facebook</span>
+        </a>
+    <% } %>
+</section>
 <% } %>
+
+<section class="contacto-form-grid">
+    <div class="contacto-form-box aparece">
+        <h2>Envíanos un mensaje</h2>
+        <p>Completa el formulario y nos pondremos en contacto contigo a la brevedad posible.</p>
+
+        <% if (enviado) { %>
+            <p class="exito">¡Gracias! Tu mensaje fue enviado, pronto te responderemos.</p>
+        <% } else { %>
+            <% if (error) { %>
+                <p class="error"><%= error %></p>
+            <% } %>
+            <form method="POST" action="/contacto" class="form">
+                <div class="form-fila">
+                    <label>Nombre<input type="text" name="nombre" required></label>
+                    <label>Apellido<input type="text" name="apellido"></label>
+                </div>
+                <label>Correo<input type="email" name="email" required></label>
+                <label>Mensaje<textarea name="mensaje" rows="4" required></textarea></label>
+                <button type="submit">Enviar mensaje</button>
+            </form>
+        <% } %>
+    </div>
+
+    <aside class="contacto-sidebar aparece">
+        <% if (sitio.whatsapp_numero) { %>
+            <a href="https://wa.me/<%= sitio.whatsapp_numero %>" target="_blank" rel="noopener" class="contacto-sidebar-btn contacto-sidebar-whatsapp">💬 Escríbenos por WhatsApp</a>
+        <% } %>
+        <% if (sitio.correo) { %>
+            <a href="mailto:<%= sitio.correo %>" class="contacto-sidebar-btn contacto-sidebar-correo">✉️ Escríbenos por correo</a>
+        <% } %>
+    </aside>
+</section>
 
 <%- include('partials/footer') %>

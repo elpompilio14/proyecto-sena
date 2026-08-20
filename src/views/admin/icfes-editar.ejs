@@ -1,0 +1,19 @@
+<%- include('../partials/header') %>
+
+<p><a href="/admin/icfes">&larr; Mejores ICFES</a></p>
+<h1>Editar resultado ICFES</h1>
+
+<form method="POST" action="/admin/icfes/<%= resultado.id %>/editar" class="form" enctype="multipart/form-data">
+    <label>Nombre del estudiante<input type="text" name="estudiante_nombre" value="<%= resultado.estudiante_nombre %>" required></label>
+    <label>Puntaje<input type="number" name="puntaje" min="0" max="500" value="<%= resultado.puntaje %>" required></label>
+    <label>Año<input type="number" name="anio" min="2000" max="2100" value="<%= resultado.anio %>" required></label>
+    <label>Descripción (opcional)<textarea name="descripcion" rows="3"><%= resultado.descripcion || '' %></textarea></label>
+    <% if (resultado.foto_url) { %>
+        <img src="<%= resultado.foto_url %>" alt="Foto actual" class="card-img">
+    <% } %>
+    <label>Cambiar foto (opcional)<input type="file" name="imagen" accept="image/*"></label>
+    <input type="hidden" name="foto_actual" value="<%= resultado.foto_url || '' %>">
+    <button type="submit">Guardar cambios</button>
+</form>
+
+<%- include('../partials/footer') %>
