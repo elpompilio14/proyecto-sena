@@ -991,9 +991,9 @@ button:hover { background: var(--azul-oscuro); transform: translateY(-1px); }
 /* ===================== Encabezado: logo, insignia de años, redes ===================== */
 
 .brand-logo {
-    height: 54px;
+    height: 58px;
     width: auto;
-    max-width: 70px;
+    max-width: 360px;
     object-fit: contain;
     flex-shrink: 0;
 }
@@ -1173,6 +1173,7 @@ button:hover { background: var(--azul-oscuro); transform: translateY(-1px); }
     .header-inner { justify-content: space-between; }
 
     .brand-texto { max-width: 160px; font-size: 0.85rem; }
+    .brand-logo { height: 42px; max-width: 190px; }
 
     .nav {
         display: none;

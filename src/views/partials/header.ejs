@@ -35,15 +35,10 @@
         <div class="container header-inner">
             <a class="brand" href="/">
                 <% if (sitio && sitio.logo_url) { %>
-                    <img src="<%= sitio.logo_url %>" alt="Logo del colegio" class="brand-logo">
+                    <img src="<%= sitio.logo_url %>" alt="IED Técnica para el Desarrollo del Talento Humano" class="brand-logo">
+                <% } else { %>
+                    <span class="brand-texto">IED Técnica para el Desarrollo del Talento Humano</span>
                 <% } %>
-                <% if (sitio && sitio.anios_fundacion) { %>
-                    <span class="anios-badge">
-                        <span class="anios-badge-num"><%= sitio.anios_fundacion %></span>
-                        <span class="anios-badge-txt">años</span>
-                    </span>
-                <% } %>
-                <span class="brand-texto">IED Técnica para el Desarrollo del Talento Humano</span>
             </a>
 
             <button type="button" class="hamburger-btn" id="btn-hamburguesa" aria-label="Abrir menú" aria-expanded="false" aria-controls="nav-principal">
