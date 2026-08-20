@@ -4,6 +4,7 @@
     --azul-claro: #4b9bff;
     --azul-pastel: #e6f1ff;
     --fondo: #f4f8fc;
+    --blanco-header: #f7faff;
     --texto: #16233a;
     --borde: #d7e6f5;
     --fuente: 'Montserrat', 'Segoe UI', Roboto, Arial, sans-serif;
@@ -33,10 +34,53 @@ h1, h2, h3 {
     padding: 0 20px;
 }
 
-.site-header {
+.topbar {
     background: var(--azul-oscuro);
     color: #fff;
-    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.15);
+}
+
+.topbar-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 8px 20px;
+}
+
+.topbar-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    color: #eaf1fb;
+    text-decoration: none;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    transition: color .15s ease;
+}
+
+.topbar-link:hover { color: #fff; }
+
+.topbar-social {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.topbar-social a {
+    color: #fff;
+    display: inline-flex;
+    transition: transform .15s ease, opacity .15s ease;
+}
+
+.topbar-social a:hover { transform: translateY(-2px); opacity: 0.85; }
+
+.site-header {
+    background: var(--blanco-header);
+    color: var(--texto);
+    box-shadow: 0 2px 12px rgba(10, 40, 80, 0.08);
 }
 
 .header-inner {
@@ -51,12 +95,12 @@ h1, h2, h3 {
     display: flex;
     align-items: center;
     gap: 10px;
-    color: #fff;
+    color: var(--texto);
     text-decoration: none;
 }
 
 .nav a {
-    color: #eaf1fb;
+    color: var(--texto);
     text-decoration: none;
     margin-left: 18px;
     font-size: 0.85rem;
@@ -66,7 +110,7 @@ h1, h2, h3 {
     transition: color .15s ease;
 }
 
-.nav a:hover { color: var(--azul-claro); text-decoration: none; }
+.nav a:hover { color: var(--azul); text-decoration: none; }
 
 .nav {
     display: flex;
@@ -76,7 +120,7 @@ h1, h2, h3 {
 }
 
 .nav span {
-    color: #eaf1fb;
+    color: var(--texto);
     margin-left: 18px;
     font-size: 0.85rem;
     font-weight: 600;
@@ -91,7 +135,7 @@ h1, h2, h3 {
     background: none;
     border: none;
     padding: 0;
-    color: #eaf1fb;
+    color: var(--texto);
     font-size: 0.85rem;
     font-weight: 600;
     letter-spacing: 0.02em;
@@ -100,7 +144,7 @@ h1, h2, h3 {
     cursor: pointer;
 }
 
-.link-btn:hover { color: var(--azul-claro); background: none; }
+.link-btn:hover { color: var(--azul); background: none; }
 
 .main-content {
     min-height: 70vh;
@@ -963,7 +1007,7 @@ button:hover { background: var(--azul-oscuro); transform: translateY(-1px); }
 }
 
 .anios-badge-num {
-    color: #fff;
+    color: var(--azul-oscuro);
     font-weight: 800;
     font-size: 1.9rem;
     line-height: 1;
@@ -986,23 +1030,6 @@ button:hover { background: var(--azul-oscuro); transform: translateY(-1px); }
     line-height: 1.2;
 }
 
-.nav-social-icons {
-    display: inline-flex;
-    gap: 10px;
-    margin-left: 18px;
-}
-
-.nav-social-icon {
-    color: #eaf1fb;
-    display: inline-flex;
-    transition: color .15s ease, transform .15s ease;
-}
-
-.nav-social-icon:hover {
-    color: var(--azul-claro);
-    transform: translateY(-2px);
-}
-
 /* ===================== Menú desplegable (Quiénes somos / Conócenos) ===================== */
 
 .nav-dropdown {
@@ -1013,7 +1040,7 @@ button:hover { background: var(--azul-oscuro); transform: translateY(-1px); }
 .nav-dropdown-btn {
     background: none;
     border: none;
-    color: #eaf1fb;
+    color: var(--texto);
     font-size: 0.85rem;
     font-weight: 600;
     letter-spacing: 0.02em;
@@ -1028,7 +1055,7 @@ button:hover { background: var(--azul-oscuro); transform: translateY(-1px); }
     transition: color .15s ease;
 }
 
-.nav-dropdown-btn:hover { color: var(--azul-claro); }
+.nav-dropdown-btn:hover { color: var(--azul); }
 
 .nav-caret {
     font-size: 0.65rem;
@@ -1131,7 +1158,7 @@ button:hover { background: var(--azul-oscuro); transform: translateY(-1px); }
     display: block;
     width: 100%;
     height: 3px;
-    background: #fff;
+    background: var(--azul-oscuro);
     border-radius: 3px;
     transition: transform .25s ease, opacity .25s ease;
 }
@@ -1186,7 +1213,7 @@ button:hover { background: var(--azul-oscuro); transform: translateY(-1px); }
         margin-top: 0;
         padding: 0 0 0 14px;
         transition: max-height .25s ease;
-        background: rgba(255, 255, 255, 0.05);
+        background: var(--azul-pastel);
         border-radius: 8px;
     }
 
@@ -1196,12 +1223,10 @@ button:hover { background: var(--azul-oscuro); transform: translateY(-1px); }
         padding: 6px 0 6px 14px;
     }
 
-    .nav-dropdown-menu a { color: #eaf1fb; }
-    .nav-dropdown-menu a:hover { background: rgba(255, 255, 255, 0.08); color: #fff; }
+    .nav-dropdown-menu a { color: var(--texto); }
+    .nav-dropdown-menu a:hover { background: rgba(10, 94, 196, 0.1); color: var(--azul-oscuro); }
 
     .nav-contacto-btn { justify-content: center; margin-top: 6px; }
-
-    .nav-social-icons { margin-left: 0; margin-top: 10px; justify-content: center; }
 }
 
 /* ===================== Portada grande ===================== */
@@ -1703,5 +1728,43 @@ button:hover { background: var(--azul-oscuro); transform: translateY(-1px); }
 @media (max-width: 640px) {
     .docentes-stats-pill { gap: 10px; padding: 12px 18px; }
     .docentes-stats-sep { display: none; }
+}
+
+/* ===================== Alianzas ===================== */
+
+.alianzas-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 20px;
+}
+
+.alianza-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    background: #fff;
+    border: 1px solid var(--borde);
+    border-radius: 14px;
+    padding: 22px 16px;
+    text-decoration: none;
+    color: var(--texto);
+    text-align: center;
+    box-shadow: var(--sombra);
+    transition: transform .15s ease, box-shadow .15s ease;
+}
+
+.alianza-card:hover { transform: translateY(-3px); box-shadow: var(--sombra-hover); }
+
+.alianza-card img {
+    max-width: 100%;
+    max-height: 70px;
+    object-fit: contain;
+}
+
+.alianza-card span {
+    font-size: 0.8rem;
+    font-weight: 700;
 }
 

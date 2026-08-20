@@ -1,0 +1,35 @@
+<%- include('../partials/header') %>
+
+<p><a href="/admin">&larr; Panel admin</a></p>
+<h1>Alianzas</h1>
+<p>Estos son los convenios/alianzas del colegio que aparecen en la barra superior del sitio.</p>
+
+<form method="POST" action="/admin/alianzas" class="form" enctype="multipart/form-data">
+    <label>Nombre de la alianza/institución<input type="text" name="nombre" required></label>
+    <label>Logo<input type="file" name="imagen" accept="image/*"></label>
+    <label>Link (opcional, a dónde lleva al hacer clic)<input type="text" name="link_url" placeholder="https://..."></label>
+    <button type="submit">Agregar alianza</button>
+</form>
+
+<% if (alianzas.length === 0) { %>
+    <p>Aún no hay alianzas registradas.</p>
+<% } else { %>
+    <table class="tabla">
+        <thead><tr><th>Nombre</th><th></th></tr></thead>
+        <tbody>
+            <% alianzas.forEach(function(a) { %>
+                <tr>
+                    <td><%= a.nombre %></td>
+                    <td class="acciones">
+                        <a href="/admin/alianzas/<%= a.id %>/editar" class="btn-editar">Editar</a>
+                        <form method="POST" action="/admin/alianzas/<%= a.id %>/eliminar">
+                            <button type="submit" class="btn-danger">Eliminar</button>
+                        </form>
+                    </td>
+                </tr>
+            <% }) %>
+        </tbody>
+    </table>
+<% } %>
+
+<%- include('../partials/footer') %>

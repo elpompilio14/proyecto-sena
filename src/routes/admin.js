@@ -18,6 +18,7 @@ const gradosController = require('../controllers/admin/gradosController');
 const deportesController = require('../controllers/admin/deportesController');
 const comunidadController = require('../controllers/admin/comunidadController');
 const icfesController = require('../controllers/admin/icfesController');
+const alianzasController = require('../controllers/admin/alianzasController');
 
 router.use(requireAdmin);
 
@@ -108,5 +109,11 @@ router.post('/icfes', upload.single('imagen'), icfesController.crear);
 router.get('/icfes/:id/editar', icfesController.editarForm);
 router.post('/icfes/:id/editar', upload.single('imagen'), icfesController.editar);
 router.post('/icfes/:id/eliminar', icfesController.eliminar);
+
+router.get('/alianzas', alianzasController.index);
+router.post('/alianzas', upload.single('imagen'), alianzasController.crear);
+router.get('/alianzas/:id/editar', alianzasController.editarForm);
+router.post('/alianzas/:id/editar', upload.single('imagen'), alianzasController.editar);
+router.post('/alianzas/:id/eliminar', alianzasController.eliminar);
 
 module.exports = router;

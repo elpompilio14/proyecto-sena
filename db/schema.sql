@@ -169,6 +169,14 @@ CREATE TABLE mensajes_contacto (
     creado_en TIMESTAMP NOT NULL DEFAULT NOW()
 );
 
+CREATE TABLE alianzas (
+    id SERIAL PRIMARY KEY,
+    nombre VARCHAR(150) NOT NULL,
+    logo_url TEXT,
+    link_url TEXT,
+    creado_en TIMESTAMP NOT NULL DEFAULT NOW()
+);
+
 CREATE TABLE icfes_resultados (
     id SERIAL PRIMARY KEY,
     estudiante_nombre VARCHAR(150) NOT NULL,

@@ -102,6 +102,11 @@ exports.mejoresPuestos = async (req, res) => {
     res.render('mejores-puestos', { titulo: 'Puestos de honor', puestos: puestos.rows });
 };
 
+exports.alianzas = async (req, res) => {
+    const alianzas = await pool.query('SELECT * FROM alianzas ORDER BY nombre');
+    res.render('alianzas', { titulo: 'Alianzas', alianzas: alianzas.rows });
+};
+
 exports.icfes = async (req, res) => {
     const resultados = await pool.query('SELECT * FROM icfes_resultados ORDER BY anio DESC, puntaje DESC');
     res.render('icfes', { titulo: 'Mejores ICFES', resultados: resultados.rows });

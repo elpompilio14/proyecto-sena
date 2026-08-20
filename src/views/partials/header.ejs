@@ -10,6 +10,27 @@
     <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
+    <div class="topbar">
+        <div class="container topbar-inner">
+            <div class="topbar-links">
+                <a href="/alianzas" class="topbar-link">🤝 Alianzas</a>
+            </div>
+            <% if (sitio && (sitio.instagram_url || sitio.facebook_url)) { %>
+                <div class="topbar-social">
+                    <% if (sitio.instagram_url) { %>
+                        <a href="<%= sitio.instagram_url %>" target="_blank" rel="noopener" aria-label="Instagram">
+                            <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+                        </a>
+                    <% } %>
+                    <% if (sitio.facebook_url) { %>
+                        <a href="<%= sitio.facebook_url %>" target="_blank" rel="noopener" aria-label="Facebook">
+                            <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+                        </a>
+                    <% } %>
+                </div>
+            <% } %>
+        </div>
+    </div>
     <header class="site-header">
         <div class="container header-inner">
             <a class="brand" href="/">
@@ -56,21 +77,6 @@
                 <a href="/galeria">Galería</a>
 
                 <a href="/contacto" class="nav-contacto-btn">Contáctanos</a>
-
-                <% if (sitio && (sitio.instagram_url || sitio.facebook_url)) { %>
-                    <span class="nav-social-icons">
-                        <% if (sitio.instagram_url) { %>
-                            <a href="<%= sitio.instagram_url %>" target="_blank" rel="noopener" aria-label="Instagram" class="nav-social-icon">
-                                <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
-                            </a>
-                        <% } %>
-                        <% if (sitio.facebook_url) { %>
-                            <a href="<%= sitio.facebook_url %>" target="_blank" rel="noopener" aria-label="Facebook" class="nav-social-icon">
-                                <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
-                            </a>
-                        <% } %>
-                    </span>
-                <% } %>
 
                 <% if (usuario && usuario.rol === 'admin') { %>
                     <a href="/admin">Panel admin</a>
