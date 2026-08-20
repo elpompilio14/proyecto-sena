@@ -34,6 +34,12 @@ h1, h2, h3 {
     padding: 0 20px;
 }
 
+.encabezado-fijo {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
 .topbar {
     background: var(--azul-oscuro);
     color: #fff;
@@ -491,7 +497,7 @@ button:hover { background: var(--azul-oscuro); transform: translateY(-1px); }
     position: fixed;
     inset: 0;
     background: rgba(10, 15, 25, 0.92);
-    z-index: 1000;
+    z-index: 2000;
     align-items: center;
     justify-content: center;
 }
