@@ -1,0 +1,110 @@
+{% extends "base.html" %}
+{% block content %}
+
+<section class="hero hero-grande"{% if fondoUrl %} style="background-image: url('{{ fondoUrl }}')"{% endif %}>
+    <div class="hero-contenido">
+        <h1>Institución Educativa Distrital Técnica para el Desarrollo del Talento Humano</h1>
+        <p>Formando talento humano con proyección técnica y humana. Conoce nuestra comunidad educativa, sus logros, deportes y eventos.</p>
+    </div>
+</section>
+
+{% if sitio and (sitio.num_estudiantes or sitio.num_profesores or sitio.anios_fundacion) %}
+<section class="stats-section aparece">
+    <span class="badge-pill">En números</span>
+    <h2>Nuestra Institución</h2>
+    <div class="stats-grid">
+        {% if sitio.num_estudiantes %}
+            <div class="stat-item">
+                <span class="stat-icono">🎓</span>
+                <span class="stat-numero" data-meta="{{ sitio.num_estudiantes }}">0</span>
+                <span class="stat-etiqueta">Estudiantes</span>
+            </div>
+        {% endif %}
+        {% if sitio.num_profesores %}
+            <div class="stat-item">
+                <span class="stat-icono">🧑‍🏫</span>
+                <span class="stat-numero" data-meta="{{ sitio.num_profesores }}">0</span>
+                <span class="stat-etiqueta">Docentes</span>
+            </div>
+        {% endif %}
+        {% if sitio.anios_fundacion %}
+            <div class="stat-item">
+                <span class="stat-icono">📅</span>
+                <span class="stat-numero" data-meta="{{ sitio.anios_fundacion }}">0</span>
+                <span class="stat-etiqueta">Años de Trayectoria</span>
+            </div>
+        {% endif %}
+    </div>
+</section>
+{% endif %}
+
+<section class="grid-links aparece">
+    <a href="/eventos" class="card-link">Eventos del colegio</a>
+    <a href="/deportes" class="card-link">Equipos deportivos</a>
+    <a href="/campeonatos" class="card-link">Intercursos</a>
+    <a href="/mejores-puestos" class="card-link">Puestos de honor</a>
+    <a href="/icfes" class="card-link">Mejores ICFES</a>
+    <a href="/galeria" class="card-link">Galería de fotos</a>
+</section>
+
+<section class="seccion-himno aparece">
+    <h2>Himno Escolar</h2>
+    {% set embed_url = youtubeEmbedUrl(himnoUrl) if himnoUrl else None %}
+    {% if embed_url %}
+        <div class="video-himno">
+            <iframe src="{{ embed_url }}" title="Himno Escolar" allowfullscreen></iframe>
+        </div>
+    {% else %}
+        <p>Aún no se ha agregado el video del himno.</p>
+    {% endif %}
+</section>
+
+<section>
+    <h2>Últimos eventos</h2>
+    {% if eventos|length == 0 %}
+        <p>Aún no hay eventos registrados.</p>
+    {% else %}
+        <div class="home-cards-grid">
+            {% for ev in eventos %}
+                <article class="home-card-grande aparece" style="transition-delay: {{ [loop.index0, 5]|min * 70 }}ms">
+                    <a href="/eventos/{{ ev.id }}" class="home-card-img-wrap">
+                        {% if ev.imagen_url %}
+                            <img src="{{ ev.imagen_url }}" alt="{{ ev.titulo }}">
+                        {% endif %}
+                    </a>
+                    <div class="home-card-caption">
+                        <p class="fecha">{{ formatearFecha(ev.fecha) }}</p>
+                        <h3><a href="/eventos/{{ ev.id }}">{{ ev.titulo }}</a></h3>
+                    </div>
+                </article>
+            {% endfor %}
+        </div>
+        <p class="home-ver-todas"><a href="/eventos" class="btn-ver-todas">Ver todos los eventos</a></p>
+    {% endif %}
+</section>
+
+<section>
+    <h2>Últimas noticias</h2>
+    {% if noticias|length == 0 %}
+        <p>Aún no hay noticias registradas.</p>
+    {% else %}
+        <div class="home-cards-grid">
+            {% for n in noticias %}
+                <article class="home-card-grande aparece" style="transition-delay: {{ [loop.index0, 5]|min * 70 }}ms">
+                    <a href="/noticias/{{ n.id }}" class="home-card-img-wrap">
+                        {% if n.imagen_url %}
+                            <img src="{{ n.imagen_url }}" alt="{{ n.titulo }}">
+                        {% endif %}
+                    </a>
+                    <div class="home-card-caption">
+                        <p class="fecha">{{ formatearFecha(n.fecha) }}</p>
+                        <h3><a href="/noticias/{{ n.id }}">{{ n.titulo }}</a></h3>
+                    </div>
+                </article>
+            {% endfor %}
+        </div>
+        <p class="home-ver-todas"><a href="/noticias" class="btn-ver-todas">Ver todas las noticias</a></p>
+    {% endif %}
+</section>
+
+{% endblock %}

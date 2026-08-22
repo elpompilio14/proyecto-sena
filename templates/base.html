@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ titulo }} · IED Talento Humano</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <div class="encabezado-fijo">
+    <div class="topbar">
+        <div class="topbar-inner">
+            <div class="topbar-links">
+                <a href="/alianzas" class="topbar-link">
+                    <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+                    Alianzas
+                </a>
+            </div>
+            {% if sitio and (sitio.instagram_url or sitio.facebook_url) %}
+                <div class="topbar-social">
+                    {% if sitio.instagram_url %}
+                        <a href="{{ sitio.instagram_url }}" target="_blank" rel="noopener" aria-label="Instagram">
+                            <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+                        </a>
+                    {% endif %}
+                    {% if sitio.facebook_url %}
+                        <a href="{{ sitio.facebook_url }}" target="_blank" rel="noopener" aria-label="Facebook">
+                            <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+                        </a>
+                    {% endif %}
+                </div>
+            {% endif %}
+        </div>
+    </div>
+    <header class="site-header">
+        <div class="header-inner">
+            <a class="brand" href="/">
+                {% if sitio and sitio.logo_url %}
+                    <img src="{{ sitio.logo_url }}" alt="IED Técnica para el Desarrollo del Talento Humano" class="brand-logo">
+                {% else %}
+                    <span class="brand-texto">IED Técnica para el Desarrollo del Talento Humano</span>
+                {% endif %}
+            </a>
+
+            <button type="button" class="hamburger-btn" id="btn-hamburguesa" aria-label="Abrir menú" aria-expanded="false" aria-controls="nav-principal">
+                <span></span><span></span><span></span>
+            </button>
+
+            <nav class="nav" id="nav-principal">
+                <a href="/">Inicio</a>
+
+                <div class="nav-dropdown">
+                    <button type="button" class="nav-dropdown-btn">Quiénes somos<span class="nav-caret">▾</span></button>
+                    <div class="nav-dropdown-menu">
+                        <div class="nav-dropdown-menu-tarjeta">
+                            <a href="/institucion">Institución</a>
+                            <a href="/comunidad-educativa">Comunidad Educativa</a>
+                            <a href="/himno">Himno Escolar</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="nav-dropdown">
+                    <button type="button" class="nav-dropdown-btn">Conócenos<span class="nav-caret">▾</span></button>
+                    <div class="nav-dropdown-menu">
+                        <div class="nav-dropdown-menu-tarjeta">
+                            <a href="/noticias">Noticias</a>
+                            <a href="/eventos">Eventos</a>
+                            <a href="/deportes">Deportes</a>
+                            <a href="/campeonatos">Intercursos</a>
+                            <a href="/galeria">Galería</a>
+                            <a href="/mejores-puestos">Puestos de honor</a>
+                            <a href="/icfes">Mejores ICFES</a>
+                        </div>
+                    </div>
+                </div>
+
+                {% if usuario and usuario.rol == 'admin' %}
+                    <a href="/admin">Panel admin</a>
+                    <form method="POST" action="/logout" class="nav-form"><button type="submit" class="link-btn">Salir</button></form>
+                {% elif usuario %}
+                    <span>Hola, {{ usuario.nombre }}</span>
+                    <form method="POST" action="/logout" class="nav-form"><button type="submit" class="link-btn">Salir</button></form>
+                {% else %}
+                    <a href="/login">Mi cuenta</a>
+                {% endif %}
+
+                <a href="/contacto" class="nav-contacto-btn">Contáctanos</a>
+            </nav>
+        </div>
+    </header>
+    </div>
+    <main class="container main-content">
+        {% block content %}{% endblock %}
+    </main>
+    <footer class="site-footer">
+        <div class="container">
+            {% if contacto and (contacto.telefono or contacto.correo) %}
+                <p class="footer-contacto">
+                    {% if contacto.telefono %}Tel: {{ contacto.telefono }}{% endif %}
+                    {% if contacto.telefono and contacto.correo %} · {% endif %}
+                    {% if contacto.correo %}{{ contacto.correo }}{% endif %}
+                </p>
+            {% endif %}
+            <p>&copy; {{ anio_actual }} Institución Educativa Distrital Técnica para el Desarrollo del Talento Humano. Proyecto SENA.</p>
+        </div>
+    </footer>
+
+    {% if sitio and sitio.whatsapp_numero %}
+        <a href="https://wa.me/{{ whatsappNumero(sitio.whatsapp_numero) }}" target="_blank" rel="noopener" class="whatsapp-flotante" aria-label="Escríbenos por WhatsApp">
+            <svg viewBox="0 0 24 24" width="28" height="28" fill="#fff"><path d="M17.5 14.4c-.3-.1-1.7-.9-2-1-.3-.1-.5-.1-.7.1-.2.3-.8 1-.9 1.2-.2.2-.3.2-.6.1-.3-.1-1.3-.5-2.4-1.5-.9-.8-1.5-1.8-1.7-2.1-.2-.3 0-.5.1-.6.1-.1.3-.3.4-.5.1-.1.2-.3.3-.4.1-.2 0-.4 0-.5C10 9 9.4 7.5 9.1 6.9c-.2-.5-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4C6.7 7.1 6 7.8 6 9.2s1 2.8 1.1 3c.1.2 2 3.1 4.9 4.3.7.3 1.2.5 1.6.6.7.2 1.3.2 1.8.1.5-.1 1.7-.7 2-1.4.2-.7.2-1.2.2-1.4-.1-.1-.3-.2-.6-.4z"/><path d="M12 2C6.5 2 2 6.5 2 12c0 1.9.5 3.6 1.5 5.1L2 22l5.1-1.3c1.4.8 3.1 1.2 4.9 1.2 5.5 0 10-4.5 10-10S17.5 2 12 2zm0 18.2c-1.6 0-3.1-.4-4.4-1.2l-.3-.2-3.3.9.9-3.2-.2-.3C4 14.8 3.5 13.4 3.5 12c0-4.7 3.8-8.5 8.5-8.5s8.5 3.8 8.5 8.5-3.8 8.5-8.5 8.5z"/></svg>
+        </a>
+    {% endif %}
+
+    <script src="/js/evitar-doble-envio.js"></script>
+    <script src="/js/lightbox.js"></script>
+    <script src="/js/aparecer-al-scroll.js"></script>
+    <script src="/js/auth-tabs.js"></script>
+    <script src="/js/menu-nav.js"></script>
+    <script src="/js/contador.js"></script>
+    <script src="/js/filtro-docentes.js"></script>
+</body>
+</html>

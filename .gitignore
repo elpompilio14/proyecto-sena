@@ -1,0 +1,14 @@
+venv/
+__pycache__/
+*.pyc
+.env
+static/images/*.jpg
+static/images/*.jpeg
+static/images/*.png
+static/images/*.JPG
+static/images/*.gif
+static/images/*.webp
+static/images/*.mp4
+static/images/*.webm
+static/images/*.mov
+!static/images/.gitkeep
