@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block content %}
+
+<p><a href="/admin/resultados">&larr; Resultados</a></p>
+<h1>Editar resultado</h1>
+
+<form method="POST" action="/admin/resultados/{{ resultado.id }}/editar" class="form">
+    <label>
+        Campeonato
+        <select name="campeonato_id" required>
+            {% for c in campeonatos %}
+                <option value="{{ c.id }}" {{ 'selected' if resultado.campeonato_id == c.id else '' }}>{{ c.nombre }}</option>
+            {% endfor %}
+        </select>
+    </label>
+    <label>
+        Equipo local
+        <select name="equipo_local_id" required>
+            {% for eq in equipos %}
+                <option value="{{ eq.id }}" {{ 'selected' if resultado.equipo_local_id == eq.id else '' }}>{{ eq.nombre }}</option>
+            {% endfor %}
+        </select>
+    </label>
+    <label>
+        Equipo visitante
+        <select name="equipo_visitante_id" required>
+            {% for eq in equipos %}
+                <option value="{{ eq.id }}" {{ 'selected' if resultado.equipo_visitante_id == eq.id else '' }}>{{ eq.nombre }}</option>
+            {% endfor %}
+        </select>
+    </label>
+    <label>Marcador local<input type="number" name="marcador_local" min="0" value="{{ resultado.marcador_local }}" required></label>
+    <label>Marcador visitante<input type="number" name="marcador_visitante" min="0" value="{{ resultado.marcador_visitante }}" required></label>
+    <label>Fecha<input type="date" name="fecha" value="{{ resultado.fecha.isoformat() }}" required></label>
+    <button type="submit">Guardar cambios</button>
+</form>
+
+{% endblock %}

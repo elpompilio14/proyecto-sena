@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block content %}
+
+<p><a href="/admin/deportes">&larr; Deportes</a></p>
+<h1>Editar deporte</h1>
+
+<form method="POST" action="/admin/deportes/{{ deporte.id }}/editar" class="form">
+    <label>Nombre<input type="text" name="nombre" value="{{ deporte.nombre }}" required></label>
+    <button type="submit">Guardar cambios</button>
+</form>
+
+{% endblock %}

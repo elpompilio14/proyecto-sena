@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block content %}
+
+<p><a href="/admin/campeonatos">&larr; Campeonatos</a></p>
+<h1>Editar campeonato</h1>
+
+<form method="POST" action="/admin/campeonatos/{{ campeonato.id }}/editar" class="form">
+    <label>Nombre<input type="text" name="nombre" value="{{ campeonato.nombre }}" required></label>
+    <label>
+        Deporte
+        <select name="deporte_id" required>
+            {% for d in deportes %}
+                <option value="{{ d.id }}" {{ 'selected' if campeonato.deporte_id == d.id else '' }}>{{ d.nombre }}</option>
+            {% endfor %}
+        </select>
+    </label>
+    <label>Fecha inicio<input type="date" name="fecha_inicio" value="{{ campeonato.fecha_inicio.isoformat() if campeonato.fecha_inicio else '' }}"></label>
+    <label>Fecha fin<input type="date" name="fecha_fin" value="{{ campeonato.fecha_fin.isoformat() if campeonato.fecha_fin else '' }}"></label>
+    <label>Descripción<textarea name="descripcion" rows="3">{{ campeonato.descripcion or '' }}</textarea></label>
+    <button type="submit">Guardar cambios</button>
+</form>
+
+{% endblock %}

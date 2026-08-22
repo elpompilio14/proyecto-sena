@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block content %}
+
+<p><a href="/admin/comunidad-educativa">&larr; Comunidad Educativa</a></p>
+<h1>Editar persona</h1>
+
+<form method="POST" action="/admin/comunidad-educativa/{{ persona.id }}/editar" class="form" enctype="multipart/form-data">
+    <label>Nombre<input type="text" name="nombre" value="{{ persona.nombre }}" required></label>
+    <label>Cargo<input type="text" name="cargo" value="{{ persona.cargo or '' }}"></label>
+    <label>Categoría (dónde aparece en la página)
+        <select name="categoria">
+            <option value="rectoria" {{ 'selected' if persona.categoria == 'rectoria' else '' }}>Rectoría</option>
+            <option value="coordinacion" {{ 'selected' if persona.categoria == 'coordinacion' else '' }}>Coordinación</option>
+            <option value="docente" {{ 'selected' if persona.categoria == 'docente' else '' }}>Cuerpo docente</option>
+        </select>
+    </label>
+    <label>Área (solo para docentes, se usa para filtrar)
+        <select name="area">
+            <option value="" {{ 'selected' if not persona.area else '' }}>-- Ninguna --</option>
+            <option value="Ciencias" {{ 'selected' if persona.area == 'Ciencias' else '' }}>Ciencias</option>
+            <option value="Humanidades" {{ 'selected' if persona.area == 'Humanidades' else '' }}>Humanidades</option>
+            <option value="Tecnología" {{ 'selected' if persona.area == 'Tecnología' else '' }}>Tecnología</option>
+            <option value="Artes y Ed. Física" {{ 'selected' if persona.area == 'Artes y Ed. Física' else '' }}>Artes y Ed. Física</option>
+        </select>
+    </label>
+    <label>Materia o especialidad<input type="text" name="materia" value="{{ persona.materia or '' }}"></label>
+    <label>Años de experiencia<input type="number" name="anios_experiencia" min="0" value="{{ persona.anios_experiencia or '' }}"></label>
+    <label>Descripción / frase corta (opcional)<textarea name="descripcion" rows="3">{{ persona.descripcion or '' }}</textarea></label>
+    {% if persona.foto_url %}
+        <img src="{{ persona.foto_url }}" alt="Foto actual" class="card-img">
+    {% endif %}
+    <label>Cambiar foto (opcional)<input type="file" name="imagen" accept="image/*"></label>
+    <input type="hidden" name="foto_actual" value="{{ persona.foto_url or '' }}">
+    <button type="submit">Guardar cambios</button>
+</form>
+
+{% endblock %}

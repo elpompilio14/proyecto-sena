@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block content %}
+
+<p><a href="/admin">&larr; Panel admin</a></p>
+<h1>Mensajes de contacto</h1>
+
+{% if mensajes|length == 0 %}
+    <p>Aún no hay mensajes.</p>
+{% else %}
+    <table class="tabla">
+        <thead><tr><th>Nombre</th><th>Correo</th><th>Mensaje</th><th>Fecha</th><th>Estado</th><th></th></tr></thead>
+        <tbody>
+            {% for m in mensajes %}
+                <tr>
+                    <td>{{ m.nombre }} {{ m.apellido or '' }}</td>
+                    <td>{{ m.email }}</td>
+                    <td>{{ m.mensaje }}</td>
+                    <td>{{ formatearFecha(m.creado_en) }}</td>
+                    <td>{{ 'Leído' if m.leido else 'Nuevo' }}</td>
+                    <td>
+                        {% if not m.leido %}
+                            <form method="POST" action="/admin/mensajes/{{ m.id }}/leido">
+                                <button type="submit" class="btn-secondary">Marcar leído</button>
+                            </form>
+                        {% endif %}
+                        <form method="POST" action="/admin/mensajes/{{ m.id }}/eliminar">
+                            <button type="submit" class="btn-danger">Eliminar</button>
+                        </form>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endif %}
+
+{% endblock %}

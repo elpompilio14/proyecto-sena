@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block content %}
+
+<p><a href="/admin/equipos">&larr; Equipos</a></p>
+<h1>Editar equipo</h1>
+
+<form method="POST" action="/admin/equipos/{{ equipo.id }}/editar" class="form" enctype="multipart/form-data">
+    <label>Nombre<input type="text" name="nombre" value="{{ equipo.nombre }}" required></label>
+    <label>
+        Deporte
+        <select name="deporte_id" required>
+            {% for d in deportes %}
+                <option value="{{ d.id }}" {{ 'selected' if equipo.deporte_id == d.id else '' }}>{{ d.nombre }}</option>
+            {% endfor %}
+        </select>
+    </label>
+    <label>Categoría<input type="text" name="categoria" value="{{ equipo.categoria or '' }}"></label>
+    <label>Entrenador<input type="text" name="entrenador" value="{{ equipo.entrenador or '' }}"></label>
+    {% if equipo.foto_url %}
+        <img src="{{ equipo.foto_url }}" alt="Foto actual" class="card-img">
+    {% endif %}
+    <label>Cambiar foto (opcional)<input type="file" name="imagen" accept="image/*"></label>
+    <input type="hidden" name="foto_actual" value="{{ equipo.foto_url or '' }}">
+    <label>Descripción<textarea name="descripcion" rows="3">{{ equipo.descripcion or '' }}</textarea></label>
+    <button type="submit">Guardar cambios</button>
+</form>
+
+{% endblock %}

@@ -51,8 +51,10 @@ def inyectar_datos_globales():
 # --- Blueprints (rutas) ---
 from blueprints.public import public_bp
 from blueprints.auth import auth_bp
+from blueprints.admin import admin_bp
 app.register_blueprint(public_bp)
 app.register_blueprint(auth_bp)
+app.register_blueprint(admin_bp)
 
 
 @app.errorhandler(404)

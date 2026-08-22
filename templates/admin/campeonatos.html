@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block content %}
+
+<p><a href="/admin">&larr; Panel admin</a></p>
+<h1>Campeonatos</h1>
+
+<form method="POST" action="/admin/campeonatos" class="form">
+    <label>Nombre<input type="text" name="nombre" required placeholder="Intercursos 2026-1"></label>
+    <label>
+        Deporte
+        <select name="deporte_id" required>
+            {% for d in deportes %}
+                <option value="{{ d.id }}">{{ d.nombre }}</option>
+            {% endfor %}
+        </select>
+    </label>
+    <label>Fecha inicio<input type="date" name="fecha_inicio"></label>
+    <label>Fecha fin<input type="date" name="fecha_fin"></label>
+    <label>Descripción<textarea name="descripcion" rows="3"></textarea></label>
+    <button type="submit">Crear campeonato</button>
+</form>
+
+{% if campeonatos|length == 0 %}
+    <p>Aún no hay campeonatos.</p>
+{% else %}
+    <table class="tabla">
+        <thead><tr><th>Nombre</th><th>Deporte</th><th></th></tr></thead>
+        <tbody>
+            {% for c in campeonatos %}
+                <tr>
+                    <td>{{ c.nombre }}</td>
+                    <td>{{ c.deporte_nombre }}</td>
+                    <td class="acciones">
+                        <a href="/admin/campeonatos/{{ c.id }}/editar" class="btn-editar">Editar</a>
+                        <form method="POST" action="/admin/campeonatos/{{ c.id }}/eliminar">
+                            <button type="submit" class="btn-danger">Eliminar</button>
+                        </form>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endif %}
+
+{% endblock %}

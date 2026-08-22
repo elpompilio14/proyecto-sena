@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% block content %}
+
+<p><a href="/admin">&larr; Panel admin</a></p>
+<h1>Comunidad Educativa</h1>
+
+<form method="POST" action="/admin/comunidad-educativa" class="form" enctype="multipart/form-data">
+    <label>Nombre<input type="text" name="nombre" required></label>
+    <label>Cargo (ej: Rectora, Coordinadora, Docente de Matemáticas)<input type="text" name="cargo"></label>
+    <label>Categoría (dónde aparece en la página)
+        <select name="categoria">
+            <option value="rectoria">Rectoría</option>
+            <option value="coordinacion">Coordinación</option>
+            <option value="docente" selected>Cuerpo docente</option>
+        </select>
+    </label>
+    <label>Área (solo para docentes, se usa para filtrar)
+        <select name="area">
+            <option value="">-- Ninguna --</option>
+            <option value="Ciencias">Ciencias</option>
+            <option value="Humanidades">Humanidades</option>
+            <option value="Tecnología">Tecnología</option>
+            <option value="Artes y Ed. Física">Artes y Ed. Física</option>
+        </select>
+    </label>
+    <label>Materia o especialidad (ej: Física y Química)<input type="text" name="materia"></label>
+    <label>Años de experiencia<input type="number" name="anios_experiencia" min="0"></label>
+    <label>Descripción / frase corta (opcional)<textarea name="descripcion" rows="3"></textarea></label>
+    <label>Foto (opcional, se ve mejor si es cuadrada)<input type="file" name="imagen" accept="image/*"></label>
+    <button type="submit">Agregar persona</button>
+</form>
+
+{% if personas|length == 0 %}
+    <p>Aún no hay nadie registrado.</p>
+{% else %}
+    <table class="tabla">
+        <thead><tr><th>Nombre</th><th>Cargo</th><th>Categoría</th><th></th></tr></thead>
+        <tbody>
+            {% for p in personas %}
+                <tr>
+                    <td>{{ p.nombre }}</td>
+                    <td>{{ p.cargo or '-' }}</td>
+                    <td>{{ p.categoria }}</td>
+                    <td class="acciones">
+                        <a href="/admin/comunidad-educativa/{{ p.id }}/editar" class="btn-editar">Editar</a>
+                        <form method="POST" action="/admin/comunidad-educativa/{{ p.id }}/eliminar">
+                            <button type="submit" class="btn-danger">Eliminar</button>
+                        </form>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endif %}
+
+{% endblock %}

@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% block content %}
+
+<p><a href="/admin">&larr; Panel admin</a></p>
+<h1>Galería de fotos</h1>
+
+<form method="POST" action="/admin/fotos" class="form" enctype="multipart/form-data">
+    <label>Título (opcional, se usa para todas las fotos que elijas)<input type="text" name="titulo"></label>
+    <label>Fotos o videos (puedes elegir varias a la vez)<input type="file" name="imagenes" accept="image/*,video/*" multiple required></label>
+    <label>
+        Evento relacionado (opcional)
+        <select name="evento_id">
+            <option value="">-- Ninguno --</option>
+            {% for ev in eventos %}
+                <option value="{{ ev.id }}">{{ ev.titulo }}</option>
+            {% endfor %}
+        </select>
+    </label>
+    <label>
+        Noticia relacionada (opcional)
+        <select name="noticia_id">
+            <option value="">-- Ninguna --</option>
+            {% for n in noticias %}
+                <option value="{{ n.id }}">{{ n.titulo }}</option>
+            {% endfor %}
+        </select>
+    </label>
+    <button type="submit">Agregar fotos</button>
+</form>
+<p>Tip: al seleccionar el archivo, mantén presionado Ctrl (o Shift para un rango) para elegir varias fotos de una vez.</p>
+
+{% if fotos|length == 0 %}
+    <p>Aún no hay fotos.</p>
+{% else %}
+    <table class="tabla">
+        <thead><tr><th>Título</th><th>Evento</th><th>Noticia</th><th></th></tr></thead>
+        <tbody>
+            {% for f in fotos %}
+                <tr>
+                    <td>{{ f.titulo or '(sin título)' }} {% if esVideo(f.url) %}<span class="badge">Video</span>{% endif %}</td>
+                    <td>{{ f.evento_titulo or '-' }}</td>
+                    <td>{{ f.noticia_titulo or '-' }}</td>
+                    <td class="acciones">
+                        <a href="/admin/fotos/{{ f.id }}/editar" class="btn-editar">Editar</a>
+                        <form method="POST" action="/admin/fotos/{{ f.id }}/eliminar">
+                            <button type="submit" class="btn-danger">Eliminar</button>
+                        </form>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endif %}
+
+{% endblock %}

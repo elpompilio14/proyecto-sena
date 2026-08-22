@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% block content %}
+
+<p><a href="/admin">&larr; Panel admin</a></p>
+<h1>Puestos de honor</h1>
+
+{% if estudiantes|length == 0 %}
+    <p class="error">Primero debes <a href="/admin/estudiantes">crear estudiantes</a> antes de poder asignarles un puesto.</p>
+{% else %}
+    <form method="POST" action="/admin/mejores-puestos" class="form">
+        <label>
+            Estudiante
+            <select name="estudiante_id" required>
+                {% for e in estudiantes %}
+                    <option value="{{ e.id }}">{{ e.nombres }} {{ e.apellidos }}</option>
+                {% endfor %}
+            </select>
+        </label>
+        <label>
+            Grado
+            <select name="grado_id" required>
+                {% for g in grados %}
+                    <option value="{{ g.id }}">{{ g.nombre }}</option>
+                {% endfor %}
+            </select>
+        </label>
+        <label>Periodo (ej: 2026-1)<input type="text" name="periodo" required></label>
+        <label>Puesto (1, 2, 3...)<input type="number" name="puesto" min="1" required></label>
+        <label>Promedio<input type="number" name="promedio" step="0.01" min="0" max="10"></label>
+        <button type="submit">Registrar puesto</button>
+    </form>
+{% endif %}
+
+{% if puestos|length == 0 %}
+    <p>Aún no hay registros.</p>
+{% else %}
+    <table class="tabla">
+        <thead><tr><th>Grado</th><th>Periodo</th><th>Puesto</th><th>Estudiante</th><th>Promedio</th><th></th></tr></thead>
+        <tbody>
+            {% for p in puestos %}
+                <tr>
+                    <td>{{ p.grado_nombre }}</td>
+                    <td>{{ p.periodo }}</td>
+                    <td>{{ p.puesto }}</td>
+                    <td>{{ p.nombres }} {{ p.apellidos }}</td>
+                    <td>{{ p.promedio }}</td>
+                    <td class="acciones">
+                        <a href="/admin/mejores-puestos/{{ p.id }}/editar" class="btn-editar">Editar</a>
+                        <form method="POST" action="/admin/mejores-puestos/{{ p.id }}/eliminar">
+                            <button type="submit" class="btn-danger">Eliminar</button>
+                        </form>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endif %}
+
+{% endblock %}

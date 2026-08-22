@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% block content %}
+
+<p><a href="/admin">&larr; Panel admin</a></p>
+<h1>Resultados</h1>
+
+<form method="POST" action="/admin/resultados" class="form">
+    <label>
+        Campeonato
+        <select name="campeonato_id" required>
+            {% for c in campeonatos %}
+                <option value="{{ c.id }}">{{ c.nombre }}</option>
+            {% endfor %}
+        </select>
+    </label>
+    <label>
+        Equipo local
+        <select name="equipo_local_id" required>
+            {% for eq in equipos %}
+                <option value="{{ eq.id }}">{{ eq.nombre }}</option>
+            {% endfor %}
+        </select>
+    </label>
+    <label>
+        Equipo visitante
+        <select name="equipo_visitante_id" required>
+            {% for eq in equipos %}
+                <option value="{{ eq.id }}">{{ eq.nombre }}</option>
+            {% endfor %}
+        </select>
+    </label>
+    <label>Marcador local<input type="number" name="marcador_local" min="0" value="0" required></label>
+    <label>Marcador visitante<input type="number" name="marcador_visitante" min="0" value="0" required></label>
+    <label>Fecha<input type="date" name="fecha" required></label>
+    <button type="submit">Registrar resultado</button>
+</form>
+
+{% if resultados|length == 0 %}
+    <p>Aún no hay resultados.</p>
+{% else %}
+    <table class="tabla">
+        <thead><tr><th>Campeonato</th><th>Local</th><th></th><th>Visitante</th><th>Fecha</th><th></th></tr></thead>
+        <tbody>
+            {% for r in resultados %}
+                <tr>
+                    <td>{{ r.campeonato_nombre }}</td>
+                    <td>{{ r.equipo_local_nombre }}</td>
+                    <td>{{ r.marcador_local }} - {{ r.marcador_visitante }}</td>
+                    <td>{{ r.equipo_visitante_nombre }}</td>
+                    <td>{{ formatearFecha(r.fecha) }}</td>
+                    <td class="acciones">
+                        <a href="/admin/resultados/{{ r.id }}/editar" class="btn-editar">Editar</a>
+                        <form method="POST" action="/admin/resultados/{{ r.id }}/eliminar">
+                            <button type="submit" class="btn-danger">Eliminar</button>
+                        </form>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endif %}
+
+{% endblock %}
