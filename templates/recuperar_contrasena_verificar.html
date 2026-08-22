@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="auth-wrapper">
+    <div class="auth-card-simple aparece">
+        <h1>Restablecer contraseña</h1>
+        <p>Te enviamos un código de 6 dígitos a <strong>{{ email }}</strong>. Escríbelo aquí junto con tu nueva contraseña.</p>
+
+        {% if error %}
+            <p class="error">{{ error }}</p>
+        {% endif %}
+
+        <form method="POST" action="/recuperar-contrasena/verificar" class="form">
+            <input type="hidden" name="email" value="{{ email }}">
+            <label>
+                Código de 6 dígitos
+                <input type="text" name="codigo" maxlength="6" pattern="[0-9]{6}" inputmode="numeric" required autofocus>
+            </label>
+            <label>
+                Nueva contraseña
+                <input type="password" name="password" required minlength="6">
+            </label>
+            <label>
+                Confirmar contraseña
+                <input type="password" name="password_confirmar" required minlength="6">
+            </label>
+            <button type="submit">Restablecer contraseña</button>
+        </form>
+
+        <form method="POST" action="/recuperar-contrasena">
+            <input type="hidden" name="email" value="{{ email }}">
+            <button type="submit" class="btn-secondary">Reenviar código</button>
+        </form>
+    </div>
+</div>
+
+{% endblock %}
