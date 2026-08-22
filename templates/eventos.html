@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h1>Eventos del colegio</h1>
+
+{% if eventos|length == 0 %}
+    <p>Aún no hay eventos registrados.</p>
+{% else %}
+    <div class="home-cards-grid">
+        {% for ev in eventos %}
+            <article class="home-card-grande aparece" style="transition-delay: {{ [loop.index0, 5]|min * 70 }}ms">
+                <a href="/eventos/{{ ev.id }}" class="home-card-img-wrap">
+                    {% if ev.imagen_url %}
+                        <img src="{{ ev.imagen_url }}" alt="{{ ev.titulo }}">
+                    {% endif %}
+                </a>
+                <div class="home-card-caption">
+                    <p class="fecha">{{ formatearFecha(ev.fecha) }}</p>
+                    <h3><a href="/eventos/{{ ev.id }}">{{ ev.titulo }}</a></h3>
+                    <p>{{ formatearTexto(ev.descripcion) | safe }}</p>
+                    <a href="/eventos/{{ ev.id }}" class="home-card-ver-fotos">Ver fotos &rarr;</a>
+                </div>
+            </article>
+        {% endfor %}
+    </div>
+{% endif %}
+
+{% endblock %}

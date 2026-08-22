@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h1>Puestos de honor por grado</h1>
+
+{% if puestos|length == 0 %}
+    <p>Aún no hay resultados registrados.</p>
+{% else %}
+    <table class="tabla aparece">
+        <thead>
+            <tr>
+                <th>Grado</th>
+                <th>Periodo</th>
+                <th>Puesto</th>
+                <th>Estudiante</th>
+                <th>Promedio</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for p in puestos %}
+                <tr>
+                    <td>{{ p.grado_nombre }}</td>
+                    <td>{{ p.periodo }}</td>
+                    <td>{{ p.puesto }}</td>
+                    <td>{{ p.nombres }} {{ p.apellidos }}</td>
+                    <td>{{ p.promedio }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endif %}
+
+{% endblock %}

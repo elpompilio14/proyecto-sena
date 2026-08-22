@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block content %}
+
+<p><a href="/eventos">&larr; Volver a Eventos</a></p>
+
+<h1>{{ evento.titulo }}</h1>
+<p class="fecha">{{ formatearFecha(evento.fecha) }}</p>
+<p>{{ formatearTexto(evento.descripcion) | safe }}</p>
+
+{% if evento.imagen_url %}
+    <img src="{{ evento.imagen_url }}" alt="{{ evento.titulo }}" class="card-img">
+{% endif %}
+
+{% if fotos|length > 0 %}
+    <h2 class="evento-mural-titulo">Fotos de {{ evento.titulo }}</h2>
+    <div class="mural">
+        {% for f in fotos %}
+            <figure class="aparece" style="transition-delay: {{ [loop.index0, 7]|min * 50 }}ms">
+                {% if esVideo(f.url) %}
+                    <div class="miniatura-video">
+                        <video src="{{ f.url }}#t=0.5" data-url="{{ f.url }}" preload="metadata" muted playsinline></video>
+                        <span class="icono-play">&#9658;</span>
+                    </div>
+                {% else %}
+                    <img src="{{ f.url }}" data-url="{{ f.url }}" alt="{{ f.titulo or evento.titulo }}">
+                {% endif %}
+                {% if f.titulo %}<figcaption>{{ f.titulo }}</figcaption>{% endif %}
+            </figure>
+        {% endfor %}
+    </div>
+{% endif %}
+
+{% endblock %}

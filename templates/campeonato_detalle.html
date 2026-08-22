@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block content %}
+
+<p><a href="/campeonatos">&larr; Volver a Intercursos</a></p>
+
+<span class="badge">{{ campeonato.deporte_nombre }}</span>
+<h1>{{ campeonato.nombre }}</h1>
+<p>{{ formatearTexto(campeonato.descripcion) | safe }}</p>
+
+<h2>Resultados</h2>
+{% if resultados|length == 0 %}
+    <p>Aún no hay resultados registrados para este campeonato.</p>
+{% else %}
+    <table class="tabla aparece">
+        <thead>
+            <tr><th>Fecha</th><th>Local</th><th></th><th>Visitante</th></tr>
+        </thead>
+        <tbody>
+            {% for r in resultados %}
+                <tr>
+                    <td>{{ formatearFecha(r.fecha) }}</td>
+                    <td>{{ r.equipo_local_nombre }}</td>
+                    <td>{{ r.marcador_local }} - {{ r.marcador_visitante }}</td>
+                    <td>{{ r.equipo_visitante_nombre }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endif %}
+
+{% endblock %}

@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+{% block content %}
+
+<section class="comunidad-intro aparece">
+    <span class="badge-pill">Comunidad Académica</span>
+    <h1>Equipo Institucional</h1>
+    <p>Conoce a los líderes y educadores que guían nuestra institución hacia la excelencia.</p>
+</section>
+
+{% if rectoria|length == 0 and coordinacion|length == 0 and docentesPreview|length == 0 %}
+    <p>Aún no hay personas registradas.</p>
+{% endif %}
+
+{% if rectoria|length > 0 %}
+<section class="comunidad-seccion aparece">
+    <h2 class="comunidad-etiqueta">Rectoría</h2>
+    <div class="comunidad-lider-grid">
+        {% for p in rectoria %}
+            <div class="comunidad-lider-card">
+                {% if p.foto_url %}<img src="{{ p.foto_url }}" alt="{{ p.nombre }}" class="comunidad-lider-foto">{% endif %}
+                <h3>{{ p.nombre }}</h3>
+                {% if p.cargo %}<span class="badge">{{ p.cargo }}</span>{% endif %}
+                {% if p.descripcion %}<p>{{ formatearTexto(p.descripcion) | safe }}</p>{% endif %}
+            </div>
+        {% endfor %}
+    </div>
+</section>
+{% endif %}
+
+{% if coordinacion|length > 0 %}
+<section class="comunidad-seccion aparece">
+    <h2 class="comunidad-etiqueta">Coordinación</h2>
+    <div class="comunidad-lider-grid">
+        {% for p in coordinacion %}
+            <div class="comunidad-lider-card">
+                {% if p.foto_url %}<img src="{{ p.foto_url }}" alt="{{ p.nombre }}" class="comunidad-lider-foto">{% endif %}
+                <h3>{{ p.nombre }}</h3>
+                {% if p.cargo %}<span class="badge">{{ p.cargo }}</span>{% endif %}
+                {% if p.descripcion %}<p>{{ formatearTexto(p.descripcion) | safe }}</p>{% endif %}
+            </div>
+        {% endfor %}
+    </div>
+</section>
+{% endif %}
+
+{% if totalDocentes > 0 %}
+<section class="comunidad-seccion aparece">
+    <h2 class="comunidad-etiqueta">Cuerpo Docente</h2>
+    <div class="comunidad-docente-preview-grid">
+        {% for p in docentesPreview %}
+            <div class="comunidad-docente-mini-card">
+                {% if p.foto_url %}<img src="{{ p.foto_url }}" alt="{{ p.nombre }}" class="comunidad-lider-foto comunidad-lider-foto-chica">{% endif %}
+                <h4>{{ p.nombre }}</h4>
+                {% if p.materia %}<span class="comunidad-materia-tag">{{ p.materia }}</span>{% endif %}
+            </div>
+        {% endfor %}
+        <a href="/comunidad-educativa/docentes" class="comunidad-ver-mas-card">
+            <span class="comunidad-ver-mas-icono">👥</span>
+            <h4>Conoce a Nuestro Equipo Docente</h4>
+            <p>Descubre a los educadores que forman parte de nuestra institución ({{ totalDocentes }} en total).</p>
+            <span class="comunidad-ver-mas-link">Ver Cuerpo Docentes &rarr;</span>
+        </a>
+    </div>
+</section>
+{% endif %}
+
+{% endblock %}

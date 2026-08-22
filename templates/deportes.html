@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h1>Equipos deportivos</h1>
+
+{% if equipos|length == 0 %}
+    <p>Aún no hay equipos registrados.</p>
+{% else %}
+    <div class="card-grid">
+        {% for eq in equipos %}
+            <article class="card aparece" style="transition-delay: {{ [loop.index0, 5]|min * 70 }}ms">
+                {% if eq.foto_url %}
+                    <img src="{{ eq.foto_url }}" alt="{{ eq.nombre }}" class="card-img">
+                {% endif %}
+                <span class="badge">{{ eq.deporte_nombre }}</span>
+                <h3>{{ eq.nombre }}</h3>
+                {% if eq.categoria %}<p class="fecha">Categoría: {{ eq.categoria }}</p>{% endif %}
+                {% if eq.entrenador %}<p class="fecha">Entrenador: {{ eq.entrenador }}</p>{% endif %}
+                <p>{{ formatearTexto(eq.descripcion) | safe }}</p>
+            </article>
+        {% endfor %}
+    </div>
+{% endif %}
+
+{% endblock %}

@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h1>Mejores ICFES</h1>
+
+{% if resultados|length == 0 %}
+    <p>Aún no hay resultados ICFES registrados.</p>
+{% else %}
+    <div class="card-grid">
+        {% for r in resultados %}
+            <article class="card aparece icfes-card" style="transition-delay: {{ [loop.index0, 5]|min * 70 }}ms">
+                {% if r.foto_url %}
+                    <img src="{{ r.foto_url }}" alt="{{ r.estudiante_nombre }}" class="card-img">
+                {% endif %}
+                <span class="badge icfes-puntaje">{{ r.puntaje }} pts</span>
+                <h3>{{ r.estudiante_nombre }}</h3>
+                <p class="fecha">Año {{ r.anio }}</p>
+                {% if r.descripcion %}
+                    <p>{{ formatearTexto(r.descripcion) | safe }}</p>
+                {% endif %}
+            </article>
+        {% endfor %}
+    </div>
+{% endif %}
+
+{% endblock %}

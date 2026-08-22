@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h1>Campeonatos de intercursos</h1>
+
+{% if campeonatos|length == 0 %}
+    <p>Aún no hay campeonatos registrados.</p>
+{% else %}
+    <div class="card-grid">
+        {% for c in campeonatos %}
+            <article class="card aparece" style="transition-delay: {{ [loop.index0, 5]|min * 70 }}ms">
+                <span class="badge">{{ c.deporte_nombre }}</span>
+                <h3><a href="/campeonatos/{{ c.id }}">{{ c.nombre }}</a></h3>
+                <p class="fecha">
+                    {{ formatearFecha(c.fecha_inicio) if c.fecha_inicio else '' }}
+                    {% if c.fecha_fin %} - {{ formatearFecha(c.fecha_fin) }}{% endif %}
+                </p>
+                <p>{{ formatearTexto(c.descripcion) | safe }}</p>
+                <a href="/campeonatos/{{ c.id }}">Ver resultados &rarr;</a>
+            </article>
+        {% endfor %}
+    </div>
+{% endif %}
+
+{% endblock %}

@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h1>Himno Escolar</h1>
+
+{% set embed_url = youtubeEmbedUrl(himnoUrl) if himnoUrl else None %}
+{% if embed_url %}
+    <div class="video-himno aparece">
+        <iframe src="{{ embed_url }}" title="Himno Escolar" allowfullscreen></iframe>
+    </div>
+{% else %}
+    <p>Aún no se ha agregado el video del himno.</p>
+{% endif %}
+
+{% if himnoLetra %}
+    <div class="letra-himno aparece">
+        <p>{{ formatearTexto(himnoLetra) | safe }}</p>
+    </div>
+{% endif %}
+
+{% endblock %}

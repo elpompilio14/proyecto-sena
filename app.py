@@ -13,6 +13,7 @@ from utils.youtube_embed_url import youtube_embed_url
 from utils.google_maps_embed_url import google_maps_embed_url
 from utils.whatsapp_numero import whatsapp_numero
 from utils.formatear_fecha import formatear_fecha
+from utils.clase_area import clase_area
 
 app = Flask(__name__, static_folder='static', static_url_path='')
 app.secret_key = os.environ.get('SESSION_SECRET', 'dev-secret')
@@ -24,6 +25,7 @@ app.jinja_env.globals['youtubeEmbedUrl'] = youtube_embed_url
 app.jinja_env.globals['googleMapsEmbedUrl'] = google_maps_embed_url
 app.jinja_env.globals['whatsappNumero'] = whatsapp_numero
 app.jinja_env.globals['formatearFecha'] = formatear_fecha
+app.jinja_env.globals['claseArea'] = clase_area
 
 
 @app.context_processor

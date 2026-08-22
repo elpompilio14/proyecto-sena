@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template
+from flask import Blueprint, render_template, request, abort
 from db import obtener_conexion
 
 public_bp = Blueprint('public', __name__)
@@ -25,3 +25,243 @@ def home():
         himnoUrl=info['himno_url'] if info else None,
         fondoUrl=info['fondo_url'] if info else None,
     )
+
+
+@public_bp.route('/institucion')
+def institucion():
+    with obtener_conexion() as conexion:
+        with conexion.cursor() as cur:
+            cur.execute('SELECT * FROM institucion_info ORDER BY id LIMIT 1')
+            info = cur.fetchone()
+    return render_template('institucion.html', titulo='Institución', info=info)
+
+
+@public_bp.route('/comunidad-educativa')
+def comunidad_educativa():
+    with obtener_conexion() as conexion:
+        with conexion.cursor() as cur:
+            cur.execute("SELECT * FROM comunidad_educativa WHERE categoria = 'rectoria' ORDER BY nombre")
+            rectoria = cur.fetchall()
+            cur.execute("SELECT * FROM comunidad_educativa WHERE categoria = 'coordinacion' ORDER BY nombre")
+            coordinacion = cur.fetchall()
+            cur.execute("SELECT * FROM comunidad_educativa WHERE categoria = 'docente' ORDER BY nombre LIMIT 4")
+            docentes_preview = cur.fetchall()
+            cur.execute("SELECT COUNT(*) AS total FROM comunidad_educativa WHERE categoria = 'docente'")
+            total_docentes = cur.fetchone()['total']
+
+    return render_template(
+        'comunidad_educativa.html',
+        titulo='Comunidad Educativa',
+        rectoria=rectoria,
+        coordinacion=coordinacion,
+        docentesPreview=docentes_preview,
+        totalDocentes=total_docentes,
+    )
+
+
+@public_bp.route('/comunidad-educativa/docentes')
+def docentes():
+    with obtener_conexion() as conexion:
+        with conexion.cursor() as cur:
+            cur.execute("SELECT * FROM comunidad_educativa WHERE categoria = 'docente' ORDER BY nombre")
+            lista_docentes = cur.fetchall()
+
+    areas = list(dict.fromkeys(d['area'] for d in lista_docentes if d['area']))
+    materias = set(d['materia'] for d in lista_docentes if d['materia'])
+    anios_combinados = sum(d['anios_experiencia'] or 0 for d in lista_docentes)
+
+    return render_template(
+        'comunidad_docentes.html',
+        titulo='Nuestro Cuerpo de Docentes',
+        docentes=lista_docentes,
+        areas=areas,
+        totalAsignaturas=len(materias),
+        aniosCombinados=anios_combinados,
+    )
+
+
+@public_bp.route('/himno')
+def himno():
+    with obtener_conexion() as conexion:
+        with conexion.cursor() as cur:
+            cur.execute('SELECT himno_url, himno_letra FROM institucion_info ORDER BY id LIMIT 1')
+            info = cur.fetchone()
+
+    return render_template(
+        'himno.html',
+        titulo='Himno Escolar',
+        himnoUrl=info['himno_url'] if info else None,
+        himnoLetra=info['himno_letra'] if info else None,
+    )
+
+
+@public_bp.route('/noticias')
+def noticias():
+    with obtener_conexion() as conexion:
+        with conexion.cursor() as cur:
+            cur.execute('SELECT * FROM noticias ORDER BY fecha DESC')
+            lista = cur.fetchall()
+    return render_template('noticias.html', titulo='Noticias', noticias=lista)
+
+
+@public_bp.route('/noticias/<int:id>')
+def noticia_detalle(id):
+    with obtener_conexion() as conexion:
+        with conexion.cursor() as cur:
+            cur.execute('SELECT * FROM noticias WHERE id = %s', (id,))
+            noticia = cur.fetchone()
+            if not noticia:
+                abort(404)
+            cur.execute('SELECT * FROM galeria_fotos WHERE noticia_id = %s ORDER BY creado_en', (id,))
+            fotos = cur.fetchall()
+
+    return render_template('noticia_detalle.html', titulo=noticia['titulo'], noticia=noticia, fotos=fotos)
+
+
+@public_bp.route('/eventos')
+def eventos():
+    with obtener_conexion() as conexion:
+        with conexion.cursor() as cur:
+            cur.execute('SELECT * FROM eventos ORDER BY fecha DESC')
+            lista = cur.fetchall()
+    return render_template('eventos.html', titulo='Eventos', eventos=lista)
+
+
+@public_bp.route('/eventos/<int:id>')
+def evento_detalle(id):
+    with obtener_conexion() as conexion:
+        with conexion.cursor() as cur:
+            cur.execute('SELECT * FROM eventos WHERE id = %s', (id,))
+            evento = cur.fetchone()
+            if not evento:
+                abort(404)
+            cur.execute('SELECT * FROM galeria_fotos WHERE evento_id = %s ORDER BY creado_en', (id,))
+            fotos = cur.fetchall()
+
+    return render_template('evento_detalle.html', titulo=evento['titulo'], evento=evento, fotos=fotos)
+
+
+@public_bp.route('/deportes')
+def deportes():
+    with obtener_conexion() as conexion:
+        with conexion.cursor() as cur:
+            cur.execute("""
+                SELECT equipos.*, deportes.nombre AS deporte_nombre
+                FROM equipos
+                JOIN deportes ON deportes.id = equipos.deporte_id
+                ORDER BY deportes.nombre, equipos.nombre
+            """)
+            equipos = cur.fetchall()
+    return render_template('deportes.html', titulo='Equipos deportivos', equipos=equipos)
+
+
+@public_bp.route('/campeonatos')
+def campeonatos():
+    with obtener_conexion() as conexion:
+        with conexion.cursor() as cur:
+            cur.execute("""
+                SELECT campeonatos.*, deportes.nombre AS deporte_nombre
+                FROM campeonatos
+                JOIN deportes ON deportes.id = campeonatos.deporte_id
+                ORDER BY campeonatos.fecha_inicio DESC
+            """)
+            lista = cur.fetchall()
+    return render_template('campeonatos.html', titulo='Intercursos', campeonatos=lista)
+
+
+@public_bp.route('/campeonatos/<int:id>')
+def campeonato_detalle(id):
+    with obtener_conexion() as conexion:
+        with conexion.cursor() as cur:
+            cur.execute("""
+                SELECT campeonatos.*, deportes.nombre AS deporte_nombre
+                FROM campeonatos
+                JOIN deportes ON deportes.id = campeonatos.deporte_id
+                WHERE campeonatos.id = %s
+            """, (id,))
+            campeonato = cur.fetchone()
+            if not campeonato:
+                abort(404)
+
+            cur.execute("""
+                SELECT resultados.*, el.nombre AS equipo_local_nombre, ev.nombre AS equipo_visitante_nombre
+                FROM resultados
+                JOIN equipos el ON el.id = resultados.equipo_local_id
+                JOIN equipos ev ON ev.id = resultados.equipo_visitante_id
+                WHERE resultados.campeonato_id = %s
+                ORDER BY resultados.fecha
+            """, (id,))
+            resultados = cur.fetchall()
+
+    return render_template(
+        'campeonato_detalle.html', titulo=campeonato['nombre'], campeonato=campeonato, resultados=resultados,
+    )
+
+
+@public_bp.route('/mejores-puestos')
+def mejores_puestos():
+    with obtener_conexion() as conexion:
+        with conexion.cursor() as cur:
+            cur.execute("""
+                SELECT mejores_puestos.*, estudiantes.nombres, estudiantes.apellidos, grados.nombre AS grado_nombre
+                FROM mejores_puestos
+                JOIN estudiantes ON estudiantes.id = mejores_puestos.estudiante_id
+                JOIN grados ON grados.id = mejores_puestos.grado_id
+                ORDER BY grados.nivel, mejores_puestos.periodo DESC, mejores_puestos.puesto
+            """)
+            puestos = cur.fetchall()
+    return render_template('mejores_puestos.html', titulo='Puestos de honor', puestos=puestos)
+
+
+@public_bp.route('/icfes')
+def icfes():
+    with obtener_conexion() as conexion:
+        with conexion.cursor() as cur:
+            cur.execute('SELECT * FROM icfes_resultados ORDER BY anio DESC, puntaje DESC')
+            resultados = cur.fetchall()
+    return render_template('icfes.html', titulo='Mejores ICFES', resultados=resultados)
+
+
+@public_bp.route('/alianzas')
+def alianzas():
+    with obtener_conexion() as conexion:
+        with conexion.cursor() as cur:
+            cur.execute('SELECT * FROM alianzas ORDER BY nombre')
+            lista = cur.fetchall()
+    return render_template('alianzas.html', titulo='Alianzas', alianzas=lista)
+
+
+@public_bp.route('/galeria')
+def galeria():
+    with obtener_conexion() as conexion:
+        with conexion.cursor() as cur:
+            cur.execute('SELECT * FROM galeria_fotos ORDER BY creado_en DESC')
+            fotos = cur.fetchall()
+    return render_template('galeria.html', titulo='Galeria', fotos=fotos)
+
+
+@public_bp.route('/contacto', methods=['GET'])
+def contacto_form():
+    return render_template('contacto.html', titulo='Contacto', enviado=False, error=None)
+
+
+@public_bp.route('/contacto', methods=['POST'])
+def contacto():
+    nombre = request.form.get('nombre')
+    apellido = request.form.get('apellido')
+    email = request.form.get('email')
+    mensaje = request.form.get('mensaje')
+
+    if not nombre or not email or not mensaje:
+        return render_template(
+            'contacto.html', titulo='Contacto', enviado=False, error='Todos los campos son obligatorios',
+        ), 400
+
+    with obtener_conexion() as conexion:
+        with conexion.cursor() as cur:
+            cur.execute(
+                'INSERT INTO mensajes_contacto (nombre, apellido, email, mensaje) VALUES (%s, %s, %s, %s)',
+                (nombre, apellido or None, email, mensaje),
+            )
+
+    return render_template('contacto.html', titulo='Contacto', enviado=True, error=None)

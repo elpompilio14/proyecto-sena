@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+{% block content %}
+
+<section class="contacto-intro aparece">
+    <span class="badge-pill">Información de contacto</span>
+    <h1>¿Cómo podemos ayudarte?</h1>
+    <p>Encuentra todas las formas de comunicarte con nuestra institución educativa.</p>
+</section>
+
+<section class="contacto-info-grid aparece">
+    {% if sitio.ubicacion_sede1 or sitio.ubicacion_sede2 %}
+        <div class="contacto-info-card">
+            <span class="contacto-info-icono">📍</span>
+            <h3>Dirección</h3>
+            {% if sitio.ubicacion_sede1 %}<p>{{ sitio.ubicacion_sede1 }}</p>{% endif %}
+            {% if sitio.ubicacion_sede2 %}<p>{{ sitio.ubicacion_sede2 }}</p>{% endif %}
+        </div>
+    {% endif %}
+    {% if sitio.telefono %}
+        <div class="contacto-info-card">
+            <span class="contacto-info-icono">📞</span>
+            <h3>Teléfono</h3>
+            <p>{{ sitio.telefono }}</p>
+        </div>
+    {% endif %}
+    {% if sitio.whatsapp_numero %}
+        <div class="contacto-info-card">
+            <span class="contacto-info-icono">💬</span>
+            <h3>WhatsApp</h3>
+            <p><a href="https://wa.me/{{ whatsappNumero(sitio.whatsapp_numero) }}" target="_blank" rel="noopener">Enviar mensaje</a></p>
+        </div>
+    {% endif %}
+    {% if sitio.correo %}
+        <div class="contacto-info-card">
+            <span class="contacto-info-icono">✉️</span>
+            <h3>Correo electrónico</h3>
+            <p><a href="mailto:{{ sitio.correo }}">{{ sitio.correo }}</a></p>
+        </div>
+    {% endif %}
+</section>
+
+{% if sitio.instagram_imagen_url or sitio.facebook_imagen_url %}
+<section class="redes-grid aparece">
+    {% if sitio.instagram_imagen_url %}
+        <a href="{{ sitio.instagram_url or '#' }}" target="_blank" rel="noopener" class="red-social-card">
+            <span class="red-social-etiqueta">📷 Instagram</span>
+            <img src="{{ sitio.instagram_imagen_url }}" alt="Instagram del colegio">
+        </a>
+    {% endif %}
+    {% if sitio.facebook_imagen_url %}
+        <a href="{{ sitio.facebook_url or '#' }}" target="_blank" rel="noopener" class="red-social-card">
+            <span class="red-social-etiqueta">👍 Facebook</span>
+            <img src="{{ sitio.facebook_imagen_url }}" alt="Facebook del colegio">
+        </a>
+    {% endif %}
+</section>
+{% endif %}
+
+<section class="contacto-botones aparece">
+    <a href="#formulario-contacto" class="contacto-boton-pill">✉️ Envíanos un mensaje</a>
+    {% if sitio.whatsapp_numero %}
+        <a href="https://wa.me/{{ whatsappNumero(sitio.whatsapp_numero) }}" target="_blank" rel="noopener" class="contacto-boton-pill contacto-boton-pill-oscuro">💬 Escríbenos al WhatsApp</a>
+    {% endif %}
+</section>
+
+<section class="contacto-form-seccion" id="formulario-contacto">
+    <div class="contacto-form-box aparece">
+        <h2>Envíanos un Mensaje</h2>
+        <p>Completa el formulario y nos pondremos en contacto contigo a la brevedad posible.</p>
+
+        {% if enviado %}
+            <p class="exito">¡Gracias! Tu mensaje fue enviado, pronto te responderemos.</p>
+        {% else %}
+            {% if error %}
+                <p class="error">{{ error }}</p>
+            {% endif %}
+            <form method="POST" action="/contacto" class="form">
+                <div class="form-fila">
+                    <label>Nombre<input type="text" name="nombre" required></label>
+                    <label>Apellido<input type="text" name="apellido"></label>
+                </div>
+                <label>Correo electrónico<input type="email" name="email" required></label>
+                <label>Mensaje<textarea name="mensaje" rows="5" required></textarea></label>
+                <button type="submit">📨 Enviar mensaje</button>
+            </form>
+        {% endif %}
+    </div>
+</section>
+
+{% endblock %}
