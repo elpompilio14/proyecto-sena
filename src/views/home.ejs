@@ -14,21 +14,18 @@
     <div class="stats-grid">
         <% if (sitio.num_estudiantes) { %>
             <div class="stat-item">
-                <span class="stat-icono">🎓</span>
                 <span class="stat-numero" data-meta="<%= sitio.num_estudiantes %>">0</span>
                 <span class="stat-etiqueta">Estudiantes</span>
             </div>
         <% } %>
         <% if (sitio.num_profesores) { %>
             <div class="stat-item">
-                <span class="stat-icono">🧑‍🏫</span>
                 <span class="stat-numero" data-meta="<%= sitio.num_profesores %>">0</span>
                 <span class="stat-etiqueta">Docentes</span>
             </div>
         <% } %>
         <% if (sitio.anios_fundacion) { %>
             <div class="stat-item">
-                <span class="stat-icono">📅</span>
                 <span class="stat-numero" data-meta="<%= sitio.anios_fundacion %>">0</span>
                 <span class="stat-etiqueta">Años de Trayectoria</span>
             </div>

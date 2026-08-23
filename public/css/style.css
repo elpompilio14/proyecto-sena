@@ -1358,19 +1358,20 @@ button:hover { background: var(--azul-oscuro); transform: translateY(-1px); }
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 8px;
+    justify-content: center;
+    gap: 10px;
+    min-height: 150px;
 }
 
-.stat-icono { font-size: 2.1rem; }
-
 .stat-numero {
-    font-size: 3rem;
+    font-size: 3.6rem;
     font-weight: 800;
+    line-height: 1;
     color: #ffcb45;
 }
 
 .stat-etiqueta {
-    font-size: 0.85rem;
+    font-size: 1.05rem;
     font-weight: 600;
     letter-spacing: 0.02em;
     opacity: 0.9;
@@ -1459,33 +1460,20 @@ button:hover { background: var(--azul-oscuro); transform: translateY(-1px); }
     display: block;
     border-radius: 14px;
     overflow: hidden;
-    box-shadow: var(--sombra);
     text-decoration: none;
-    background: #fff;
-    border: 1px solid var(--borde);
-    transition: transform .2s ease, box-shadow .2s ease;
+    transition: transform .2s ease, filter .2s ease;
 }
 
 .red-social-card:hover {
     transform: translateY(-4px);
-    box-shadow: var(--sombra-hover);
+    filter: brightness(0.97);
 }
 
 .red-social-card img {
     width: 100%;
     height: auto;
     display: block;
-}
-
-.red-social-etiqueta {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    background: var(--azul-oscuro);
-    color: #fff;
-    font-weight: 700;
-    font-size: 0.85rem;
-    padding: 10px 16px;
+    mix-blend-mode: multiply;
 }
 
 .contacto-botones {
@@ -1544,6 +1532,20 @@ button:hover { background: var(--azul-oscuro); transform: translateY(-1px); }
     border: none;
     border-radius: 0;
     text-align: left;
+}
+
+.contacto-form-box .form input,
+.contacto-form-box .form textarea {
+    background: #fff;
+    border: 1px solid #eef2f7;
+    border-radius: 12px;
+    padding: 14px 16px;
+    font-size: 0.95rem;
+}
+
+.contacto-form-box .form input:focus,
+.contacto-form-box .form textarea:focus {
+    border-color: var(--azul-claro);
 }
 
 .form-fila {
