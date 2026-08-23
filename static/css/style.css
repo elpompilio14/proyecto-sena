@@ -277,11 +277,12 @@ h1, h2, h3 {
 .detalle-portada {
     display: block;
     width: 100%;
+    max-width: 620px;
     aspect-ratio: 16 / 9;
     object-fit: cover;
     border-radius: 18px;
     box-shadow: var(--sombra);
-    margin: 20px 0 34px;
+    margin: 20px auto 34px;
 }
 
 .fecha {
