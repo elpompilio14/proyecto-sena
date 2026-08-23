@@ -141,7 +141,7 @@
         <% icfesResultados.forEach(function(r, i) { %>
             <article class="card aparece icfes-card" style="transition-delay: <%= Math.min(i, 5) * 70 %>ms">
                 <% if (r.foto_url) { %>
-                    <img src="<%= r.foto_url %>" alt="<%= r.estudiante_nombre %>" class="card-img">
+                    <img src="<%= r.foto_url %>" alt="<%= r.estudiante_nombre %>" class="icfes-foto">
                 <% } %>
                 <span class="badge icfes-puntaje"><%= r.puntaje %> pts</span>
                 <h3><%= r.estudiante_nombre %></h3>
