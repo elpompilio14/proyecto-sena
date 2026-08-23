@@ -1786,8 +1786,9 @@ button:hover { background: var(--azul-oscuro); transform: translateY(-1px); }
 .icfes-foto {
     display: block;
     width: 100%;
-    aspect-ratio: 3 / 4;
+    aspect-ratio: 4 / 5;
     object-fit: cover;
+    object-position: center 18%;
     border-radius: 10px;
     margin-bottom: 12px;
 }
