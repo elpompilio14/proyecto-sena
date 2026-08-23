@@ -1461,6 +1461,7 @@ button:hover { background: var(--azul-oscuro); transform: translateY(-1px); }
     border-radius: 14px;
     overflow: hidden;
     text-decoration: none;
+    background: var(--fondo);
     transition: transform .2s ease, filter .2s ease;
 }
 
@@ -1471,7 +1472,8 @@ button:hover { background: var(--azul-oscuro); transform: translateY(-1px); }
 
 .red-social-card img {
     width: 100%;
-    height: auto;
+    height: 480px;
+    object-fit: contain;
     display: block;
     mix-blend-mode: multiply;
 }
