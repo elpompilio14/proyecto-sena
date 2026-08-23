@@ -3,6 +3,8 @@
     --azul-oscuro: #073d82;
     --azul-claro: #4b9bff;
     --azul-pastel: #e6f1ff;
+    --azul-rey: #1a35c4;
+    --dorado: #d4af37;
     --fondo: #f4f8fc;
     --blanco-header: #f7faff;
     --texto: #16233a;
@@ -1779,9 +1781,22 @@ button:hover { background: var(--azul-oscuro); transform: translateY(-1px); }
 
 .icfes-card { text-align: center; }
 
+.icfes-foto {
+    display: block;
+    width: 100%;
+    aspect-ratio: 3 / 4;
+    object-fit: cover;
+    border-radius: 10px;
+    margin-bottom: 12px;
+}
+
 .icfes-puntaje {
-    background: var(--azul-oscuro);
-    color: #fff;
+    background: var(--dorado);
+    color: #4a3200;
+}
+
+.icfes-card .fecha {
+    color: var(--azul-rey);
 }
 
 /* ===================== Comunidad Educativa ===================== */
