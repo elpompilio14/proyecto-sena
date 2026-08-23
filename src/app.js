@@ -1,5 +1,6 @@
 require('dotenv').config();
 const path = require('path');
+const fs = require('fs');
 const express = require('express');
 const session = require('express-session');
 
@@ -34,8 +35,15 @@ app.use(session({
     cookie: { maxAge: 1000 * 60 * 60 * 4 }, // 4 horas
 }));
 
+const rutaCss = path.join(__dirname, '..', 'public', 'css', 'style.css');
+
 app.use((req, res, next) => {
     res.locals.usuario = req.session.usuario || null;
+    try {
+        res.locals.cssVersion = fs.statSync(rutaCss).mtimeMs;
+    } catch (err) {
+        res.locals.cssVersion = Date.now();
+    }
     next();
 });
 
