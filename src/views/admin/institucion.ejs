@@ -3,7 +3,7 @@
 <p><a href="/admin">&larr; Panel admin</a></p>
 <h1>Información institucional</h1>
 
-<form method="POST" action="/admin/institucion" class="form" enctype="multipart/form-data">
+<form method="POST" action="/admin/institucion" class="form form-ancho" enctype="multipart/form-data">
     <h2>Encabezado del sitio</h2>
     <% if (info && info.logo_url) { %>
         <img src="<%= info.logo_url %>" alt="Logo actual" class="card-img" style="max-width:120px;">
