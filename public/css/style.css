@@ -1472,6 +1472,11 @@ button:hover { background: var(--azul-oscuro); transform: translateY(-1px); }
     mix-blend-mode: multiply;
 }
 
+.red-social-card-difuminar-derecha img {
+    -webkit-mask-image: linear-gradient(to right, #000 88%, transparent 100%);
+    mask-image: linear-gradient(to right, #000 88%, transparent 100%);
+}
+
 .contacto-botones {
     display: flex;
     justify-content: center;

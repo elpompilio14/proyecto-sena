@@ -41,7 +41,7 @@
 <% if (sitio.instagram_imagen_url || sitio.facebook_imagen_url) { %>
 <section class="redes-grid aparece">
     <% if (sitio.instagram_imagen_url) { %>
-        <a href="<%= sitio.instagram_url || '#' %>" target="_blank" rel="noopener" class="red-social-card">
+        <a href="<%= sitio.instagram_url || '#' %>" target="_blank" rel="noopener" class="red-social-card red-social-card-difuminar-derecha">
             <img src="<%= sitio.instagram_imagen_url %>" alt="Instagram del colegio">
         </a>
     <% } %>
