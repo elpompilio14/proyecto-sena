@@ -7,8 +7,8 @@ exports.home = async (req, res) => {
     const noticias = await pool.query(
         'SELECT * FROM noticias ORDER BY fecha DESC LIMIT 3'
     );
-    const gobiernoEscolar = await pool.query('SELECT * FROM gobierno_escolar ORDER BY nombre');
-    const equipoDesarrollo = await pool.query('SELECT * FROM equipo_desarrollo ORDER BY nombre');
+    const gobiernoEscolar = await pool.query('SELECT * FROM gobierno_escolar ORDER BY orden, nombre');
+    const equipoDesarrollo = await pool.query('SELECT * FROM equipo_desarrollo ORDER BY orden, nombre');
     const info = await pool.query('SELECT himno_url, fondo_url FROM institucion_info ORDER BY id LIMIT 1');
     res.render('home', {
         titulo: 'Inicio',
@@ -22,12 +22,12 @@ exports.home = async (req, res) => {
 };
 
 exports.gobiernoEscolar = async (req, res) => {
-    const miembros = await pool.query('SELECT * FROM gobierno_escolar ORDER BY nombre');
+    const miembros = await pool.query('SELECT * FROM gobierno_escolar ORDER BY orden, nombre');
     res.render('gobierno-escolar', { titulo: 'Gobierno Escolar', miembros: miembros.rows });
 };
 
 exports.equipoDesarrollo = async (req, res) => {
-    const miembros = await pool.query('SELECT * FROM equipo_desarrollo ORDER BY nombre');
+    const miembros = await pool.query('SELECT * FROM equipo_desarrollo ORDER BY orden, nombre');
     res.render('equipo-desarrollo', { titulo: 'Equipo de Desarrollo', miembros: miembros.rows });
 };
 
@@ -165,9 +165,9 @@ exports.institucion = async (req, res) => {
 };
 
 exports.comunidadEducativa = async (req, res) => {
-    const rectoria = await pool.query("SELECT * FROM comunidad_educativa WHERE categoria = 'rectoria' ORDER BY nombre");
-    const coordinacion = await pool.query("SELECT * FROM comunidad_educativa WHERE categoria = 'coordinacion' ORDER BY nombre");
-    const docentesPreview = await pool.query("SELECT * FROM comunidad_educativa WHERE categoria = 'docente' ORDER BY nombre LIMIT 4");
+    const rectoria = await pool.query("SELECT * FROM comunidad_educativa WHERE categoria = 'rectoria' ORDER BY orden, nombre");
+    const coordinacion = await pool.query("SELECT * FROM comunidad_educativa WHERE categoria = 'coordinacion' ORDER BY orden, nombre");
+    const docentesPreview = await pool.query("SELECT * FROM comunidad_educativa WHERE categoria = 'docente' ORDER BY orden, nombre LIMIT 4");
     const totalDocentes = await pool.query("SELECT COUNT(*) FROM comunidad_educativa WHERE categoria = 'docente'");
 
     res.render('comunidad-educativa', {
@@ -180,7 +180,7 @@ exports.comunidadEducativa = async (req, res) => {
 };
 
 exports.docentes = async (req, res) => {
-    const docentes = await pool.query("SELECT * FROM comunidad_educativa WHERE categoria = 'docente' ORDER BY nombre");
+    const docentes = await pool.query("SELECT * FROM comunidad_educativa WHERE categoria = 'docente' ORDER BY orden, nombre");
     const areas = [...new Set(docentes.rows.map((d) => d.area).filter(Boolean))];
     const materias = new Set(docentes.rows.map((d) => d.materia).filter(Boolean));
     const aniosCombinados = docentes.rows.reduce((total, d) => total + (d.anios_experiencia || 0), 0);

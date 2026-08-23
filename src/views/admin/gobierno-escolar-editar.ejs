@@ -11,6 +11,7 @@
     <% } %>
     <label>Cambiar foto (opcional)<input type="file" name="imagen" accept="image/*"></label>
     <input type="hidden" name="foto_actual" value="<%= miembro.foto_url || '' %>">
+    <label>Orden (los números más bajos salen primero; si empatan, se ordenan por nombre)<input type="number" name="orden" value="<%= miembro.orden %>"></label>
     <button type="submit">Guardar cambios</button>
 </form>
 

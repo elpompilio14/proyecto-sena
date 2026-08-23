@@ -26,6 +26,7 @@
     <label>Años de experiencia<input type="number" name="anios_experiencia" min="0"></label>
     <label>Descripción / frase corta (opcional)<textarea name="descripcion" rows="3"></textarea></label>
     <label>Foto (opcional, se ve mejor si es cuadrada)<input type="file" name="imagen" accept="image/*"></label>
+    <label>Orden (los números más bajos salen primero; si empatan, se ordenan por nombre)<input type="number" name="orden" value="0"></label>
     <button type="submit">Agregar persona</button>
 </form>
 
@@ -33,7 +34,7 @@
     <p>Aún no hay nadie registrado.</p>
 <% } else { %>
     <table class="tabla">
-        <thead><tr><th class="tabla-col-foto">Foto</th><th>Nombre</th><th>Cargo</th><th>Categoría</th><th></th></tr></thead>
+        <thead><tr><th class="tabla-col-foto">Foto</th><th>Nombre</th><th>Cargo</th><th>Categoría</th><th>Orden</th><th></th></tr></thead>
         <tbody>
             <% personas.forEach(function(p) { %>
                 <tr>
@@ -47,6 +48,7 @@
                     <td><%= p.nombre %></td>
                     <td><%= p.cargo || '-' %></td>
                     <td><%= p.categoria %></td>
+                    <td><%= p.orden %></td>
                     <td class="acciones">
                         <a href="/admin/comunidad-educativa/<%= p.id %>/editar" class="btn-editar">Editar</a>
                         <form method="POST" action="/admin/comunidad-educativa/<%= p.id %>/eliminar">

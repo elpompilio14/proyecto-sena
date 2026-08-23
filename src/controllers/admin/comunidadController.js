@@ -3,19 +3,19 @@ const pool = require('../../config/db');
 exports.index = async (req, res) => {
     const personas = await pool.query(`
         SELECT * FROM comunidad_educativa
-        ORDER BY CASE categoria WHEN 'rectoria' THEN 1 WHEN 'coordinacion' THEN 2 ELSE 3 END, nombre
+        ORDER BY CASE categoria WHEN 'rectoria' THEN 1 WHEN 'coordinacion' THEN 2 ELSE 3 END, orden, nombre
     `);
     res.render('admin/comunidad', { titulo: 'Admin · Comunidad Educativa', personas: personas.rows });
 };
 
 exports.crear = async (req, res) => {
-    const { nombre, cargo, categoria, area, materia, anios_experiencia, descripcion } = req.body;
+    const { nombre, cargo, categoria, area, materia, anios_experiencia, descripcion, orden } = req.body;
     const foto_url = req.file ? `/images/${req.file.filename}` : null;
     await pool.query(
-        `INSERT INTO comunidad_educativa (nombre, cargo, categoria, area, materia, anios_experiencia, descripcion, foto_url)
-         VALUES ($1, $2, $3, $4, $5, $6, $7, $8)`,
+        `INSERT INTO comunidad_educativa (nombre, cargo, categoria, area, materia, anios_experiencia, descripcion, foto_url, orden)
+         VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)`,
         [nombre, cargo || null, categoria || 'docente', area || null, materia || null,
-            anios_experiencia || null, descripcion || null, foto_url]
+            anios_experiencia || null, descripcion || null, foto_url, orden || 0]
     );
     res.redirect('/admin/comunidad-educativa');
 };
@@ -34,15 +34,15 @@ exports.editarForm = async (req, res) => {
 };
 
 exports.editar = async (req, res) => {
-    const { nombre, cargo, categoria, area, materia, anios_experiencia, descripcion, foto_actual } = req.body;
+    const { nombre, cargo, categoria, area, materia, anios_experiencia, descripcion, foto_actual, orden } = req.body;
     const foto_url = req.file ? `/images/${req.file.filename}` : (foto_actual || null);
     await pool.query(
         `UPDATE comunidad_educativa
          SET nombre = $1, cargo = $2, categoria = $3, area = $4, materia = $5,
-             anios_experiencia = $6, descripcion = $7, foto_url = $8
-         WHERE id = $9`,
+             anios_experiencia = $6, descripcion = $7, foto_url = $8, orden = $9
+         WHERE id = $10`,
         [nombre, cargo || null, categoria || 'docente', area || null, materia || null,
-            anios_experiencia || null, descripcion || null, foto_url, req.params.id]
+            anios_experiencia || null, descripcion || null, foto_url, orden || 0, req.params.id]
     );
     res.redirect('/admin/comunidad-educativa');
 };

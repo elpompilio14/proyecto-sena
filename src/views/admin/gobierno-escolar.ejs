@@ -7,6 +7,7 @@
     <label>Nombre<input type="text" name="nombre" required></label>
     <label>Rol (ej: Personero, Contralor, Representante de curso)<input type="text" name="rol"></label>
     <label>Foto (opcional, se ve mejor si es cuadrada)<input type="file" name="imagen" accept="image/*"></label>
+    <label>Orden (los números más bajos salen primero; si empatan, se ordenan por nombre)<input type="number" name="orden" value="0"></label>
     <button type="submit">Agregar miembro</button>
 </form>
 
@@ -14,7 +15,7 @@
     <p>Aún no hay miembros registrados.</p>
 <% } else { %>
     <table class="tabla">
-        <thead><tr><th class="tabla-col-foto">Foto</th><th>Nombre</th><th>Rol</th><th></th></tr></thead>
+        <thead><tr><th class="tabla-col-foto">Foto</th><th>Nombre</th><th>Rol</th><th>Orden</th><th></th></tr></thead>
         <tbody>
             <% miembros.forEach(function(m) { %>
                 <tr>
@@ -27,6 +28,7 @@
                     </td>
                     <td><%= m.nombre %></td>
                     <td><%= m.rol || '-' %></td>
+                    <td><%= m.orden %></td>
                     <td class="acciones">
                         <a href="/admin/gobierno-escolar/<%= m.id %>/editar" class="btn-editar">Editar</a>
                         <form method="POST" action="/admin/gobierno-escolar/<%= m.id %>/eliminar">
