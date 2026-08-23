@@ -266,7 +266,7 @@ def _agrupar_por_mes(filas):
     grupo_actual = None
 
     for foto in filas:
-        fecha = foto['creado_en']
+        fecha = foto['fecha']
         clave = (fecha.year, fecha.month)
 
         if grupo_actual is None or grupo_actual['clave'] != clave:
@@ -286,7 +286,7 @@ def _agrupar_por_mes(filas):
 def galeria():
     with obtener_conexion() as conexion:
         with conexion.cursor() as cur:
-            cur.execute('SELECT * FROM galeria_fotos ORDER BY creado_en DESC')
+            cur.execute('SELECT * FROM galeria_fotos ORDER BY fecha DESC, creado_en DESC')
             fotos = cur.fetchall()
     return render_template('galeria.html', titulo='Galeria', grupos=_agrupar_por_mes(fotos))
 

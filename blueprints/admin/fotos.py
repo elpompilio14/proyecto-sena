@@ -1,3 +1,4 @@
+from datetime import date
 from flask import render_template, request, redirect, abort
 from . import admin_bp
 from db import obtener_conexion
@@ -13,7 +14,7 @@ def fotos_index():
                 FROM galeria_fotos
                 LEFT JOIN eventos ON eventos.id = galeria_fotos.evento_id
                 LEFT JOIN noticias ON noticias.id = galeria_fotos.noticia_id
-                ORDER BY galeria_fotos.creado_en DESC
+                ORDER BY galeria_fotos.fecha DESC, galeria_fotos.creado_en DESC
             """)
             fotos = cur.fetchall()
             cur.execute('SELECT id, titulo FROM eventos ORDER BY fecha DESC')
@@ -34,14 +35,15 @@ def fotos_crear():
     titulo = request.form.get('titulo')
     evento_id = request.form.get('evento_id') or None
     noticia_id = request.form.get('noticia_id') or None
+    fecha = request.form.get('fecha') or date.today().isoformat()
 
     with obtener_conexion() as conexion:
         with conexion.cursor() as cur:
             for archivo in archivos:
                 url = guardar_archivo(archivo, TIPOS_IMAGEN_Y_VIDEO)
                 cur.execute(
-                    'INSERT INTO galeria_fotos (titulo, url, evento_id, noticia_id) VALUES (%s, %s, %s, %s)',
-                    (titulo or None, url, evento_id, noticia_id),
+                    'INSERT INTO galeria_fotos (titulo, url, evento_id, noticia_id, fecha) VALUES (%s, %s, %s, %s, %s)',
+                    (titulo or None, url, evento_id, noticia_id, fecha),
                 )
     return redirect('/admin/fotos')
 
@@ -69,12 +71,13 @@ def fotos_editar(id):
     noticia_id = request.form.get('noticia_id') or None
     url_actual = request.form.get('url_actual')
     url = guardar_archivo(request.files.get('imagen'), TIPOS_IMAGEN_Y_VIDEO) or url_actual
+    fecha = request.form.get('fecha') or date.today().isoformat()
 
     with obtener_conexion() as conexion:
         with conexion.cursor() as cur:
             cur.execute(
-                'UPDATE galeria_fotos SET titulo = %s, url = %s, evento_id = %s, noticia_id = %s WHERE id = %s',
-                (titulo or None, url, evento_id, noticia_id, id),
+                'UPDATE galeria_fotos SET titulo = %s, url = %s, evento_id = %s, noticia_id = %s, fecha = %s WHERE id = %s',
+                (titulo or None, url, evento_id, noticia_id, fecha, id),
             )
     return redirect('/admin/fotos')
 

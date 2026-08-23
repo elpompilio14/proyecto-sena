@@ -6,6 +6,7 @@
 
 <form method="POST" action="/admin/fotos/{{ foto.id }}/editar" class="form" enctype="multipart/form-data">
     <label>Título (opcional)<input type="text" name="titulo" value="{{ foto.titulo or '' }}"></label>
+    <label>Fecha (se usa para agrupar por mes en la galería)<input type="date" name="fecha" value="{{ foto.fecha }}"></label>
     {% if esVideo(foto.url) %}
         <video src="{{ foto.url }}" controls class="card-img"></video>
     {% else %}
