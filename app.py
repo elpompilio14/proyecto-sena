@@ -45,7 +45,16 @@ def inyectar_datos_globales():
         print('No se pudo cargar institucion_info:', err)
         sitio = {}
 
-    return {'usuario': usuario, 'sitio': sitio, 'contacto': sitio, 'anio_actual': datetime.now().year}
+    ruta_css = os.path.join(app.static_folder, 'css', 'style.css')
+    try:
+        css_version = os.path.getmtime(ruta_css)
+    except OSError:
+        css_version = datetime.now().timestamp()
+
+    return {
+        'usuario': usuario, 'sitio': sitio, 'contacto': sitio,
+        'anio_actual': datetime.now().year, 'cssVersion': css_version,
+    }
 
 
 # --- Blueprints (rutas) ---
