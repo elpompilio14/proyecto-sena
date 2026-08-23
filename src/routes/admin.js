@@ -44,6 +44,7 @@ router.post('/fotos', upload.galeria.array('imagenes', 20), fotosController.crea
 router.get('/fotos/:id/editar', fotosController.editarForm);
 router.post('/fotos/:id/editar', upload.galeria.single('imagen'), fotosController.editar);
 router.post('/fotos/:id/eliminar', fotosController.eliminar);
+router.post('/fotos/editar-lote', fotosController.editarLote);
 
 router.get('/equipos', equiposController.index);
 router.post('/equipos', upload.single('imagen'), equiposController.crear);

@@ -35,6 +35,42 @@ exports.crear = async (req, res) => {
     res.redirect('/admin/fotos');
 };
 
+exports.editarLote = async (req, res) => {
+    const idsRaw = req.body.ids;
+    const ids = Array.isArray(idsRaw) ? idsRaw : (idsRaw ? [idsRaw] : []);
+    if (ids.length === 0) {
+        return res.redirect('/admin/fotos');
+    }
+
+    const { evento_lote, fecha_lote, titulo_lote } = req.body;
+    const cambios = [];
+    const valores = [];
+    let i = 1;
+
+    if (evento_lote !== undefined && evento_lote !== '__no_cambiar__') {
+        cambios.push(`evento_id = $${i++}`);
+        valores.push(evento_lote || null);
+    }
+    if (fecha_lote) {
+        cambios.push(`fecha = $${i++}`);
+        valores.push(fecha_lote);
+    }
+    if (titulo_lote) {
+        cambios.push(`titulo = $${i++}`);
+        valores.push(titulo_lote);
+    }
+
+    if (cambios.length > 0) {
+        valores.push(ids);
+        await pool.query(
+            `UPDATE galeria_fotos SET ${cambios.join(', ')} WHERE id = ANY($${i}::int[])`,
+            valores
+        );
+    }
+
+    res.redirect('/admin/fotos');
+};
+
 exports.eliminar = async (req, res) => {
     await pool.query('DELETE FROM galeria_fotos WHERE id = $1', [req.params.id]);
     res.redirect('/admin/fotos');

@@ -33,33 +33,50 @@
 <% if (fotos.length === 0) { %>
     <p>Aún no hay fotos.</p>
 <% } else { %>
-    <table class="tabla">
-        <thead><tr><th class="tabla-col-foto">Foto</th><th>Título</th><th>Fecha</th><th>Orden</th><th>Evento</th><th>Noticia</th><th></th></tr></thead>
-        <tbody>
-            <% fotos.forEach(function(f) { %>
-                <tr>
-                    <td>
-                        <% if (esVideo(f.url)) { %>
-                            <span class="tabla-foto-vacia" title="Video">&#9658;</span>
-                        <% } else { %>
-                            <img src="<%= f.url %>" alt="<%= f.titulo || 'Foto' %>" class="tabla-foto-mini">
-                        <% } %>
-                    </td>
-                    <td><%= f.titulo || '(sin título)' %> <% if (esVideo(f.url)) { %><span class="badge">Video</span><% } %></td>
-                    <td><%= new Date(f.fecha).toLocaleDateString('es-CO') %></td>
-                    <td><%= f.orden %></td>
-                    <td><%= f.evento_titulo || '-' %></td>
-                    <td><%= f.noticia_titulo || '-' %></td>
-                    <td class="acciones">
-                        <a href="/admin/fotos/<%= f.id %>/editar" class="btn-editar">Editar</a>
-                        <form method="POST" action="/admin/fotos/<%= f.id %>/eliminar">
-                            <button type="submit" class="btn-danger">Eliminar</button>
-                        </form>
-                    </td>
-                </tr>
-            <% }) %>
-        </tbody>
-    </table>
+    <form method="POST" action="/admin/fotos/editar-lote" id="form-lote-fotos">
+        <div class="admin-lote-panel">
+            <p><strong>Edición en lote:</strong> marca las fotos que quieras abajo y completa solo lo que quieras cambiarles a todas.</p>
+            <label>Nuevo evento
+                <select name="evento_lote">
+                    <option value="__no_cambiar__">-- No cambiar --</option>
+                    <option value="">-- Quitar evento --</option>
+                    <% eventos.forEach(function(ev) { %>
+                        <option value="<%= ev.id %>"><%= ev.titulo %></option>
+                    <% }) %>
+                </select>
+            </label>
+            <label>Nueva fecha<input type="date" name="fecha_lote"></label>
+            <label>Nuevo título<input type="text" name="titulo_lote" placeholder="(dejar vacío = no cambiar)"></label>
+            <button type="submit">Aplicar a las seleccionadas</button>
+        </div>
+
+        <table class="tabla">
+            <thead><tr><th><input type="checkbox" id="check-todas-fotos"></th><th class="tabla-col-foto">Foto</th><th>Título</th><th>Fecha</th><th>Orden</th><th>Evento</th><th>Noticia</th><th></th></tr></thead>
+            <tbody>
+                <% fotos.forEach(function(f) { %>
+                    <tr>
+                        <td><input type="checkbox" name="ids" value="<%= f.id %>" class="fila-check-foto"></td>
+                        <td>
+                            <% if (esVideo(f.url)) { %>
+                                <span class="tabla-foto-vacia" title="Video">&#9658;</span>
+                            <% } else { %>
+                                <img src="<%= f.url %>" alt="<%= f.titulo || 'Foto' %>" class="tabla-foto-mini">
+                            <% } %>
+                        </td>
+                        <td><%= f.titulo || '(sin título)' %> <% if (esVideo(f.url)) { %><span class="badge">Video</span><% } %></td>
+                        <td><%= new Date(f.fecha).toLocaleDateString('es-CO') %></td>
+                        <td><%= f.orden %></td>
+                        <td><%= f.evento_titulo || '-' %></td>
+                        <td><%= f.noticia_titulo || '-' %></td>
+                        <td class="acciones">
+                            <a href="/admin/fotos/<%= f.id %>/editar" class="btn-editar">Editar</a>
+                            <button type="submit" formaction="/admin/fotos/<%= f.id %>/eliminar" class="btn-danger">Eliminar</button>
+                        </td>
+                    </tr>
+                <% }) %>
+            </tbody>
+        </table>
+    </form>
 <% } %>
 
 <%- include('../partials/footer') %>
