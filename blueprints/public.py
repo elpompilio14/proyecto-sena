@@ -14,10 +14,10 @@ def home():
             cur.execute('SELECT * FROM noticias ORDER BY fecha DESC LIMIT 3')
             noticias = cur.fetchall()
 
-            cur.execute('SELECT * FROM gobierno_escolar ORDER BY nombre')
+            cur.execute('SELECT * FROM gobierno_escolar ORDER BY orden, nombre')
             gobierno_escolar = cur.fetchall()
 
-            cur.execute('SELECT * FROM equipo_desarrollo ORDER BY nombre')
+            cur.execute('SELECT * FROM equipo_desarrollo ORDER BY orden, nombre')
             equipo_desarrollo = cur.fetchall()
 
             cur.execute('SELECT himno_url, fondo_url FROM institucion_info ORDER BY id LIMIT 1')
@@ -39,7 +39,7 @@ def home():
 def gobierno_escolar():
     with obtener_conexion() as conexion:
         with conexion.cursor() as cur:
-            cur.execute('SELECT * FROM gobierno_escolar ORDER BY nombre')
+            cur.execute('SELECT * FROM gobierno_escolar ORDER BY orden, nombre')
             miembros = cur.fetchall()
     return render_template('gobierno_escolar.html', titulo='Gobierno Escolar', miembros=miembros)
 
@@ -48,7 +48,7 @@ def gobierno_escolar():
 def equipo_desarrollo():
     with obtener_conexion() as conexion:
         with conexion.cursor() as cur:
-            cur.execute('SELECT * FROM equipo_desarrollo ORDER BY nombre')
+            cur.execute('SELECT * FROM equipo_desarrollo ORDER BY orden, nombre')
             miembros = cur.fetchall()
     return render_template('equipo_desarrollo.html', titulo='Equipo de Desarrollo', miembros=miembros)
 
@@ -66,11 +66,11 @@ def institucion():
 def comunidad_educativa():
     with obtener_conexion() as conexion:
         with conexion.cursor() as cur:
-            cur.execute("SELECT * FROM comunidad_educativa WHERE categoria = 'rectoria' ORDER BY nombre")
+            cur.execute("SELECT * FROM comunidad_educativa WHERE categoria = 'rectoria' ORDER BY orden, nombre")
             rectoria = cur.fetchall()
-            cur.execute("SELECT * FROM comunidad_educativa WHERE categoria = 'coordinacion' ORDER BY nombre")
+            cur.execute("SELECT * FROM comunidad_educativa WHERE categoria = 'coordinacion' ORDER BY orden, nombre")
             coordinacion = cur.fetchall()
-            cur.execute("SELECT * FROM comunidad_educativa WHERE categoria = 'docente' ORDER BY nombre LIMIT 4")
+            cur.execute("SELECT * FROM comunidad_educativa WHERE categoria = 'docente' ORDER BY orden, nombre LIMIT 4")
             docentes_preview = cur.fetchall()
             cur.execute("SELECT COUNT(*) AS total FROM comunidad_educativa WHERE categoria = 'docente'")
             total_docentes = cur.fetchone()['total']
@@ -89,7 +89,7 @@ def comunidad_educativa():
 def docentes():
     with obtener_conexion() as conexion:
         with conexion.cursor() as cur:
-            cur.execute("SELECT * FROM comunidad_educativa WHERE categoria = 'docente' ORDER BY nombre")
+            cur.execute("SELECT * FROM comunidad_educativa WHERE categoria = 'docente' ORDER BY orden, nombre")
             lista_docentes = cur.fetchall()
 
     areas = list(dict.fromkeys(d['area'] for d in lista_docentes if d['area']))

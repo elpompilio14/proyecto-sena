@@ -8,7 +8,7 @@ from uploads import guardar_archivo
 def equipo_desarrollo_index():
     with obtener_conexion() as conexion:
         with conexion.cursor() as cur:
-            cur.execute('SELECT * FROM equipo_desarrollo ORDER BY nombre')
+            cur.execute('SELECT * FROM equipo_desarrollo ORDER BY orden, nombre')
             miembros = cur.fetchall()
     return render_template('admin/equipo_desarrollo.html', titulo='Admin · Equipo de Desarrollo', miembros=miembros)
 
@@ -18,12 +18,13 @@ def equipo_desarrollo_crear():
     nombre = request.form.get('nombre')
     rol = request.form.get('rol') or None
     foto_url = guardar_archivo(request.files.get('imagen'))
+    orden = request.form.get('orden') or 0
 
     with obtener_conexion() as conexion:
         with conexion.cursor() as cur:
             cur.execute(
-                'INSERT INTO equipo_desarrollo (nombre, rol, foto_url) VALUES (%s, %s, %s)',
-                (nombre, rol, foto_url),
+                'INSERT INTO equipo_desarrollo (nombre, rol, foto_url, orden) VALUES (%s, %s, %s, %s)',
+                (nombre, rol, foto_url, orden),
             )
     return redirect('/admin/equipo-desarrollo')
 
@@ -45,12 +46,13 @@ def equipo_desarrollo_editar(id):
     rol = request.form.get('rol') or None
     foto_actual = request.form.get('foto_actual')
     foto_url = guardar_archivo(request.files.get('imagen')) or (foto_actual or None)
+    orden = request.form.get('orden') or 0
 
     with obtener_conexion() as conexion:
         with conexion.cursor() as cur:
             cur.execute(
-                'UPDATE equipo_desarrollo SET nombre = %s, rol = %s, foto_url = %s WHERE id = %s',
-                (nombre, rol, foto_url, id),
+                'UPDATE equipo_desarrollo SET nombre = %s, rol = %s, foto_url = %s, orden = %s WHERE id = %s',
+                (nombre, rol, foto_url, orden, id),
             )
     return redirect('/admin/equipo-desarrollo')
 

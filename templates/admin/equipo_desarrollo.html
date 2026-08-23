@@ -8,6 +8,7 @@
     <label>Nombre<input type="text" name="nombre" required></label>
     <label>Rol (ej: Desarrollador, Diseñador, Base de datos)<input type="text" name="rol"></label>
     <label>Foto (opcional, se ve mejor si es cuadrada)<input type="file" name="imagen" accept="image/*"></label>
+    <label>Orden (los números más bajos salen primero; si empatan, se ordenan por nombre)<input type="number" name="orden" value="0"></label>
     <button type="submit">Agregar miembro</button>
 </form>
 
@@ -15,7 +16,7 @@
     <p>Aún no hay miembros registrados.</p>
 {% else %}
     <table class="tabla">
-        <thead><tr><th class="tabla-col-foto">Foto</th><th>Nombre</th><th>Rol</th><th></th></tr></thead>
+        <thead><tr><th class="tabla-col-foto">Foto</th><th>Nombre</th><th>Rol</th><th>Orden</th><th></th></tr></thead>
         <tbody>
             {% for m in miembros %}
                 <tr>
@@ -28,6 +29,7 @@
                     </td>
                     <td>{{ m.nombre }}</td>
                     <td>{{ m.rol or '-' }}</td>
+                    <td>{{ m.orden }}</td>
                     <td class="acciones">
                         <a href="/admin/equipo-desarrollo/{{ m.id }}/editar" class="btn-editar">Editar</a>
                         <form method="POST" action="/admin/equipo-desarrollo/{{ m.id }}/eliminar">

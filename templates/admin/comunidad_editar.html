@@ -31,6 +31,7 @@
     {% endif %}
     <label>Cambiar foto (opcional)<input type="file" name="imagen" accept="image/*"></label>
     <input type="hidden" name="foto_actual" value="{{ persona.foto_url or '' }}">
+    <label>Orden (los números más bajos salen primero; si empatan, se ordenan por nombre)<input type="number" name="orden" value="{{ persona.orden }}"></label>
     <button type="submit">Guardar cambios</button>
 </form>
 

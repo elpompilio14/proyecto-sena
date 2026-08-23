@@ -161,6 +161,7 @@ CREATE TABLE comunidad_educativa (
     anios_experiencia INTEGER,
     descripcion TEXT, -- biografía corta / frase
     foto_url TEXT,
+    orden INTEGER NOT NULL DEFAULT 0, -- posicion manual (menor = primero)
     creado_en TIMESTAMP NOT NULL DEFAULT NOW()
 );
 
@@ -169,6 +170,7 @@ CREATE TABLE gobierno_escolar (
     nombre VARCHAR(150) NOT NULL,
     rol VARCHAR(150),
     foto_url TEXT,
+    orden INTEGER NOT NULL DEFAULT 0, -- posicion manual (menor = primero)
     creado_en TIMESTAMP NOT NULL DEFAULT NOW()
 );
 
@@ -177,6 +179,7 @@ CREATE TABLE equipo_desarrollo (
     nombre VARCHAR(150) NOT NULL,
     rol VARCHAR(150),
     foto_url TEXT,
+    orden INTEGER NOT NULL DEFAULT 0, -- posicion manual (menor = primero)
     creado_en TIMESTAMP NOT NULL DEFAULT NOW()
 );
 

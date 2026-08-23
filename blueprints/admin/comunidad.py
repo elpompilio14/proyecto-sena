@@ -10,7 +10,7 @@ def comunidad_index():
         with conexion.cursor() as cur:
             cur.execute("""
                 SELECT * FROM comunidad_educativa
-                ORDER BY CASE categoria WHEN 'rectoria' THEN 1 WHEN 'coordinacion' THEN 2 ELSE 3 END, nombre
+                ORDER BY CASE categoria WHEN 'rectoria' THEN 1 WHEN 'coordinacion' THEN 2 ELSE 3 END, orden, nombre
             """)
             personas = cur.fetchall()
     return render_template('admin/comunidad.html', titulo='Admin · Comunidad Educativa', personas=personas)
@@ -26,13 +26,14 @@ def comunidad_crear():
     anios_experiencia = request.form.get('anios_experiencia') or None
     descripcion = request.form.get('descripcion') or None
     foto_url = guardar_archivo(request.files.get('imagen'))
+    orden = request.form.get('orden') or 0
 
     with obtener_conexion() as conexion:
         with conexion.cursor() as cur:
             cur.execute(
-                """INSERT INTO comunidad_educativa (nombre, cargo, categoria, area, materia, anios_experiencia, descripcion, foto_url)
-                   VALUES (%s, %s, %s, %s, %s, %s, %s, %s)""",
-                (nombre, cargo, categoria, area, materia, anios_experiencia, descripcion, foto_url),
+                """INSERT INTO comunidad_educativa (nombre, cargo, categoria, area, materia, anios_experiencia, descripcion, foto_url, orden)
+                   VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)""",
+                (nombre, cargo, categoria, area, materia, anios_experiencia, descripcion, foto_url, orden),
             )
     return redirect('/admin/comunidad-educativa')
 
@@ -59,15 +60,16 @@ def comunidad_editar(id):
     descripcion = request.form.get('descripcion') or None
     foto_actual = request.form.get('foto_actual')
     foto_url = guardar_archivo(request.files.get('imagen')) or (foto_actual or None)
+    orden = request.form.get('orden') or 0
 
     with obtener_conexion() as conexion:
         with conexion.cursor() as cur:
             cur.execute(
                 """UPDATE comunidad_educativa
                    SET nombre = %s, cargo = %s, categoria = %s, area = %s, materia = %s,
-                       anios_experiencia = %s, descripcion = %s, foto_url = %s
+                       anios_experiencia = %s, descripcion = %s, foto_url = %s, orden = %s
                    WHERE id = %s""",
-                (nombre, cargo, categoria, area, materia, anios_experiencia, descripcion, foto_url, id),
+                (nombre, cargo, categoria, area, materia, anios_experiencia, descripcion, foto_url, orden, id),
             )
     return redirect('/admin/comunidad-educativa')
 
