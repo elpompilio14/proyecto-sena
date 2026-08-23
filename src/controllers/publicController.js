@@ -7,6 +7,11 @@ exports.home = async (req, res) => {
     const noticias = await pool.query(
         'SELECT * FROM noticias ORDER BY fecha DESC LIMIT 3'
     );
+    const icfesResultados = await pool.query(`
+        SELECT * FROM icfes_resultados
+        WHERE anio = (SELECT MAX(anio) FROM icfes_resultados)
+        ORDER BY puntaje DESC
+    `);
     const gobiernoEscolar = await pool.query('SELECT * FROM gobierno_escolar ORDER BY orden, nombre');
     const equipoDesarrollo = await pool.query('SELECT * FROM equipo_desarrollo ORDER BY orden, nombre');
     const comiteEcologico = await pool.query('SELECT * FROM comite_ecologico ORDER BY orden, nombre');
@@ -15,6 +20,8 @@ exports.home = async (req, res) => {
         titulo: 'Inicio',
         eventos: eventos.rows,
         noticias: noticias.rows,
+        icfesResultados: icfesResultados.rows,
+        icfesAnio: icfesResultados.rows[0] ? icfesResultados.rows[0].anio : null,
         gobiernoEscolar: gobiernoEscolar.rows,
         equipoDesarrollo: equipoDesarrollo.rows,
         comiteEcologico: comiteEcologico.rows,

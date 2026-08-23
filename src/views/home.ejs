@@ -134,6 +134,27 @@
     <% } %>
 </section>
 
+<% if (icfesResultados.length > 0) { %>
+<section class="aparece">
+    <h2>Mejores ICFES<% if (icfesAnio) { %> del <%= icfesAnio %><% } %></h2>
+    <div class="card-grid">
+        <% icfesResultados.forEach(function(r, i) { %>
+            <article class="card aparece icfes-card" style="transition-delay: <%= Math.min(i, 5) * 70 %>ms">
+                <% if (r.foto_url) { %>
+                    <img src="<%= r.foto_url %>" alt="<%= r.estudiante_nombre %>" class="card-img">
+                <% } %>
+                <span class="badge icfes-puntaje"><%= r.puntaje %> pts</span>
+                <h3><%= r.estudiante_nombre %></h3>
+                <% if (r.descripcion) { %>
+                    <p><%- formatearTexto(r.descripcion) %></p>
+                <% } %>
+            </article>
+        <% }) %>
+    </div>
+    <p class="home-ver-todas"><a href="/icfes" class="btn-ver-todas">Ver todos los resultados ICFES</a></p>
+</section>
+<% } %>
+
 <% if (gobiernoEscolar.length > 0) { %>
 <section class="comunidad-seccion aparece">
     <h2>Gobierno Escolar</h2>
