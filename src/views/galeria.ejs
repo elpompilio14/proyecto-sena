@@ -6,7 +6,7 @@
     <p>Aún no hay fotos en la galería.</p>
 <% } else { %>
     <% grupos.forEach(function(grupo) { %>
-        <section class="galeria-grupo aparece">
+        <section class="galeria-grupo">
             <h2 class="galeria-mes-titulo"><%= grupo.etiqueta %></h2>
             <div class="mural">
                 <% grupo.fotos.forEach(function(f, i) { %>
