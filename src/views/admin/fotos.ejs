@@ -32,10 +32,17 @@
     <p>Aún no hay fotos.</p>
 <% } else { %>
     <table class="tabla">
-        <thead><tr><th>Título</th><th>Evento</th><th>Noticia</th><th></th></tr></thead>
+        <thead><tr><th class="tabla-col-foto">Foto</th><th>Título</th><th>Evento</th><th>Noticia</th><th></th></tr></thead>
         <tbody>
             <% fotos.forEach(function(f) { %>
                 <tr>
+                    <td>
+                        <% if (esVideo(f.url)) { %>
+                            <span class="tabla-foto-vacia" title="Video">&#9658;</span>
+                        <% } else { %>
+                            <img src="<%= f.url %>" alt="<%= f.titulo || 'Foto' %>" class="tabla-foto-mini">
+                        <% } %>
+                    </td>
                     <td><%= f.titulo || '(sin título)' %> <% if (esVideo(f.url)) { %><span class="badge">Video</span><% } %></td>
                     <td><%= f.evento_titulo || '-' %></td>
                     <td><%= f.noticia_titulo || '-' %></td>
