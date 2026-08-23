@@ -2,24 +2,29 @@
 
 <h1>Galería de fotos</h1>
 
-<% if (fotos.length === 0) { %>
+<% if (grupos.length === 0) { %>
     <p>Aún no hay fotos en la galería.</p>
 <% } else { %>
-    <div class="mural">
-        <% fotos.forEach(function(f, i) { %>
-            <figure class="aparece" style="transition-delay: <%= Math.min(i, 7) * 50 %>ms">
-                <% if (esVideo(f.url)) { %>
-                    <div class="miniatura-video">
-                        <video src="<%= f.url %>#t=0.5" data-url="<%= f.url %>" preload="metadata" muted playsinline></video>
-                        <span class="icono-play">&#9658;</span>
-                    </div>
-                <% } else { %>
-                    <img src="<%= f.url %>" data-url="<%= f.url %>" alt="<%= f.titulo || 'Foto del colegio' %>">
-                <% } %>
-                <% if (f.titulo) { %><figcaption><%= f.titulo %></figcaption><% } %>
-            </figure>
-        <% }) %>
-    </div>
+    <% grupos.forEach(function(grupo) { %>
+        <section class="galeria-grupo aparece">
+            <h2 class="galeria-mes-titulo"><%= grupo.etiqueta %></h2>
+            <div class="mural">
+                <% grupo.fotos.forEach(function(f, i) { %>
+                    <figure class="aparece" style="transition-delay: <%= Math.min(i, 7) * 50 %>ms">
+                        <% if (esVideo(f.url)) { %>
+                            <div class="miniatura-video">
+                                <video src="<%= f.url %>#t=0.5" data-url="<%= f.url %>" preload="metadata" muted playsinline></video>
+                                <span class="icono-play">&#9658;</span>
+                            </div>
+                        <% } else { %>
+                            <img src="<%= f.url %>" data-url="<%= f.url %>" alt="<%= f.titulo || 'Foto del colegio' %>">
+                        <% } %>
+                        <% if (f.titulo) { %><figcaption><%= f.titulo %></figcaption><% } %>
+                    </figure>
+                <% }) %>
+            </div>
+        </section>
+    <% }) %>
 <% } %>
 
 <%- include('partials/footer') %>

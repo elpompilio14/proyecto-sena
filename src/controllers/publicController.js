@@ -126,11 +126,37 @@ exports.icfes = async (req, res) => {
     res.render('icfes', { titulo: 'Mejores ICFES', resultados: resultados.rows });
 };
 
+const MESES = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio',
+    'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'];
+
+function agruparPorMes(filas) {
+    const grupos = [];
+    let grupoActual = null;
+
+    filas.forEach((foto) => {
+        const fecha = new Date(foto.creado_en);
+        const clave = `${fecha.getFullYear()}-${fecha.getMonth()}`;
+
+        if (!grupoActual || grupoActual.clave !== clave) {
+            const mes = MESES[fecha.getMonth()];
+            grupoActual = {
+                clave,
+                etiqueta: `${mes.charAt(0).toUpperCase()}${mes.slice(1)} ${fecha.getFullYear()}`,
+                fotos: [],
+            };
+            grupos.push(grupoActual);
+        }
+        grupoActual.fotos.push(foto);
+    });
+
+    return grupos;
+}
+
 exports.galeria = async (req, res) => {
     const fotos = await pool.query(
         'SELECT * FROM galeria_fotos ORDER BY creado_en DESC'
     );
-    res.render('galeria', { titulo: 'Galeria', fotos: fotos.rows });
+    res.render('galeria', { titulo: 'Galeria', grupos: agruparPorMes(fotos.rows) });
 };
 
 exports.institucion = async (req, res) => {
