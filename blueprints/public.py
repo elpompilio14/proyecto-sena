@@ -257,13 +257,38 @@ def alianzas():
     return render_template('alianzas.html', titulo='Alianzas', alianzas=lista)
 
 
+MESES = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio',
+         'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre']
+
+
+def _agrupar_por_mes(filas):
+    grupos = []
+    grupo_actual = None
+
+    for foto in filas:
+        fecha = foto['creado_en']
+        clave = (fecha.year, fecha.month)
+
+        if grupo_actual is None or grupo_actual['clave'] != clave:
+            mes = MESES[fecha.month - 1]
+            grupo_actual = {
+                'clave': clave,
+                'etiqueta': f'{mes.capitalize()} {fecha.year}',
+                'fotos': [],
+            }
+            grupos.append(grupo_actual)
+        grupo_actual['fotos'].append(foto)
+
+    return grupos
+
+
 @public_bp.route('/galeria')
 def galeria():
     with obtener_conexion() as conexion:
         with conexion.cursor() as cur:
             cur.execute('SELECT * FROM galeria_fotos ORDER BY creado_en DESC')
             fotos = cur.fetchall()
-    return render_template('galeria.html', titulo='Galeria', fotos=fotos)
+    return render_template('galeria.html', titulo='Galeria', grupos=_agrupar_por_mes(fotos))
 
 
 @public_bp.route('/contacto', methods=['GET'])

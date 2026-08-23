@@ -3,24 +3,29 @@
 
 <h1>Galería de fotos</h1>
 
-{% if fotos|length == 0 %}
+{% if grupos|length == 0 %}
     <p>Aún no hay fotos en la galería.</p>
 {% else %}
-    <div class="mural">
-        {% for f in fotos %}
-            <figure class="aparece" style="transition-delay: {{ [loop.index0, 7]|min * 50 }}ms">
-                {% if esVideo(f.url) %}
-                    <div class="miniatura-video">
-                        <video src="{{ f.url }}#t=0.5" data-url="{{ f.url }}" preload="metadata" muted playsinline></video>
-                        <span class="icono-play">&#9658;</span>
-                    </div>
-                {% else %}
-                    <img src="{{ f.url }}" data-url="{{ f.url }}" alt="{{ f.titulo or 'Foto del colegio' }}">
-                {% endif %}
-                {% if f.titulo %}<figcaption>{{ f.titulo }}</figcaption>{% endif %}
-            </figure>
-        {% endfor %}
-    </div>
+    {% for grupo in grupos %}
+        <section class="galeria-grupo aparece">
+            <h2 class="galeria-mes-titulo">{{ grupo.etiqueta }}</h2>
+            <div class="mural">
+                {% for f in grupo.fotos %}
+                    <figure class="aparece" style="transition-delay: {{ [loop.index0, 7]|min * 50 }}ms">
+                        {% if esVideo(f.url) %}
+                            <div class="miniatura-video">
+                                <video src="{{ f.url }}#t=0.5" data-url="{{ f.url }}" preload="metadata" muted playsinline></video>
+                                <span class="icono-play">&#9658;</span>
+                            </div>
+                        {% else %}
+                            <img src="{{ f.url }}" data-url="{{ f.url }}" alt="{{ f.titulo or 'Foto del colegio' }}">
+                        {% endif %}
+                        {% if f.titulo %}<figcaption>{{ f.titulo }}</figcaption>{% endif %}
+                    </figure>
+                {% endfor %}
+            </div>
+        </section>
+    {% endfor %}
 {% endif %}
 
 {% endblock %}
