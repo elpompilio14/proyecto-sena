@@ -8,7 +8,7 @@
 <p>{{ formatearTexto(evento.descripcion) | safe }}</p>
 
 {% if evento.imagen_url %}
-    <img src="{{ evento.imagen_url }}" alt="{{ evento.titulo }}" class="card-img">
+    <img src="{{ evento.imagen_url }}" alt="{{ evento.titulo }}" class="detalle-portada">
 {% endif %}
 
 {% if fotos|length > 0 %}
