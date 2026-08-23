@@ -163,6 +163,22 @@ CREATE TABLE comunidad_educativa (
     creado_en TIMESTAMP NOT NULL DEFAULT NOW()
 );
 
+CREATE TABLE gobierno_escolar (
+    id SERIAL PRIMARY KEY,
+    nombre VARCHAR(150) NOT NULL,
+    rol VARCHAR(150),
+    foto_url TEXT,
+    creado_en TIMESTAMP NOT NULL DEFAULT NOW()
+);
+
+CREATE TABLE equipo_desarrollo (
+    id SERIAL PRIMARY KEY,
+    nombre VARCHAR(150) NOT NULL,
+    rol VARCHAR(150),
+    foto_url TEXT,
+    creado_en TIMESTAMP NOT NULL DEFAULT NOW()
+);
+
 CREATE TABLE mensajes_contacto (
     id SERIAL PRIMARY KEY,
     nombre VARCHAR(100) NOT NULL,

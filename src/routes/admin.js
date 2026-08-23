@@ -19,6 +19,8 @@ const deportesController = require('../controllers/admin/deportesController');
 const comunidadController = require('../controllers/admin/comunidadController');
 const icfesController = require('../controllers/admin/icfesController');
 const alianzasController = require('../controllers/admin/alianzasController');
+const gobiernoEscolarController = require('../controllers/admin/gobiernoEscolarController');
+const equipoDesarrolloController = require('../controllers/admin/equipoDesarrolloController');
 
 router.use(requireAdmin);
 
@@ -118,5 +120,17 @@ router.post('/alianzas', upload.single('imagen'), alianzasController.crear);
 router.get('/alianzas/:id/editar', alianzasController.editarForm);
 router.post('/alianzas/:id/editar', upload.single('imagen'), alianzasController.editar);
 router.post('/alianzas/:id/eliminar', alianzasController.eliminar);
+
+router.get('/gobierno-escolar', gobiernoEscolarController.index);
+router.post('/gobierno-escolar', upload.single('imagen'), gobiernoEscolarController.crear);
+router.get('/gobierno-escolar/:id/editar', gobiernoEscolarController.editarForm);
+router.post('/gobierno-escolar/:id/editar', upload.single('imagen'), gobiernoEscolarController.editar);
+router.post('/gobierno-escolar/:id/eliminar', gobiernoEscolarController.eliminar);
+
+router.get('/equipo-desarrollo', equipoDesarrolloController.index);
+router.post('/equipo-desarrollo', upload.single('imagen'), equipoDesarrolloController.crear);
+router.get('/equipo-desarrollo/:id/editar', equipoDesarrolloController.editarForm);
+router.post('/equipo-desarrollo/:id/editar', upload.single('imagen'), equipoDesarrolloController.editar);
+router.post('/equipo-desarrollo/:id/eliminar', equipoDesarrolloController.eliminar);
 
 module.exports = router;

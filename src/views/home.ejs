@@ -134,4 +134,36 @@
     <% } %>
 </section>
 
+<% if (gobiernoEscolar.length > 0) { %>
+<section class="comunidad-seccion aparece">
+    <h2>Gobierno Escolar</h2>
+    <div class="comunidad-lider-grid">
+        <% gobiernoEscolar.forEach(function(m) { %>
+            <div class="comunidad-lider-card">
+                <% if (m.foto_url) { %><img src="<%= m.foto_url %>" alt="<%= m.nombre %>" class="comunidad-lider-foto"><% } %>
+                <h3><%= m.nombre %></h3>
+                <% if (m.rol) { %><span class="badge"><%= m.rol %></span><% } %>
+            </div>
+        <% }) %>
+    </div>
+    <p class="home-ver-todas"><a href="/gobierno-escolar" class="btn-ver-todas">Ver Gobierno Escolar</a></p>
+</section>
+<% } %>
+
+<% if (equipoDesarrollo.length > 0) { %>
+<section class="comunidad-seccion aparece">
+    <h2>Equipo de Desarrollo</h2>
+    <div class="comunidad-lider-grid">
+        <% equipoDesarrollo.forEach(function(m) { %>
+            <div class="comunidad-lider-card">
+                <% if (m.foto_url) { %><img src="<%= m.foto_url %>" alt="<%= m.nombre %>" class="comunidad-lider-foto"><% } %>
+                <h3><%= m.nombre %></h3>
+                <% if (m.rol) { %><span class="badge"><%= m.rol %></span><% } %>
+            </div>
+        <% }) %>
+    </div>
+    <p class="home-ver-todas"><a href="/equipo-desarrollo" class="btn-ver-todas">Ver Equipo de Desarrollo</a></p>
+</section>
+<% } %>
+
 <%- include('partials/footer') %>
