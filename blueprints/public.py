@@ -262,13 +262,26 @@ def mejores_puestos():
     return render_template('mejores_puestos.html', titulo='Puestos de honor', puestos=puestos)
 
 
+def _agrupar_por_anio(filas):
+    grupos = []
+    grupo_actual = None
+
+    for r in filas:
+        if grupo_actual is None or grupo_actual['anio'] != r['anio']:
+            grupo_actual = {'anio': r['anio'], 'resultados': []}
+            grupos.append(grupo_actual)
+        grupo_actual['resultados'].append(r)
+
+    return grupos
+
+
 @public_bp.route('/icfes')
 def icfes():
     with obtener_conexion() as conexion:
         with conexion.cursor() as cur:
             cur.execute('SELECT * FROM icfes_resultados ORDER BY anio DESC, puntaje DESC')
             resultados = cur.fetchall()
-    return render_template('icfes.html', titulo='Mejores ICFES', resultados=resultados)
+    return render_template('icfes.html', titulo='Mejores ICFES', grupos=_agrupar_por_anio(resultados))
 
 
 @public_bp.route('/alianzas')

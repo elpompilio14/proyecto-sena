@@ -618,6 +618,8 @@ button:hover { background: var(--azul-oscuro); transform: translateY(-1px); }
 
 .card + .card { margin-top: 14px; }
 
+.card-grid .card + .card { margin-top: 0; }
+
 .site-footer {
     background: var(--azul-oscuro);
     color: #cfe0f5;
