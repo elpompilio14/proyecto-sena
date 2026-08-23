@@ -36,7 +36,7 @@ def fotos_crear():
     evento_id = request.form.get('evento_id') or None
     noticia_id = request.form.get('noticia_id') or None
     fecha = request.form.get('fecha') or date.today().isoformat()
-    orden = request.form.get('orden') or 0
+    orden = request.form.get('orden') or 1
 
     with obtener_conexion() as conexion:
         with conexion.cursor() as cur:
@@ -73,7 +73,7 @@ def fotos_editar(id):
     url_actual = request.form.get('url_actual')
     url = guardar_archivo(request.files.get('imagen'), TIPOS_IMAGEN_Y_VIDEO) or url_actual
     fecha = request.form.get('fecha') or date.today().isoformat()
-    orden = request.form.get('orden') or 0
+    orden = request.form.get('orden') or 1
 
     with obtener_conexion() as conexion:
         with conexion.cursor() as cur:
@@ -101,6 +101,7 @@ def fotos_editar_lote():
     evento_lote = request.form.get('evento_lote')
     fecha_lote = request.form.get('fecha_lote')
     titulo_lote = request.form.get('titulo_lote')
+    orden_lote = request.form.get('orden_lote')
 
     cambios = []
     valores = []
@@ -114,6 +115,9 @@ def fotos_editar_lote():
     if titulo_lote:
         cambios.append('titulo = %s')
         valores.append(titulo_lote)
+    if orden_lote:
+        cambios.append('orden = %s')
+        valores.append(orden_lote)
 
     if cambios:
         valores.append(ids)
