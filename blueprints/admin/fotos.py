@@ -36,14 +36,15 @@ def fotos_crear():
     evento_id = request.form.get('evento_id') or None
     noticia_id = request.form.get('noticia_id') or None
     fecha = request.form.get('fecha') or date.today().isoformat()
+    orden = request.form.get('orden') or 0
 
     with obtener_conexion() as conexion:
         with conexion.cursor() as cur:
             for archivo in archivos:
                 url = guardar_archivo(archivo, TIPOS_IMAGEN_Y_VIDEO)
                 cur.execute(
-                    'INSERT INTO galeria_fotos (titulo, url, evento_id, noticia_id, fecha) VALUES (%s, %s, %s, %s, %s)',
-                    (titulo or None, url, evento_id, noticia_id, fecha),
+                    'INSERT INTO galeria_fotos (titulo, url, evento_id, noticia_id, fecha, orden) VALUES (%s, %s, %s, %s, %s, %s)',
+                    (titulo or None, url, evento_id, noticia_id, fecha, orden),
                 )
     return redirect('/admin/fotos')
 
@@ -72,12 +73,13 @@ def fotos_editar(id):
     url_actual = request.form.get('url_actual')
     url = guardar_archivo(request.files.get('imagen'), TIPOS_IMAGEN_Y_VIDEO) or url_actual
     fecha = request.form.get('fecha') or date.today().isoformat()
+    orden = request.form.get('orden') or 0
 
     with obtener_conexion() as conexion:
         with conexion.cursor() as cur:
             cur.execute(
-                'UPDATE galeria_fotos SET titulo = %s, url = %s, evento_id = %s, noticia_id = %s, fecha = %s WHERE id = %s',
-                (titulo or None, url, evento_id, noticia_id, fecha, id),
+                'UPDATE galeria_fotos SET titulo = %s, url = %s, evento_id = %s, noticia_id = %s, fecha = %s, orden = %s WHERE id = %s',
+                (titulo or None, url, evento_id, noticia_id, fecha, orden, id),
             )
     return redirect('/admin/fotos')
 

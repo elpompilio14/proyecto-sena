@@ -151,7 +151,7 @@ def noticia_detalle(id):
             noticia = cur.fetchone()
             if not noticia:
                 abort(404)
-            cur.execute('SELECT * FROM galeria_fotos WHERE noticia_id = %s ORDER BY creado_en', (id,))
+            cur.execute('SELECT * FROM galeria_fotos WHERE noticia_id = %s ORDER BY orden, creado_en', (id,))
             fotos = cur.fetchall()
 
     return render_template('noticia_detalle.html', titulo=noticia['titulo'], noticia=noticia, fotos=fotos)
@@ -174,7 +174,7 @@ def evento_detalle(id):
             evento = cur.fetchone()
             if not evento:
                 abort(404)
-            cur.execute('SELECT * FROM galeria_fotos WHERE evento_id = %s ORDER BY creado_en', (id,))
+            cur.execute('SELECT * FROM galeria_fotos WHERE evento_id = %s ORDER BY orden, creado_en', (id,))
             fotos = cur.fetchall()
 
     return render_template('evento_detalle.html', titulo=evento['titulo'], evento=evento, fotos=fotos)

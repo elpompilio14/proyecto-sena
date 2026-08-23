@@ -7,6 +7,7 @@
 <form method="POST" action="/admin/fotos/{{ foto.id }}/editar" class="form" enctype="multipart/form-data">
     <label>Título (opcional)<input type="text" name="titulo" value="{{ foto.titulo or '' }}"></label>
     <label>Fecha (se usa para agrupar por mes en la galería)<input type="date" name="fecha" value="{{ foto.fecha }}"></label>
+    <label>Orden dentro del evento/noticia (los números más bajos salen primero; si empatan, se ordenan por como se subieron)<input type="number" name="orden" value="{{ foto.orden }}"></label>
     {% if esVideo(foto.url) %}
         <video src="{{ foto.url }}" controls class="card-img"></video>
     {% else %}
