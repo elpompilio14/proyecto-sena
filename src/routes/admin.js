@@ -80,6 +80,7 @@ router.post('/institucion', upload.fields([
     { name: 'logo', maxCount: 1 },
     { name: 'instagram_imagen', maxCount: 1 },
     { name: 'facebook_imagen', maxCount: 1 },
+    { name: 'plataforma_virtual_logo', maxCount: 1 },
 ]), institucionController.actualizar);
 
 router.get('/mensajes', mensajesController.index);

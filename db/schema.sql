@@ -46,6 +46,8 @@ CREATE TABLE institucion_info (
     instagram_imagen_url TEXT,
     facebook_url TEXT,
     facebook_imagen_url TEXT,
+    plataforma_virtual_url TEXT,
+    plataforma_virtual_logo_url TEXT,
     actualizado_en TIMESTAMP NOT NULL DEFAULT NOW()
 );
 

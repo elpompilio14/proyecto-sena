@@ -43,6 +43,19 @@
     <a href="/galeria" class="card-link">Galería de fotos</a>
 </section>
 
+<section class="seccion-plataforma aparece">
+    <h2>Plataforma Virtual</h2>
+    <div class="plataforma-caja">
+        <% if (sitio && sitio.plataforma_virtual_logo_url) { %>
+            <img src="<%= sitio.plataforma_virtual_logo_url %>" alt="Plataforma Virtual" class="plataforma-logo">
+        <% } %>
+        <a href="<%= (sitio && sitio.plataforma_virtual_url) ? sitio.plataforma_virtual_url : '#' %>" target="_blank" rel="noopener" class="plataforma-boton">
+            Ingresar
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M13 6l6 6-6 6"/></svg>
+        </a>
+    </div>
+</section>
+
 <section class="seccion-himno aparece">
     <h2>Himno Escolar</h2>
     <% const embedUrl = himnoUrl ? youtubeEmbedUrl(himnoUrl) : null; %>
