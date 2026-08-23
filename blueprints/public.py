@@ -14,6 +14,13 @@ def home():
             cur.execute('SELECT * FROM noticias ORDER BY fecha DESC LIMIT 3')
             noticias = cur.fetchall()
 
+            cur.execute("""
+                SELECT * FROM icfes_resultados
+                WHERE anio = (SELECT MAX(anio) FROM icfes_resultados)
+                ORDER BY puntaje DESC
+            """)
+            icfes_resultados = cur.fetchall()
+
             cur.execute('SELECT * FROM gobierno_escolar ORDER BY orden, nombre')
             gobierno_escolar = cur.fetchall()
 
@@ -31,6 +38,8 @@ def home():
         titulo='Inicio',
         eventos=eventos,
         noticias=noticias,
+        icfesResultados=icfes_resultados,
+        icfesAnio=icfes_resultados[0]['anio'] if icfes_resultados else None,
         gobiernoEscolar=gobierno_escolar,
         equipoDesarrollo=equipo_desarrollo,
         comiteEcologico=comite_ecologico,

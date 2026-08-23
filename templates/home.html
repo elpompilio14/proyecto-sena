@@ -135,6 +135,27 @@
     {% endif %}
 </section>
 
+{% if icfesResultados|length > 0 %}
+<section class="aparece">
+    <h2>Mejores ICFES{% if icfesAnio %} del {{ icfesAnio }}{% endif %}</h2>
+    <div class="card-grid">
+        {% for r in icfesResultados %}
+            <article class="card aparece icfes-card" style="transition-delay: {{ [loop.index0, 5]|min * 70 }}ms">
+                {% if r.foto_url %}
+                    <img src="{{ r.foto_url }}" alt="{{ r.estudiante_nombre }}" class="card-img">
+                {% endif %}
+                <span class="badge icfes-puntaje">{{ r.puntaje }} pts</span>
+                <h3>{{ r.estudiante_nombre }}</h3>
+                {% if r.descripcion %}
+                    <p>{{ formatearTexto(r.descripcion)|safe }}</p>
+                {% endif %}
+            </article>
+        {% endfor %}
+    </div>
+    <p class="home-ver-todas"><a href="/icfes" class="btn-ver-todas">Ver todos los resultados ICFES</a></p>
+</section>
+{% endif %}
+
 {% if gobiernoEscolar|length > 0 %}
 <section class="comunidad-seccion aparece">
     <h2>Gobierno Escolar</h2>
