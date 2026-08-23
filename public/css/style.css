@@ -380,6 +380,36 @@ h1, h2, h3 {
     letter-spacing: 0.02em;
 }
 
+.tabla-col-foto {
+    width: 60px;
+}
+
+.tabla-foto-mini {
+    width: 44px;
+    height: 44px;
+    object-fit: cover;
+    border-radius: 8px;
+    cursor: zoom-in;
+    display: block;
+    transition: transform .15s ease;
+}
+
+.tabla-foto-mini:hover {
+    transform: scale(1.08);
+}
+
+.tabla-foto-vacia {
+    width: 44px;
+    height: 44px;
+    border-radius: 8px;
+    background: var(--azul-pastel);
+    color: var(--azul-oscuro);
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 .form {
     display: flex;
     flex-direction: column;

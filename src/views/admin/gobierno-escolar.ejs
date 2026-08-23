@@ -14,10 +14,17 @@
     <p>Aún no hay miembros registrados.</p>
 <% } else { %>
     <table class="tabla">
-        <thead><tr><th>Nombre</th><th>Rol</th><th></th></tr></thead>
+        <thead><tr><th class="tabla-col-foto">Foto</th><th>Nombre</th><th>Rol</th><th></th></tr></thead>
         <tbody>
             <% miembros.forEach(function(m) { %>
                 <tr>
+                    <td>
+                        <% if (m.foto_url) { %>
+                            <img src="<%= m.foto_url %>" alt="<%= m.nombre %>" class="tabla-foto-mini">
+                        <% } else { %>
+                            <span class="tabla-foto-vacia">—</span>
+                        <% } %>
+                    </td>
                     <td><%= m.nombre %></td>
                     <td><%= m.rol || '-' %></td>
                     <td class="acciones">

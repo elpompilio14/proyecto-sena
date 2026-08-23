@@ -24,10 +24,17 @@
     <p>Aún no hay equipos.</p>
 <% } else { %>
     <table class="tabla">
-        <thead><tr><th>Nombre</th><th>Deporte</th><th>Categoría</th><th>Entrenador</th><th></th></tr></thead>
+        <thead><tr><th class="tabla-col-foto">Foto</th><th>Nombre</th><th>Deporte</th><th>Categoría</th><th>Entrenador</th><th></th></tr></thead>
         <tbody>
             <% equipos.forEach(function(eq) { %>
                 <tr>
+                    <td>
+                        <% if (eq.foto_url) { %>
+                            <img src="<%= eq.foto_url %>" alt="<%= eq.nombre %>" class="tabla-foto-mini">
+                        <% } else { %>
+                            <span class="tabla-foto-vacia">—</span>
+                        <% } %>
+                    </td>
                     <td><%= eq.nombre %></td>
                     <td><%= eq.deporte_nombre %></td>
                     <td><%= eq.categoria || '-' %></td>

@@ -15,10 +15,17 @@
     <p>Aún no hay noticias.</p>
 <% } else { %>
     <table class="tabla">
-        <thead><tr><th>Título</th><th>Fecha</th><th></th></tr></thead>
+        <thead><tr><th class="tabla-col-foto">Foto</th><th>Título</th><th>Fecha</th><th></th></tr></thead>
         <tbody>
             <% noticias.forEach(function(n) { %>
                 <tr>
+                    <td>
+                        <% if (n.imagen_url) { %>
+                            <img src="<%= n.imagen_url %>" alt="<%= n.titulo %>" class="tabla-foto-mini">
+                        <% } else { %>
+                            <span class="tabla-foto-vacia">—</span>
+                        <% } %>
+                    </td>
                     <td><%= n.titulo %></td>
                     <td><%= new Date(n.fecha).toLocaleDateString('es-CO') %></td>
                     <td class="acciones">
