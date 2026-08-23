@@ -1844,11 +1844,11 @@ button:hover { background: var(--azul-oscuro); transform: translateY(-1px); }
 }
 
 .comunidad-lider-foto {
-    width: 110px;
-    height: 110px;
+    width: 160px;
+    height: 160px;
     border-radius: 50%;
     object-fit: cover;
-    border: 3px solid var(--azul);
+    border: 4px solid var(--azul);
     padding: 3px;
     margin-bottom: 14px;
 }
