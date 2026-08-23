@@ -148,7 +148,7 @@ CREATE TABLE galeria_fotos (
     evento_id INTEGER REFERENCES eventos(id) ON DELETE SET NULL,
     noticia_id INTEGER REFERENCES noticias(id) ON DELETE SET NULL,
     fecha DATE NOT NULL DEFAULT CURRENT_DATE, -- fecha de la foto (editable), se usa para agrupar en la galeria
-    orden INTEGER NOT NULL DEFAULT 0, -- posicion manual dentro de un evento/noticia (menor = primero; si empatan, por creado_en)
+    orden INTEGER NOT NULL DEFAULT 1, -- posicion manual dentro de un evento/noticia (menor = primero; usa 0 para poner una foto de primera; si empatan, por creado_en)
     creado_en TIMESTAMP NOT NULL DEFAULT NOW()
 );
 

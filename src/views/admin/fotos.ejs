@@ -6,7 +6,7 @@
 <form method="POST" action="/admin/fotos" class="form" enctype="multipart/form-data">
     <label>Título (opcional, se usa para todas las fotos que elijas)<input type="text" name="titulo"></label>
     <label>Fecha (se usa para todas las fotos que elijas, y para agruparlas por mes en la galería)<input type="date" name="fecha"></label>
-    <label>Orden dentro del evento/noticia (se usa para todas las fotos que elijas; los números más bajos salen primero, si empatan se ordenan por como se subieron)<input type="number" name="orden" value="0"></label>
+    <label>Orden dentro del evento/noticia (se usa para todas las fotos que elijas; los números más bajos salen primero, si empatan se ordenan por como se subieron. Usa 0 para dejar una foto de primera)<input type="number" name="orden" value="1"></label>
     <label>Fotos o videos (puedes elegir varias a la vez)<input type="file" name="imagenes" accept="image/*,video/*" multiple required></label>
     <label>
         Evento relacionado (opcional)
@@ -47,6 +47,7 @@
             </label>
             <label>Nueva fecha<input type="date" name="fecha_lote"></label>
             <label>Nuevo título<input type="text" name="titulo_lote" placeholder="(dejar vacío = no cambiar)"></label>
+            <label>Nuevo orden (0 = primera)<input type="number" name="orden_lote" placeholder="(dejar vacío = no cambiar)"></label>
             <button type="submit">Aplicar a las seleccionadas</button>
         </div>
 
