@@ -14,6 +14,12 @@ def home():
             cur.execute('SELECT * FROM noticias ORDER BY fecha DESC LIMIT 3')
             noticias = cur.fetchall()
 
+            cur.execute('SELECT * FROM gobierno_escolar ORDER BY nombre')
+            gobierno_escolar = cur.fetchall()
+
+            cur.execute('SELECT * FROM equipo_desarrollo ORDER BY nombre')
+            equipo_desarrollo = cur.fetchall()
+
             cur.execute('SELECT himno_url, fondo_url FROM institucion_info ORDER BY id LIMIT 1')
             info = cur.fetchone()
 
@@ -22,9 +28,29 @@ def home():
         titulo='Inicio',
         eventos=eventos,
         noticias=noticias,
+        gobiernoEscolar=gobierno_escolar,
+        equipoDesarrollo=equipo_desarrollo,
         himnoUrl=info['himno_url'] if info else None,
         fondoUrl=info['fondo_url'] if info else None,
     )
+
+
+@public_bp.route('/gobierno-escolar')
+def gobierno_escolar():
+    with obtener_conexion() as conexion:
+        with conexion.cursor() as cur:
+            cur.execute('SELECT * FROM gobierno_escolar ORDER BY nombre')
+            miembros = cur.fetchall()
+    return render_template('gobierno_escolar.html', titulo='Gobierno Escolar', miembros=miembros)
+
+
+@public_bp.route('/equipo-desarrollo')
+def equipo_desarrollo():
+    with obtener_conexion() as conexion:
+        with conexion.cursor() as cur:
+            cur.execute('SELECT * FROM equipo_desarrollo ORDER BY nombre')
+            miembros = cur.fetchall()
+    return render_template('equipo_desarrollo.html', titulo='Equipo de Desarrollo', miembros=miembros)
 
 
 @public_bp.route('/institucion')

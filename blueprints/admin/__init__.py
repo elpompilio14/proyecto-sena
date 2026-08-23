@@ -27,4 +27,6 @@ from . import (  # noqa: E402  (import al final para evitar import circular con 
     comunidad,
     icfes,
     alianzas,
+    gobierno_escolar,
+    equipo_desarrollo,
 )

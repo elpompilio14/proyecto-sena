@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block content %}
+
+<section class="comunidad-intro aparece">
+    <span class="badge-pill">Proyecto SENA</span>
+    <h1>Equipo de Desarrollo</h1>
+    <p>Los estudiantes que diseñaron y construyeron esta página.</p>
+</section>
+
+{% if miembros|length == 0 %}
+    <p>Aún no hay miembros registrados.</p>
+{% else %}
+<section class="comunidad-seccion aparece">
+    <div class="comunidad-lider-grid">
+        {% for m in miembros %}
+            <div class="comunidad-lider-card">
+                {% if m.foto_url %}<img src="{{ m.foto_url }}" alt="{{ m.nombre }}" class="comunidad-lider-foto">{% endif %}
+                <h3>{{ m.nombre }}</h3>
+                {% if m.rol %}<span class="badge">{{ m.rol }}</span>{% endif %}
+            </div>
+        {% endfor %}
+    </div>
+</section>
+{% endif %}
+
+{% endblock %}
