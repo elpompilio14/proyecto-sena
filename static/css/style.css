@@ -1477,42 +1477,12 @@ button:hover { background: var(--azul-oscuro); transform: translateY(-1px); }
     mask-image: linear-gradient(to right, #000 88%, transparent 100%);
 }
 
-.contacto-botones {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 18px;
-    margin-bottom: 44px;
-}
-
-.contacto-boton-pill {
-    display: inline-flex;
-    align-items: center;
-    gap: 9px;
-    background: var(--azul);
-    color: #fff;
-    text-decoration: none;
-    font-weight: 700;
-    font-size: 0.9rem;
-    letter-spacing: 0.01em;
-    padding: 15px 34px;
-    border-radius: 999px;
-    box-shadow: var(--sombra);
-    transition: transform .2s ease, box-shadow .2s ease, background .2s ease;
-}
-
-.contacto-boton-pill:hover {
-    transform: translateY(-4px);
-    box-shadow: var(--sombra-hover);
-    background: var(--azul-claro);
-}
-
-.contacto-boton-pill-oscuro { background: var(--azul-oscuro); }
-.contacto-boton-pill-oscuro:hover { background: var(--azul); }
-
-.contacto-form-seccion {
-    display: flex;
-    justify-content: center;
+.contacto-form-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 26px;
+    align-items: start;
+    margin-top: 6px;
 }
 
 .contacto-form-box {
@@ -1521,9 +1491,39 @@ button:hover { background: var(--azul-oscuro); transform: translateY(-1px); }
     border-radius: 16px;
     padding: 34px;
     box-shadow: var(--sombra);
-    max-width: 560px;
-    width: 100%;
-    text-align: center;
+    text-align: left;
+}
+
+.contacto-sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.contacto-sidebar-btn {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    padding: 20px 22px;
+    border-radius: 14px;
+    font-weight: 700;
+    font-size: 0.95rem;
+    text-decoration: none;
+    color: #fff;
+    box-shadow: var(--sombra);
+    transition: transform .15s ease, box-shadow .15s ease;
+}
+
+.contacto-sidebar-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--sombra-hover);
+}
+
+.contacto-sidebar-whatsapp { background: #25d366; }
+.contacto-sidebar-correo { background: var(--azul); }
+
+@media (max-width: 760px) {
+    .contacto-form-grid { grid-template-columns: 1fr; }
 }
 
 .contacto-form-box .form {
