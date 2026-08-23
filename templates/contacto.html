@@ -43,13 +43,11 @@
 <section class="redes-grid aparece">
     {% if sitio.instagram_imagen_url %}
         <a href="{{ sitio.instagram_url or '#' }}" target="_blank" rel="noopener" class="red-social-card">
-            <span class="red-social-etiqueta">📷 Instagram</span>
             <img src="{{ sitio.instagram_imagen_url }}" alt="Instagram del colegio">
         </a>
     {% endif %}
     {% if sitio.facebook_imagen_url %}
         <a href="{{ sitio.facebook_url or '#' }}" target="_blank" rel="noopener" class="red-social-card">
-            <span class="red-social-etiqueta">👍 Facebook</span>
             <img src="{{ sitio.facebook_imagen_url }}" alt="Facebook del colegio">
         </a>
     {% endif %}
