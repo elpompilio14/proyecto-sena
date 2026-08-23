@@ -7,7 +7,7 @@
     <p>Aún no hay fotos en la galería.</p>
 {% else %}
     {% for grupo in grupos %}
-        <section class="galeria-grupo aparece">
+        <section class="galeria-grupo">
             <h2 class="galeria-mes-titulo">{{ grupo.etiqueta }}</h2>
             <div class="mural">
                 {% for f in grupo.fotos %}
