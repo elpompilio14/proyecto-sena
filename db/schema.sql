@@ -147,6 +147,7 @@ CREATE TABLE galeria_fotos (
     url VARCHAR(255) NOT NULL,
     evento_id INTEGER REFERENCES eventos(id) ON DELETE SET NULL,
     noticia_id INTEGER REFERENCES noticias(id) ON DELETE SET NULL,
+    fecha DATE NOT NULL DEFAULT CURRENT_DATE, -- fecha de la foto (editable), se usa para agrupar en la galeria
     creado_en TIMESTAMP NOT NULL DEFAULT NOW()
 );
 

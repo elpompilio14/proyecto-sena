@@ -1,12 +1,17 @@
 const pool = require('../../config/db');
 
+function hoyLocal() {
+    const d = new Date();
+    return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+}
+
 exports.index = async (req, res) => {
     const fotos = await pool.query(`
         SELECT galeria_fotos.*, eventos.titulo AS evento_titulo, noticias.titulo AS noticia_titulo
         FROM galeria_fotos
         LEFT JOIN eventos ON eventos.id = galeria_fotos.evento_id
         LEFT JOIN noticias ON noticias.id = galeria_fotos.noticia_id
-        ORDER BY galeria_fotos.creado_en DESC
+        ORDER BY galeria_fotos.fecha DESC, galeria_fotos.creado_en DESC
     `);
     const eventos = await pool.query('SELECT id, titulo FROM eventos ORDER BY fecha DESC');
     const noticias = await pool.query('SELECT id, titulo FROM noticias ORDER BY fecha DESC');
@@ -17,13 +22,13 @@ exports.crear = async (req, res) => {
     if (!req.files || req.files.length === 0) {
         return res.redirect('/admin/fotos');
     }
-    const { titulo, evento_id, noticia_id } = req.body;
+    const { titulo, evento_id, noticia_id, fecha } = req.body;
 
     for (const archivo of req.files) {
         const url = `/images/${archivo.filename}`;
         await pool.query(
-            'INSERT INTO galeria_fotos (titulo, url, evento_id, noticia_id) VALUES ($1, $2, $3, $4)',
-            [titulo || null, url, evento_id || null, noticia_id || null]
+            'INSERT INTO galeria_fotos (titulo, url, evento_id, noticia_id, fecha) VALUES ($1, $2, $3, $4, $5)',
+            [titulo || null, url, evento_id || null, noticia_id || null, fecha || hoyLocal()]
         );
     }
 
@@ -46,11 +51,11 @@ exports.editarForm = async (req, res) => {
 };
 
 exports.editar = async (req, res) => {
-    const { titulo, evento_id, noticia_id, url_actual } = req.body;
+    const { titulo, evento_id, noticia_id, url_actual, fecha } = req.body;
     const url = req.file ? `/images/${req.file.filename}` : url_actual;
     await pool.query(
-        'UPDATE galeria_fotos SET titulo = $1, url = $2, evento_id = $3, noticia_id = $4 WHERE id = $5',
-        [titulo || null, url, evento_id || null, noticia_id || null, req.params.id]
+        'UPDATE galeria_fotos SET titulo = $1, url = $2, evento_id = $3, noticia_id = $4, fecha = $5 WHERE id = $6',
+        [titulo || null, url, evento_id || null, noticia_id || null, fecha || hoyLocal(), req.params.id]
     );
     res.redirect('/admin/fotos');
 };

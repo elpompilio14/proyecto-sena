@@ -134,7 +134,7 @@ function agruparPorMes(filas) {
     let grupoActual = null;
 
     filas.forEach((foto) => {
-        const fecha = new Date(foto.creado_en);
+        const fecha = new Date(foto.fecha);
         const clave = `${fecha.getFullYear()}-${fecha.getMonth()}`;
 
         if (!grupoActual || grupoActual.clave !== clave) {
@@ -154,7 +154,7 @@ function agruparPorMes(filas) {
 
 exports.galeria = async (req, res) => {
     const fotos = await pool.query(
-        'SELECT * FROM galeria_fotos ORDER BY creado_en DESC'
+        'SELECT * FROM galeria_fotos ORDER BY fecha DESC, creado_en DESC'
     );
     res.render('galeria', { titulo: 'Galeria', grupos: agruparPorMes(fotos.rows) });
 };
