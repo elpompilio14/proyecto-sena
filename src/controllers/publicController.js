@@ -10,7 +10,8 @@ exports.home = async (req, res) => {
     const icfesResultados = await pool.query(`
         SELECT * FROM icfes_resultados
         WHERE anio = (SELECT MAX(anio) FROM icfes_resultados)
-        ORDER BY puntaje DESC
+        ORDER BY puntaje DESC, creado_en ASC
+        LIMIT 3
     `);
     const gobiernoEscolar = await pool.query('SELECT * FROM gobierno_escolar ORDER BY orden, nombre');
     const equipoDesarrollo = await pool.query('SELECT * FROM equipo_desarrollo ORDER BY orden, nombre');
