@@ -17,7 +17,8 @@ def home():
             cur.execute("""
                 SELECT * FROM icfes_resultados
                 WHERE anio = (SELECT MAX(anio) FROM icfes_resultados)
-                ORDER BY puntaje DESC
+                ORDER BY puntaje DESC, creado_en ASC
+                LIMIT 3
             """)
             icfes_resultados = cur.fetchall()
 
