@@ -48,6 +48,8 @@ CREATE TABLE institucion_info (
     facebook_imagen_url TEXT,
     plataforma_virtual_url TEXT,
     plataforma_virtual_logo_url TEXT,
+    manual_convivencia_url TEXT,
+    manual_convivencia_imagen_url TEXT,
     actualizado_en TIMESTAMP NOT NULL DEFAULT NOW()
 );
 

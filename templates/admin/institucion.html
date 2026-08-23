@@ -43,6 +43,19 @@
     <label>Logo de la plataforma virtual (usa una imagen con fondo transparente, se muestra en el inicio)<input type="file" name="plataforma_virtual_logo" accept="image/*"></label>
     <input type="hidden" name="plataforma_virtual_logo_url_actual" value="{{ info.plataforma_virtual_logo_url if info and info.plataforma_virtual_logo_url else '' }}">
 
+    <h2>Manual de Convivencia</h2>
+    {% if info and info.manual_convivencia_url %}
+        <p><a href="{{ info.manual_convivencia_url }}" target="_blank">Ver el PDF actual</a></p>
+    {% endif %}
+    <label>Archivo PDF del Manual de Convivencia (se muestra como botón de descarga en el inicio)<input type="file" name="manual_convivencia" accept="application/pdf"></label>
+    <input type="hidden" name="manual_convivencia_url_actual" value="{{ info.manual_convivencia_url if info and info.manual_convivencia_url else '' }}">
+
+    {% if info and info.manual_convivencia_imagen_url %}
+        <img src="{{ info.manual_convivencia_imagen_url }}" alt="Imagen del Manual de Convivencia actual" class="card-img" style="max-width:200px;">
+    {% endif %}
+    <label>Imagen o sello para ese botón (opcional, usa una imagen con fondo transparente)<input type="file" name="manual_convivencia_imagen" accept="image/*"></label>
+    <input type="hidden" name="manual_convivencia_imagen_url_actual" value="{{ info.manual_convivencia_imagen_url if info and info.manual_convivencia_imagen_url else '' }}">
+
     <h2>Portada e información general</h2>
     {% if info and info.fondo_url %}
         <img src="{{ info.fondo_url }}" alt="Fondo actual" class="card-img">

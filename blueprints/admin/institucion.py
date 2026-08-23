@@ -1,7 +1,7 @@
 from flask import render_template, request, redirect
 from . import admin_bp
 from db import obtener_conexion
-from uploads import guardar_archivo
+from uploads import guardar_archivo, TIPOS_DOCUMENTO
 
 
 @admin_bp.route('/institucion')
@@ -24,6 +24,8 @@ def institucion_actualizar():
     instagram_imagen_url = guardar_archivo(request.files.get('instagram_imagen')) or (f.get('instagram_imagen_url_actual') or None)
     facebook_imagen_url = guardar_archivo(request.files.get('facebook_imagen')) or (f.get('facebook_imagen_url_actual') or None)
     plataforma_virtual_logo_url = guardar_archivo(request.files.get('plataforma_virtual_logo')) or (f.get('plataforma_virtual_logo_url_actual') or None)
+    manual_convivencia_url = guardar_archivo(request.files.get('manual_convivencia'), tipos_permitidos=TIPOS_DOCUMENTO) or (f.get('manual_convivencia_url_actual') or None)
+    manual_convivencia_imagen_url = guardar_archivo(request.files.get('manual_convivencia_imagen')) or (f.get('manual_convivencia_imagen_url_actual') or None)
 
     valores = (
         f.get('historia'), f.get('mision'), f.get('vision'), f.get('principios'), f.get('valores'),
@@ -35,6 +37,7 @@ def institucion_actualizar():
         f.get('whatsapp_numero') or None, f.get('instagram_url') or None, instagram_imagen_url,
         f.get('facebook_url') or None, facebook_imagen_url,
         f.get('plataforma_virtual_url') or None, plataforma_virtual_logo_url,
+        manual_convivencia_url, manual_convivencia_imagen_url,
     )
 
     with obtener_conexion() as conexion:
@@ -49,8 +52,9 @@ def institucion_actualizar():
                          telefono, correo, himno_url, himno_letra, escudo_texto, escudo_url, bandera_texto, bandera_url, fondo_url,
                          logo_url, anios_fundacion, num_estudiantes, num_profesores, whatsapp_numero,
                          instagram_url, instagram_imagen_url, facebook_url, facebook_imagen_url,
-                         plataforma_virtual_url, plataforma_virtual_logo_url)
-                       VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)""",
+                         plataforma_virtual_url, plataforma_virtual_logo_url,
+                         manual_convivencia_url, manual_convivencia_imagen_url)
+                       VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)""",
                     valores,
                 )
             else:
@@ -64,6 +68,7 @@ def institucion_actualizar():
                            num_profesores = %s, whatsapp_numero = %s, instagram_url = %s,
                            instagram_imagen_url = %s, facebook_url = %s, facebook_imagen_url = %s,
                            plataforma_virtual_url = %s, plataforma_virtual_logo_url = %s,
+                           manual_convivencia_url = %s, manual_convivencia_imagen_url = %s,
                            actualizado_en = NOW()
                        WHERE id = %s""",
                     valores + (existente['id'],),

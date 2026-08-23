@@ -7,6 +7,7 @@ CARPETA_IMAGENES = os.path.join(os.path.dirname(__file__), 'static', 'images')
 
 TIPOS_IMAGEN = ['.jpg', '.jpeg', '.png', '.gif', '.webp']
 TIPOS_IMAGEN_Y_VIDEO = TIPOS_IMAGEN + ['.mp4', '.webm', '.mov', '.ogg']
+TIPOS_DOCUMENTO = ['.pdf']
 
 
 def _extension(nombre_archivo):
