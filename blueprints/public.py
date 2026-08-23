@@ -20,6 +20,9 @@ def home():
             cur.execute('SELECT * FROM equipo_desarrollo ORDER BY orden, nombre')
             equipo_desarrollo = cur.fetchall()
 
+            cur.execute('SELECT * FROM comite_ecologico ORDER BY orden, nombre')
+            comite_ecologico = cur.fetchall()
+
             cur.execute('SELECT himno_url, fondo_url FROM institucion_info ORDER BY id LIMIT 1')
             info = cur.fetchone()
 
@@ -30,6 +33,7 @@ def home():
         noticias=noticias,
         gobiernoEscolar=gobierno_escolar,
         equipoDesarrollo=equipo_desarrollo,
+        comiteEcologico=comite_ecologico,
         himnoUrl=info['himno_url'] if info else None,
         fondoUrl=info['fondo_url'] if info else None,
     )
@@ -51,6 +55,15 @@ def equipo_desarrollo():
             cur.execute('SELECT * FROM equipo_desarrollo ORDER BY orden, nombre')
             miembros = cur.fetchall()
     return render_template('equipo_desarrollo.html', titulo='Equipo de Desarrollo', miembros=miembros)
+
+
+@public_bp.route('/comite-ecologico')
+def comite_ecologico():
+    with obtener_conexion() as conexion:
+        with conexion.cursor() as cur:
+            cur.execute('SELECT * FROM comite_ecologico ORDER BY orden, nombre')
+            miembros = cur.fetchall()
+    return render_template('comite_ecologico.html', titulo='Comité Ecológico', miembros=miembros)
 
 
 @public_bp.route('/institucion')

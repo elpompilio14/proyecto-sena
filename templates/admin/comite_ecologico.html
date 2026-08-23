@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block content %}
+
+<p><a href="/admin">&larr; Panel admin</a></p>
+<h1>Comité Ecológico</h1>
+
+<form method="POST" action="/admin/comite-ecologico" class="form" enctype="multipart/form-data">
+    <label>Nombre<input type="text" name="nombre" required></label>
+    <label>Rol (ej: Coordinador, Integrante)<input type="text" name="rol"></label>
+    <label>Foto (opcional, se ve mejor si es cuadrada)<input type="file" name="imagen" accept="image/*"></label>
+    <label>Orden (los números más bajos salen primero; si empatan, se ordenan por nombre)<input type="number" name="orden" value="0"></label>
+    <button type="submit">Agregar miembro</button>
+</form>
+
+{% if miembros|length == 0 %}
+    <p>Aún no hay miembros registrados.</p>
+{% else %}
+    <table class="tabla">
+        <thead><tr><th class="tabla-col-foto">Foto</th><th>Nombre</th><th>Rol</th><th>Orden</th><th></th></tr></thead>
+        <tbody>
+            {% for m in miembros %}
+                <tr>
+                    <td>
+                        {% if m.foto_url %}
+                            <img src="{{ m.foto_url }}" alt="{{ m.nombre }}" class="tabla-foto-mini">
+                        {% else %}
+                            <span class="tabla-foto-vacia">—</span>
+                        {% endif %}
+                    </td>
+                    <td>{{ m.nombre }}</td>
+                    <td>{{ m.rol or '-' }}</td>
+                    <td>{{ m.orden }}</td>
+                    <td class="acciones">
+                        <a href="/admin/comite-ecologico/{{ m.id }}/editar" class="btn-editar">Editar</a>
+                        <form method="POST" action="/admin/comite-ecologico/{{ m.id }}/eliminar">
+                            <button type="submit" class="btn-danger">Eliminar</button>
+                        </form>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endif %}
+
+{% endblock %}

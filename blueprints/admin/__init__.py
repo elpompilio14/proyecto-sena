@@ -29,4 +29,5 @@ from . import (  # noqa: E402  (import al final para evitar import circular con 
     alianzas,
     gobierno_escolar,
     equipo_desarrollo,
+    comite_ecologico,
 )
