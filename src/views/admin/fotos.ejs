@@ -6,6 +6,7 @@
 <form method="POST" action="/admin/fotos" class="form" enctype="multipart/form-data">
     <label>Título (opcional, se usa para todas las fotos que elijas)<input type="text" name="titulo"></label>
     <label>Fecha (se usa para todas las fotos que elijas, y para agruparlas por mes en la galería)<input type="date" name="fecha"></label>
+    <label>Orden dentro del evento/noticia (se usa para todas las fotos que elijas; los números más bajos salen primero, si empatan se ordenan por como se subieron)<input type="number" name="orden" value="0"></label>
     <label>Fotos o videos (puedes elegir varias a la vez)<input type="file" name="imagenes" accept="image/*,video/*" multiple required></label>
     <label>
         Evento relacionado (opcional)
@@ -33,7 +34,7 @@
     <p>Aún no hay fotos.</p>
 <% } else { %>
     <table class="tabla">
-        <thead><tr><th class="tabla-col-foto">Foto</th><th>Título</th><th>Fecha</th><th>Evento</th><th>Noticia</th><th></th></tr></thead>
+        <thead><tr><th class="tabla-col-foto">Foto</th><th>Título</th><th>Fecha</th><th>Orden</th><th>Evento</th><th>Noticia</th><th></th></tr></thead>
         <tbody>
             <% fotos.forEach(function(f) { %>
                 <tr>
@@ -46,6 +47,7 @@
                     </td>
                     <td><%= f.titulo || '(sin título)' %> <% if (esVideo(f.url)) { %><span class="badge">Video</span><% } %></td>
                     <td><%= new Date(f.fecha).toLocaleDateString('es-CO') %></td>
+                    <td><%= f.orden %></td>
                     <td><%= f.evento_titulo || '-' %></td>
                     <td><%= f.noticia_titulo || '-' %></td>
                     <td class="acciones">

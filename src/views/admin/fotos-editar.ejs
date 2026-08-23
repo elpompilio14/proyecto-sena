@@ -8,6 +8,7 @@
     <% const fFechaIso = `${fFecha.getFullYear()}-${String(fFecha.getMonth() + 1).padStart(2, '0')}-${String(fFecha.getDate()).padStart(2, '0')}`; %>
     <label>Título (opcional)<input type="text" name="titulo" value="<%= foto.titulo || '' %>"></label>
     <label>Fecha (se usa para agrupar por mes en la galería)<input type="date" name="fecha" value="<%= fFechaIso %>"></label>
+    <label>Orden dentro del evento/noticia (los números más bajos salen primero; si empatan, se ordenan por como se subieron)<input type="number" name="orden" value="<%= foto.orden %>"></label>
     <% if (esVideo(foto.url)) { %>
         <video src="<%= foto.url %>" controls class="card-img"></video>
     <% } else { %>

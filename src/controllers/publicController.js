@@ -53,7 +53,7 @@ exports.eventoDetalle = async (req, res) => {
     }
 
     const fotos = await pool.query(
-        'SELECT * FROM galeria_fotos WHERE evento_id = $1 ORDER BY creado_en',
+        'SELECT * FROM galeria_fotos WHERE evento_id = $1 ORDER BY orden, creado_en',
         [req.params.id]
     );
 
@@ -223,7 +223,7 @@ exports.noticiaDetalle = async (req, res) => {
     }
 
     const fotos = await pool.query(
-        'SELECT * FROM galeria_fotos WHERE noticia_id = $1 ORDER BY creado_en',
+        'SELECT * FROM galeria_fotos WHERE noticia_id = $1 ORDER BY orden, creado_en',
         [req.params.id]
     );
 

@@ -22,13 +22,13 @@ exports.crear = async (req, res) => {
     if (!req.files || req.files.length === 0) {
         return res.redirect('/admin/fotos');
     }
-    const { titulo, evento_id, noticia_id, fecha } = req.body;
+    const { titulo, evento_id, noticia_id, fecha, orden } = req.body;
 
     for (const archivo of req.files) {
         const url = `/images/${archivo.filename}`;
         await pool.query(
-            'INSERT INTO galeria_fotos (titulo, url, evento_id, noticia_id, fecha) VALUES ($1, $2, $3, $4, $5)',
-            [titulo || null, url, evento_id || null, noticia_id || null, fecha || hoyLocal()]
+            'INSERT INTO galeria_fotos (titulo, url, evento_id, noticia_id, fecha, orden) VALUES ($1, $2, $3, $4, $5, $6)',
+            [titulo || null, url, evento_id || null, noticia_id || null, fecha || hoyLocal(), orden || 0]
         );
     }
 
@@ -51,11 +51,11 @@ exports.editarForm = async (req, res) => {
 };
 
 exports.editar = async (req, res) => {
-    const { titulo, evento_id, noticia_id, url_actual, fecha } = req.body;
+    const { titulo, evento_id, noticia_id, url_actual, fecha, orden } = req.body;
     const url = req.file ? `/images/${req.file.filename}` : url_actual;
     await pool.query(
-        'UPDATE galeria_fotos SET titulo = $1, url = $2, evento_id = $3, noticia_id = $4, fecha = $5 WHERE id = $6',
-        [titulo || null, url, evento_id || null, noticia_id || null, fecha || hoyLocal(), req.params.id]
+        'UPDATE galeria_fotos SET titulo = $1, url = $2, evento_id = $3, noticia_id = $4, fecha = $5, orden = $6 WHERE id = $7',
+        [titulo || null, url, evento_id || null, noticia_id || null, fecha || hoyLocal(), orden || 0, req.params.id]
     );
     res.redirect('/admin/fotos');
 };
