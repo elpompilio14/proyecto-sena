@@ -33,10 +33,17 @@
     <p>Aún no hay fotos.</p>
 {% else %}
     <table class="tabla">
-        <thead><tr><th>Título</th><th>Evento</th><th>Noticia</th><th></th></tr></thead>
+        <thead><tr><th class="tabla-col-foto">Foto</th><th>Título</th><th>Evento</th><th>Noticia</th><th></th></tr></thead>
         <tbody>
             {% for f in fotos %}
                 <tr>
+                    <td>
+                        {% if esVideo(f.url) %}
+                            <span class="tabla-foto-vacia" title="Video">&#9658;</span>
+                        {% else %}
+                            <img src="{{ f.url }}" alt="{{ f.titulo or 'Foto' }}" class="tabla-foto-mini">
+                        {% endif %}
+                    </td>
                     <td>{{ f.titulo or '(sin título)' }} {% if esVideo(f.url) %}<span class="badge">Video</span>{% endif %}</td>
                     <td>{{ f.evento_titulo or '-' }}</td>
                     <td>{{ f.noticia_titulo or '-' }}</td>
