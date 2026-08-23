@@ -73,7 +73,7 @@ router.post('/mejores-puestos/:id/editar', mejoresPuestosController.editar);
 router.post('/mejores-puestos/:id/eliminar', mejoresPuestosController.eliminar);
 
 router.get('/institucion', institucionController.index);
-router.post('/institucion', upload.fields([
+router.post('/institucion', upload.institucion.fields([
     { name: 'escudo', maxCount: 1 },
     { name: 'bandera', maxCount: 1 },
     { name: 'fondo', maxCount: 1 },
@@ -81,6 +81,8 @@ router.post('/institucion', upload.fields([
     { name: 'instagram_imagen', maxCount: 1 },
     { name: 'facebook_imagen', maxCount: 1 },
     { name: 'plataforma_virtual_logo', maxCount: 1 },
+    { name: 'manual_convivencia', maxCount: 1 },
+    { name: 'manual_convivencia_imagen', maxCount: 1 },
 ]), institucionController.actualizar);
 
 router.get('/mensajes', mensajesController.index);

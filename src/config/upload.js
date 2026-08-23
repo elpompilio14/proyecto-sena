@@ -12,6 +12,7 @@ const storage = multer.diskStorage({
 
 const tiposImagen = ['.jpg', '.jpeg', '.png', '.gif', '.webp'];
 const tiposImagenYVideo = [...tiposImagen, '.mp4', '.webm', '.mov', '.ogg'];
+const tiposImagenYDocumento = [...tiposImagen, '.pdf'];
 
 function crearFiltro(tiposPermitidos, mensajeError) {
     return function filtroArchivo(req, file, cb) {
@@ -37,5 +38,13 @@ const uploadGaleria = multer({
     limits: { fileSize: 50 * 1024 * 1024 },
 });
 
+// Para la seccion de institucion: imagenes o el PDF del manual de convivencia
+const uploadInstitucion = multer({
+    storage,
+    fileFilter: crearFiltro(tiposImagenYDocumento, 'Solo se permiten imágenes (jpg, png, gif, webp) o PDF'),
+    limits: { fileSize: 10 * 1024 * 1024 },
+});
+
 module.exports = upload;
 module.exports.galeria = uploadGaleria;
+module.exports.institucion = uploadInstitucion;
