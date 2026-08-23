@@ -35,6 +35,14 @@
     <label>Imagen/captura de la página de Facebook (se muestra como tarjeta que lleva al perfil)<input type="file" name="facebook_imagen" accept="image/*"></label>
     <input type="hidden" name="facebook_imagen_url_actual" value="{{ info.facebook_imagen_url if info and info.facebook_imagen_url else '' }}">
 
+    <h2>Plataforma Virtual</h2>
+    <label>Link de la plataforma virtual<input type="text" name="plataforma_virtual_url" value="{{ info.plataforma_virtual_url if info and info.plataforma_virtual_url else '' }}" placeholder="https://..."></label>
+    {% if info and info.plataforma_virtual_logo_url %}
+        <img src="{{ info.plataforma_virtual_logo_url }}" alt="Logo de la plataforma virtual actual" class="card-img" style="max-width:200px;">
+    {% endif %}
+    <label>Logo de la plataforma virtual (usa una imagen con fondo transparente, se muestra en el inicio)<input type="file" name="plataforma_virtual_logo" accept="image/*"></label>
+    <input type="hidden" name="plataforma_virtual_logo_url_actual" value="{{ info.plataforma_virtual_logo_url if info and info.plataforma_virtual_logo_url else '' }}">
+
     <h2>Portada e información general</h2>
     {% if info and info.fondo_url %}
         <img src="{{ info.fondo_url }}" alt="Fondo actual" class="card-img">
