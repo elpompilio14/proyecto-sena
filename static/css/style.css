@@ -614,20 +614,36 @@ button:hover { background: var(--azul-oscuro); transform: translateY(-1px); }
     justify-content: center;
     align-items: flex-start;
     flex-wrap: wrap;
-    gap: 60px;
+    gap: 100px;
 }
 
 .plataforma-item {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 22px;
+    gap: 16px;
     width: 220px;
 }
 
-.plataforma-logo {
-    max-width: 260px;
+.plataforma-item-titulo {
+    font-weight: 700;
+    font-size: 0.95rem;
+    color: var(--azul-oscuro);
+    margin: 0;
+}
+
+.plataforma-logo-wrap {
     width: 100%;
+    height: 170px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.plataforma-logo {
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
     height: auto;
     object-fit: contain;
 }
