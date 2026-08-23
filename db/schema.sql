@@ -183,6 +183,15 @@ CREATE TABLE equipo_desarrollo (
     creado_en TIMESTAMP NOT NULL DEFAULT NOW()
 );
 
+CREATE TABLE comite_ecologico (
+    id SERIAL PRIMARY KEY,
+    nombre VARCHAR(150) NOT NULL,
+    rol VARCHAR(150),
+    foto_url TEXT,
+    orden INTEGER NOT NULL DEFAULT 0, -- posicion manual (menor = primero)
+    creado_en TIMESTAMP NOT NULL DEFAULT NOW()
+);
+
 CREATE TABLE mensajes_contacto (
     id SERIAL PRIMARY KEY,
     nombre VARCHAR(100) NOT NULL,

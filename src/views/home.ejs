@@ -166,4 +166,20 @@
 </section>
 <% } %>
 
+<% if (comiteEcologico.length > 0) { %>
+<section class="comunidad-seccion aparece">
+    <h2>Comité Ecológico</h2>
+    <div class="comunidad-lider-grid">
+        <% comiteEcologico.forEach(function(m) { %>
+            <div class="comunidad-lider-card">
+                <% if (m.foto_url) { %><img src="<%= m.foto_url %>" alt="<%= m.nombre %>" class="comunidad-lider-foto"><% } %>
+                <h3><%= m.nombre %></h3>
+                <% if (m.rol) { %><span class="badge"><%= m.rol %></span><% } %>
+            </div>
+        <% }) %>
+    </div>
+    <p class="home-ver-todas"><a href="/comite-ecologico" class="btn-ver-todas">Ver Comité Ecológico</a></p>
+</section>
+<% } %>
+
 <%- include('partials/footer') %>

@@ -21,6 +21,7 @@ const icfesController = require('../controllers/admin/icfesController');
 const alianzasController = require('../controllers/admin/alianzasController');
 const gobiernoEscolarController = require('../controllers/admin/gobiernoEscolarController');
 const equipoDesarrolloController = require('../controllers/admin/equipoDesarrolloController');
+const comiteEcologicoController = require('../controllers/admin/comiteEcologicoController');
 
 router.use(requireAdmin);
 
@@ -132,5 +133,11 @@ router.post('/equipo-desarrollo', upload.single('imagen'), equipoDesarrolloContr
 router.get('/equipo-desarrollo/:id/editar', equipoDesarrolloController.editarForm);
 router.post('/equipo-desarrollo/:id/editar', upload.single('imagen'), equipoDesarrolloController.editar);
 router.post('/equipo-desarrollo/:id/eliminar', equipoDesarrolloController.eliminar);
+
+router.get('/comite-ecologico', comiteEcologicoController.index);
+router.post('/comite-ecologico', upload.single('imagen'), comiteEcologicoController.crear);
+router.get('/comite-ecologico/:id/editar', comiteEcologicoController.editarForm);
+router.post('/comite-ecologico/:id/editar', upload.single('imagen'), comiteEcologicoController.editar);
+router.post('/comite-ecologico/:id/eliminar', comiteEcologicoController.eliminar);
 
 module.exports = router;

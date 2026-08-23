@@ -1,0 +1,25 @@
+<%- include('partials/header') %>
+
+<section class="comunidad-intro aparece">
+    <span class="badge-pill">Comité Ecológico</span>
+    <h1>Comité Ecológico</h1>
+    <p>Conoce a los estudiantes que promueven el cuidado del medio ambiente en la institución.</p>
+</section>
+
+<% if (miembros.length === 0) { %>
+    <p>Aún no hay miembros registrados.</p>
+<% } else { %>
+<section class="comunidad-seccion aparece">
+    <div class="comunidad-lider-grid">
+        <% miembros.forEach(function(m) { %>
+            <div class="comunidad-lider-card">
+                <% if (m.foto_url) { %><img src="<%= m.foto_url %>" alt="<%= m.nombre %>" class="comunidad-lider-foto"><% } %>
+                <h3><%= m.nombre %></h3>
+                <% if (m.rol) { %><span class="badge"><%= m.rol %></span><% } %>
+            </div>
+        <% }) %>
+    </div>
+</section>
+<% } %>
+
+<%- include('partials/footer') %>

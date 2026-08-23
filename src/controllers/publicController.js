@@ -9,6 +9,7 @@ exports.home = async (req, res) => {
     );
     const gobiernoEscolar = await pool.query('SELECT * FROM gobierno_escolar ORDER BY orden, nombre');
     const equipoDesarrollo = await pool.query('SELECT * FROM equipo_desarrollo ORDER BY orden, nombre');
+    const comiteEcologico = await pool.query('SELECT * FROM comite_ecologico ORDER BY orden, nombre');
     const info = await pool.query('SELECT himno_url, fondo_url FROM institucion_info ORDER BY id LIMIT 1');
     res.render('home', {
         titulo: 'Inicio',
@@ -16,6 +17,7 @@ exports.home = async (req, res) => {
         noticias: noticias.rows,
         gobiernoEscolar: gobiernoEscolar.rows,
         equipoDesarrollo: equipoDesarrollo.rows,
+        comiteEcologico: comiteEcologico.rows,
         himnoUrl: info.rows[0] ? info.rows[0].himno_url : null,
         fondoUrl: info.rows[0] ? info.rows[0].fondo_url : null,
     });
@@ -29,6 +31,11 @@ exports.gobiernoEscolar = async (req, res) => {
 exports.equipoDesarrollo = async (req, res) => {
     const miembros = await pool.query('SELECT * FROM equipo_desarrollo ORDER BY orden, nombre');
     res.render('equipo-desarrollo', { titulo: 'Equipo de Desarrollo', miembros: miembros.rows });
+};
+
+exports.comiteEcologico = async (req, res) => {
+    const miembros = await pool.query('SELECT * FROM comite_ecologico ORDER BY orden, nombre');
+    res.render('comite-ecologico', { titulo: 'Comité Ecológico', miembros: miembros.rows });
 };
 
 exports.eventos = async (req, res) => {
