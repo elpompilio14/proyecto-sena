@@ -447,6 +447,47 @@ h1, h2, h3 {
     justify-content: center;
 }
 
+.admin-lote-panel {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: end;
+    gap: 14px;
+    background: #fff;
+    border: 1px solid var(--borde);
+    border-radius: 14px;
+    padding: 18px 20px;
+    margin-bottom: 20px;
+    box-shadow: var(--sombra);
+}
+
+.admin-lote-panel > p {
+    flex-basis: 100%;
+    margin: 0 0 4px;
+    font-size: 0.9rem;
+}
+
+.admin-lote-panel label {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+.admin-lote-panel input,
+.admin-lote-panel select {
+    font: inherit;
+    padding: 8px 10px;
+    border: 1px solid var(--borde);
+    border-radius: 8px;
+}
+
+.tabla input[type="checkbox"] {
+    width: 17px;
+    height: 17px;
+    cursor: pointer;
+}
+
 .form {
     display: flex;
     flex-direction: column;

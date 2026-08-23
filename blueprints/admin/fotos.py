@@ -90,3 +90,38 @@ def fotos_eliminar(id):
         with conexion.cursor() as cur:
             cur.execute('DELETE FROM galeria_fotos WHERE id = %s', (id,))
     return redirect('/admin/fotos')
+
+
+@admin_bp.route('/fotos/editar-lote', methods=['POST'])
+def fotos_editar_lote():
+    ids = request.form.getlist('ids')
+    if not ids:
+        return redirect('/admin/fotos')
+
+    evento_lote = request.form.get('evento_lote')
+    fecha_lote = request.form.get('fecha_lote')
+    titulo_lote = request.form.get('titulo_lote')
+
+    cambios = []
+    valores = []
+
+    if evento_lote is not None and evento_lote != '__no_cambiar__':
+        cambios.append('evento_id = %s')
+        valores.append(evento_lote or None)
+    if fecha_lote:
+        cambios.append('fecha = %s')
+        valores.append(fecha_lote)
+    if titulo_lote:
+        cambios.append('titulo = %s')
+        valores.append(titulo_lote)
+
+    if cambios:
+        valores.append(ids)
+        with obtener_conexion() as conexion:
+            with conexion.cursor() as cur:
+                cur.execute(
+                    f"UPDATE galeria_fotos SET {', '.join(cambios)} WHERE id = ANY(%s::int[])",
+                    valores,
+                )
+
+    return redirect('/admin/fotos')
