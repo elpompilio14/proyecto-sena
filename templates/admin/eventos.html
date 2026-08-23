@@ -16,10 +16,17 @@
     <p>Aún no hay eventos.</p>
 {% else %}
     <table class="tabla">
-        <thead><tr><th>Título</th><th>Fecha</th><th></th></tr></thead>
+        <thead><tr><th class="tabla-col-foto">Foto</th><th>Título</th><th>Fecha</th><th></th></tr></thead>
         <tbody>
             {% for ev in eventos %}
                 <tr>
+                    <td>
+                        {% if ev.imagen_url %}
+                            <img src="{{ ev.imagen_url }}" alt="{{ ev.titulo }}" class="tabla-foto-mini">
+                        {% else %}
+                            <span class="tabla-foto-vacia">—</span>
+                        {% endif %}
+                    </td>
                     <td>{{ ev.titulo }}</td>
                     <td>{{ formatearFecha(ev.fecha) }}</td>
                     <td class="acciones">

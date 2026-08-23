@@ -15,10 +15,17 @@
     <p>Aún no hay miembros registrados.</p>
 {% else %}
     <table class="tabla">
-        <thead><tr><th>Nombre</th><th>Rol</th><th></th></tr></thead>
+        <thead><tr><th class="tabla-col-foto">Foto</th><th>Nombre</th><th>Rol</th><th></th></tr></thead>
         <tbody>
             {% for m in miembros %}
                 <tr>
+                    <td>
+                        {% if m.foto_url %}
+                            <img src="{{ m.foto_url }}" alt="{{ m.nombre }}" class="tabla-foto-mini">
+                        {% else %}
+                            <span class="tabla-foto-vacia">—</span>
+                        {% endif %}
+                    </td>
                     <td>{{ m.nombre }}</td>
                     <td>{{ m.rol or '-' }}</td>
                     <td class="acciones">

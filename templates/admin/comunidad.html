@@ -34,10 +34,17 @@
     <p>Aún no hay nadie registrado.</p>
 {% else %}
     <table class="tabla">
-        <thead><tr><th>Nombre</th><th>Cargo</th><th>Categoría</th><th></th></tr></thead>
+        <thead><tr><th class="tabla-col-foto">Foto</th><th>Nombre</th><th>Cargo</th><th>Categoría</th><th></th></tr></thead>
         <tbody>
             {% for p in personas %}
                 <tr>
+                    <td>
+                        {% if p.foto_url %}
+                            <img src="{{ p.foto_url }}" alt="{{ p.nombre }}" class="tabla-foto-mini">
+                        {% else %}
+                            <span class="tabla-foto-vacia">—</span>
+                        {% endif %}
+                    </td>
                     <td>{{ p.nombre }}</td>
                     <td>{{ p.cargo or '-' }}</td>
                     <td>{{ p.categoria }}</td>

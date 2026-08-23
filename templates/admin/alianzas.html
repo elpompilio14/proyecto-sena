@@ -16,10 +16,17 @@
     <p>Aún no hay alianzas registradas.</p>
 {% else %}
     <table class="tabla">
-        <thead><tr><th>Nombre</th><th></th></tr></thead>
+        <thead><tr><th class="tabla-col-foto">Foto</th><th>Nombre</th><th></th></tr></thead>
         <tbody>
             {% for a in alianzas %}
                 <tr>
+                    <td>
+                        {% if a.logo_url %}
+                            <img src="{{ a.logo_url }}" alt="{{ a.nombre }}" class="tabla-foto-mini">
+                        {% else %}
+                            <span class="tabla-foto-vacia">—</span>
+                        {% endif %}
+                    </td>
                     <td>{{ a.nombre }}</td>
                     <td class="acciones">
                         <a href="/admin/alianzas/{{ a.id }}/editar" class="btn-editar">Editar</a>

@@ -24,10 +24,17 @@
     <p>Aún no hay estudiantes.</p>
 {% else %}
     <table class="tabla">
-        <thead><tr><th>Nombres</th><th>Apellidos</th><th>Grado</th><th></th></tr></thead>
+        <thead><tr><th class="tabla-col-foto">Foto</th><th>Nombres</th><th>Apellidos</th><th>Grado</th><th></th></tr></thead>
         <tbody>
             {% for e in estudiantes %}
                 <tr>
+                    <td>
+                        {% if e.foto_url %}
+                            <img src="{{ e.foto_url }}" alt="{{ e.nombres }}" class="tabla-foto-mini">
+                        {% else %}
+                            <span class="tabla-foto-vacia">—</span>
+                        {% endif %}
+                    </td>
                     <td>{{ e.nombres }}</td>
                     <td>{{ e.apellidos }}</td>
                     <td>{{ e.grado_nombre or '-' }}</td>
