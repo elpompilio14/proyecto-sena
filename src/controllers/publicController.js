@@ -136,9 +136,24 @@ exports.alianzas = async (req, res) => {
     res.render('alianzas', { titulo: 'Alianzas', alianzas: alianzas.rows });
 };
 
+function agruparPorAnio(filas) {
+    const grupos = [];
+    let grupoActual = null;
+
+    filas.forEach((r) => {
+        if (!grupoActual || grupoActual.anio !== r.anio) {
+            grupoActual = { anio: r.anio, resultados: [] };
+            grupos.push(grupoActual);
+        }
+        grupoActual.resultados.push(r);
+    });
+
+    return grupos;
+}
+
 exports.icfes = async (req, res) => {
     const resultados = await pool.query('SELECT * FROM icfes_resultados ORDER BY anio DESC, puntaje DESC');
-    res.render('icfes', { titulo: 'Mejores ICFES', resultados: resultados.rows });
+    res.render('icfes', { titulo: 'Mejores ICFES', grupos: agruparPorAnio(resultados.rows) });
 };
 
 const MESES = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio',
