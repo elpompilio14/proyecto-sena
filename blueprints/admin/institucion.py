@@ -38,6 +38,7 @@ def institucion_actualizar():
         f.get('facebook_url') or None, facebook_imagen_url,
         f.get('plataforma_virtual_url') or None, plataforma_virtual_logo_url,
         manual_convivencia_url, manual_convivencia_imagen_url,
+        f.get('articulado_texto') or None, f.get('investigacion_texto') or None,
     )
 
     with obtener_conexion() as conexion:
@@ -53,8 +54,9 @@ def institucion_actualizar():
                          logo_url, anios_fundacion, num_estudiantes, num_profesores, whatsapp_numero,
                          instagram_url, instagram_imagen_url, facebook_url, facebook_imagen_url,
                          plataforma_virtual_url, plataforma_virtual_logo_url,
-                         manual_convivencia_url, manual_convivencia_imagen_url)
-                       VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)""",
+                         manual_convivencia_url, manual_convivencia_imagen_url,
+                         articulado_texto, investigacion_texto)
+                       VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)""",
                     valores,
                 )
             else:
@@ -69,6 +71,7 @@ def institucion_actualizar():
                            instagram_imagen_url = %s, facebook_url = %s, facebook_imagen_url = %s,
                            plataforma_virtual_url = %s, plataforma_virtual_logo_url = %s,
                            manual_convivencia_url = %s, manual_convivencia_imagen_url = %s,
+                           articulado_texto = %s, investigacion_texto = %s,
                            actualizado_en = NOW()
                        WHERE id = %s""",
                     valores + (existente['id'],),

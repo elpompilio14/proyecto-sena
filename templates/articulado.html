@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h1>Articulado</h1>
+
+{% if not texto %}
+    <p>Aún no se ha agregado esta información.</p>
+{% else %}
+    <section class="card aparece">
+        <p>{{ formatearTexto(texto) | safe }}</p>
+    </section>
+{% endif %}
+
+{% endblock %}

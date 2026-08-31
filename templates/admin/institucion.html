@@ -56,6 +56,10 @@
     <label>Imagen o sello para ese botón (opcional, usa una imagen con fondo transparente)<input type="file" name="manual_convivencia_imagen" accept="image/*"></label>
     <input type="hidden" name="manual_convivencia_imagen_url_actual" value="{{ info.manual_convivencia_imagen_url if info and info.manual_convivencia_imagen_url else '' }}">
 
+    <h2>Media Técnica</h2>
+    <label>Texto de Articulado<textarea name="articulado_texto" rows="6">{{ info.articulado_texto if info else '' }}</textarea></label>
+    <label>Texto de Investigación<textarea name="investigacion_texto" rows="6">{{ info.investigacion_texto if info else '' }}</textarea></label>
+
     <h2>Portada e información general</h2>
     {% if info and info.fondo_url %}
         <img src="{{ info.fondo_url }}" alt="Fondo actual" class="card-img">

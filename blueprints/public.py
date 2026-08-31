@@ -85,6 +85,24 @@ def institucion():
     return render_template('institucion.html', titulo='Institución', info=info)
 
 
+@public_bp.route('/articulado')
+def articulado():
+    with obtener_conexion() as conexion:
+        with conexion.cursor() as cur:
+            cur.execute('SELECT articulado_texto FROM institucion_info ORDER BY id LIMIT 1')
+            info = cur.fetchone()
+    return render_template('articulado.html', titulo='Articulado', texto=info['articulado_texto'] if info else None)
+
+
+@public_bp.route('/investigacion')
+def investigacion():
+    with obtener_conexion() as conexion:
+        with conexion.cursor() as cur:
+            cur.execute('SELECT investigacion_texto FROM institucion_info ORDER BY id LIMIT 1')
+            info = cur.fetchone()
+    return render_template('investigacion.html', titulo='Investigación', texto=info['investigacion_texto'] if info else None)
+
+
 @public_bp.route('/comunidad-educativa')
 def comunidad_educativa():
     with obtener_conexion() as conexion:
