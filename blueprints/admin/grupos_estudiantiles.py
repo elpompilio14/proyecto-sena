@@ -10,7 +10,7 @@ def grupos_estudiantiles_index():
         with conexion.cursor() as cur:
             cur.execute('SELECT * FROM grupos_estudiantiles ORDER BY nombre')
             grupos = cur.fetchall()
-    return render_template('admin/grupos_estudiantiles.html', titulo='Admin · Grupos Estudiantiles', grupos=grupos)
+    return render_template('admin/grupos_estudiantiles.html', titulo='Admin · Grupos y Semilleros', grupos=grupos)
 
 
 @admin_bp.route('/grupos-estudiantiles', methods=['POST'])
@@ -18,13 +18,14 @@ def grupos_estudiantiles_crear():
     nombre = request.form.get('nombre')
     descripcion = request.form.get('descripcion') or None
     encargado = request.form.get('encargado') or None
+    enlace_url = request.form.get('enlace_url') or None
     foto_url = guardar_archivo(request.files.get('imagen'))
 
     with obtener_conexion() as conexion:
         with conexion.cursor() as cur:
             cur.execute(
-                'INSERT INTO grupos_estudiantiles (nombre, descripcion, encargado, foto_url) VALUES (%s, %s, %s, %s)',
-                (nombre, descripcion, encargado, foto_url),
+                'INSERT INTO grupos_estudiantiles (nombre, descripcion, encargado, foto_url, enlace_url) VALUES (%s, %s, %s, %s, %s)',
+                (nombre, descripcion, encargado, foto_url, enlace_url),
             )
     return redirect('/admin/grupos-estudiantiles')
 
@@ -45,14 +46,15 @@ def grupos_estudiantiles_editar(id):
     nombre = request.form.get('nombre')
     descripcion = request.form.get('descripcion') or None
     encargado = request.form.get('encargado') or None
+    enlace_url = request.form.get('enlace_url') or None
     foto_actual = request.form.get('foto_actual')
     foto_url = guardar_archivo(request.files.get('imagen')) or (foto_actual or None)
 
     with obtener_conexion() as conexion:
         with conexion.cursor() as cur:
             cur.execute(
-                'UPDATE grupos_estudiantiles SET nombre = %s, descripcion = %s, encargado = %s, foto_url = %s WHERE id = %s',
-                (nombre, descripcion, encargado, foto_url, id),
+                'UPDATE grupos_estudiantiles SET nombre = %s, descripcion = %s, encargado = %s, foto_url = %s, enlace_url = %s WHERE id = %s',
+                (nombre, descripcion, encargado, foto_url, enlace_url, id),
             )
     return redirect('/admin/grupos-estudiantiles')
 

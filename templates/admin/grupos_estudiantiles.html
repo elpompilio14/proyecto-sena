@@ -2,13 +2,14 @@
 {% block content %}
 
 <p><a href="/admin">&larr; Panel admin</a></p>
-<h1>Grupos Estudiantiles</h1>
+<h1>Grupos y Semilleros</h1>
 
 <form method="POST" action="/admin/grupos-estudiantiles" class="form" enctype="multipart/form-data">
     <label>Nombre del grupo<input type="text" name="nombre" required></label>
     <label>Encargado (docente o estudiante líder)<input type="text" name="encargado"></label>
     <label>Descripción<textarea name="descripcion" rows="3"></textarea></label>
     <label>Foto (opcional)<input type="file" name="imagen" accept="image/*"></label>
+    <label>Enlace a su página completa (opcional, ej: /comite-ecologico). Si lo dejas vacío, la tarjeta no será clicable<input type="text" name="enlace_url" placeholder="/mi-pagina"></label>
     <button type="submit">Crear grupo</button>
 </form>
 

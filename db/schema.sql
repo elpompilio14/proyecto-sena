@@ -123,14 +123,15 @@ CREATE TABLE grupos_estudiantiles (
     descripcion TEXT,
     encargado VARCHAR(100),
     foto_url VARCHAR(255),
+    enlace_url VARCHAR(255), -- pagina propia del grupo (opcional); si esta vacia la tarjeta no es clicable
     creado_en TIMESTAMP NOT NULL DEFAULT NOW()
 );
 
-INSERT INTO grupos_estudiantiles (nombre) VALUES
-    ('Comité Ecológico'),
-    ('Equipo de Desarrollo'),
-    ('Equipo de Drones'),
-    ('Cohetería');
+INSERT INTO grupos_estudiantiles (nombre, enlace_url) VALUES
+    ('Comité Ecológico', '/comite-ecologico'),
+    ('Equipo de Desarrollo', '/equipo-desarrollo'),
+    ('Equipo de Drones', '/equipo-drones'),
+    ('Cohetería', '/coheteria');
 
 CREATE TABLE campeonatos (
     id SERIAL PRIMARY KEY,

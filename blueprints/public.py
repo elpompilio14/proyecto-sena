@@ -263,7 +263,7 @@ def grupos_estudiantiles():
         with conexion.cursor() as cur:
             cur.execute('SELECT * FROM grupos_estudiantiles ORDER BY nombre')
             grupos = cur.fetchall()
-    return render_template('grupos_estudiantiles.html', titulo='Grupos Estudiantiles', grupos=grupos)
+    return render_template('grupos_estudiantiles.html', titulo='Grupos y Semilleros', grupos=grupos)
 
 
 @public_bp.route('/deportes')
