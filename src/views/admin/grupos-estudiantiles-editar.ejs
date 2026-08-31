@@ -12,6 +12,7 @@
     <% } %>
     <label>Cambiar foto (opcional)<input type="file" name="imagen" accept="image/*"></label>
     <input type="hidden" name="foto_actual" value="<%= grupo.foto_url || '' %>">
+    <label>Enlace a su página completa (opcional, ej: /comite-ecologico). Si lo dejas vacío, la tarjeta no será clicable<input type="text" name="enlace_url" value="<%= grupo.enlace_url || '' %>" placeholder="/mi-pagina"></label>
     <button type="submit">Guardar cambios</button>
 </form>
 

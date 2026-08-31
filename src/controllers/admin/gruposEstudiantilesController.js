@@ -2,15 +2,15 @@ const pool = require('../../config/db');
 
 exports.index = async (req, res) => {
     const grupos = await pool.query('SELECT * FROM grupos_estudiantiles ORDER BY nombre');
-    res.render('admin/grupos-estudiantiles', { titulo: 'Admin · Grupos Estudiantiles', grupos: grupos.rows });
+    res.render('admin/grupos-estudiantiles', { titulo: 'Admin · Grupos y Semilleros', grupos: grupos.rows });
 };
 
 exports.crear = async (req, res) => {
-    const { nombre, descripcion, encargado } = req.body;
+    const { nombre, descripcion, encargado, enlace_url } = req.body;
     const foto_url = req.file ? `/images/${req.file.filename}` : null;
     await pool.query(
-        'INSERT INTO grupos_estudiantiles (nombre, descripcion, encargado, foto_url) VALUES ($1, $2, $3, $4)',
-        [nombre, descripcion || null, encargado || null, foto_url]
+        'INSERT INTO grupos_estudiantiles (nombre, descripcion, encargado, foto_url, enlace_url) VALUES ($1, $2, $3, $4, $5)',
+        [nombre, descripcion || null, encargado || null, foto_url, enlace_url || null]
     );
     res.redirect('/admin/grupos-estudiantiles');
 };
@@ -24,11 +24,11 @@ exports.editarForm = async (req, res) => {
 };
 
 exports.editar = async (req, res) => {
-    const { nombre, descripcion, encargado, foto_actual } = req.body;
+    const { nombre, descripcion, encargado, enlace_url, foto_actual } = req.body;
     const foto_url = req.file ? `/images/${req.file.filename}` : (foto_actual || null);
     await pool.query(
-        'UPDATE grupos_estudiantiles SET nombre = $1, descripcion = $2, encargado = $3, foto_url = $4 WHERE id = $5',
-        [nombre, descripcion || null, encargado || null, foto_url, req.params.id]
+        'UPDATE grupos_estudiantiles SET nombre = $1, descripcion = $2, encargado = $3, foto_url = $4, enlace_url = $5 WHERE id = $6',
+        [nombre, descripcion || null, encargado || null, foto_url, enlace_url || null, req.params.id]
     );
     res.redirect('/admin/grupos-estudiantiles');
 };

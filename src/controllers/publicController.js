@@ -97,7 +97,7 @@ exports.eventoDetalle = async (req, res) => {
 
 exports.gruposEstudiantiles = async (req, res) => {
     const grupos = await pool.query('SELECT * FROM grupos_estudiantiles ORDER BY nombre');
-    res.render('grupos-estudiantiles', { titulo: 'Grupos Estudiantiles', grupos: grupos.rows });
+    res.render('grupos-estudiantiles', { titulo: 'Grupos y Semilleros', grupos: grupos.rows });
 };
 
 exports.deportes = async (req, res) => {

@@ -109,3 +109,10 @@ SELECT * FROM (VALUES
     ('Cohetería')
 ) AS datos(nombre)
 WHERE NOT EXISTS (SELECT 1 FROM grupos_estudiantiles);
+
+ALTER TABLE grupos_estudiantiles ADD COLUMN IF NOT EXISTS enlace_url VARCHAR(255);
+
+UPDATE grupos_estudiantiles SET enlace_url = '/comite-ecologico' WHERE nombre = 'Comité Ecológico' AND enlace_url IS NULL;
+UPDATE grupos_estudiantiles SET enlace_url = '/equipo-desarrollo' WHERE nombre = 'Equipo de Desarrollo' AND enlace_url IS NULL;
+UPDATE grupos_estudiantiles SET enlace_url = '/equipo-drones' WHERE nombre = 'Equipo de Drones' AND enlace_url IS NULL;
+UPDATE grupos_estudiantiles SET enlace_url = '/coheteria' WHERE nombre = 'Cohetería' AND enlace_url IS NULL;
