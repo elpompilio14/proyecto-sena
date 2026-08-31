@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h1>Grupos Estudiantiles</h1>
+
+{% if grupos|length == 0 %}
+    <p>Aún no hay grupos registrados.</p>
+{% else %}
+    <div class="home-cards-grid">
+        {% for g in grupos %}
+            <article class="home-card-grande aparece" style="transition-delay: {{ [loop.index0, 5]|min * 70 }}ms">
+                <div class="home-card-img-wrap">
+                    {% if g.foto_url %}
+                        <img src="{{ g.foto_url }}" alt="{{ g.nombre }}">
+                    {% endif %}
+                </div>
+                <div class="home-card-caption">
+                    <h3>{{ g.nombre }}</h3>
+                    {% if g.encargado %}<p class="fecha">Encargado: {{ g.encargado }}</p>{% endif %}
+                    {% if g.descripcion %}<p>{{ formatearTexto(g.descripcion) | safe }}</p>{% endif %}
+                </div>
+            </article>
+        {% endfor %}
+    </div>
+{% endif %}
+
+{% endblock %}

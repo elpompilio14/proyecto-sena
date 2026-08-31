@@ -257,6 +257,15 @@ def evento_detalle(id):
     return render_template('evento_detalle.html', titulo=evento['titulo'], evento=evento, fotos=fotos)
 
 
+@public_bp.route('/grupos-estudiantiles')
+def grupos_estudiantiles():
+    with obtener_conexion() as conexion:
+        with conexion.cursor() as cur:
+            cur.execute('SELECT * FROM grupos_estudiantiles ORDER BY nombre')
+            grupos = cur.fetchall()
+    return render_template('grupos_estudiantiles.html', titulo='Grupos Estudiantiles', grupos=grupos)
+
+
 @public_bp.route('/deportes')
 def deportes():
     with obtener_conexion() as conexion:

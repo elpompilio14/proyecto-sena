@@ -115,6 +115,23 @@ CREATE TABLE integrantes_equipo (
     UNIQUE (equipo_id, estudiante_id)
 );
 
+-- Grupos y equipos del colegio que no son deportivos (Comite Ecologico, Equipo de Desarrollo, etc.)
+-- Independiente de "equipos", que es solo para equipos deportivos
+CREATE TABLE grupos_estudiantiles (
+    id SERIAL PRIMARY KEY,
+    nombre VARCHAR(100) NOT NULL,
+    descripcion TEXT,
+    encargado VARCHAR(100),
+    foto_url VARCHAR(255),
+    creado_en TIMESTAMP NOT NULL DEFAULT NOW()
+);
+
+INSERT INTO grupos_estudiantiles (nombre) VALUES
+    ('Comité Ecológico'),
+    ('Equipo de Desarrollo'),
+    ('Equipo de Drones'),
+    ('Cohetería');
+
 CREATE TABLE campeonatos (
     id SERIAL PRIMARY KEY,
     nombre VARCHAR(150) NOT NULL, -- ej: "Intercursos 2026-1"

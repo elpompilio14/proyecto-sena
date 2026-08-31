@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block content %}
+
+<p><a href="/admin">&larr; Panel admin</a></p>
+<h1>Grupos Estudiantiles</h1>
+
+<form method="POST" action="/admin/grupos-estudiantiles" class="form" enctype="multipart/form-data">
+    <label>Nombre del grupo<input type="text" name="nombre" required></label>
+    <label>Encargado (docente o estudiante líder)<input type="text" name="encargado"></label>
+    <label>Descripción<textarea name="descripcion" rows="3"></textarea></label>
+    <label>Foto (opcional)<input type="file" name="imagen" accept="image/*"></label>
+    <button type="submit">Crear grupo</button>
+</form>
+
+{% if grupos|length == 0 %}
+    <p>Aún no hay grupos registrados.</p>
+{% else %}
+    <table class="tabla">
+        <thead><tr><th class="tabla-col-foto">Foto</th><th>Nombre</th><th>Encargado</th><th></th></tr></thead>
+        <tbody>
+            {% for g in grupos %}
+                <tr>
+                    <td>
+                        {% if g.foto_url %}
+                            <img src="{{ g.foto_url }}" alt="{{ g.nombre }}" class="tabla-foto-mini">
+                        {% else %}
+                            <span class="tabla-foto-vacia">—</span>
+                        {% endif %}
+                    </td>
+                    <td>{{ g.nombre }}</td>
+                    <td>{{ g.encargado or '-' }}</td>
+                    <td class="acciones">
+                        <a href="/admin/grupos-estudiantiles/{{ g.id }}/editar" class="btn-editar">Editar</a>
+                        <form method="POST" action="/admin/grupos-estudiantiles/{{ g.id }}/eliminar">
+                            <button type="submit" class="btn-danger">Eliminar</button>
+                        </form>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endif %}
+
+{% endblock %}

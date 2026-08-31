@@ -91,3 +91,21 @@ CREATE TABLE IF NOT EXISTS comite_ecologico (
     orden INTEGER NOT NULL DEFAULT 0,
     creado_en TIMESTAMP NOT NULL DEFAULT NOW()
 );
+
+CREATE TABLE IF NOT EXISTS grupos_estudiantiles (
+    id SERIAL PRIMARY KEY,
+    nombre VARCHAR(100) NOT NULL,
+    descripcion TEXT,
+    encargado VARCHAR(100),
+    foto_url VARCHAR(255),
+    creado_en TIMESTAMP NOT NULL DEFAULT NOW()
+);
+
+INSERT INTO grupos_estudiantiles (nombre)
+SELECT * FROM (VALUES
+    ('Comité Ecológico'),
+    ('Equipo de Desarrollo'),
+    ('Equipo de Drones'),
+    ('Cohetería')
+) AS datos(nombre)
+WHERE NOT EXISTS (SELECT 1 FROM grupos_estudiantiles);
