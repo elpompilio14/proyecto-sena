@@ -30,4 +30,6 @@ from . import (  # noqa: E402  (import al final para evitar import circular con 
     gobierno_escolar,
     equipo_desarrollo,
     comite_ecologico,
+    equipo_drones,
+    coheteria,
 )

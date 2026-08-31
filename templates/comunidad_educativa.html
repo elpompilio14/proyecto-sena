@@ -7,39 +7,17 @@
     <p>Conoce a los líderes y educadores que guían nuestra institución hacia la excelencia.</p>
 </section>
 
-{% if rectoria|length == 0 and coordinacion|length == 0 and docentesPreview|length == 0 %}
+{% set totalDirectivos = directivos.punta|length + directivos.medio|length + directivos.base|length %}
+{% if totalDirectivos == 0 and docentesPreview|length == 0 %}
     <p>Aún no hay personas registradas.</p>
 {% endif %}
 
-{% if rectoria|length > 0 %}
+{% if totalDirectivos > 0 %}
 <section class="comunidad-seccion aparece">
-    <h2 class="comunidad-etiqueta">Rectoría</h2>
-    <div class="comunidad-lider-grid">
-        {% for p in rectoria %}
-            <div class="comunidad-lider-card">
-                {% if p.foto_url %}<img src="{{ p.foto_url }}" alt="{{ p.nombre }}" class="comunidad-lider-foto">{% endif %}
-                <h3>{{ p.nombre }}</h3>
-                {% if p.cargo %}<span class="badge">{{ p.cargo }}</span>{% endif %}
-                {% if p.descripcion %}<p>{{ formatearTexto(p.descripcion) | safe }}</p>{% endif %}
-            </div>
-        {% endfor %}
-    </div>
-</section>
-{% endif %}
-
-{% if coordinacion|length > 0 %}
-<section class="comunidad-seccion aparece">
-    <h2 class="comunidad-etiqueta">Coordinación</h2>
-    <div class="comunidad-lider-grid">
-        {% for p in coordinacion %}
-            <div class="comunidad-lider-card">
-                {% if p.foto_url %}<img src="{{ p.foto_url }}" alt="{{ p.nombre }}" class="comunidad-lider-foto">{% endif %}
-                <h3>{{ p.nombre }}</h3>
-                {% if p.cargo %}<span class="badge">{{ p.cargo }}</span>{% endif %}
-                {% if p.descripcion %}<p>{{ formatearTexto(p.descripcion) | safe }}</p>{% endif %}
-            </div>
-        {% endfor %}
-    </div>
+    <h2 class="comunidad-etiqueta">Directivos</h2>
+    {% with grupos = directivos %}
+        {% include "partials/piramide.html" %}
+    {% endwith %}
 </section>
 {% endif %}
 

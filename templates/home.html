@@ -156,51 +156,53 @@
 </section>
 {% endif %}
 
-{% if gobiernoEscolar|length > 0 %}
+{% if gobiernoEscolar.punta|length + gobiernoEscolar.medio|length + gobiernoEscolar.base|length > 0 %}
 <section class="comunidad-seccion aparece">
     <h2>Gobierno Escolar</h2>
-    <div class="comunidad-lider-grid">
-        {% for m in gobiernoEscolar %}
-            <div class="comunidad-lider-card">
-                {% if m.foto_url %}<img src="{{ m.foto_url }}" alt="{{ m.nombre }}" class="comunidad-lider-foto">{% endif %}
-                <h3>{{ m.nombre }}</h3>
-                {% if m.rol %}<span class="badge">{{ m.rol }}</span>{% endif %}
-            </div>
-        {% endfor %}
-    </div>
+    {% with grupos = gobiernoEscolar %}
+        {% include "partials/piramide.html" %}
+    {% endwith %}
     <p class="home-ver-todas"><a href="/gobierno-escolar" class="btn-ver-todas">Ver Gobierno Escolar</a></p>
 </section>
 {% endif %}
 
-{% if equipoDesarrollo|length > 0 %}
+{% if equipoDesarrollo.punta|length + equipoDesarrollo.medio|length + equipoDesarrollo.base|length > 0 %}
 <section class="comunidad-seccion aparece">
     <h2>Equipo de Desarrollo</h2>
-    <div class="comunidad-lider-grid">
-        {% for m in equipoDesarrollo %}
-            <div class="comunidad-lider-card">
-                {% if m.foto_url %}<img src="{{ m.foto_url }}" alt="{{ m.nombre }}" class="comunidad-lider-foto">{% endif %}
-                <h3>{{ m.nombre }}</h3>
-                {% if m.rol %}<span class="badge">{{ m.rol }}</span>{% endif %}
-            </div>
-        {% endfor %}
-    </div>
+    {% with grupos = equipoDesarrollo %}
+        {% include "partials/piramide.html" %}
+    {% endwith %}
     <p class="home-ver-todas"><a href="/equipo-desarrollo" class="btn-ver-todas">Ver Equipo de Desarrollo</a></p>
 </section>
 {% endif %}
 
-{% if comiteEcologico|length > 0 %}
+{% if comiteEcologico.punta|length + comiteEcologico.medio|length + comiteEcologico.base|length > 0 %}
 <section class="comunidad-seccion aparece">
     <h2>Comité Ecológico</h2>
-    <div class="comunidad-lider-grid">
-        {% for m in comiteEcologico %}
-            <div class="comunidad-lider-card">
-                {% if m.foto_url %}<img src="{{ m.foto_url }}" alt="{{ m.nombre }}" class="comunidad-lider-foto">{% endif %}
-                <h3>{{ m.nombre }}</h3>
-                {% if m.rol %}<span class="badge">{{ m.rol }}</span>{% endif %}
-            </div>
-        {% endfor %}
-    </div>
+    {% with grupos = comiteEcologico %}
+        {% include "partials/piramide.html" %}
+    {% endwith %}
     <p class="home-ver-todas"><a href="/comite-ecologico" class="btn-ver-todas">Ver Comité Ecológico</a></p>
+</section>
+{% endif %}
+
+{% if equipoDrones.punta|length + equipoDrones.medio|length + equipoDrones.base|length > 0 %}
+<section class="comunidad-seccion aparece">
+    <h2>Equipo de Drones</h2>
+    {% with grupos = equipoDrones %}
+        {% include "partials/piramide.html" %}
+    {% endwith %}
+    <p class="home-ver-todas"><a href="/equipo-drones" class="btn-ver-todas">Ver Equipo de Drones</a></p>
+</section>
+{% endif %}
+
+{% if coheteria.punta|length + coheteria.medio|length + coheteria.base|length > 0 %}
+<section class="comunidad-seccion aparece">
+    <h2>Cohetería</h2>
+    {% with grupos = coheteria %}
+        {% include "partials/piramide.html" %}
+    {% endwith %}
+    <p class="home-ver-todas"><a href="/coheteria" class="btn-ver-todas">Ver Cohetería</a></p>
 </section>
 {% endif %}
 

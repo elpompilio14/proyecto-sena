@@ -2,11 +2,11 @@
 {% block content %}
 
 <p><a href="/admin">&larr; Panel admin</a></p>
-<h1>Gobierno Escolar</h1>
+<h1>Cohetería</h1>
 
-<form method="POST" action="/admin/gobierno-escolar" class="form" enctype="multipart/form-data">
+<form method="POST" action="/admin/coheteria" class="form" enctype="multipart/form-data">
     <label>Nombre<input type="text" name="nombre" required></label>
-    <label>Rol (ej: Personero, Contralor, Representante de curso)<input type="text" name="rol"></label>
+    <label>Rol (ej: Capitán, Integrante)<input type="text" name="rol"></label>
     <label>Foto (opcional, se ve mejor si es cuadrada)<input type="file" name="imagen" accept="image/*"></label>
     <label>Orden (los números más bajos salen primero; si empatan, se ordenan por nombre)<input type="number" name="orden" value="0"></label>
     <label>Nivel en la pirámide
@@ -39,8 +39,8 @@
                     <td>{{ m.orden }}</td>
                     <td>{{ m.nivel }}</td>
                     <td class="acciones">
-                        <a href="/admin/gobierno-escolar/{{ m.id }}/editar" class="btn-editar">Editar</a>
-                        <form method="POST" action="/admin/gobierno-escolar/{{ m.id }}/eliminar">
+                        <a href="/admin/coheteria/{{ m.id }}/editar" class="btn-editar">Editar</a>
+                        <form method="POST" action="/admin/coheteria/{{ m.id }}/eliminar">
                             <button type="submit" class="btn-danger">Eliminar</button>
                         </form>
                     </td>

@@ -13,6 +13,13 @@
     <label>Cambiar foto (opcional)<input type="file" name="imagen" accept="image/*"></label>
     <input type="hidden" name="foto_actual" value="{{ miembro.foto_url or '' }}">
     <label>Orden (los números más bajos salen primero; si empatan, se ordenan por nombre)<input type="number" name="orden" value="{{ miembro.orden }}"></label>
+    <label>Nivel en la pirámide
+        <select name="nivel">
+            <option value="punta" {{ 'selected' if miembro.nivel == 'punta' else '' }}>Punta (arriba de todo)</option>
+            <option value="medio" {{ 'selected' if miembro.nivel == 'medio' else '' }}>Medio</option>
+            <option value="base" {{ 'selected' if miembro.nivel == 'base' else '' }}>Base</option>
+        </select>
+    </label>
     <button type="submit">Guardar cambios</button>
 </form>
 

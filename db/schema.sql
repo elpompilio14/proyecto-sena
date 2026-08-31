@@ -165,6 +165,7 @@ CREATE TABLE comunidad_educativa (
     descripcion TEXT, -- biografía corta / frase
     foto_url TEXT,
     orden INTEGER NOT NULL DEFAULT 0, -- posicion manual (menor = primero)
+    nivel VARCHAR(10) NOT NULL DEFAULT 'base', -- 'punta', 'medio' o 'base' (piramide de rectoria/coordinacion)
     creado_en TIMESTAMP NOT NULL DEFAULT NOW()
 );
 
@@ -174,6 +175,7 @@ CREATE TABLE gobierno_escolar (
     rol VARCHAR(150),
     foto_url TEXT,
     orden INTEGER NOT NULL DEFAULT 0, -- posicion manual (menor = primero)
+    nivel VARCHAR(10) NOT NULL DEFAULT 'base', -- 'punta', 'medio' o 'base' (piramide)
     creado_en TIMESTAMP NOT NULL DEFAULT NOW()
 );
 
@@ -183,6 +185,7 @@ CREATE TABLE equipo_desarrollo (
     rol VARCHAR(150),
     foto_url TEXT,
     orden INTEGER NOT NULL DEFAULT 0, -- posicion manual (menor = primero)
+    nivel VARCHAR(10) NOT NULL DEFAULT 'base', -- 'punta', 'medio' o 'base' (piramide)
     creado_en TIMESTAMP NOT NULL DEFAULT NOW()
 );
 
@@ -192,6 +195,27 @@ CREATE TABLE comite_ecologico (
     rol VARCHAR(150),
     foto_url TEXT,
     orden INTEGER NOT NULL DEFAULT 0, -- posicion manual (menor = primero)
+    nivel VARCHAR(10) NOT NULL DEFAULT 'base', -- 'punta', 'medio' o 'base' (piramide)
+    creado_en TIMESTAMP NOT NULL DEFAULT NOW()
+);
+
+CREATE TABLE equipo_drones (
+    id SERIAL PRIMARY KEY,
+    nombre VARCHAR(150) NOT NULL,
+    rol VARCHAR(150),
+    foto_url TEXT,
+    orden INTEGER NOT NULL DEFAULT 0, -- posicion manual (menor = primero)
+    nivel VARCHAR(10) NOT NULL DEFAULT 'base', -- 'punta', 'medio' o 'base' (piramide)
+    creado_en TIMESTAMP NOT NULL DEFAULT NOW()
+);
+
+CREATE TABLE coheteria (
+    id SERIAL PRIMARY KEY,
+    nombre VARCHAR(150) NOT NULL,
+    rol VARCHAR(150),
+    foto_url TEXT,
+    orden INTEGER NOT NULL DEFAULT 0, -- posicion manual (menor = primero)
+    nivel VARCHAR(10) NOT NULL DEFAULT 'base', -- 'punta', 'medio' o 'base' (piramide)
     creado_en TIMESTAMP NOT NULL DEFAULT NOW()
 );
 

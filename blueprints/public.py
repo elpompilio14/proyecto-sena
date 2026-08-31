@@ -4,6 +4,14 @@ from db import obtener_conexion
 public_bp = Blueprint('public', __name__)
 
 
+def _agrupar_por_nivel(filas):
+    grupos = {'punta': [], 'medio': [], 'base': []}
+    for r in filas:
+        nivel = r['nivel'] if r['nivel'] in ('punta', 'medio', 'base') else 'base'
+        grupos[nivel].append(r)
+    return grupos
+
+
 @public_bp.route('/')
 def home():
     with obtener_conexion() as conexion:
@@ -31,6 +39,12 @@ def home():
             cur.execute('SELECT * FROM comite_ecologico ORDER BY orden, nombre')
             comite_ecologico = cur.fetchall()
 
+            cur.execute('SELECT * FROM equipo_drones ORDER BY orden, nombre')
+            equipo_drones = cur.fetchall()
+
+            cur.execute('SELECT * FROM coheteria ORDER BY orden, nombre')
+            coheteria = cur.fetchall()
+
             cur.execute('SELECT himno_url, fondo_url FROM institucion_info ORDER BY id LIMIT 1')
             info = cur.fetchone()
 
@@ -41,9 +55,11 @@ def home():
         noticias=noticias,
         icfesResultados=icfes_resultados,
         icfesAnio=icfes_resultados[0]['anio'] if icfes_resultados else None,
-        gobiernoEscolar=gobierno_escolar,
-        equipoDesarrollo=equipo_desarrollo,
-        comiteEcologico=comite_ecologico,
+        gobiernoEscolar=_agrupar_por_nivel(gobierno_escolar),
+        equipoDesarrollo=_agrupar_por_nivel(equipo_desarrollo),
+        comiteEcologico=_agrupar_por_nivel(comite_ecologico),
+        equipoDrones=_agrupar_por_nivel(equipo_drones),
+        coheteria=_agrupar_por_nivel(coheteria),
         himnoUrl=info['himno_url'] if info else None,
         fondoUrl=info['fondo_url'] if info else None,
     )
@@ -55,7 +71,7 @@ def gobierno_escolar():
         with conexion.cursor() as cur:
             cur.execute('SELECT * FROM gobierno_escolar ORDER BY orden, nombre')
             miembros = cur.fetchall()
-    return render_template('gobierno_escolar.html', titulo='Gobierno Escolar', miembros=miembros)
+    return render_template('gobierno_escolar.html', titulo='Gobierno Escolar', grupos=_agrupar_por_nivel(miembros))
 
 
 @public_bp.route('/equipo-desarrollo')
@@ -64,7 +80,7 @@ def equipo_desarrollo():
         with conexion.cursor() as cur:
             cur.execute('SELECT * FROM equipo_desarrollo ORDER BY orden, nombre')
             miembros = cur.fetchall()
-    return render_template('equipo_desarrollo.html', titulo='Equipo de Desarrollo', miembros=miembros)
+    return render_template('equipo_desarrollo.html', titulo='Equipo de Desarrollo', grupos=_agrupar_por_nivel(miembros))
 
 
 @public_bp.route('/comite-ecologico')
@@ -73,7 +89,25 @@ def comite_ecologico():
         with conexion.cursor() as cur:
             cur.execute('SELECT * FROM comite_ecologico ORDER BY orden, nombre')
             miembros = cur.fetchall()
-    return render_template('comite_ecologico.html', titulo='Comité Ecológico', miembros=miembros)
+    return render_template('comite_ecologico.html', titulo='Comité Ecológico', grupos=_agrupar_por_nivel(miembros))
+
+
+@public_bp.route('/equipo-drones')
+def equipo_drones():
+    with obtener_conexion() as conexion:
+        with conexion.cursor() as cur:
+            cur.execute('SELECT * FROM equipo_drones ORDER BY orden, nombre')
+            miembros = cur.fetchall()
+    return render_template('equipo_drones.html', titulo='Equipo de Drones', grupos=_agrupar_por_nivel(miembros))
+
+
+@public_bp.route('/coheteria')
+def coheteria():
+    with obtener_conexion() as conexion:
+        with conexion.cursor() as cur:
+            cur.execute('SELECT * FROM coheteria ORDER BY orden, nombre')
+            miembros = cur.fetchall()
+    return render_template('coheteria.html', titulo='Cohetería', grupos=_agrupar_por_nivel(miembros))
 
 
 @public_bp.route('/institucion')
@@ -107,10 +141,8 @@ def investigacion():
 def comunidad_educativa():
     with obtener_conexion() as conexion:
         with conexion.cursor() as cur:
-            cur.execute("SELECT * FROM comunidad_educativa WHERE categoria = 'rectoria' ORDER BY orden, nombre")
-            rectoria = cur.fetchall()
-            cur.execute("SELECT * FROM comunidad_educativa WHERE categoria = 'coordinacion' ORDER BY orden, nombre")
-            coordinacion = cur.fetchall()
+            cur.execute("SELECT * FROM comunidad_educativa WHERE categoria IN ('rectoria', 'coordinacion') ORDER BY orden, nombre")
+            directivos = cur.fetchall()
             cur.execute("SELECT * FROM comunidad_educativa WHERE categoria = 'docente' ORDER BY orden, nombre LIMIT 4")
             docentes_preview = cur.fetchall()
             cur.execute("SELECT COUNT(*) AS total FROM comunidad_educativa WHERE categoria = 'docente'")
@@ -119,8 +151,7 @@ def comunidad_educativa():
     return render_template(
         'comunidad_educativa.html',
         titulo='Comunidad Educativa',
-        rectoria=rectoria,
-        coordinacion=coordinacion,
+        directivos=_agrupar_por_nivel(directivos),
         docentesPreview=docentes_preview,
         totalDocentes=total_docentes,
     )

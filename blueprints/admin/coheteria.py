@@ -4,17 +4,17 @@ from db import obtener_conexion
 from uploads import guardar_archivo
 
 
-@admin_bp.route('/gobierno-escolar')
-def gobierno_escolar_index():
+@admin_bp.route('/coheteria')
+def coheteria_index():
     with obtener_conexion() as conexion:
         with conexion.cursor() as cur:
-            cur.execute('SELECT * FROM gobierno_escolar ORDER BY orden, nombre')
+            cur.execute('SELECT * FROM coheteria ORDER BY orden, nombre')
             miembros = cur.fetchall()
-    return render_template('admin/gobierno_escolar.html', titulo='Admin · Gobierno Escolar', miembros=miembros)
+    return render_template('admin/coheteria.html', titulo='Admin · Cohetería', miembros=miembros)
 
 
-@admin_bp.route('/gobierno-escolar', methods=['POST'])
-def gobierno_escolar_crear():
+@admin_bp.route('/coheteria', methods=['POST'])
+def coheteria_crear():
     nombre = request.form.get('nombre')
     rol = request.form.get('rol') or None
     foto_url = guardar_archivo(request.files.get('imagen'))
@@ -24,25 +24,25 @@ def gobierno_escolar_crear():
     with obtener_conexion() as conexion:
         with conexion.cursor() as cur:
             cur.execute(
-                'INSERT INTO gobierno_escolar (nombre, rol, foto_url, orden, nivel) VALUES (%s, %s, %s, %s, %s)',
+                'INSERT INTO coheteria (nombre, rol, foto_url, orden, nivel) VALUES (%s, %s, %s, %s, %s)',
                 (nombre, rol, foto_url, orden, nivel),
             )
-    return redirect('/admin/gobierno-escolar')
+    return redirect('/admin/coheteria')
 
 
-@admin_bp.route('/gobierno-escolar/<int:id>/editar')
-def gobierno_escolar_editar_form(id):
+@admin_bp.route('/coheteria/<int:id>/editar')
+def coheteria_editar_form(id):
     with obtener_conexion() as conexion:
         with conexion.cursor() as cur:
-            cur.execute('SELECT * FROM gobierno_escolar WHERE id = %s', (id,))
+            cur.execute('SELECT * FROM coheteria WHERE id = %s', (id,))
             miembro = cur.fetchone()
     if not miembro:
         abort(404)
-    return render_template('admin/gobierno_escolar_editar.html', titulo='Admin · Editar miembro', miembro=miembro)
+    return render_template('admin/coheteria_editar.html', titulo='Admin · Editar miembro', miembro=miembro)
 
 
-@admin_bp.route('/gobierno-escolar/<int:id>/editar', methods=['POST'])
-def gobierno_escolar_editar(id):
+@admin_bp.route('/coheteria/<int:id>/editar', methods=['POST'])
+def coheteria_editar(id):
     nombre = request.form.get('nombre')
     rol = request.form.get('rol') or None
     foto_actual = request.form.get('foto_actual')
@@ -53,15 +53,15 @@ def gobierno_escolar_editar(id):
     with obtener_conexion() as conexion:
         with conexion.cursor() as cur:
             cur.execute(
-                'UPDATE gobierno_escolar SET nombre = %s, rol = %s, foto_url = %s, orden = %s, nivel = %s WHERE id = %s',
+                'UPDATE coheteria SET nombre = %s, rol = %s, foto_url = %s, orden = %s, nivel = %s WHERE id = %s',
                 (nombre, rol, foto_url, orden, nivel, id),
             )
-    return redirect('/admin/gobierno-escolar')
+    return redirect('/admin/coheteria')
 
 
-@admin_bp.route('/gobierno-escolar/<int:id>/eliminar', methods=['POST'])
-def gobierno_escolar_eliminar(id):
+@admin_bp.route('/coheteria/<int:id>/eliminar', methods=['POST'])
+def coheteria_eliminar(id):
     with obtener_conexion() as conexion:
         with conexion.cursor() as cur:
-            cur.execute('DELETE FROM gobierno_escolar WHERE id = %s', (id,))
-    return redirect('/admin/gobierno-escolar')
+            cur.execute('DELETE FROM coheteria WHERE id = %s', (id,))
+    return redirect('/admin/coheteria')

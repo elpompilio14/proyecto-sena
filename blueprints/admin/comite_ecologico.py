@@ -19,12 +19,13 @@ def comite_ecologico_crear():
     rol = request.form.get('rol') or None
     foto_url = guardar_archivo(request.files.get('imagen'))
     orden = request.form.get('orden') or 0
+    nivel = request.form.get('nivel') or 'base'
 
     with obtener_conexion() as conexion:
         with conexion.cursor() as cur:
             cur.execute(
-                'INSERT INTO comite_ecologico (nombre, rol, foto_url, orden) VALUES (%s, %s, %s, %s)',
-                (nombre, rol, foto_url, orden),
+                'INSERT INTO comite_ecologico (nombre, rol, foto_url, orden, nivel) VALUES (%s, %s, %s, %s, %s)',
+                (nombre, rol, foto_url, orden, nivel),
             )
     return redirect('/admin/comite-ecologico')
 
@@ -47,12 +48,13 @@ def comite_ecologico_editar(id):
     foto_actual = request.form.get('foto_actual')
     foto_url = guardar_archivo(request.files.get('imagen')) or (foto_actual or None)
     orden = request.form.get('orden') or 0
+    nivel = request.form.get('nivel') or 'base'
 
     with obtener_conexion() as conexion:
         with conexion.cursor() as cur:
             cur.execute(
-                'UPDATE comite_ecologico SET nombre = %s, rol = %s, foto_url = %s, orden = %s WHERE id = %s',
-                (nombre, rol, foto_url, orden, id),
+                'UPDATE comite_ecologico SET nombre = %s, rol = %s, foto_url = %s, orden = %s, nivel = %s WHERE id = %s',
+                (nombre, rol, foto_url, orden, nivel, id),
             )
     return redirect('/admin/comite-ecologico')
 

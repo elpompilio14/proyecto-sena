@@ -27,13 +27,14 @@ def comunidad_crear():
     descripcion = request.form.get('descripcion') or None
     foto_url = guardar_archivo(request.files.get('imagen'))
     orden = request.form.get('orden') or 0
+    nivel = request.form.get('nivel') or 'base'
 
     with obtener_conexion() as conexion:
         with conexion.cursor() as cur:
             cur.execute(
-                """INSERT INTO comunidad_educativa (nombre, cargo, categoria, area, materia, anios_experiencia, descripcion, foto_url, orden)
-                   VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)""",
-                (nombre, cargo, categoria, area, materia, anios_experiencia, descripcion, foto_url, orden),
+                """INSERT INTO comunidad_educativa (nombre, cargo, categoria, area, materia, anios_experiencia, descripcion, foto_url, orden, nivel)
+                   VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)""",
+                (nombre, cargo, categoria, area, materia, anios_experiencia, descripcion, foto_url, orden, nivel),
             )
     return redirect('/admin/comunidad-educativa')
 
@@ -61,15 +62,16 @@ def comunidad_editar(id):
     foto_actual = request.form.get('foto_actual')
     foto_url = guardar_archivo(request.files.get('imagen')) or (foto_actual or None)
     orden = request.form.get('orden') or 0
+    nivel = request.form.get('nivel') or 'base'
 
     with obtener_conexion() as conexion:
         with conexion.cursor() as cur:
             cur.execute(
                 """UPDATE comunidad_educativa
                    SET nombre = %s, cargo = %s, categoria = %s, area = %s, materia = %s,
-                       anios_experiencia = %s, descripcion = %s, foto_url = %s, orden = %s
+                       anios_experiencia = %s, descripcion = %s, foto_url = %s, orden = %s, nivel = %s
                    WHERE id = %s""",
-                (nombre, cargo, categoria, area, materia, anios_experiencia, descripcion, foto_url, orden, id),
+                (nombre, cargo, categoria, area, materia, anios_experiencia, descripcion, foto_url, orden, nivel, id),
             )
     return redirect('/admin/comunidad-educativa')
 

@@ -1,0 +1,38 @@
+<div class="piramide">
+    {% if grupos.punta|length > 0 %}
+        <div class="piramide-fila piramide-fila-punta">
+            {% for m in grupos.punta %}
+                <div class="comunidad-lider-card">
+                    {% if m.foto_url %}<img src="{{ m.foto_url }}" alt="{{ m.nombre }}" class="comunidad-lider-foto">{% endif %}
+                    <h3>{{ m.nombre }}</h3>
+                    {% if m.rol or m.cargo %}<span class="badge">{{ m.rol or m.cargo }}</span>{% endif %}
+                    {% if m.descripcion %}<p>{{ formatearTexto(m.descripcion) | safe }}</p>{% endif %}
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+    {% if grupos.medio|length > 0 %}
+        <div class="piramide-fila piramide-fila-medio">
+            {% for m in grupos.medio %}
+                <div class="comunidad-lider-card">
+                    {% if m.foto_url %}<img src="{{ m.foto_url }}" alt="{{ m.nombre }}" class="comunidad-lider-foto">{% endif %}
+                    <h3>{{ m.nombre }}</h3>
+                    {% if m.rol or m.cargo %}<span class="badge">{{ m.rol or m.cargo }}</span>{% endif %}
+                    {% if m.descripcion %}<p>{{ formatearTexto(m.descripcion) | safe }}</p>{% endif %}
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+    {% if grupos.base|length > 0 %}
+        <div class="piramide-fila piramide-fila-base">
+            {% for m in grupos.base %}
+                <div class="comunidad-lider-card">
+                    {% if m.foto_url %}<img src="{{ m.foto_url }}" alt="{{ m.nombre }}" class="comunidad-lider-foto">{% endif %}
+                    <h3>{{ m.nombre }}</h3>
+                    {% if m.rol or m.cargo %}<span class="badge">{{ m.rol or m.cargo }}</span>{% endif %}
+                    {% if m.descripcion %}<p>{{ formatearTexto(m.descripcion) | safe }}</p>{% endif %}
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+</div>
