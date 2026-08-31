@@ -1860,6 +1860,46 @@ button:hover { background: var(--azul-oscuro); transform: translateY(-1px); }
     margin-bottom: 10px;
 }
 
+/* ===================== Piramide jerarquica (punta / medio / base) ===================== */
+
+.piramide {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 36px;
+}
+
+.piramide-fila {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 24px;
+    width: 100%;
+}
+
+.piramide-fila-punta .comunidad-lider-foto {
+    width: 190px;
+    height: 190px;
+    border-color: var(--dorado);
+    border-width: 5px;
+}
+
+.piramide-fila-punta .badge {
+    background: var(--dorado);
+    color: #4a3200;
+}
+
+.piramide-fila-medio .comunidad-lider-foto {
+    border-color: var(--azul);
+}
+
+.piramide-fila-base .comunidad-lider-foto {
+    width: 130px;
+    height: 130px;
+    border-color: var(--azul-claro);
+    border-width: 3px;
+}
+
 .comunidad-docente-preview-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));

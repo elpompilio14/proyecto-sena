@@ -9,13 +9,13 @@ exports.index = async (req, res) => {
 };
 
 exports.crear = async (req, res) => {
-    const { nombre, cargo, categoria, area, materia, anios_experiencia, descripcion, orden } = req.body;
+    const { nombre, cargo, categoria, area, materia, anios_experiencia, descripcion, orden, nivel } = req.body;
     const foto_url = req.file ? `/images/${req.file.filename}` : null;
     await pool.query(
-        `INSERT INTO comunidad_educativa (nombre, cargo, categoria, area, materia, anios_experiencia, descripcion, foto_url, orden)
-         VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)`,
+        `INSERT INTO comunidad_educativa (nombre, cargo, categoria, area, materia, anios_experiencia, descripcion, foto_url, orden, nivel)
+         VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)`,
         [nombre, cargo || null, categoria || 'docente', area || null, materia || null,
-            anios_experiencia || null, descripcion || null, foto_url, orden || 0]
+            anios_experiencia || null, descripcion || null, foto_url, orden || 0, nivel || 'base']
     );
     res.redirect('/admin/comunidad-educativa');
 };
@@ -34,15 +34,15 @@ exports.editarForm = async (req, res) => {
 };
 
 exports.editar = async (req, res) => {
-    const { nombre, cargo, categoria, area, materia, anios_experiencia, descripcion, foto_actual, orden } = req.body;
+    const { nombre, cargo, categoria, area, materia, anios_experiencia, descripcion, foto_actual, orden, nivel } = req.body;
     const foto_url = req.file ? `/images/${req.file.filename}` : (foto_actual || null);
     await pool.query(
         `UPDATE comunidad_educativa
          SET nombre = $1, cargo = $2, categoria = $3, area = $4, materia = $5,
-             anios_experiencia = $6, descripcion = $7, foto_url = $8, orden = $9
-         WHERE id = $10`,
+             anios_experiencia = $6, descripcion = $7, foto_url = $8, orden = $9, nivel = $10
+         WHERE id = $11`,
         [nombre, cargo || null, categoria || 'docente', area || null, materia || null,
-            anios_experiencia || null, descripcion || null, foto_url, orden || 0, req.params.id]
+            anios_experiencia || null, descripcion || null, foto_url, orden || 0, nivel || 'base', req.params.id]
     );
     res.redirect('/admin/comunidad-educativa');
 };

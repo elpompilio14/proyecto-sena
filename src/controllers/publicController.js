@@ -1,5 +1,14 @@
 const pool = require('../config/db');
 
+function agruparPorNivel(filas) {
+    const grupos = { punta: [], medio: [], base: [] };
+    filas.forEach((r) => {
+        const nivel = ['punta', 'medio', 'base'].includes(r.nivel) ? r.nivel : 'base';
+        grupos[nivel].push(r);
+    });
+    return grupos;
+}
+
 exports.home = async (req, res) => {
     const eventos = await pool.query(
         'SELECT * FROM eventos ORDER BY fecha DESC LIMIT 6'
@@ -16,6 +25,8 @@ exports.home = async (req, res) => {
     const gobiernoEscolar = await pool.query('SELECT * FROM gobierno_escolar ORDER BY orden, nombre');
     const equipoDesarrollo = await pool.query('SELECT * FROM equipo_desarrollo ORDER BY orden, nombre');
     const comiteEcologico = await pool.query('SELECT * FROM comite_ecologico ORDER BY orden, nombre');
+    const equipoDrones = await pool.query('SELECT * FROM equipo_drones ORDER BY orden, nombre');
+    const coheteria = await pool.query('SELECT * FROM coheteria ORDER BY orden, nombre');
     const info = await pool.query('SELECT himno_url, fondo_url FROM institucion_info ORDER BY id LIMIT 1');
     res.render('home', {
         titulo: 'Inicio',
@@ -23,9 +34,11 @@ exports.home = async (req, res) => {
         noticias: noticias.rows,
         icfesResultados: icfesResultados.rows,
         icfesAnio: icfesResultados.rows[0] ? icfesResultados.rows[0].anio : null,
-        gobiernoEscolar: gobiernoEscolar.rows,
-        equipoDesarrollo: equipoDesarrollo.rows,
-        comiteEcologico: comiteEcologico.rows,
+        gobiernoEscolar: agruparPorNivel(gobiernoEscolar.rows),
+        equipoDesarrollo: agruparPorNivel(equipoDesarrollo.rows),
+        comiteEcologico: agruparPorNivel(comiteEcologico.rows),
+        equipoDrones: agruparPorNivel(equipoDrones.rows),
+        coheteria: agruparPorNivel(coheteria.rows),
         himnoUrl: info.rows[0] ? info.rows[0].himno_url : null,
         fondoUrl: info.rows[0] ? info.rows[0].fondo_url : null,
     });
@@ -33,17 +46,27 @@ exports.home = async (req, res) => {
 
 exports.gobiernoEscolar = async (req, res) => {
     const miembros = await pool.query('SELECT * FROM gobierno_escolar ORDER BY orden, nombre');
-    res.render('gobierno-escolar', { titulo: 'Gobierno Escolar', miembros: miembros.rows });
+    res.render('gobierno-escolar', { titulo: 'Gobierno Escolar', grupos: agruparPorNivel(miembros.rows) });
 };
 
 exports.equipoDesarrollo = async (req, res) => {
     const miembros = await pool.query('SELECT * FROM equipo_desarrollo ORDER BY orden, nombre');
-    res.render('equipo-desarrollo', { titulo: 'Equipo de Desarrollo', miembros: miembros.rows });
+    res.render('equipo-desarrollo', { titulo: 'Equipo de Desarrollo', grupos: agruparPorNivel(miembros.rows) });
 };
 
 exports.comiteEcologico = async (req, res) => {
     const miembros = await pool.query('SELECT * FROM comite_ecologico ORDER BY orden, nombre');
-    res.render('comite-ecologico', { titulo: 'Comité Ecológico', miembros: miembros.rows });
+    res.render('comite-ecologico', { titulo: 'Comité Ecológico', grupos: agruparPorNivel(miembros.rows) });
+};
+
+exports.equipoDrones = async (req, res) => {
+    const miembros = await pool.query('SELECT * FROM equipo_drones ORDER BY orden, nombre');
+    res.render('equipo-drones', { titulo: 'Equipo de Drones', grupos: agruparPorNivel(miembros.rows) });
+};
+
+exports.coheteria = async (req, res) => {
+    const miembros = await pool.query('SELECT * FROM coheteria ORDER BY orden, nombre');
+    res.render('coheteria', { titulo: 'Cohetería', grupos: agruparPorNivel(miembros.rows) });
 };
 
 exports.eventos = async (req, res) => {
@@ -205,15 +228,13 @@ exports.investigacion = async (req, res) => {
 };
 
 exports.comunidadEducativa = async (req, res) => {
-    const rectoria = await pool.query("SELECT * FROM comunidad_educativa WHERE categoria = 'rectoria' ORDER BY orden, nombre");
-    const coordinacion = await pool.query("SELECT * FROM comunidad_educativa WHERE categoria = 'coordinacion' ORDER BY orden, nombre");
+    const directivos = await pool.query("SELECT * FROM comunidad_educativa WHERE categoria IN ('rectoria', 'coordinacion') ORDER BY orden, nombre");
     const docentesPreview = await pool.query("SELECT * FROM comunidad_educativa WHERE categoria = 'docente' ORDER BY orden, nombre LIMIT 4");
     const totalDocentes = await pool.query("SELECT COUNT(*) FROM comunidad_educativa WHERE categoria = 'docente'");
 
     res.render('comunidad-educativa', {
         titulo: 'Comunidad Educativa',
-        rectoria: rectoria.rows,
-        coordinacion: coordinacion.rows,
+        directivos: agruparPorNivel(directivos.rows),
         docentesPreview: docentesPreview.rows,
         totalDocentes: parseInt(totalDocentes.rows[0].count, 10),
     });

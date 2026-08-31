@@ -6,39 +6,15 @@
     <p>Conoce a los líderes y educadores que guían nuestra institución hacia la excelencia.</p>
 </section>
 
-<% if (rectoria.length === 0 && coordinacion.length === 0 && docentesPreview.length === 0) { %>
+<% const totalDirectivos = directivos.punta.length + directivos.medio.length + directivos.base.length; %>
+<% if (totalDirectivos === 0 && docentesPreview.length === 0) { %>
     <p>Aún no hay personas registradas.</p>
 <% } %>
 
-<% if (rectoria.length > 0) { %>
+<% if (totalDirectivos > 0) { %>
 <section class="comunidad-seccion aparece">
-    <h2 class="comunidad-etiqueta">Rectoría</h2>
-    <div class="comunidad-lider-grid">
-        <% rectoria.forEach(function(p) { %>
-            <div class="comunidad-lider-card">
-                <% if (p.foto_url) { %><img src="<%= p.foto_url %>" alt="<%= p.nombre %>" class="comunidad-lider-foto"><% } %>
-                <h3><%= p.nombre %></h3>
-                <% if (p.cargo) { %><span class="badge"><%= p.cargo %></span><% } %>
-                <% if (p.descripcion) { %><p><%- formatearTexto(p.descripcion) %></p><% } %>
-            </div>
-        <% }) %>
-    </div>
-</section>
-<% } %>
-
-<% if (coordinacion.length > 0) { %>
-<section class="comunidad-seccion aparece">
-    <h2 class="comunidad-etiqueta">Coordinación</h2>
-    <div class="comunidad-lider-grid">
-        <% coordinacion.forEach(function(p) { %>
-            <div class="comunidad-lider-card">
-                <% if (p.foto_url) { %><img src="<%= p.foto_url %>" alt="<%= p.nombre %>" class="comunidad-lider-foto"><% } %>
-                <h3><%= p.nombre %></h3>
-                <% if (p.cargo) { %><span class="badge"><%= p.cargo %></span><% } %>
-                <% if (p.descripcion) { %><p><%- formatearTexto(p.descripcion) %></p><% } %>
-            </div>
-        <% }) %>
-    </div>
+    <h2 class="comunidad-etiqueta">Directivos</h2>
+    <%- include('partials/piramide', { grupos: directivos }) %>
 </section>
 <% } %>
 

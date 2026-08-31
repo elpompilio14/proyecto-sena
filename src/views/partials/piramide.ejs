@@ -1,0 +1,38 @@
+<div class="piramide">
+    <% if (grupos.punta.length > 0) { %>
+        <div class="piramide-fila piramide-fila-punta">
+            <% grupos.punta.forEach(function(m) { %>
+                <div class="comunidad-lider-card">
+                    <% if (m.foto_url) { %><img src="<%= m.foto_url %>" alt="<%= m.nombre %>" class="comunidad-lider-foto"><% } %>
+                    <h3><%= m.nombre %></h3>
+                    <% if (m.rol || m.cargo) { %><span class="badge"><%= m.rol || m.cargo %></span><% } %>
+                    <% if (m.descripcion) { %><p><%- formatearTexto(m.descripcion) %></p><% } %>
+                </div>
+            <% }) %>
+        </div>
+    <% } %>
+    <% if (grupos.medio.length > 0) { %>
+        <div class="piramide-fila piramide-fila-medio">
+            <% grupos.medio.forEach(function(m) { %>
+                <div class="comunidad-lider-card">
+                    <% if (m.foto_url) { %><img src="<%= m.foto_url %>" alt="<%= m.nombre %>" class="comunidad-lider-foto"><% } %>
+                    <h3><%= m.nombre %></h3>
+                    <% if (m.rol || m.cargo) { %><span class="badge"><%= m.rol || m.cargo %></span><% } %>
+                    <% if (m.descripcion) { %><p><%- formatearTexto(m.descripcion) %></p><% } %>
+                </div>
+            <% }) %>
+        </div>
+    <% } %>
+    <% if (grupos.base.length > 0) { %>
+        <div class="piramide-fila piramide-fila-base">
+            <% grupos.base.forEach(function(m) { %>
+                <div class="comunidad-lider-card">
+                    <% if (m.foto_url) { %><img src="<%= m.foto_url %>" alt="<%= m.nombre %>" class="comunidad-lider-foto"><% } %>
+                    <h3><%= m.nombre %></h3>
+                    <% if (m.rol || m.cargo) { %><span class="badge"><%= m.rol || m.cargo %></span><% } %>
+                    <% if (m.descripcion) { %><p><%- formatearTexto(m.descripcion) %></p><% } %>
+                </div>
+            <% }) %>
+        </div>
+    <% } %>
+</div>

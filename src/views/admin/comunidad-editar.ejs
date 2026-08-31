@@ -31,6 +31,13 @@
     <label>Cambiar foto (opcional)<input type="file" name="imagen" accept="image/*"></label>
     <input type="hidden" name="foto_actual" value="<%= persona.foto_url || '' %>">
     <label>Orden (los números más bajos salen primero; si empatan, se ordenan por nombre)<input type="number" name="orden" value="<%= persona.orden %>"></label>
+    <label>Nivel en la pirámide (solo aplica a Rectoría/Coordinación)
+        <select name="nivel">
+            <option value="punta" <%= persona.nivel === 'punta' ? 'selected' : '' %>>Punta (arriba de todo)</option>
+            <option value="medio" <%= persona.nivel === 'medio' ? 'selected' : '' %>>Medio</option>
+            <option value="base" <%= persona.nivel === 'base' ? 'selected' : '' %>>Base</option>
+        </select>
+    </label>
     <button type="submit">Guardar cambios</button>
 </form>
 

@@ -1,9 +1,9 @@
 <%- include('../partials/header') %>
 
-<p><a href="/admin/equipo-desarrollo">&larr; Equipo de Desarrollo</a></p>
+<p><a href="/admin/coheteria">&larr; Cohetería</a></p>
 <h1>Editar miembro</h1>
 
-<form method="POST" action="/admin/equipo-desarrollo/<%= miembro.id %>/editar" class="form" enctype="multipart/form-data">
+<form method="POST" action="/admin/coheteria/<%= miembro.id %>/editar" class="form" enctype="multipart/form-data">
     <label>Nombre<input type="text" name="nombre" value="<%= miembro.nombre %>" required></label>
     <label>Rol<input type="text" name="rol" value="<%= miembro.rol || '' %>"></label>
     <% if (miembro.foto_url) { %>

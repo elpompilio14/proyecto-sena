@@ -22,6 +22,8 @@ const alianzasController = require('../controllers/admin/alianzasController');
 const gobiernoEscolarController = require('../controllers/admin/gobiernoEscolarController');
 const equipoDesarrolloController = require('../controllers/admin/equipoDesarrolloController');
 const comiteEcologicoController = require('../controllers/admin/comiteEcologicoController');
+const equipoDronesController = require('../controllers/admin/equipoDronesController');
+const coheteriaController = require('../controllers/admin/coheteriaController');
 
 router.use(requireAdmin);
 
@@ -140,5 +142,17 @@ router.post('/comite-ecologico', upload.single('imagen'), comiteEcologicoControl
 router.get('/comite-ecologico/:id/editar', comiteEcologicoController.editarForm);
 router.post('/comite-ecologico/:id/editar', upload.single('imagen'), comiteEcologicoController.editar);
 router.post('/comite-ecologico/:id/eliminar', comiteEcologicoController.eliminar);
+
+router.get('/equipo-drones', equipoDronesController.index);
+router.post('/equipo-drones', upload.single('imagen'), equipoDronesController.crear);
+router.get('/equipo-drones/:id/editar', equipoDronesController.editarForm);
+router.post('/equipo-drones/:id/editar', upload.single('imagen'), equipoDronesController.editar);
+router.post('/equipo-drones/:id/eliminar', equipoDronesController.eliminar);
+
+router.get('/coheteria', coheteriaController.index);
+router.post('/coheteria', upload.single('imagen'), coheteriaController.crear);
+router.get('/coheteria/:id/editar', coheteriaController.editarForm);
+router.post('/coheteria/:id/editar', upload.single('imagen'), coheteriaController.editar);
+router.post('/coheteria/:id/eliminar', coheteriaController.eliminar);
 
 module.exports = router;

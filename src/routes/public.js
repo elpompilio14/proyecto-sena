@@ -11,6 +11,8 @@ router.get('/comunidad-educativa/docentes', publicController.docentes);
 router.get('/gobierno-escolar', publicController.gobiernoEscolar);
 router.get('/equipo-desarrollo', publicController.equipoDesarrollo);
 router.get('/comite-ecologico', publicController.comiteEcologico);
+router.get('/equipo-drones', publicController.equipoDrones);
+router.get('/coheteria', publicController.coheteria);
 router.get('/himno', publicController.himno);
 router.get('/noticias', publicController.noticias);
 router.get('/noticias/:id', publicController.noticiaDetalle);

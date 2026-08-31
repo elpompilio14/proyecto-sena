@@ -155,51 +155,43 @@
 </section>
 <% } %>
 
-<% if (gobiernoEscolar.length > 0) { %>
+<% if (gobiernoEscolar.punta.length + gobiernoEscolar.medio.length + gobiernoEscolar.base.length > 0) { %>
 <section class="comunidad-seccion aparece">
     <h2>Gobierno Escolar</h2>
-    <div class="comunidad-lider-grid">
-        <% gobiernoEscolar.forEach(function(m) { %>
-            <div class="comunidad-lider-card">
-                <% if (m.foto_url) { %><img src="<%= m.foto_url %>" alt="<%= m.nombre %>" class="comunidad-lider-foto"><% } %>
-                <h3><%= m.nombre %></h3>
-                <% if (m.rol) { %><span class="badge"><%= m.rol %></span><% } %>
-            </div>
-        <% }) %>
-    </div>
+    <%- include('partials/piramide', { grupos: gobiernoEscolar }) %>
     <p class="home-ver-todas"><a href="/gobierno-escolar" class="btn-ver-todas">Ver Gobierno Escolar</a></p>
 </section>
 <% } %>
 
-<% if (equipoDesarrollo.length > 0) { %>
+<% if (equipoDesarrollo.punta.length + equipoDesarrollo.medio.length + equipoDesarrollo.base.length > 0) { %>
 <section class="comunidad-seccion aparece">
     <h2>Equipo de Desarrollo</h2>
-    <div class="comunidad-lider-grid">
-        <% equipoDesarrollo.forEach(function(m) { %>
-            <div class="comunidad-lider-card">
-                <% if (m.foto_url) { %><img src="<%= m.foto_url %>" alt="<%= m.nombre %>" class="comunidad-lider-foto"><% } %>
-                <h3><%= m.nombre %></h3>
-                <% if (m.rol) { %><span class="badge"><%= m.rol %></span><% } %>
-            </div>
-        <% }) %>
-    </div>
+    <%- include('partials/piramide', { grupos: equipoDesarrollo }) %>
     <p class="home-ver-todas"><a href="/equipo-desarrollo" class="btn-ver-todas">Ver Equipo de Desarrollo</a></p>
 </section>
 <% } %>
 
-<% if (comiteEcologico.length > 0) { %>
+<% if (comiteEcologico.punta.length + comiteEcologico.medio.length + comiteEcologico.base.length > 0) { %>
 <section class="comunidad-seccion aparece">
     <h2>Comité Ecológico</h2>
-    <div class="comunidad-lider-grid">
-        <% comiteEcologico.forEach(function(m) { %>
-            <div class="comunidad-lider-card">
-                <% if (m.foto_url) { %><img src="<%= m.foto_url %>" alt="<%= m.nombre %>" class="comunidad-lider-foto"><% } %>
-                <h3><%= m.nombre %></h3>
-                <% if (m.rol) { %><span class="badge"><%= m.rol %></span><% } %>
-            </div>
-        <% }) %>
-    </div>
+    <%- include('partials/piramide', { grupos: comiteEcologico }) %>
     <p class="home-ver-todas"><a href="/comite-ecologico" class="btn-ver-todas">Ver Comité Ecológico</a></p>
+</section>
+<% } %>
+
+<% if (equipoDrones.punta.length + equipoDrones.medio.length + equipoDrones.base.length > 0) { %>
+<section class="comunidad-seccion aparece">
+    <h2>Equipo de Drones</h2>
+    <%- include('partials/piramide', { grupos: equipoDrones }) %>
+    <p class="home-ver-todas"><a href="/equipo-drones" class="btn-ver-todas">Ver Equipo de Drones</a></p>
+</section>
+<% } %>
+
+<% if (coheteria.punta.length + coheteria.medio.length + coheteria.base.length > 0) { %>
+<section class="comunidad-seccion aparece">
+    <h2>Cohetería</h2>
+    <%- include('partials/piramide', { grupos: coheteria }) %>
+    <p class="home-ver-todas"><a href="/coheteria" class="btn-ver-todas">Ver Cohetería</a></p>
 </section>
 <% } %>
 
