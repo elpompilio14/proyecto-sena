@@ -8,7 +8,7 @@
 {% else %}
     <div class="home-cards-grid">
         {% for g in grupos %}
-            <article class="home-card-grande aparece" style="transition-delay: {{ [loop.index0, 5]|min * 70 }}ms">
+            <article class="home-card-grande grupos-card aparece" style="transition-delay: {{ [loop.index0, 5]|min * 70 }}ms">
                 {% if g.enlace_url %}
                     <a href="{{ g.enlace_url }}" class="home-card-img-wrap">
                         {% if g.foto_url %}<img src="{{ g.foto_url }}" alt="{{ g.nombre }}">{% endif %}

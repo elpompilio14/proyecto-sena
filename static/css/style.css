@@ -2199,6 +2199,18 @@ button:hover { background: var(--azul-oscuro); transform: translateY(-1px); }
 
 .home-card-grande:hover .home-card-img-wrap img { transform: scale(1.05); }
 
+/* Grupos y Semilleros: misma animacion de hover que las tarjetas de Articulado (.categoria-link-card) */
+.home-card-grande.grupos-card {
+    transition: transform .18s ease, box-shadow .18s ease;
+}
+
+.home-card-grande.grupos-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--sombra-hover);
+}
+
+.home-card-grande.grupos-card:hover .home-card-img-wrap img { transform: none; }
+
 .home-card-caption {
     position: relative;
     margin: -42px 18px 0;
