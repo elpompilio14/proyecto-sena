@@ -728,6 +728,7 @@ button:hover { background: var(--azul-oscuro); transform: translateY(-1px); }
 
 .recorte-botones {
     display: flex;
+    flex-wrap: wrap;
     justify-content: flex-end;
     gap: 10px;
     margin-top: 18px;

@@ -8,7 +8,7 @@
     <% if (alianza.logo_url) { %>
         <img src="<%= alianza.logo_url %>" alt="Logo actual" class="card-img">
     <% } %>
-    <label>Cambiar logo (opcional)<input type="file" name="imagen" accept="image/*"></label>
+    <label>Cambiar logo (opcional)<input type="file" name="imagen" accept="image/*" data-recorte="rectangulo"></label>
     <input type="hidden" name="logo_actual" value="<%= alianza.logo_url || '' %>">
     <label>Link (opcional)<input type="text" name="link_url" value="<%= alianza.link_url || '' %>" placeholder="https://..."></label>
     <button type="submit">Guardar cambios</button>

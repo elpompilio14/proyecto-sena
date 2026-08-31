@@ -6,7 +6,7 @@
 
 <form method="POST" action="/admin/alianzas" class="form" enctype="multipart/form-data">
     <label>Nombre de la alianza/institución<input type="text" name="nombre" required></label>
-    <label>Logo<input type="file" name="imagen" accept="image/*"></label>
+    <label>Logo<input type="file" name="imagen" accept="image/*" data-recorte="rectangulo"></label>
     <label>Link (opcional, a dónde lleva al hacer clic)<input type="text" name="link_url" placeholder="https://..."></label>
     <button type="submit">Agregar alianza</button>
 </form>

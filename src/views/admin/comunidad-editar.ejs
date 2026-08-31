@@ -28,7 +28,7 @@
     <% if (persona.foto_url) { %>
         <img src="<%= persona.foto_url %>" alt="Foto actual" class="card-img">
     <% } %>
-    <label>Cambiar foto (opcional)<input type="file" name="imagen" accept="image/*"></label>
+    <label>Cambiar foto (opcional)<input type="file" name="imagen" accept="image/*" data-recorte="circulo" data-recorte-aspecto="1"></label>
     <input type="hidden" name="foto_actual" value="<%= persona.foto_url || '' %>">
     <label>Orden (los números más bajos salen primero; si empatan, se ordenan por nombre)<input type="number" name="orden" value="<%= persona.orden %>"></label>
     <label>Nivel en la pirámide (solo aplica a Rectoría/Coordinación)
