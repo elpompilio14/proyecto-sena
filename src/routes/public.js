@@ -19,6 +19,7 @@ router.get('/noticias', publicController.noticias);
 router.get('/noticias/:id', publicController.noticiaDetalle);
 router.get('/eventos', publicController.eventos);
 router.get('/eventos/:id', publicController.eventoDetalle);
+router.get('/grupos-estudiantiles', publicController.gruposEstudiantiles);
 router.get('/deportes', publicController.deportes);
 router.get('/deportes/:id', publicController.deporteDetalle);
 router.get('/campeonatos', publicController.campeonatos);

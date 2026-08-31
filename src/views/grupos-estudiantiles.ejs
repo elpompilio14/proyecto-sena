@@ -1,0 +1,26 @@
+<%- include('partials/header') %>
+
+<h1>Grupos Estudiantiles</h1>
+
+<% if (grupos.length === 0) { %>
+    <p>Aún no hay grupos registrados.</p>
+<% } else { %>
+    <div class="home-cards-grid">
+        <% grupos.forEach(function(g, i) { %>
+            <article class="home-card-grande aparece" style="transition-delay: <%= Math.min(i, 5) * 70 %>ms">
+                <div class="home-card-img-wrap">
+                    <% if (g.foto_url) { %>
+                        <img src="<%= g.foto_url %>" alt="<%= g.nombre %>">
+                    <% } %>
+                </div>
+                <div class="home-card-caption">
+                    <h3><%= g.nombre %></h3>
+                    <% if (g.encargado) { %><p class="fecha">Encargado: <%= g.encargado %></p><% } %>
+                    <% if (g.descripcion) { %><p><%- formatearTexto(g.descripcion) %></p><% } %>
+                </div>
+            </article>
+        <% }) %>
+    </div>
+<% } %>
+
+<%- include('partials/footer') %>

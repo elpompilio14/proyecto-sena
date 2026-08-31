@@ -17,6 +17,7 @@ const mensajesController = require('../controllers/admin/mensajesController');
 const gradosController = require('../controllers/admin/gradosController');
 const deportesController = require('../controllers/admin/deportesController');
 const mediaTecnicaController = require('../controllers/admin/mediaTecnicaController');
+const gruposEstudiantilesController = require('../controllers/admin/gruposEstudiantilesController');
 const comunidadController = require('../controllers/admin/comunidadController');
 const icfesController = require('../controllers/admin/icfesController');
 const alianzasController = require('../controllers/admin/alianzasController');
@@ -113,6 +114,12 @@ router.post('/media-tecnica', upload.single('imagen'), mediaTecnicaController.cr
 router.get('/media-tecnica/:id/editar', mediaTecnicaController.editarForm);
 router.post('/media-tecnica/:id/editar', upload.single('imagen'), mediaTecnicaController.editar);
 router.post('/media-tecnica/:id/eliminar', mediaTecnicaController.eliminar);
+
+router.get('/grupos-estudiantiles', gruposEstudiantilesController.index);
+router.post('/grupos-estudiantiles', upload.single('imagen'), gruposEstudiantilesController.crear);
+router.get('/grupos-estudiantiles/:id/editar', gruposEstudiantilesController.editarForm);
+router.post('/grupos-estudiantiles/:id/editar', upload.single('imagen'), gruposEstudiantilesController.editar);
+router.post('/grupos-estudiantiles/:id/eliminar', gruposEstudiantilesController.eliminar);
 
 router.get('/comunidad-educativa', comunidadController.index);
 router.post('/comunidad-educativa', upload.single('imagen'), comunidadController.crear);
