@@ -5,7 +5,7 @@
 
 <form method="POST" action="/admin/deportes" class="form" enctype="multipart/form-data">
     <label>Nombre del deporte<input type="text" name="nombre" required></label>
-    <label>Imagen de la tarjeta (opcional)<input type="file" name="imagen" accept="image/*"></label>
+    <label>Imagen de la tarjeta (opcional)<input type="file" name="imagen" accept="image/*" data-recorte="rectangulo" data-recorte-aspecto="1.3333"></label>
     <label>Descripción (para la página del deporte)<textarea name="descripcion" rows="4"></textarea></label>
     <button type="submit">Crear deporte</button>
 </form>

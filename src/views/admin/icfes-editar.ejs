@@ -11,7 +11,7 @@
     <% if (resultado.foto_url) { %>
         <img src="<%= resultado.foto_url %>" alt="Foto actual" class="card-img">
     <% } %>
-    <label>Cambiar foto (opcional)<input type="file" name="imagen" accept="image/*"></label>
+    <label>Cambiar foto (opcional)<input type="file" name="imagen" accept="image/*" data-recorte="rectangulo" data-recorte-aspecto="0.8"></label>
     <input type="hidden" name="foto_actual" value="<%= resultado.foto_url || '' %>">
     <button type="submit">Guardar cambios</button>
 </form>

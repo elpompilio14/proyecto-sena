@@ -684,6 +684,73 @@ button:hover { background: var(--azul-oscuro); transform: translateY(-1px); }
     font-size: 0.85rem;
 }
 
+/* ===================== Recorte de fotos al subir (admin) ===================== */
+
+.recorte-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(10, 15, 25, 0.75);
+    z-index: 2100;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.recorte-overlay.activo { display: flex; }
+
+.recorte-modal {
+    background: #fff;
+    border-radius: 16px;
+    padding: 22px;
+    max-width: 520px;
+    width: 100%;
+    box-shadow: var(--sombra-hover);
+}
+
+.recorte-modal h3 { margin: 0 0 6px; text-align: center; }
+
+.recorte-ayuda {
+    margin: 0 0 14px;
+    text-align: center;
+    font-size: 0.85rem;
+    opacity: 0.75;
+}
+
+.recorte-imagen-wrap {
+    max-height: 55vh;
+    background: #111;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.recorte-imagen-wrap img { display: block; max-width: 100%; }
+
+.recorte-botones {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 18px;
+}
+
+.recorte-confirmar {
+    background: var(--azul);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 18px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.recorte-confirmar:hover { background: var(--azul-oscuro); }
+
+/* Guia circular: redondea el area visible de recorte de Cropper.js */
+.recorte-circulo .cropper-view-box,
+.recorte-circulo .cropper-face {
+    border-radius: 50%;
+}
+
 .lightbox-overlay {
     display: none;
     position: fixed;

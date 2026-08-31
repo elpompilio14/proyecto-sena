@@ -10,7 +10,7 @@
     <% if (evento.imagen_url) { %>
         <img src="<%= evento.imagen_url %>" alt="Foto actual" class="card-img">
     <% } %>
-    <label>Cambiar foto (opcional)<input type="file" name="imagen" accept="image/*"></label>
+    <label>Cambiar foto (opcional)<input type="file" name="imagen" accept="image/*" data-recorte="rectangulo" data-recorte-aspecto="1.25"></label>
     <input type="hidden" name="imagen_actual" value="<%= evento.imagen_url || '' %>">
     <button type="submit">Guardar cambios</button>
 </form>
