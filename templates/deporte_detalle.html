@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block content %}
+
+<p><a href="/deportes">&larr; Volver a Deportes</a></p>
+
+<h1>{{ deporte.nombre }}</h1>
+
+{% if deporte.imagen_url %}
+    <img src="{{ deporte.imagen_url }}" alt="{{ deporte.nombre }}" class="card-img">
+{% endif %}
+
+{% if deporte.descripcion %}
+    <p>{{ formatearTexto(deporte.descripcion) | safe }}</p>
+{% else %}
+    <p>Aún no se ha agregado una descripción para este deporte.</p>
+{% endif %}
+
+{% if equipos|length > 0 %}
+    <h2>Equipos</h2>
+    <div class="card-grid">
+        {% for eq in equipos %}
+            <article class="card aparece" style="transition-delay: {{ [loop.index0, 5]|min * 70 }}ms">
+                {% if eq.foto_url %}
+                    <img src="{{ eq.foto_url }}" alt="{{ eq.nombre }}" class="card-img">
+                {% endif %}
+                <h3>{{ eq.nombre }}</h3>
+                {% if eq.categoria %}<p class="fecha">Categoría: {{ eq.categoria }}</p>{% endif %}
+                {% if eq.entrenador %}<p class="fecha">Entrenador: {{ eq.entrenador }}</p>{% endif %}
+                <p>{{ formatearTexto(eq.descripcion) | safe }}</p>
+            </article>
+        {% endfor %}
+    </div>
+{% endif %}
+
+{% endblock %}

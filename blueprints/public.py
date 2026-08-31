@@ -125,7 +125,25 @@ def articulado():
         with conexion.cursor() as cur:
             cur.execute('SELECT articulado_texto FROM institucion_info ORDER BY id LIMIT 1')
             info = cur.fetchone()
-    return render_template('articulado.html', titulo='Articulado', texto=info['articulado_texto'] if info else None)
+            cur.execute('SELECT * FROM media_tecnica_categorias ORDER BY orden, nombre')
+            categorias = cur.fetchall()
+    return render_template(
+        'articulado.html',
+        titulo='Articulado',
+        texto=info['articulado_texto'] if info else None,
+        categorias=categorias,
+    )
+
+
+@public_bp.route('/articulado/<int:id>')
+def media_tecnica_detalle(id):
+    with obtener_conexion() as conexion:
+        with conexion.cursor() as cur:
+            cur.execute('SELECT * FROM media_tecnica_categorias WHERE id = %s', (id,))
+            categoria = cur.fetchone()
+    if not categoria:
+        abort(404)
+    return render_template('media_tecnica_detalle.html', titulo=categoria['nombre'], categoria=categoria)
 
 
 @public_bp.route('/investigacion')
@@ -243,6 +261,8 @@ def evento_detalle(id):
 def deportes():
     with obtener_conexion() as conexion:
         with conexion.cursor() as cur:
+            cur.execute('SELECT * FROM deportes ORDER BY nombre')
+            lista_deportes = cur.fetchall()
             cur.execute("""
                 SELECT equipos.*, deportes.nombre AS deporte_nombre
                 FROM equipos
@@ -250,7 +270,20 @@ def deportes():
                 ORDER BY deportes.nombre, equipos.nombre
             """)
             equipos = cur.fetchall()
-    return render_template('deportes.html', titulo='Equipos deportivos', equipos=equipos)
+    return render_template('deportes.html', titulo='Equipos deportivos', deportes=lista_deportes, equipos=equipos)
+
+
+@public_bp.route('/deportes/<int:id>')
+def deporte_detalle(id):
+    with obtener_conexion() as conexion:
+        with conexion.cursor() as cur:
+            cur.execute('SELECT * FROM deportes WHERE id = %s', (id,))
+            deporte = cur.fetchone()
+            if not deporte:
+                abort(404)
+            cur.execute('SELECT * FROM equipos WHERE deporte_id = %s ORDER BY nombre', (id,))
+            equipos = cur.fetchall()
+    return render_template('deporte_detalle.html', titulo=deporte['nombre'], deporte=deporte, equipos=equipos)
 
 
 @public_bp.route('/campeonatos')

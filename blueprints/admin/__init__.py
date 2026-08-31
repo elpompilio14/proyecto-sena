@@ -24,6 +24,7 @@ from . import (  # noqa: E402  (import al final para evitar import circular con 
     mensajes,
     grados,
     deportes,
+    media_tecnica,
     comunidad,
     icfes,
     alianzas,

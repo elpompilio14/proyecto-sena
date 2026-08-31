@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block content %}
+
+<p><a href="/articulado">&larr; Volver a Articulado</a></p>
+
+<h1>{{ categoria.nombre }}</h1>
+
+{% if categoria.imagen_url %}
+    <img src="{{ categoria.imagen_url }}" alt="{{ categoria.nombre }}" class="card-img">
+{% endif %}
+
+{% if categoria.descripcion %}
+    <p>{{ formatearTexto(categoria.descripcion) | safe }}</p>
+{% else %}
+    <p>Aún no se ha agregado una descripción para esta categoría.</p>
+{% endif %}
+
+{% endblock %}

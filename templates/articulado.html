@@ -3,40 +3,24 @@
 
 <h1>Articulado</h1>
 
-<div class="categorias-grid">
-    <div class="categoria-card categoria-articulado">
-        <div class="categoria-card-icono">
-            <svg viewBox="0 0 24 24" width="52" height="52" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-                <rect x="3" y="4" width="18" height="12" rx="2"/>
-                <path d="M8 20h8M12 16v4"/>
-                <path d="M9 10.2a3 3 0 0 1 6 0"/>
-                <path d="M10.5 12a1.3 1.3 0 0 1 3 0"/>
-            </svg>
-        </div>
-        <h3>Sistemas Teleinformáticos</h3>
+{% if categorias|length == 0 %}
+    <p>Aún no hay categorías registradas.</p>
+{% else %}
+    <div class="categorias-grid">
+        {% for c in categorias %}
+            <a href="/articulado/{{ c.id }}" class="categoria-link-card">
+                <div class="categoria-link-card-img-wrap">
+                    {% if c.imagen_url %}
+                        <img src="{{ c.imagen_url }}" alt="{{ c.nombre }}">
+                    {% else %}
+                        <span class="categoria-link-card-sin-imagen">🖥️</span>
+                    {% endif %}
+                </div>
+                <h3>{{ c.nombre }}</h3>
+            </a>
+        {% endfor %}
     </div>
-    <div class="categoria-card categoria-articulado">
-        <div class="categoria-card-icono">
-            <svg viewBox="0 0 24 24" width="52" height="52" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-                <circle cx="12" cy="5" r="2.1"/>
-                <circle cx="5" cy="17.5" r="2.1"/>
-                <circle cx="19" cy="17.5" r="2.1"/>
-                <path d="M12 7.1v3.5M12 10.6l-6 4.8M12 10.6l6 4.8"/>
-            </svg>
-        </div>
-        <h3>Internet de las Cosas</h3>
-    </div>
-    <div class="categoria-card categoria-articulado">
-        <div class="categoria-card-icono">
-            <svg viewBox="0 0 24 24" width="52" height="52" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                <polyline points="8,7 3,12 8,17"/>
-                <polyline points="16,7 21,12 16,17"/>
-                <line x1="13.5" y1="5" x2="10.5" y2="19"/>
-            </svg>
-        </div>
-        <h3>Programación de Software</h3>
-    </div>
-</div>
+{% endif %}
 
 {% if not texto %}
     <p>Aún no se ha agregado esta información.</p>

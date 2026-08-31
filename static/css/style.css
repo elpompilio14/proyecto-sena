@@ -252,42 +252,52 @@ h1, h2, h3 {
     margin-bottom: 44px;
 }
 
-.categoria-card {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 14px;
-    padding: 30px 18px;
+.categoria-link-card {
+    display: block;
+    background: #fff;
+    border: 1px solid var(--borde);
     border-radius: 18px;
-    text-align: center;
+    overflow: hidden;
     box-shadow: var(--sombra);
+    text-decoration: none;
+    color: var(--texto);
     transition: transform .18s ease, box-shadow .18s ease;
 }
 
-.categoria-card:hover {
+.categoria-link-card:hover {
     transform: translateY(-5px);
     box-shadow: var(--sombra-hover);
+    text-decoration: none;
 }
 
-.categoria-card-icono {
-    width: 60px;
-    height: 60px;
+.categoria-link-card-img-wrap {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    background: var(--azul-pastel);
+    overflow: hidden;
+}
+
+.categoria-link-card-img-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.categoria-link-card-sin-imagen {
+    width: 100%;
+    height: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
+    font-size: 2.6rem;
 }
 
-.categoria-card h3 {
+.categoria-link-card h3 {
     margin: 0;
+    padding: 16px 18px;
     font-size: 1.05rem;
+    text-align: center;
 }
-
-.categoria-baloncesto { background: #ff8c1a; color: #1a1a1a; }
-.categoria-futbol { background: #ffffff; color: #1a1a1a; border: 2px solid #1a1a1a; }
-.categoria-balonmano { background: #ffd60a; color: #0a2a5e; }
-.categoria-badminton { background: #ffffff; color: #2a6fdb; border: 2px solid #cfe3ff; }
-
-.categoria-articulado { background: var(--azul-oscuro); color: #fff; }
 
 .card {
     background: #fff;

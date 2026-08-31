@@ -92,7 +92,9 @@ CREATE TABLE eventos (
 
 CREATE TABLE deportes (
     id SERIAL PRIMARY KEY,
-    nombre VARCHAR(80) NOT NULL UNIQUE -- ej: "Futbol", "Voleibol", "Baloncesto"
+    nombre VARCHAR(80) NOT NULL UNIQUE, -- ej: "Futbol", "Voleibol", "Baloncesto"
+    imagen_url TEXT,
+    descripcion TEXT
 );
 
 CREATE TABLE equipos (
@@ -219,6 +221,15 @@ CREATE TABLE coheteria (
     creado_en TIMESTAMP NOT NULL DEFAULT NOW()
 );
 
+CREATE TABLE media_tecnica_categorias (
+    id SERIAL PRIMARY KEY,
+    nombre VARCHAR(150) NOT NULL,
+    imagen_url TEXT,
+    descripcion TEXT,
+    orden INTEGER NOT NULL DEFAULT 0,
+    creado_en TIMESTAMP NOT NULL DEFAULT NOW()
+);
+
 CREATE TABLE mensajes_contacto (
     id SERIAL PRIMARY KEY,
     nombre VARCHAR(100) NOT NULL,
@@ -258,6 +269,11 @@ INSERT INTO grados (nombre, nivel) VALUES
 
 INSERT INTO deportes (nombre) VALUES
     ('Futbol'), ('Voleibol'), ('Baloncesto'), ('Bádminton');
+
+INSERT INTO media_tecnica_categorias (nombre, orden) VALUES
+    ('Sistemas Teleinformáticos', 1),
+    ('Internet de las Cosas', 2),
+    ('Programación de Software', 3);
 
 INSERT INTO institucion_info (historia, mision, vision, principios, valores, ubicacion) VALUES (
     'La Institución Educativa Distrital Técnica para el Desarrollo del Talento Humano fue creada para brindar formación académica y técnica a la comunidad, en convenio con el SENA.',
