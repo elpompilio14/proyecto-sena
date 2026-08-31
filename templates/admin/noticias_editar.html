@@ -11,7 +11,7 @@
     {% if noticia.imagen_url %}
         <img src="{{ noticia.imagen_url }}" alt="Foto actual" class="card-img">
     {% endif %}
-    <label>Cambiar foto (opcional)<input type="file" name="imagen" accept="image/*"></label>
+    <label>Cambiar foto (opcional)<input type="file" name="imagen" accept="image/*" data-recorte="rectangulo" data-recorte-aspecto="1.25"></label>
     <input type="hidden" name="imagen_actual" value="{{ noticia.imagen_url or '' }}">
     <button type="submit">Guardar cambios</button>
 </form>

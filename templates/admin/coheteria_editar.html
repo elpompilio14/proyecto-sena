@@ -10,7 +10,7 @@
     {% if miembro.foto_url %}
         <img src="{{ miembro.foto_url }}" alt="Foto actual" class="card-img">
     {% endif %}
-    <label>Cambiar foto (opcional)<input type="file" name="imagen" accept="image/*"></label>
+    <label>Cambiar foto (opcional)<input type="file" name="imagen" accept="image/*" data-recorte="circulo" data-recorte-aspecto="1"></label>
     <input type="hidden" name="foto_actual" value="{{ miembro.foto_url or '' }}">
     <label>Orden (los números más bajos salen primero; si empatan, se ordenan por nombre)<input type="number" name="orden" value="{{ miembro.orden }}"></label>
     <label>Nivel en la pirámide

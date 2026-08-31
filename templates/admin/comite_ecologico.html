@@ -7,7 +7,7 @@
 <form method="POST" action="/admin/comite-ecologico" class="form" enctype="multipart/form-data">
     <label>Nombre<input type="text" name="nombre" required></label>
     <label>Rol (ej: Coordinador, Integrante)<input type="text" name="rol"></label>
-    <label>Foto (opcional, se ve mejor si es cuadrada)<input type="file" name="imagen" accept="image/*"></label>
+    <label>Foto (opcional, se ve mejor si es cuadrada)<input type="file" name="imagen" accept="image/*" data-recorte="circulo" data-recorte-aspecto="1"></label>
     <label>Orden (los números más bajos salen primero; si empatan, se ordenan por nombre)<input type="number" name="orden" value="0"></label>
     <label>Nivel en la pirámide
         <select name="nivel">

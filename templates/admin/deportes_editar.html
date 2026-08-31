@@ -9,7 +9,7 @@
     {% if deporte.imagen_url %}
         <img src="{{ deporte.imagen_url }}" alt="Imagen actual" class="card-img">
     {% endif %}
-    <label>Cambiar imagen (opcional)<input type="file" name="imagen" accept="image/*"></label>
+    <label>Cambiar imagen (opcional)<input type="file" name="imagen" accept="image/*" data-recorte="rectangulo" data-recorte-aspecto="1.3333"></label>
     <input type="hidden" name="imagen_actual" value="{{ deporte.imagen_url or '' }}">
     <label>Descripción (para la página del deporte)<textarea name="descripcion" rows="4">{{ deporte.descripcion or '' }}</textarea></label>
     <button type="submit">Guardar cambios</button>
