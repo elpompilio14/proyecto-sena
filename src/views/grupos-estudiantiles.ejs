@@ -5,24 +5,25 @@
 <% if (grupos.length === 0) { %>
     <p>Aún no hay grupos registrados.</p>
 <% } else { %>
-    <div class="home-cards-grid">
-        <% grupos.forEach(function(g, i) { %>
-            <article class="home-card-grande grupos-card aparece" style="transition-delay: <%= Math.min(i, 5) * 70 %>ms">
-                <% if (g.enlace_url) { %>
-                    <a href="<%= g.enlace_url %>" class="home-card-img-wrap">
-                        <% if (g.foto_url) { %><img src="<%= g.foto_url %>" alt="<%= g.nombre %>"><% } %>
-                    </a>
-                <% } else { %>
-                    <div class="home-card-img-wrap">
-                        <% if (g.foto_url) { %><img src="<%= g.foto_url %>" alt="<%= g.nombre %>"><% } %>
+    <div class="categorias-grid">
+        <% grupos.forEach(function(g) { %>
+            <% var etiqueta = g.enlace_url ? 'a' : 'div'; %>
+            <<%= etiqueta %> class="categoria-link-card categoria-link-card--grupo"<% if (g.enlace_url) { %> href="<%= g.enlace_url %>"<% } %>>
+                <div class="categoria-link-card-img-wrap">
+                    <% if (g.foto_url) { %>
+                        <img src="<%= g.foto_url %>" alt="<%= g.nombre %>">
+                    <% } else { %>
+                        <span class="categoria-link-card-sin-imagen">🧑‍🤝‍🧑</span>
+                    <% } %>
+                </div>
+                <h3><%= g.nombre %></h3>
+                <% if (g.encargado || g.descripcion) { %>
+                    <div class="grupos-card-info">
+                        <% if (g.encargado) { %><p class="fecha">Encargado: <%= g.encargado %></p><% } %>
+                        <% if (g.descripcion) { %><p><%- formatearTexto(g.descripcion) %></p><% } %>
                     </div>
                 <% } %>
-                <div class="home-card-caption">
-                    <h3><% if (g.enlace_url) { %><a href="<%= g.enlace_url %>"><%= g.nombre %></a><% } else { %><%= g.nombre %><% } %></h3>
-                    <% if (g.encargado) { %><p class="fecha">Encargado: <%= g.encargado %></p><% } %>
-                    <% if (g.descripcion) { %><p><%- formatearTexto(g.descripcion) %></p><% } %>
-                </div>
-            </article>
+            </<%= etiqueta %>>
         <% }) %>
     </div>
 <% } %>
