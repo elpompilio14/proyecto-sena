@@ -82,6 +82,16 @@
                     </div>
                 </div>
 
+                <div class="nav-dropdown">
+                    <button type="button" class="nav-dropdown-btn">Media Técnica<span class="nav-caret">▾</span></button>
+                    <div class="nav-dropdown-menu">
+                        <div class="nav-dropdown-menu-tarjeta">
+                            <a href="/articulado">Articulado</a>
+                            <a href="/investigacion">Investigación</a>
+                        </div>
+                    </div>
+                </div>
+
                 <% if (usuario && usuario.rol === 'admin') { %>
                     <a href="/admin">Panel admin</a>
                     <form method="POST" action="/logout" class="nav-form"><button type="submit" class="link-btn">Salir</button></form>

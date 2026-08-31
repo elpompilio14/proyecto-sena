@@ -16,6 +16,7 @@ exports.actualizar = async (req, res) => {
         manual_convivencia_url_actual, manual_convivencia_imagen_url_actual,
         anios_fundacion, num_estudiantes, num_profesores, whatsapp_numero,
         instagram_url, facebook_url, plataforma_virtual_url,
+        articulado_texto, investigacion_texto,
     } = req.body;
 
     const archivoEscudo = req.files && req.files.escudo ? req.files.escudo[0] : null;
@@ -49,6 +50,7 @@ exports.actualizar = async (req, res) => {
         facebook_url || null, facebook_imagen_url,
         plataforma_virtual_url || null, plataforma_virtual_logo_url,
         manual_convivencia_url, manual_convivencia_imagen_url,
+        articulado_texto || null, investigacion_texto || null,
     ];
 
     if (existente.rows.length === 0) {
@@ -59,9 +61,10 @@ exports.actualizar = async (req, res) => {
                  logo_url, anios_fundacion, num_estudiantes, num_profesores, whatsapp_numero,
                  instagram_url, instagram_imagen_url, facebook_url, facebook_imagen_url,
                  plataforma_virtual_url, plataforma_virtual_logo_url,
-                 manual_convivencia_url, manual_convivencia_imagen_url)
+                 manual_convivencia_url, manual_convivencia_imagen_url,
+                 articulado_texto, investigacion_texto)
              VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16,
-                     $17, $18, $19, $20, $21, $22, $23, $24, $25, $26, $27, $28, $29)`,
+                     $17, $18, $19, $20, $21, $22, $23, $24, $25, $26, $27, $28, $29, $30, $31)`,
             valores_comunes
         );
     } else {
@@ -76,8 +79,9 @@ exports.actualizar = async (req, res) => {
                  instagram_imagen_url = $23, facebook_url = $24, facebook_imagen_url = $25,
                  plataforma_virtual_url = $26, plataforma_virtual_logo_url = $27,
                  manual_convivencia_url = $28, manual_convivencia_imagen_url = $29,
+                 articulado_texto = $30, investigacion_texto = $31,
                  actualizado_en = NOW()
-             WHERE id = $30`,
+             WHERE id = $32`,
             [...valores_comunes, existente.rows[0].id]
         );
     }

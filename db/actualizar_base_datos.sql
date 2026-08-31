@@ -35,6 +35,9 @@ ALTER TABLE equipo_desarrollo ADD COLUMN IF NOT EXISTS orden INTEGER NOT NULL DE
 ALTER TABLE galeria_fotos ADD COLUMN IF NOT EXISTS orden INTEGER NOT NULL DEFAULT 1;
 ALTER TABLE galeria_fotos ALTER COLUMN orden SET DEFAULT 1;
 
+ALTER TABLE institucion_info ADD COLUMN IF NOT EXISTS articulado_texto TEXT;
+ALTER TABLE institucion_info ADD COLUMN IF NOT EXISTS investigacion_texto TEXT;
+
 CREATE TABLE IF NOT EXISTS comite_ecologico (
     id SERIAL PRIMARY KEY,
     nombre VARCHAR(150) NOT NULL,

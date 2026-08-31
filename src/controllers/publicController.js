@@ -194,6 +194,16 @@ exports.institucion = async (req, res) => {
     res.render('institucion', { titulo: 'Institución', info: info.rows[0] || null });
 };
 
+exports.articulado = async (req, res) => {
+    const info = await pool.query('SELECT articulado_texto FROM institucion_info ORDER BY id LIMIT 1');
+    res.render('articulado', { titulo: 'Articulado', texto: info.rows[0] ? info.rows[0].articulado_texto : null });
+};
+
+exports.investigacion = async (req, res) => {
+    const info = await pool.query('SELECT investigacion_texto FROM institucion_info ORDER BY id LIMIT 1');
+    res.render('investigacion', { titulo: 'Investigación', texto: info.rows[0] ? info.rows[0].investigacion_texto : null });
+};
+
 exports.comunidadEducativa = async (req, res) => {
     const rectoria = await pool.query("SELECT * FROM comunidad_educativa WHERE categoria = 'rectoria' ORDER BY orden, nombre");
     const coordinacion = await pool.query("SELECT * FROM comunidad_educativa WHERE categoria = 'coordinacion' ORDER BY orden, nombre");

@@ -4,6 +4,8 @@ const publicController = require('../controllers/publicController');
 
 router.get('/', publicController.home);
 router.get('/institucion', publicController.institucion);
+router.get('/articulado', publicController.articulado);
+router.get('/investigacion', publicController.investigacion);
 router.get('/comunidad-educativa', publicController.comunidadEducativa);
 router.get('/comunidad-educativa/docentes', publicController.docentes);
 router.get('/gobierno-escolar', publicController.gobiernoEscolar);

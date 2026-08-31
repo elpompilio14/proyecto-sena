@@ -50,6 +50,8 @@ CREATE TABLE institucion_info (
     plataforma_virtual_logo_url TEXT,
     manual_convivencia_url TEXT,
     manual_convivencia_imagen_url TEXT,
+    articulado_texto TEXT,
+    investigacion_texto TEXT,
     actualizado_en TIMESTAMP NOT NULL DEFAULT NOW()
 );
 

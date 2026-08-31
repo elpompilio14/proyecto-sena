@@ -55,6 +55,10 @@
     <label>Imagen o sello para ese botón (opcional, usa una imagen con fondo transparente)<input type="file" name="manual_convivencia_imagen" accept="image/*"></label>
     <input type="hidden" name="manual_convivencia_imagen_url_actual" value="<%= info && info.manual_convivencia_imagen_url ? info.manual_convivencia_imagen_url : '' %>">
 
+    <h2>Media Técnica</h2>
+    <label>Texto de Articulado<textarea name="articulado_texto" rows="6"><%= info ? info.articulado_texto : '' %></textarea></label>
+    <label>Texto de Investigación<textarea name="investigacion_texto" rows="6"><%= info ? info.investigacion_texto : '' %></textarea></label>
+
     <h2>Portada e información general</h2>
     <% if (info && info.fondo_url) { %>
         <img src="<%= info.fondo_url %>" alt="Fondo actual" class="card-img">
