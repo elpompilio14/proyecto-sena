@@ -11,7 +11,7 @@
     {% if grupo.foto_url %}
         <img src="{{ grupo.foto_url }}" alt="Foto actual" class="card-img">
     {% endif %}
-    <label>Cambiar foto (opcional)<input type="file" name="imagen" accept="image/*"></label>
+    <label>Cambiar foto (opcional)<input type="file" name="imagen" accept="image/*" data-recorte="rectangulo" data-recorte-aspecto="1.3333"></label>
     <input type="hidden" name="foto_actual" value="{{ grupo.foto_url or '' }}">
     <label>Enlace a su página completa (opcional, ej: /comite-ecologico). Si lo dejas vacío, la tarjeta no será clicable<input type="text" name="enlace_url" value="{{ grupo.enlace_url or '' }}" placeholder="/mi-pagina"></label>
     <button type="submit">Guardar cambios</button>

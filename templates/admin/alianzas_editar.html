@@ -9,7 +9,7 @@
     {% if alianza.logo_url %}
         <img src="{{ alianza.logo_url }}" alt="Logo actual" class="card-img">
     {% endif %}
-    <label>Cambiar logo (opcional)<input type="file" name="imagen" accept="image/*"></label>
+    <label>Cambiar logo (opcional)<input type="file" name="imagen" accept="image/*" data-recorte="rectangulo"></label>
     <input type="hidden" name="logo_actual" value="{{ alianza.logo_url or '' }}">
     <label>Link (opcional)<input type="text" name="link_url" value="{{ alianza.link_url or '' }}" placeholder="https://..."></label>
     <button type="submit">Guardar cambios</button>
