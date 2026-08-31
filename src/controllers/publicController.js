@@ -96,13 +96,26 @@ exports.eventoDetalle = async (req, res) => {
 };
 
 exports.deportes = async (req, res) => {
+    const deportes = await pool.query('SELECT * FROM deportes ORDER BY nombre');
     const equipos = await pool.query(`
         SELECT equipos.*, deportes.nombre AS deporte_nombre
         FROM equipos
         JOIN deportes ON deportes.id = equipos.deporte_id
         ORDER BY deportes.nombre, equipos.nombre
     `);
-    res.render('deportes', { titulo: 'Equipos deportivos', equipos: equipos.rows });
+    res.render('deportes', { titulo: 'Equipos deportivos', deportes: deportes.rows, equipos: equipos.rows });
+};
+
+exports.deporteDetalle = async (req, res) => {
+    const deporte = await pool.query('SELECT * FROM deportes WHERE id = $1', [req.params.id]);
+    if (deporte.rows.length === 0) {
+        return res.status(404).render('404', { titulo: 'No encontrado' });
+    }
+    const equipos = await pool.query(
+        'SELECT * FROM equipos WHERE deporte_id = $1 ORDER BY nombre',
+        [req.params.id]
+    );
+    res.render('deporte-detalle', { titulo: deporte.rows[0].nombre, deporte: deporte.rows[0], equipos: equipos.rows });
 };
 
 exports.campeonatos = async (req, res) => {
@@ -219,7 +232,20 @@ exports.institucion = async (req, res) => {
 
 exports.articulado = async (req, res) => {
     const info = await pool.query('SELECT articulado_texto FROM institucion_info ORDER BY id LIMIT 1');
-    res.render('articulado', { titulo: 'Articulado', texto: info.rows[0] ? info.rows[0].articulado_texto : null });
+    const categorias = await pool.query('SELECT * FROM media_tecnica_categorias ORDER BY orden, nombre');
+    res.render('articulado', {
+        titulo: 'Articulado',
+        texto: info.rows[0] ? info.rows[0].articulado_texto : null,
+        categorias: categorias.rows,
+    });
+};
+
+exports.mediaTecnicaDetalle = async (req, res) => {
+    const categoria = await pool.query('SELECT * FROM media_tecnica_categorias WHERE id = $1', [req.params.id]);
+    if (categoria.rows.length === 0) {
+        return res.status(404).render('404', { titulo: 'No encontrado' });
+    }
+    res.render('media-tecnica-detalle', { titulo: categoria.rows[0].nombre, categoria: categoria.rows[0] });
 };
 
 exports.investigacion = async (req, res) => {

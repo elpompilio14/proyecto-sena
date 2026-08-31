@@ -63,6 +63,26 @@ CREATE TABLE IF NOT EXISTS coheteria (
 ALTER TABLE institucion_info ADD COLUMN IF NOT EXISTS articulado_texto TEXT;
 ALTER TABLE institucion_info ADD COLUMN IF NOT EXISTS investigacion_texto TEXT;
 
+ALTER TABLE deportes ADD COLUMN IF NOT EXISTS imagen_url TEXT;
+ALTER TABLE deportes ADD COLUMN IF NOT EXISTS descripcion TEXT;
+
+CREATE TABLE IF NOT EXISTS media_tecnica_categorias (
+    id SERIAL PRIMARY KEY,
+    nombre VARCHAR(150) NOT NULL,
+    imagen_url TEXT,
+    descripcion TEXT,
+    orden INTEGER NOT NULL DEFAULT 0,
+    creado_en TIMESTAMP NOT NULL DEFAULT NOW()
+);
+
+INSERT INTO media_tecnica_categorias (nombre, orden)
+SELECT * FROM (VALUES
+    ('Sistemas Teleinformáticos', 1),
+    ('Internet de las Cosas', 2),
+    ('Programación de Software', 3)
+) AS datos(nombre, orden)
+WHERE NOT EXISTS (SELECT 1 FROM media_tecnica_categorias);
+
 CREATE TABLE IF NOT EXISTS comite_ecologico (
     id SERIAL PRIMARY KEY,
     nombre VARCHAR(150) NOT NULL,

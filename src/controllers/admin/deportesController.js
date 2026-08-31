@@ -6,8 +6,12 @@ exports.index = async (req, res) => {
 };
 
 exports.crear = async (req, res) => {
-    const { nombre } = req.body;
-    await pool.query('INSERT INTO deportes (nombre) VALUES ($1)', [nombre]);
+    const { nombre, descripcion } = req.body;
+    const foto_url = req.file ? `/images/${req.file.filename}` : null;
+    await pool.query(
+        'INSERT INTO deportes (nombre, imagen_url, descripcion) VALUES ($1, $2, $3)',
+        [nombre, foto_url, descripcion || null]
+    );
     res.redirect('/admin/deportes');
 };
 
@@ -20,8 +24,12 @@ exports.editarForm = async (req, res) => {
 };
 
 exports.editar = async (req, res) => {
-    const { nombre } = req.body;
-    await pool.query('UPDATE deportes SET nombre = $1 WHERE id = $2', [nombre, req.params.id]);
+    const { nombre, descripcion, imagen_actual } = req.body;
+    const foto_url = req.file ? `/images/${req.file.filename}` : (imagen_actual || null);
+    await pool.query(
+        'UPDATE deportes SET nombre = $1, imagen_url = $2, descripcion = $3 WHERE id = $4',
+        [nombre, foto_url, descripcion || null, req.params.id]
+    );
     res.redirect('/admin/deportes');
 };
 

@@ -1,0 +1,17 @@
+<%- include('partials/header') %>
+
+<p><a href="/articulado">&larr; Volver a Articulado</a></p>
+
+<h1><%= categoria.nombre %></h1>
+
+<% if (categoria.imagen_url) { %>
+    <img src="<%= categoria.imagen_url %>" alt="<%= categoria.nombre %>" class="card-img">
+<% } %>
+
+<% if (categoria.descripcion) { %>
+    <p><%- formatearTexto(categoria.descripcion) %></p>
+<% } else { %>
+    <p>Aún no se ha agregado una descripción para esta categoría.</p>
+<% } %>
+
+<%- include('partials/footer') %>
