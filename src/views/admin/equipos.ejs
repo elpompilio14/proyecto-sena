@@ -28,12 +28,13 @@
         <tbody>
             <% equipos.forEach(function(eq) { %>
                 <tr>
-                    <td>
+                    <td class="tabla-col-foto-visible">
                         <% if (eq.foto_url) { %>
                             <img src="<%= eq.foto_url %>" alt="<%= eq.nombre %>" class="tabla-foto-mini">
                         <% } else { %>
                             <span class="tabla-foto-vacia">—</span>
                         <% } %>
+                        <%- include('../partials/boton-visibilidad', { urlToggle: '/admin/equipos/' + eq.id + '/visibilidad', visible: eq.visible }) %>
                     </td>
                     <td><%= eq.nombre %></td>
                     <td><%= eq.deporte_nombre %></td>

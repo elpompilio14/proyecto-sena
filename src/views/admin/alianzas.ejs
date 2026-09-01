@@ -19,12 +19,13 @@
         <tbody>
             <% alianzas.forEach(function(a) { %>
                 <tr>
-                    <td>
+                    <td class="tabla-col-foto-visible">
                         <% if (a.logo_url) { %>
                             <img src="<%= a.logo_url %>" alt="<%= a.nombre %>" class="tabla-foto-mini">
                         <% } else { %>
                             <span class="tabla-foto-vacia">—</span>
                         <% } %>
+                        <%- include('../partials/boton-visibilidad', { urlToggle: '/admin/alianzas/' + a.id + '/visibilidad', visible: a.visible }) %>
                     </td>
                     <td><%= a.nombre %></td>
                     <td class="acciones">

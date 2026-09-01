@@ -45,12 +45,13 @@
         <tbody>
             <% personas.forEach(function(p) { %>
                 <tr>
-                    <td>
+                    <td class="tabla-col-foto-visible">
                         <% if (p.foto_url) { %>
                             <img src="<%= p.foto_url %>" alt="<%= p.nombre %>" class="tabla-foto-mini">
                         <% } else { %>
                             <span class="tabla-foto-vacia">—</span>
                         <% } %>
+                        <%- include('../partials/boton-visibilidad', { urlToggle: '/admin/comunidad-educativa/' + p.id + '/visibilidad', visible: p.visible }) %>
                     </td>
                     <td><%= p.nombre %></td>
                     <td><%= p.cargo || '-' %></td>

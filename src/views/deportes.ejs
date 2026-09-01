@@ -9,7 +9,7 @@
         <% deportes.forEach(function(d) { %>
             <a href="/deportes/<%= d.id %>" class="categoria-link-card">
                 <div class="categoria-link-card-img-wrap">
-                    <% if (d.imagen_url) { %>
+                    <% if (d.imagen_url && d.visible) { %>
                         <img src="<%= d.imagen_url %>" alt="<%= d.nombre %>">
                     <% } else { %>
                         <span class="categoria-link-card-sin-imagen">🏅</span>
@@ -27,7 +27,7 @@
     <div class="card-grid">
         <% equipos.forEach(function(eq, i) { %>
             <article class="card aparece" style="transition-delay: <%= Math.min(i, 5) * 70 %>ms">
-                <% if (eq.foto_url) { %>
+                <% if (eq.foto_url && eq.visible) { %>
                     <img src="<%= eq.foto_url %>" alt="<%= eq.nombre %>" class="card-img">
                 <% } %>
                 <span class="badge"><%= eq.deporte_nombre %></span>

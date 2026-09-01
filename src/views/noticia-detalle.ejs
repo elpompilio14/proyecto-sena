@@ -6,7 +6,7 @@
 <p class="fecha"><%= new Date(noticia.fecha).toLocaleDateString('es-CO') %></p>
 <p><%- formatearTexto(noticia.contenido) %></p>
 
-<% if (noticia.imagen_url) { %>
+<% if (noticia.imagen_url && noticia.visible) { %>
     <img src="<%= noticia.imagen_url %>" alt="<%= noticia.titulo %>" class="detalle-portada">
 <% } %>
 

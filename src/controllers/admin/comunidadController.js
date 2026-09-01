@@ -25,6 +25,11 @@ exports.eliminar = async (req, res) => {
     res.redirect('/admin/comunidad-educativa');
 };
 
+exports.toggleVisible = async (req, res) => {
+    const r = await pool.query('UPDATE comunidad_educativa SET visible = NOT visible WHERE id = $1 RETURNING visible', [req.params.id]);
+    res.json({ visible: r.rows[0].visible });
+};
+
 exports.editarForm = async (req, res) => {
     const persona = await pool.query('SELECT * FROM comunidad_educativa WHERE id = $1', [req.params.id]);
     if (persona.rows.length === 0) {

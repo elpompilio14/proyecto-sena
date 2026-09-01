@@ -18,12 +18,13 @@
         <tbody>
             <% deportes.forEach(function(d) { %>
                 <tr>
-                    <td>
+                    <td class="tabla-col-foto-visible">
                         <% if (d.imagen_url) { %>
                             <img src="<%= d.imagen_url %>" alt="<%= d.nombre %>" class="tabla-foto-mini">
                         <% } else { %>
                             <span class="tabla-foto-vacia">—</span>
                         <% } %>
+                        <%- include('../partials/boton-visibilidad', { urlToggle: '/admin/deportes/' + d.id + '/visibilidad', visible: d.visible }) %>
                     </td>
                     <td><%= d.nombre %></td>
                     <td class="acciones">

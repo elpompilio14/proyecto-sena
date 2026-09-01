@@ -95,7 +95,7 @@
             <% eventos.forEach(function(ev, i) { %>
                 <article class="home-card-grande aparece" style="transition-delay: <%= Math.min(i, 5) * 70 %>ms">
                     <a href="/eventos/<%= ev.id %>" class="home-card-img-wrap">
-                        <% if (ev.imagen_url) { %>
+                        <% if (ev.imagen_url && ev.visible) { %>
                             <img src="<%= ev.imagen_url %>" alt="<%= ev.titulo %>">
                         <% } %>
                     </a>
@@ -119,7 +119,7 @@
             <% noticias.forEach(function(n, i) { %>
                 <article class="home-card-grande aparece" style="transition-delay: <%= Math.min(i, 5) * 70 %>ms">
                     <a href="/noticias/<%= n.id %>" class="home-card-img-wrap">
-                        <% if (n.imagen_url) { %>
+                        <% if (n.imagen_url && n.visible) { %>
                             <img src="<%= n.imagen_url %>" alt="<%= n.titulo %>">
                         <% } %>
                     </a>
@@ -140,7 +140,7 @@
     <div class="card-grid">
         <% icfesResultados.forEach(function(r, i) { %>
             <article class="card aparece icfes-card" style="transition-delay: <%= Math.min(i, 5) * 70 %>ms">
-                <% if (r.foto_url) { %>
+                <% if (r.foto_url && r.visible) { %>
                     <img src="<%= r.foto_url %>" alt="<%= r.estudiante_nombre %>" class="icfes-foto">
                 <% } %>
                 <span class="badge icfes-puntaje"><%= r.puntaje %> pts</span>

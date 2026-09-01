@@ -19,12 +19,13 @@
         <tbody>
             <% eventos.forEach(function(ev) { %>
                 <tr>
-                    <td>
+                    <td class="tabla-col-foto-visible">
                         <% if (ev.imagen_url) { %>
                             <img src="<%= ev.imagen_url %>" alt="<%= ev.titulo %>" class="tabla-foto-mini">
                         <% } else { %>
                             <span class="tabla-foto-vacia">—</span>
                         <% } %>
+                        <%- include('../partials/boton-visibilidad', { urlToggle: '/admin/eventos/' + ev.id + '/visibilidad', visible: ev.visible }) %>
                     </td>
                     <td><%= ev.titulo %></td>
                     <td><%= new Date(ev.fecha).toLocaleDateString('es-CO') %></td>

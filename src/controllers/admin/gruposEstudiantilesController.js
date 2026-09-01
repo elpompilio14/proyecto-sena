@@ -37,3 +37,8 @@ exports.eliminar = async (req, res) => {
     await pool.query('DELETE FROM grupos_estudiantiles WHERE id = $1', [req.params.id]);
     res.redirect('/admin/grupos-estudiantiles');
 };
+
+exports.toggleVisible = async (req, res) => {
+    const r = await pool.query('UPDATE grupos_estudiantiles SET visible = NOT visible WHERE id = $1 RETURNING visible', [req.params.id]);
+    res.json({ visible: r.rows[0].visible });
+};

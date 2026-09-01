@@ -9,7 +9,7 @@
         <% categorias.forEach(function(c) { %>
             <a href="/articulado/<%= c.id %>" class="categoria-link-card">
                 <div class="categoria-link-card-img-wrap">
-                    <% if (c.imagen_url) { %>
+                    <% if (c.imagen_url && c.visible) { %>
                         <img src="<%= c.imagen_url %>" alt="<%= c.nombre %>">
                     <% } else { %>
                         <span class="categoria-link-card-sin-imagen">🖥️</span>

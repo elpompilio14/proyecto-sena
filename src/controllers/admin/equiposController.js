@@ -27,6 +27,11 @@ exports.eliminar = async (req, res) => {
     res.redirect('/admin/equipos');
 };
 
+exports.toggleVisible = async (req, res) => {
+    const r = await pool.query('UPDATE equipos SET visible = NOT visible WHERE id = $1 RETURNING visible', [req.params.id]);
+    res.json({ visible: r.rows[0].visible });
+};
+
 exports.editarForm = async (req, res) => {
     const equipo = await pool.query('SELECT * FROM equipos WHERE id = $1', [req.params.id]);
     if (equipo.rows.length === 0) {

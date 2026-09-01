@@ -57,12 +57,13 @@
                 <% fotos.forEach(function(f) { %>
                     <tr>
                         <td><input type="checkbox" name="ids" value="<%= f.id %>" class="fila-check-foto"></td>
-                        <td>
+                        <td class="tabla-col-foto-visible">
                             <% if (esVideo(f.url)) { %>
                                 <span class="tabla-foto-vacia" title="Video">&#9658;</span>
                             <% } else { %>
                                 <img src="<%= f.url %>" alt="<%= f.titulo || 'Foto' %>" class="tabla-foto-mini">
                             <% } %>
+                            <%- include('../partials/boton-visibilidad', { urlToggle: '/admin/fotos/' + f.id + '/visibilidad', visible: f.visible }) %>
                         </td>
                         <td><%= f.titulo || '(sin título)' %> <% if (esVideo(f.url)) { %><span class="badge">Video</span><% } %></td>
                         <td><%= new Date(f.fecha).toLocaleDateString('es-CO') %></td>

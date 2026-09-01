@@ -19,12 +19,13 @@
         <tbody>
             <% categorias.forEach(function(c) { %>
                 <tr>
-                    <td>
+                    <td class="tabla-col-foto-visible">
                         <% if (c.imagen_url) { %>
                             <img src="<%= c.imagen_url %>" alt="<%= c.nombre %>" class="tabla-foto-mini">
                         <% } else { %>
                             <span class="tabla-foto-vacia">—</span>
                         <% } %>
+                        <%- include('../partials/boton-visibilidad', { urlToggle: '/admin/media-tecnica/' + c.id + '/visibilidad', visible: c.visible }) %>
                     </td>
                     <td><%= c.nombre %></td>
                     <td><%= c.orden %></td>

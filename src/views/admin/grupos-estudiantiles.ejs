@@ -20,12 +20,13 @@
         <tbody>
             <% grupos.forEach(function(g) { %>
                 <tr>
-                    <td>
+                    <td class="tabla-col-foto-visible">
                         <% if (g.foto_url) { %>
                             <img src="<%= g.foto_url %>" alt="<%= g.nombre %>" class="tabla-foto-mini">
                         <% } else { %>
                             <span class="tabla-foto-vacia">—</span>
                         <% } %>
+                        <%- include('../partials/boton-visibilidad', { urlToggle: '/admin/grupos-estudiantiles/' + g.id + '/visibilidad', visible: g.visible }) %>
                     </td>
                     <td><%= g.nombre %></td>
                     <td><%= g.encargado || '-' %></td>

@@ -42,7 +42,7 @@ function claseArea(area) {
         <% docentes.forEach(function(d, i) { %>
             <article class="card docente-card aparece" data-area="<%= d.area || '' %>" style="transition-delay: <%= Math.min(i, 5) * 70 %>ms">
                 <div class="docente-foto-wrap">
-                    <% if (d.foto_url) { %><img src="<%= d.foto_url %>" alt="<%= d.nombre %>" class="docente-foto"><% } %>
+                    <% if (d.foto_url && d.visible) { %><img src="<%= d.foto_url %>" alt="<%= d.nombre %>" class="docente-foto"><% } %>
                     <% if (d.materia) { %><span class="docente-tag <%= claseArea(d.area) %>"><%= d.materia %></span><% } %>
                 </div>
                 <h3><%= d.nombre %></h3>

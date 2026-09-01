@@ -24,7 +24,7 @@
     <div class="comunidad-docente-preview-grid">
         <% docentesPreview.forEach(function(p) { %>
             <div class="comunidad-docente-mini-card">
-                <% if (p.foto_url) { %><img src="<%= p.foto_url %>" alt="<%= p.nombre %>" class="comunidad-lider-foto comunidad-lider-foto-chica"><% } %>
+                <% if (p.foto_url && p.visible) { %><img src="<%= p.foto_url %>" alt="<%= p.nombre %>" class="comunidad-lider-foto comunidad-lider-foto-chica"><% } %>
                 <h4><%= p.nombre %></h4>
                 <% if (p.materia) { %><span class="comunidad-materia-tag"><%= p.materia %></span><% } %>
             </div>

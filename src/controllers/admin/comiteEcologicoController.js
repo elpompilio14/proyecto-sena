@@ -20,6 +20,11 @@ exports.eliminar = async (req, res) => {
     res.redirect('/admin/comite-ecologico');
 };
 
+exports.toggleVisible = async (req, res) => {
+    const r = await pool.query('UPDATE comite_ecologico SET visible = NOT visible WHERE id = $1 RETURNING visible', [req.params.id]);
+    res.json({ visible: r.rows[0].visible });
+};
+
 exports.editarForm = async (req, res) => {
     const miembro = await pool.query('SELECT * FROM comite_ecologico WHERE id = $1', [req.params.id]);
     if (miembro.rows.length === 0) {

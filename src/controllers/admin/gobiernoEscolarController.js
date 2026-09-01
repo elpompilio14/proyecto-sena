@@ -20,6 +20,11 @@ exports.eliminar = async (req, res) => {
     res.redirect('/admin/gobierno-escolar');
 };
 
+exports.toggleVisible = async (req, res) => {
+    const r = await pool.query('UPDATE gobierno_escolar SET visible = NOT visible WHERE id = $1 RETURNING visible', [req.params.id]);
+    res.json({ visible: r.rows[0].visible });
+};
+
 exports.editarForm = async (req, res) => {
     const miembro = await pool.query('SELECT * FROM gobierno_escolar WHERE id = $1', [req.params.id]);
     if (miembro.rows.length === 0) {

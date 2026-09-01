@@ -4,7 +4,7 @@
 
 <h1><%= deporte.nombre %></h1>
 
-<% if (deporte.imagen_url) { %>
+<% if (deporte.imagen_url && deporte.visible) { %>
     <img src="<%= deporte.imagen_url %>" alt="<%= deporte.nombre %>" class="card-img">
 <% } %>
 
@@ -19,7 +19,7 @@
     <div class="card-grid">
         <% equipos.forEach(function(eq, i) { %>
             <article class="card aparece" style="transition-delay: <%= Math.min(i, 5) * 70 %>ms">
-                <% if (eq.foto_url) { %>
+                <% if (eq.foto_url && eq.visible) { %>
                     <img src="<%= eq.foto_url %>" alt="<%= eq.nombre %>" class="card-img">
                 <% } %>
                 <h3><%= eq.nombre %></h3>

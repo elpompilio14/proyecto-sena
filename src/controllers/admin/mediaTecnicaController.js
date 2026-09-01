@@ -37,3 +37,8 @@ exports.eliminar = async (req, res) => {
     await pool.query('DELETE FROM media_tecnica_categorias WHERE id = $1', [req.params.id]);
     res.redirect('/admin/media-tecnica');
 };
+
+exports.toggleVisible = async (req, res) => {
+    const r = await pool.query('UPDATE media_tecnica_categorias SET visible = NOT visible WHERE id = $1 RETURNING visible', [req.params.id]);
+    res.json({ visible: r.rows[0].visible });
+};

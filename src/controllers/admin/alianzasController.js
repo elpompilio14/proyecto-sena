@@ -20,6 +20,11 @@ exports.eliminar = async (req, res) => {
     res.redirect('/admin/alianzas');
 };
 
+exports.toggleVisible = async (req, res) => {
+    const r = await pool.query('UPDATE alianzas SET visible = NOT visible WHERE id = $1 RETURNING visible', [req.params.id]);
+    res.json({ visible: r.rows[0].visible });
+};
+
 exports.editarForm = async (req, res) => {
     const alianza = await pool.query('SELECT * FROM alianzas WHERE id = $1', [req.params.id]);
     if (alianza.rows.length === 0) {

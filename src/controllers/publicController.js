@@ -9,6 +9,16 @@ function agruparPorNivel(filas) {
     return grupos;
 }
 
+// Version recortada de un grupo (piramide) para mostrar como vista previa en el inicio:
+// si hay punta, muestra la punta completa + hasta 3 personas mas; si no hay punta, muestra solo las primeras 3.
+function recortarParaInicio(grupos) {
+    const resto = grupos.medio.concat(grupos.base);
+    if (grupos.punta.length > 0) {
+        return { punta: grupos.punta, medio: resto.slice(0, 3), base: [] };
+    }
+    return { punta: [], medio: resto.slice(0, 3), base: [] };
+}
+
 exports.home = async (req, res) => {
     const eventos = await pool.query(
         'SELECT * FROM eventos ORDER BY fecha DESC LIMIT 6'
@@ -34,11 +44,11 @@ exports.home = async (req, res) => {
         noticias: noticias.rows,
         icfesResultados: icfesResultados.rows,
         icfesAnio: icfesResultados.rows[0] ? icfesResultados.rows[0].anio : null,
-        gobiernoEscolar: agruparPorNivel(gobiernoEscolar.rows),
-        equipoDesarrollo: agruparPorNivel(equipoDesarrollo.rows),
-        comiteEcologico: agruparPorNivel(comiteEcologico.rows),
-        equipoDrones: agruparPorNivel(equipoDrones.rows),
-        coheteria: agruparPorNivel(coheteria.rows),
+        gobiernoEscolar: recortarParaInicio(agruparPorNivel(gobiernoEscolar.rows)),
+        equipoDesarrollo: recortarParaInicio(agruparPorNivel(equipoDesarrollo.rows)),
+        comiteEcologico: recortarParaInicio(agruparPorNivel(comiteEcologico.rows)),
+        equipoDrones: recortarParaInicio(agruparPorNivel(equipoDrones.rows)),
+        coheteria: recortarParaInicio(agruparPorNivel(coheteria.rows)),
         himnoUrl: info.rows[0] ? info.rows[0].himno_url : null,
         fondoUrl: info.rows[0] ? info.rows[0].fondo_url : null,
     });
@@ -84,7 +94,7 @@ exports.eventoDetalle = async (req, res) => {
     }
 
     const fotos = await pool.query(
-        'SELECT * FROM galeria_fotos WHERE evento_id = $1 ORDER BY orden, creado_en',
+        'SELECT * FROM galeria_fotos WHERE evento_id = $1 AND visible = true ORDER BY orden, creado_en',
         [req.params.id]
     );
 
@@ -225,7 +235,7 @@ function agruparPorMes(filas) {
 
 exports.galeria = async (req, res) => {
     const fotos = await pool.query(
-        'SELECT * FROM galeria_fotos ORDER BY fecha DESC, creado_en DESC'
+        'SELECT * FROM galeria_fotos WHERE visible = true ORDER BY fecha DESC, creado_en DESC'
     );
     res.render('galeria', { titulo: 'Galeria', grupos: agruparPorMes(fotos.rows) });
 };
@@ -308,7 +318,7 @@ exports.noticiaDetalle = async (req, res) => {
     }
 
     const fotos = await pool.query(
-        'SELECT * FROM galeria_fotos WHERE noticia_id = $1 ORDER BY orden, creado_en',
+        'SELECT * FROM galeria_fotos WHERE noticia_id = $1 AND visible = true ORDER BY orden, creado_en',
         [req.params.id]
     );
 

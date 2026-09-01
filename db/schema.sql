@@ -76,6 +76,7 @@ CREATE TABLE noticias (
     contenido TEXT,
     fecha DATE NOT NULL,
     imagen_url VARCHAR(255),
+    visible BOOLEAN NOT NULL DEFAULT true, -- si esta en false, la foto no se muestra al publico
     creado_por INTEGER REFERENCES usuarios(id) ON DELETE SET NULL,
     creado_en TIMESTAMP NOT NULL DEFAULT NOW()
 );
@@ -86,6 +87,7 @@ CREATE TABLE eventos (
     descripcion TEXT,
     fecha DATE NOT NULL,
     imagen_url VARCHAR(255),
+    visible BOOLEAN NOT NULL DEFAULT true,
     creado_por INTEGER REFERENCES usuarios(id) ON DELETE SET NULL,
     creado_en TIMESTAMP NOT NULL DEFAULT NOW()
 );
@@ -94,7 +96,8 @@ CREATE TABLE deportes (
     id SERIAL PRIMARY KEY,
     nombre VARCHAR(80) NOT NULL UNIQUE, -- ej: "Futbol", "Voleibol", "Baloncesto"
     imagen_url TEXT,
-    descripcion TEXT
+    descripcion TEXT,
+    visible BOOLEAN NOT NULL DEFAULT true
 );
 
 CREATE TABLE equipos (
@@ -104,7 +107,8 @@ CREATE TABLE equipos (
     categoria VARCHAR(50),   -- ej: "Sub-15", "Mayores"
     entrenador VARCHAR(100),
     foto_url VARCHAR(255),
-    descripcion TEXT
+    descripcion TEXT,
+    visible BOOLEAN NOT NULL DEFAULT true
 );
 
 -- Relacion N:M entre estudiantes y equipos
@@ -124,6 +128,7 @@ CREATE TABLE grupos_estudiantiles (
     encargado VARCHAR(100),
     foto_url VARCHAR(255),
     enlace_url VARCHAR(255), -- pagina propia del grupo (opcional); si esta vacia la tarjeta no es clicable
+    visible BOOLEAN NOT NULL DEFAULT true,
     creado_en TIMESTAMP NOT NULL DEFAULT NOW()
 );
 
@@ -171,6 +176,7 @@ CREATE TABLE galeria_fotos (
     noticia_id INTEGER REFERENCES noticias(id) ON DELETE SET NULL,
     fecha DATE NOT NULL DEFAULT CURRENT_DATE, -- fecha de la foto (editable), se usa para agrupar en la galeria
     orden INTEGER NOT NULL DEFAULT 1, -- posicion manual dentro de un evento/noticia (menor = primero; usa 0 para poner una foto de primera; si empatan, por creado_en)
+    visible BOOLEAN NOT NULL DEFAULT true, -- si esta en false, la foto no aparece en la galeria publica
     creado_en TIMESTAMP NOT NULL DEFAULT NOW()
 );
 
@@ -186,6 +192,7 @@ CREATE TABLE comunidad_educativa (
     foto_url TEXT,
     orden INTEGER NOT NULL DEFAULT 0, -- posicion manual (menor = primero)
     nivel VARCHAR(10) NOT NULL DEFAULT 'base', -- 'punta', 'medio' o 'base' (piramide de rectoria/coordinacion)
+    visible BOOLEAN NOT NULL DEFAULT true,
     creado_en TIMESTAMP NOT NULL DEFAULT NOW()
 );
 
@@ -196,6 +203,7 @@ CREATE TABLE gobierno_escolar (
     foto_url TEXT,
     orden INTEGER NOT NULL DEFAULT 0, -- posicion manual (menor = primero)
     nivel VARCHAR(10) NOT NULL DEFAULT 'base', -- 'punta', 'medio' o 'base' (piramide)
+    visible BOOLEAN NOT NULL DEFAULT true,
     creado_en TIMESTAMP NOT NULL DEFAULT NOW()
 );
 
@@ -206,6 +214,7 @@ CREATE TABLE equipo_desarrollo (
     foto_url TEXT,
     orden INTEGER NOT NULL DEFAULT 0, -- posicion manual (menor = primero)
     nivel VARCHAR(10) NOT NULL DEFAULT 'base', -- 'punta', 'medio' o 'base' (piramide)
+    visible BOOLEAN NOT NULL DEFAULT true,
     creado_en TIMESTAMP NOT NULL DEFAULT NOW()
 );
 
@@ -216,6 +225,7 @@ CREATE TABLE comite_ecologico (
     foto_url TEXT,
     orden INTEGER NOT NULL DEFAULT 0, -- posicion manual (menor = primero)
     nivel VARCHAR(10) NOT NULL DEFAULT 'base', -- 'punta', 'medio' o 'base' (piramide)
+    visible BOOLEAN NOT NULL DEFAULT true,
     creado_en TIMESTAMP NOT NULL DEFAULT NOW()
 );
 
@@ -226,6 +236,7 @@ CREATE TABLE equipo_drones (
     foto_url TEXT,
     orden INTEGER NOT NULL DEFAULT 0, -- posicion manual (menor = primero)
     nivel VARCHAR(10) NOT NULL DEFAULT 'base', -- 'punta', 'medio' o 'base' (piramide)
+    visible BOOLEAN NOT NULL DEFAULT true,
     creado_en TIMESTAMP NOT NULL DEFAULT NOW()
 );
 
@@ -236,6 +247,7 @@ CREATE TABLE coheteria (
     foto_url TEXT,
     orden INTEGER NOT NULL DEFAULT 0, -- posicion manual (menor = primero)
     nivel VARCHAR(10) NOT NULL DEFAULT 'base', -- 'punta', 'medio' o 'base' (piramide)
+    visible BOOLEAN NOT NULL DEFAULT true,
     creado_en TIMESTAMP NOT NULL DEFAULT NOW()
 );
 
@@ -245,6 +257,7 @@ CREATE TABLE media_tecnica_categorias (
     imagen_url TEXT,
     descripcion TEXT,
     orden INTEGER NOT NULL DEFAULT 0,
+    visible BOOLEAN NOT NULL DEFAULT true,
     creado_en TIMESTAMP NOT NULL DEFAULT NOW()
 );
 
@@ -263,6 +276,7 @@ CREATE TABLE alianzas (
     nombre VARCHAR(150) NOT NULL,
     logo_url TEXT,
     link_url TEXT,
+    visible BOOLEAN NOT NULL DEFAULT true,
     creado_en TIMESTAMP NOT NULL DEFAULT NOW()
 );
 
@@ -273,6 +287,7 @@ CREATE TABLE icfes_resultados (
     anio INTEGER NOT NULL,
     foto_url TEXT,
     descripcion TEXT,
+    visible BOOLEAN NOT NULL DEFAULT true,
     creado_en TIMESTAMP NOT NULL DEFAULT NOW()
 );
 

@@ -80,6 +80,11 @@ exports.eliminar = async (req, res) => {
     res.redirect('/admin/fotos');
 };
 
+exports.toggleVisible = async (req, res) => {
+    const r = await pool.query('UPDATE galeria_fotos SET visible = NOT visible WHERE id = $1 RETURNING visible', [req.params.id]);
+    res.json({ visible: r.rows[0].visible });
+};
+
 exports.editarForm = async (req, res) => {
     const foto = await pool.query('SELECT * FROM galeria_fotos WHERE id = $1', [req.params.id]);
     if (foto.rows.length === 0) {

@@ -10,7 +10,7 @@
             <% var etiqueta = g.enlace_url ? 'a' : 'div'; %>
             <<%= etiqueta %> class="categoria-link-card categoria-link-card--grupo"<% if (g.enlace_url) { %> href="<%= g.enlace_url %>"<% } %>>
                 <div class="categoria-link-card-img-wrap">
-                    <% if (g.foto_url) { %>
+                    <% if (g.foto_url && g.visible) { %>
                         <img src="<%= g.foto_url %>" alt="<%= g.nombre %>">
                     <% } else { %>
                         <span class="categoria-link-card-sin-imagen">🧑‍🤝‍🧑</span>

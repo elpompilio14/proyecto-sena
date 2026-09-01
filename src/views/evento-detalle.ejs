@@ -6,7 +6,7 @@
 <p class="fecha"><%= new Date(evento.fecha).toLocaleDateString('es-CO') %></p>
 <p><%- formatearTexto(evento.descripcion) %></p>
 
-<% if (evento.imagen_url) { %>
+<% if (evento.imagen_url && evento.visible) { %>
     <img src="<%= evento.imagen_url %>" alt="<%= evento.titulo %>" class="detalle-portada">
 <% } %>
 

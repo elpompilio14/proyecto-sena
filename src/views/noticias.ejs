@@ -9,7 +9,7 @@
         <% noticias.forEach(function(n, i) { %>
             <article class="home-card-grande aparece" style="transition-delay: <%= Math.min(i, 5) * 70 %>ms">
                 <a href="/noticias/<%= n.id %>" class="home-card-img-wrap">
-                    <% if (n.imagen_url) { %>
+                    <% if (n.imagen_url && n.visible) { %>
                         <img src="<%= n.imagen_url %>" alt="<%= n.titulo %>">
                     <% } %>
                 </a>
