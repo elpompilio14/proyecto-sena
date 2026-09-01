@@ -634,7 +634,49 @@ button:hover { background: var(--azul-oscuro); transform: translateY(-1px); }
 
 .acciones {
     display: flex;
+    align-items: center;
     gap: 8px;
+}
+
+/* ===================== Ojito de mostrar/ocultar foto al publico ===================== */
+
+.toggle-visibilidad {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--texto);
+    opacity: 0.7;
+    flex-shrink: 0;
+}
+
+.toggle-visibilidad:hover { opacity: 1; }
+
+.toggle-visibilidad svg {
+    width: 20px;
+    height: 20px;
+    display: block;
+    transition: transform .2s ease;
+}
+
+.toggle-visibilidad .icono-ojo-cerrado { display: none; }
+
+.toggle-visibilidad[data-visible="false"] {
+    opacity: 0.45;
+}
+
+.toggle-visibilidad[data-visible="false"] .icono-ojo-abierto { display: none; }
+.toggle-visibilidad[data-visible="false"] .icono-ojo-cerrado { display: block; }
+
+.toggle-visibilidad.animando svg { transform: scaleY(0.05); }
+
+.tabla-col-foto-visible {
+    display: flex;
+    align-items: center;
+    gap: 6px;
 }
 
 .btn-editar {

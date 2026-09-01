@@ -20,12 +20,15 @@
         <tbody>
             {% for a in alianzas %}
                 <tr>
-                    <td>
+                    <td class="tabla-col-foto-visible">
                         {% if a.logo_url %}
                             <img src="{{ a.logo_url }}" alt="{{ a.nombre }}" class="tabla-foto-mini">
                         {% else %}
                             <span class="tabla-foto-vacia">—</span>
                         {% endif %}
+                        {% with url_toggle = '/admin/alianzas/' ~ a.id ~ '/visibilidad', visible = a.visible %}
+                            {% include "partials/boton_visibilidad.html" %}
+                        {% endwith %}
                     </td>
                     <td>{{ a.nombre }}</td>
                     <td class="acciones">

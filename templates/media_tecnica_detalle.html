@@ -5,7 +5,7 @@
 
 <h1>{{ categoria.nombre }}</h1>
 
-{% if categoria.imagen_url %}
+{% if categoria.imagen_url and categoria.visible %}
     <img src="{{ categoria.imagen_url }}" alt="{{ categoria.nombre }}" class="card-img">
 {% endif %}
 

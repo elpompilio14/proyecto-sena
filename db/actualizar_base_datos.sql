@@ -116,3 +116,20 @@ UPDATE grupos_estudiantiles SET enlace_url = '/comite-ecologico' WHERE nombre = 
 UPDATE grupos_estudiantiles SET enlace_url = '/equipo-desarrollo' WHERE nombre = 'Equipo de Desarrollo' AND enlace_url IS NULL;
 UPDATE grupos_estudiantiles SET enlace_url = '/equipo-drones' WHERE nombre = 'Equipo de Drones' AND enlace_url IS NULL;
 UPDATE grupos_estudiantiles SET enlace_url = '/coheteria' WHERE nombre = 'Cohetería' AND enlace_url IS NULL;
+
+-- Ojito de mostrar/ocultar foto al publico, en todas las secciones con fotos
+ALTER TABLE equipos ADD COLUMN IF NOT EXISTS visible BOOLEAN NOT NULL DEFAULT true;
+ALTER TABLE deportes ADD COLUMN IF NOT EXISTS visible BOOLEAN NOT NULL DEFAULT true;
+ALTER TABLE media_tecnica_categorias ADD COLUMN IF NOT EXISTS visible BOOLEAN NOT NULL DEFAULT true;
+ALTER TABLE grupos_estudiantiles ADD COLUMN IF NOT EXISTS visible BOOLEAN NOT NULL DEFAULT true;
+ALTER TABLE comunidad_educativa ADD COLUMN IF NOT EXISTS visible BOOLEAN NOT NULL DEFAULT true;
+ALTER TABLE gobierno_escolar ADD COLUMN IF NOT EXISTS visible BOOLEAN NOT NULL DEFAULT true;
+ALTER TABLE equipo_desarrollo ADD COLUMN IF NOT EXISTS visible BOOLEAN NOT NULL DEFAULT true;
+ALTER TABLE comite_ecologico ADD COLUMN IF NOT EXISTS visible BOOLEAN NOT NULL DEFAULT true;
+ALTER TABLE equipo_drones ADD COLUMN IF NOT EXISTS visible BOOLEAN NOT NULL DEFAULT true;
+ALTER TABLE coheteria ADD COLUMN IF NOT EXISTS visible BOOLEAN NOT NULL DEFAULT true;
+ALTER TABLE alianzas ADD COLUMN IF NOT EXISTS visible BOOLEAN NOT NULL DEFAULT true;
+ALTER TABLE icfes_resultados ADD COLUMN IF NOT EXISTS visible BOOLEAN NOT NULL DEFAULT true;
+ALTER TABLE noticias ADD COLUMN IF NOT EXISTS visible BOOLEAN NOT NULL DEFAULT true;
+ALTER TABLE eventos ADD COLUMN IF NOT EXISTS visible BOOLEAN NOT NULL DEFAULT true;
+ALTER TABLE galeria_fotos ADD COLUMN IF NOT EXISTS visible BOOLEAN NOT NULL DEFAULT true;

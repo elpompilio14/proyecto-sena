@@ -1,4 +1,4 @@
-from flask import render_template, request, redirect, abort
+from flask import render_template, request, redirect, abort, jsonify
 from . import admin_bp
 from db import obtener_conexion
 from uploads import guardar_archivo
@@ -61,3 +61,12 @@ def media_tecnica_eliminar(id):
         with conexion.cursor() as cur:
             cur.execute('DELETE FROM media_tecnica_categorias WHERE id = %s', (id,))
     return redirect('/admin/media-tecnica')
+
+
+@admin_bp.route('/media-tecnica/<int:id>/visibilidad', methods=['POST'])
+def media_tecnica_toggle_visible(id):
+    with obtener_conexion() as conexion:
+        with conexion.cursor() as cur:
+            cur.execute('UPDATE media_tecnica_categorias SET visible = NOT visible WHERE id = %s RETURNING visible', (id,))
+            resultado = cur.fetchone()
+    return jsonify({'visible': resultado['visible']})

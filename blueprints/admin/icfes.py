@@ -1,4 +1,4 @@
-from flask import render_template, request, redirect, abort
+from flask import render_template, request, redirect, abort, jsonify
 from . import admin_bp
 from db import obtener_conexion
 from uploads import guardar_archivo
@@ -67,3 +67,12 @@ def icfes_eliminar(id):
         with conexion.cursor() as cur:
             cur.execute('DELETE FROM icfes_resultados WHERE id = %s', (id,))
     return redirect('/admin/icfes')
+
+
+@admin_bp.route('/icfes/<int:id>/visibilidad', methods=['POST'])
+def icfes_toggle_visible(id):
+    with obtener_conexion() as conexion:
+        with conexion.cursor() as cur:
+            cur.execute('UPDATE icfes_resultados SET visible = NOT visible WHERE id = %s RETURNING visible', (id,))
+            resultado = cur.fetchone()
+    return jsonify({'visible': resultado['visible']})

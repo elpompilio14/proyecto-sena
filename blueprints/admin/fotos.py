@@ -1,5 +1,5 @@
 from datetime import date
-from flask import render_template, request, redirect, abort
+from flask import render_template, request, redirect, abort, jsonify
 from . import admin_bp
 from db import obtener_conexion
 from uploads import guardar_archivo, TIPOS_IMAGEN_Y_VIDEO
@@ -90,6 +90,15 @@ def fotos_eliminar(id):
         with conexion.cursor() as cur:
             cur.execute('DELETE FROM galeria_fotos WHERE id = %s', (id,))
     return redirect('/admin/fotos')
+
+
+@admin_bp.route('/fotos/<int:id>/visibilidad', methods=['POST'])
+def fotos_toggle_visible(id):
+    with obtener_conexion() as conexion:
+        with conexion.cursor() as cur:
+            cur.execute('UPDATE galeria_fotos SET visible = NOT visible WHERE id = %s RETURNING visible', (id,))
+            resultado = cur.fetchone()
+    return jsonify({'visible': resultado['visible']})
 
 
 @admin_bp.route('/fotos/editar-lote', methods=['POST'])

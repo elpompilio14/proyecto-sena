@@ -21,12 +21,15 @@
         <tbody>
             {% for g in grupos %}
                 <tr>
-                    <td>
+                    <td class="tabla-col-foto-visible">
                         {% if g.foto_url %}
                             <img src="{{ g.foto_url }}" alt="{{ g.nombre }}" class="tabla-foto-mini">
                         {% else %}
                             <span class="tabla-foto-vacia">—</span>
                         {% endif %}
+                        {% with url_toggle = '/admin/grupos-estudiantiles/' ~ g.id ~ '/visibilidad', visible = g.visible %}
+                            {% include "partials/boton_visibilidad.html" %}
+                        {% endwith %}
                     </td>
                     <td>{{ g.nombre }}</td>
                     <td>{{ g.encargado or '-' }}</td>

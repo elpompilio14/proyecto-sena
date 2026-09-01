@@ -14,12 +14,12 @@
         {% for a in alianzas %}
             {% if a.link_url %}
                 <a href="{{ a.link_url }}" target="_blank" rel="noopener" class="alianza-card">
-                    {% if a.logo_url %}<img src="{{ a.logo_url }}" alt="{{ a.nombre }}">{% endif %}
+                    {% if a.logo_url and a.visible %}<img src="{{ a.logo_url }}" alt="{{ a.nombre }}">{% endif %}
                     <span>{{ a.nombre }}</span>
                 </a>
             {% else %}
                 <div class="alianza-card">
-                    {% if a.logo_url %}<img src="{{ a.logo_url }}" alt="{{ a.nombre }}">{% endif %}
+                    {% if a.logo_url and a.visible %}<img src="{{ a.logo_url }}" alt="{{ a.nombre }}">{% endif %}
                     <span>{{ a.nombre }}</span>
                 </div>
             {% endif %}

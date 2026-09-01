@@ -46,12 +46,15 @@
         <tbody>
             {% for p in personas %}
                 <tr>
-                    <td>
+                    <td class="tabla-col-foto-visible">
                         {% if p.foto_url %}
                             <img src="{{ p.foto_url }}" alt="{{ p.nombre }}" class="tabla-foto-mini">
                         {% else %}
                             <span class="tabla-foto-vacia">—</span>
                         {% endif %}
+                        {% with url_toggle = '/admin/comunidad-educativa/' ~ p.id ~ '/visibilidad', visible = p.visible %}
+                            {% include "partials/boton_visibilidad.html" %}
+                        {% endwith %}
                     </td>
                     <td>{{ p.nombre }}</td>
                     <td>{{ p.cargo or '-' }}</td>

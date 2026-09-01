@@ -7,7 +7,7 @@
 <p class="fecha">{{ formatearFecha(evento.fecha) }}</p>
 <p>{{ formatearTexto(evento.descripcion) | safe }}</p>
 
-{% if evento.imagen_url %}
+{% if evento.imagen_url and evento.visible %}
     <img src="{{ evento.imagen_url }}" alt="{{ evento.titulo }}" class="detalle-portada">
 {% endif %}
 

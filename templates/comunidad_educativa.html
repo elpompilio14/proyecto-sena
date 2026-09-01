@@ -27,7 +27,7 @@
     <div class="comunidad-docente-preview-grid">
         {% for p in docentesPreview %}
             <div class="comunidad-docente-mini-card">
-                {% if p.foto_url %}<img src="{{ p.foto_url }}" alt="{{ p.nombre }}" class="comunidad-lider-foto comunidad-lider-foto-chica">{% endif %}
+                {% if p.foto_url and p.visible %}<img src="{{ p.foto_url }}" alt="{{ p.nombre }}" class="comunidad-lider-foto comunidad-lider-foto-chica">{% endif %}
                 <h4>{{ p.nombre }}</h4>
                 {% if p.materia %}<span class="comunidad-materia-tag">{{ p.materia }}</span>{% endif %}
             </div>

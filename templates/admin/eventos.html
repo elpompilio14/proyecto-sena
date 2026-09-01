@@ -20,12 +20,15 @@
         <tbody>
             {% for ev in eventos %}
                 <tr>
-                    <td>
+                    <td class="tabla-col-foto-visible">
                         {% if ev.imagen_url %}
                             <img src="{{ ev.imagen_url }}" alt="{{ ev.titulo }}" class="tabla-foto-mini">
                         {% else %}
                             <span class="tabla-foto-vacia">—</span>
                         {% endif %}
+                        {% with url_toggle = '/admin/eventos/' ~ ev.id ~ '/visibilidad', visible = ev.visible %}
+                            {% include "partials/boton_visibilidad.html" %}
+                        {% endwith %}
                     </td>
                     <td>{{ ev.titulo }}</td>
                     <td>{{ formatearFecha(ev.fecha) }}</td>

@@ -1,4 +1,4 @@
-from flask import render_template, request, redirect, abort
+from flask import render_template, request, redirect, abort, jsonify
 from . import admin_bp
 from db import obtener_conexion
 from uploads import guardar_archivo
@@ -59,3 +59,12 @@ def deportes_eliminar(id):
         with conexion.cursor() as cur:
             cur.execute('DELETE FROM deportes WHERE id = %s', (id,))
     return redirect('/admin/deportes')
+
+
+@admin_bp.route('/deportes/<int:id>/visibilidad', methods=['POST'])
+def deportes_toggle_visible(id):
+    with obtener_conexion() as conexion:
+        with conexion.cursor() as cur:
+            cur.execute('UPDATE deportes SET visible = NOT visible WHERE id = %s RETURNING visible', (id,))
+            resultado = cur.fetchone()
+    return jsonify({'visible': resultado['visible']})

@@ -29,12 +29,15 @@
         <tbody>
             {% for eq in equipos %}
                 <tr>
-                    <td>
+                    <td class="tabla-col-foto-visible">
                         {% if eq.foto_url %}
                             <img src="{{ eq.foto_url }}" alt="{{ eq.nombre }}" class="tabla-foto-mini">
                         {% else %}
                             <span class="tabla-foto-vacia">—</span>
                         {% endif %}
+                        {% with url_toggle = '/admin/equipos/' ~ eq.id ~ '/visibilidad', visible = eq.visible %}
+                            {% include "partials/boton_visibilidad.html" %}
+                        {% endwith %}
                     </td>
                     <td>{{ eq.nombre }}</td>
                     <td>{{ eq.deporte_nombre }}</td>

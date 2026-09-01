@@ -20,12 +20,15 @@
         <tbody>
             {% for n in noticias %}
                 <tr>
-                    <td>
+                    <td class="tabla-col-foto-visible">
                         {% if n.imagen_url %}
                             <img src="{{ n.imagen_url }}" alt="{{ n.titulo }}" class="tabla-foto-mini">
                         {% else %}
                             <span class="tabla-foto-vacia">—</span>
                         {% endif %}
+                        {% with url_toggle = '/admin/noticias/' ~ n.id ~ '/visibilidad', visible = n.visible %}
+                            {% include "partials/boton_visibilidad.html" %}
+                        {% endwith %}
                     </td>
                     <td>{{ n.titulo }}</td>
                     <td>{{ formatearFecha(n.fecha) }}</td>

@@ -5,7 +5,7 @@
 
 <h1>{{ deporte.nombre }}</h1>
 
-{% if deporte.imagen_url %}
+{% if deporte.imagen_url and deporte.visible %}
     <img src="{{ deporte.imagen_url }}" alt="{{ deporte.nombre }}" class="card-img">
 {% endif %}
 
@@ -20,7 +20,7 @@
     <div class="card-grid">
         {% for eq in equipos %}
             <article class="card aparece" style="transition-delay: {{ [loop.index0, 5]|min * 70 }}ms">
-                {% if eq.foto_url %}
+                {% if eq.foto_url and eq.visible %}
                     <img src="{{ eq.foto_url }}" alt="{{ eq.nombre }}" class="card-img">
                 {% endif %}
                 <h3>{{ eq.nombre }}</h3>

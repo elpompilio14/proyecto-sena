@@ -10,7 +10,7 @@
         {% for d in deportes %}
             <a href="/deportes/{{ d.id }}" class="categoria-link-card">
                 <div class="categoria-link-card-img-wrap">
-                    {% if d.imagen_url %}
+                    {% if d.imagen_url and d.visible %}
                         <img src="{{ d.imagen_url }}" alt="{{ d.nombre }}">
                     {% else %}
                         <span class="categoria-link-card-sin-imagen">🏅</span>
@@ -28,7 +28,7 @@
     <div class="card-grid">
         {% for eq in equipos %}
             <article class="card aparece" style="transition-delay: {{ [loop.index0, 5]|min * 70 }}ms">
-                {% if eq.foto_url %}
+                {% if eq.foto_url and eq.visible %}
                     <img src="{{ eq.foto_url }}" alt="{{ eq.nombre }}" class="card-img">
                 {% endif %}
                 <span class="badge">{{ eq.deporte_nombre }}</span>

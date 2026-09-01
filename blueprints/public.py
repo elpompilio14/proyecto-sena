@@ -12,6 +12,15 @@ def _agrupar_por_nivel(filas):
     return grupos
 
 
+def _recortar_para_inicio(grupos):
+    """Vista previa para el inicio: si hay punta, la punta completa + hasta 3 mas;
+    si no hay punta, solo las primeras 3."""
+    resto = grupos['medio'] + grupos['base']
+    if len(grupos['punta']) > 0:
+        return {'punta': grupos['punta'], 'medio': resto[:3], 'base': []}
+    return {'punta': [], 'medio': resto[:3], 'base': []}
+
+
 @public_bp.route('/')
 def home():
     with obtener_conexion() as conexion:
@@ -55,11 +64,11 @@ def home():
         noticias=noticias,
         icfesResultados=icfes_resultados,
         icfesAnio=icfes_resultados[0]['anio'] if icfes_resultados else None,
-        gobiernoEscolar=_agrupar_por_nivel(gobierno_escolar),
-        equipoDesarrollo=_agrupar_por_nivel(equipo_desarrollo),
-        comiteEcologico=_agrupar_por_nivel(comite_ecologico),
-        equipoDrones=_agrupar_por_nivel(equipo_drones),
-        coheteria=_agrupar_por_nivel(coheteria),
+        gobiernoEscolar=_recortar_para_inicio(_agrupar_por_nivel(gobierno_escolar)),
+        equipoDesarrollo=_recortar_para_inicio(_agrupar_por_nivel(equipo_desarrollo)),
+        comiteEcologico=_recortar_para_inicio(_agrupar_por_nivel(comite_ecologico)),
+        equipoDrones=_recortar_para_inicio(_agrupar_por_nivel(equipo_drones)),
+        coheteria=_recortar_para_inicio(_agrupar_por_nivel(coheteria)),
         himnoUrl=info['himno_url'] if info else None,
         fondoUrl=info['fondo_url'] if info else None,
     )
@@ -228,7 +237,7 @@ def noticia_detalle(id):
             noticia = cur.fetchone()
             if not noticia:
                 abort(404)
-            cur.execute('SELECT * FROM galeria_fotos WHERE noticia_id = %s ORDER BY orden, creado_en', (id,))
+            cur.execute('SELECT * FROM galeria_fotos WHERE noticia_id = %s AND visible = true ORDER BY orden, creado_en', (id,))
             fotos = cur.fetchall()
 
     return render_template('noticia_detalle.html', titulo=noticia['titulo'], noticia=noticia, fotos=fotos)
@@ -251,7 +260,7 @@ def evento_detalle(id):
             evento = cur.fetchone()
             if not evento:
                 abort(404)
-            cur.execute('SELECT * FROM galeria_fotos WHERE evento_id = %s ORDER BY orden, creado_en', (id,))
+            cur.execute('SELECT * FROM galeria_fotos WHERE evento_id = %s AND visible = true ORDER BY orden, creado_en', (id,))
             fotos = cur.fetchall()
 
     return render_template('evento_detalle.html', titulo=evento['titulo'], evento=evento, fotos=fotos)
@@ -413,7 +422,7 @@ def _agrupar_por_mes(filas):
 def galeria():
     with obtener_conexion() as conexion:
         with conexion.cursor() as cur:
-            cur.execute('SELECT * FROM galeria_fotos ORDER BY fecha DESC, creado_en DESC')
+            cur.execute('SELECT * FROM galeria_fotos WHERE visible = true ORDER BY fecha DESC, creado_en DESC')
             fotos = cur.fetchall()
     return render_template('galeria.html', titulo='Galeria', grupos=_agrupar_por_mes(fotos))
 

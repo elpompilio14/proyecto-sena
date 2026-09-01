@@ -10,7 +10,7 @@
         {% for n in noticias %}
             <article class="home-card-grande aparece" style="transition-delay: {{ [loop.index0, 5]|min * 70 }}ms">
                 <a href="/noticias/{{ n.id }}" class="home-card-img-wrap">
-                    {% if n.imagen_url %}
+                    {% if n.imagen_url and n.visible %}
                         <img src="{{ n.imagen_url }}" alt="{{ n.titulo }}">
                     {% endif %}
                 </a>

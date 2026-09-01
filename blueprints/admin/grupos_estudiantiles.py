@@ -1,4 +1,4 @@
-from flask import render_template, request, redirect, abort
+from flask import render_template, request, redirect, abort, jsonify
 from . import admin_bp
 from db import obtener_conexion
 from uploads import guardar_archivo
@@ -65,3 +65,12 @@ def grupos_estudiantiles_eliminar(id):
         with conexion.cursor() as cur:
             cur.execute('DELETE FROM grupos_estudiantiles WHERE id = %s', (id,))
     return redirect('/admin/grupos-estudiantiles')
+
+
+@admin_bp.route('/grupos-estudiantiles/<int:id>/visibilidad', methods=['POST'])
+def grupos_estudiantiles_toggle_visible(id):
+    with obtener_conexion() as conexion:
+        with conexion.cursor() as cur:
+            cur.execute('UPDATE grupos_estudiantiles SET visible = NOT visible WHERE id = %s RETURNING visible', (id,))
+            resultado = cur.fetchone()
+    return jsonify({'visible': resultado['visible']})

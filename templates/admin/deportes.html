@@ -19,12 +19,15 @@
         <tbody>
             {% for d in deportes %}
                 <tr>
-                    <td>
+                    <td class="tabla-col-foto-visible">
                         {% if d.imagen_url %}
                             <img src="{{ d.imagen_url }}" alt="{{ d.nombre }}" class="tabla-foto-mini">
                         {% else %}
                             <span class="tabla-foto-vacia">—</span>
                         {% endif %}
+                        {% with url_toggle = '/admin/deportes/' ~ d.id ~ '/visibilidad', visible = d.visible %}
+                            {% include "partials/boton_visibilidad.html" %}
+                        {% endwith %}
                     </td>
                     <td>{{ d.nombre }}</td>
                     <td class="acciones">

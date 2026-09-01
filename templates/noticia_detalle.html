@@ -7,7 +7,7 @@
 <p class="fecha">{{ formatearFecha(noticia.fecha) }}</p>
 <p>{{ formatearTexto(noticia.contenido) | safe }}</p>
 
-{% if noticia.imagen_url %}
+{% if noticia.imagen_url and noticia.visible %}
     <img src="{{ noticia.imagen_url }}" alt="{{ noticia.titulo }}" class="detalle-portada">
 {% endif %}
 

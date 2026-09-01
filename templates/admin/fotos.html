@@ -58,12 +58,15 @@
                 {% for f in fotos %}
                     <tr>
                         <td><input type="checkbox" name="ids" value="{{ f.id }}" class="fila-check-foto"></td>
-                        <td>
+                        <td class="tabla-col-foto-visible">
                             {% if esVideo(f.url) %}
                                 <span class="tabla-foto-vacia" title="Video">&#9658;</span>
                             {% else %}
                                 <img src="{{ f.url }}" alt="{{ f.titulo or 'Foto' }}" class="tabla-foto-mini">
                             {% endif %}
+                            {% with url_toggle = '/admin/fotos/' ~ f.id ~ '/visibilidad', visible = f.visible %}
+                                {% include "partials/boton_visibilidad.html" %}
+                            {% endwith %}
                         </td>
                         <td>{{ f.titulo or '(sin título)' }} {% if esVideo(f.url) %}<span class="badge">Video</span>{% endif %}</td>
                         <td>{{ formatearFecha(f.fecha) }}</td>

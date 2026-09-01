@@ -10,7 +10,7 @@
         {% for ev in eventos %}
             <article class="home-card-grande aparece" style="transition-delay: {{ [loop.index0, 5]|min * 70 }}ms">
                 <a href="/eventos/{{ ev.id }}" class="home-card-img-wrap">
-                    {% if ev.imagen_url %}
+                    {% if ev.imagen_url and ev.visible %}
                         <img src="{{ ev.imagen_url }}" alt="{{ ev.titulo }}">
                     {% endif %}
                 </a>

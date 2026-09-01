@@ -25,6 +25,9 @@
                     <td>{{ r.puntaje }}</td>
                     <td>{{ r.anio }}</td>
                     <td class="acciones">
+                        {% with url_toggle = '/admin/icfes/' ~ r.id ~ '/visibilidad', visible = r.visible %}
+                            {% include "partials/boton_visibilidad.html" %}
+                        {% endwith %}
                         <a href="/admin/icfes/{{ r.id }}/editar" class="btn-editar">Editar</a>
                         <form method="POST" action="/admin/icfes/{{ r.id }}/eliminar">
                             <button type="submit" class="btn-danger">Eliminar</button>

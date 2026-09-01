@@ -1,4 +1,4 @@
-from flask import render_template, request, redirect, abort
+from flask import render_template, request, redirect, abort, jsonify
 from . import admin_bp
 from db import obtener_conexion
 from uploads import guardar_archivo
@@ -65,3 +65,12 @@ def gobierno_escolar_eliminar(id):
         with conexion.cursor() as cur:
             cur.execute('DELETE FROM gobierno_escolar WHERE id = %s', (id,))
     return redirect('/admin/gobierno-escolar')
+
+
+@admin_bp.route('/gobierno-escolar/<int:id>/visibilidad', methods=['POST'])
+def gobierno_escolar_toggle_visible(id):
+    with obtener_conexion() as conexion:
+        with conexion.cursor() as cur:
+            cur.execute('UPDATE gobierno_escolar SET visible = NOT visible WHERE id = %s RETURNING visible', (id,))
+            resultado = cur.fetchone()
+    return jsonify({'visible': resultado['visible']})

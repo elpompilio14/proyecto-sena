@@ -27,12 +27,15 @@
         <tbody>
             {% for m in miembros %}
                 <tr>
-                    <td>
+                    <td class="tabla-col-foto-visible">
                         {% if m.foto_url %}
                             <img src="{{ m.foto_url }}" alt="{{ m.nombre }}" class="tabla-foto-mini">
                         {% else %}
                             <span class="tabla-foto-vacia">—</span>
                         {% endif %}
+                        {% with url_toggle = '/admin/equipo-drones/' ~ m.id ~ '/visibilidad', visible = m.visible %}
+                            {% include "partials/boton_visibilidad.html" %}
+                        {% endwith %}
                     </td>
                     <td>{{ m.nombre }}</td>
                     <td>{{ m.rol or '-' }}</td>
