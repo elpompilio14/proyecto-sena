@@ -103,6 +103,18 @@
                 <% } %>
 
                 <a href="/contacto" class="nav-contacto-btn">Contáctanos</a>
+
+                <% if (sitio && sitio.promocion_logo_url) { %>
+                    <% if (sitio.promocion_link_url) { %>
+                        <a href="<%= sitio.promocion_link_url %>" target="_blank" rel="noopener" class="nav-promocion-logo">
+                            <img src="<%= sitio.promocion_logo_url %>" alt="Logo de promoción">
+                        </a>
+                    <% } else { %>
+                        <span class="nav-promocion-logo">
+                            <img src="<%= sitio.promocion_logo_url %>" alt="Logo de promoción">
+                        </span>
+                    <% } %>
+                <% } %>
             </nav>
         </div>
     </header>

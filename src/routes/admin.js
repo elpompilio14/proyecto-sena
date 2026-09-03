@@ -95,6 +95,7 @@ router.post('/institucion', upload.institucion.fields([
     { name: 'plataforma_virtual_logo', maxCount: 1 },
     { name: 'manual_convivencia', maxCount: 1 },
     { name: 'manual_convivencia_imagen', maxCount: 1 },
+    { name: 'promocion_logo', maxCount: 1 },
 ]), institucionController.actualizar);
 
 router.get('/mensajes', mensajesController.index);
@@ -155,6 +156,11 @@ router.get('/gobierno-escolar/:id/editar', gobiernoEscolarController.editarForm)
 router.post('/gobierno-escolar/:id/editar', upload.single('imagen'), gobiernoEscolarController.editar);
 router.post('/gobierno-escolar/:id/eliminar', gobiernoEscolarController.eliminar);
 router.post('/gobierno-escolar/:id/visibilidad', gobiernoEscolarController.toggleVisible);
+
+router.post('/coheteria/info', upload.single('portada'), coheteriaController.actualizarInfo);
+router.post('/comite-ecologico/info', upload.single('portada'), comiteEcologicoController.actualizarInfo);
+router.post('/equipo-drones/info', upload.single('portada'), equipoDronesController.actualizarInfo);
+router.post('/equipo-desarrollo/info', upload.single('portada'), equipoDesarrolloController.actualizarInfo);
 
 router.get('/equipo-desarrollo', equipoDesarrolloController.index);
 router.post('/equipo-desarrollo', upload.single('imagen'), equipoDesarrolloController.crear);

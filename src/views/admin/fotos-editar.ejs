@@ -34,6 +34,24 @@
             <% }) %>
         </select>
     </label>
+    <label>
+        Categoría de Media Técnica relacionada (opcional)
+        <select name="media_tecnica_categoria_id">
+            <option value="">-- Ninguna --</option>
+            <% categoriasMediaTecnica.forEach(function(c) { %>
+                <option value="<%= c.id %>" <%= foto.media_tecnica_categoria_id === c.id ? 'selected' : '' %>><%= c.nombre %></option>
+            <% }) %>
+        </select>
+    </label>
+    <label>
+        Sección relacionada (opcional)
+        <select name="seccion">
+            <option value="">-- Ninguna --</option>
+            <% Object.keys(secciones).forEach(function(clave) { %>
+                <option value="<%= clave %>" <%= foto.seccion === clave ? 'selected' : '' %>><%= secciones[clave] %></option>
+            <% }) %>
+        </select>
+    </label>
     <button type="submit">Guardar cambios</button>
 </form>
 

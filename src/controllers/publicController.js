@@ -61,22 +61,54 @@ exports.gobiernoEscolar = async (req, res) => {
 
 exports.equipoDesarrollo = async (req, res) => {
     const miembros = await pool.query('SELECT * FROM equipo_desarrollo ORDER BY orden, nombre');
-    res.render('equipo-desarrollo', { titulo: 'Equipo de Desarrollo', grupos: agruparPorNivel(miembros.rows) });
+    const info = await pool.query('SELECT equipo_desarrollo_texto, equipo_desarrollo_portada_url FROM institucion_info ORDER BY id LIMIT 1');
+    const fotos = await pool.query("SELECT * FROM galeria_fotos WHERE seccion = 'equipo-desarrollo' AND visible = true ORDER BY orden, creado_en");
+    res.render('equipo-desarrollo', {
+        titulo: 'Equipo de Desarrollo',
+        grupos: agruparPorNivel(miembros.rows),
+        texto: info.rows[0] ? info.rows[0].equipo_desarrollo_texto : null,
+        portada: info.rows[0] ? info.rows[0].equipo_desarrollo_portada_url : null,
+        fotos: fotos.rows,
+    });
 };
 
 exports.comiteEcologico = async (req, res) => {
     const miembros = await pool.query('SELECT * FROM comite_ecologico ORDER BY orden, nombre');
-    res.render('comite-ecologico', { titulo: 'Comité Ecológico', grupos: agruparPorNivel(miembros.rows) });
+    const info = await pool.query('SELECT comite_ecologico_texto, comite_ecologico_portada_url FROM institucion_info ORDER BY id LIMIT 1');
+    const fotos = await pool.query("SELECT * FROM galeria_fotos WHERE seccion = 'comite-ecologico' AND visible = true ORDER BY orden, creado_en");
+    res.render('comite-ecologico', {
+        titulo: 'Comité Ecológico',
+        grupos: agruparPorNivel(miembros.rows),
+        texto: info.rows[0] ? info.rows[0].comite_ecologico_texto : null,
+        portada: info.rows[0] ? info.rows[0].comite_ecologico_portada_url : null,
+        fotos: fotos.rows,
+    });
 };
 
 exports.equipoDrones = async (req, res) => {
     const miembros = await pool.query('SELECT * FROM equipo_drones ORDER BY orden, nombre');
-    res.render('equipo-drones', { titulo: 'Equipo de Drones', grupos: agruparPorNivel(miembros.rows) });
+    const info = await pool.query('SELECT equipo_drones_texto, equipo_drones_portada_url FROM institucion_info ORDER BY id LIMIT 1');
+    const fotos = await pool.query("SELECT * FROM galeria_fotos WHERE seccion = 'equipo-drones' AND visible = true ORDER BY orden, creado_en");
+    res.render('equipo-drones', {
+        titulo: 'Equipo de Drones',
+        grupos: agruparPorNivel(miembros.rows),
+        texto: info.rows[0] ? info.rows[0].equipo_drones_texto : null,
+        portada: info.rows[0] ? info.rows[0].equipo_drones_portada_url : null,
+        fotos: fotos.rows,
+    });
 };
 
 exports.coheteria = async (req, res) => {
     const miembros = await pool.query('SELECT * FROM coheteria ORDER BY orden, nombre');
-    res.render('coheteria', { titulo: 'Cohetería', grupos: agruparPorNivel(miembros.rows) });
+    const info = await pool.query('SELECT coheteria_texto, coheteria_portada_url FROM institucion_info ORDER BY id LIMIT 1');
+    const fotos = await pool.query("SELECT * FROM galeria_fotos WHERE seccion = 'coheteria' AND visible = true ORDER BY orden, creado_en");
+    res.render('coheteria', {
+        titulo: 'Cohetería',
+        grupos: agruparPorNivel(miembros.rows),
+        texto: info.rows[0] ? info.rows[0].coheteria_texto : null,
+        portada: info.rows[0] ? info.rows[0].coheteria_portada_url : null,
+        fotos: fotos.rows,
+    });
 };
 
 exports.eventos = async (req, res) => {
@@ -260,7 +292,11 @@ exports.mediaTecnicaDetalle = async (req, res) => {
     if (categoria.rows.length === 0) {
         return res.status(404).render('404', { titulo: 'No encontrado' });
     }
-    res.render('media-tecnica-detalle', { titulo: categoria.rows[0].nombre, categoria: categoria.rows[0] });
+    const fotos = await pool.query(
+        'SELECT * FROM galeria_fotos WHERE media_tecnica_categoria_id = $1 AND visible = true ORDER BY orden, creado_en',
+        [req.params.id]
+    );
+    res.render('media-tecnica-detalle', { titulo: categoria.rows[0].nombre, categoria: categoria.rows[0], fotos: fotos.rows });
 };
 
 exports.investigacion = async (req, res) => {

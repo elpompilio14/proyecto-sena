@@ -52,6 +52,16 @@ CREATE TABLE institucion_info (
     manual_convivencia_imagen_url TEXT,
     articulado_texto TEXT,
     investigacion_texto TEXT,
+    coheteria_texto TEXT,
+    comite_ecologico_texto TEXT,
+    equipo_drones_texto TEXT,
+    equipo_desarrollo_texto TEXT,
+    coheteria_portada_url TEXT,
+    comite_ecologico_portada_url TEXT,
+    equipo_drones_portada_url TEXT,
+    equipo_desarrollo_portada_url TEXT,
+    promocion_logo_url TEXT,
+    promocion_link_url TEXT,
     actualizado_en TIMESTAMP NOT NULL DEFAULT NOW()
 );
 
@@ -260,6 +270,12 @@ CREATE TABLE media_tecnica_categorias (
     visible BOOLEAN NOT NULL DEFAULT true,
     creado_en TIMESTAMP NOT NULL DEFAULT NOW()
 );
+
+-- Fotos de una categoria de Media Tecnica (galeria propia, igual que eventos/noticias)
+ALTER TABLE galeria_fotos ADD COLUMN media_tecnica_categoria_id INTEGER REFERENCES media_tecnica_categorias(id) ON DELETE SET NULL;
+
+-- Fotos relacionadas con una seccion fija (Coheteria, Comite Ecologico, Equipo de Drones, Equipo de Desarrollo)
+ALTER TABLE galeria_fotos ADD COLUMN seccion VARCHAR(30);
 
 CREATE TABLE mensajes_contacto (
     id SERIAL PRIMARY KEY,

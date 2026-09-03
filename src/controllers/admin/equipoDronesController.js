@@ -2,7 +2,23 @@ const pool = require('../../config/db');
 
 exports.index = async (req, res) => {
     const miembros = await pool.query('SELECT * FROM equipo_drones ORDER BY orden, nombre');
-    res.render('admin/equipo-drones', { titulo: 'Admin · Equipo de Drones', miembros: miembros.rows });
+    const info = await pool.query('SELECT equipo_drones_texto, equipo_drones_portada_url FROM institucion_info ORDER BY id LIMIT 1');
+    res.render('admin/equipo-drones', {
+        titulo: 'Admin · Equipo de Drones',
+        miembros: miembros.rows,
+        infoTexto: info.rows[0] ? info.rows[0].equipo_drones_texto : '',
+        infoPortada: info.rows[0] ? info.rows[0].equipo_drones_portada_url : null,
+    });
+};
+
+exports.actualizarInfo = async (req, res) => {
+    const { texto, portada_actual } = req.body;
+    const portada_url = req.file ? `/images/${req.file.filename}` : (portada_actual || null);
+    await pool.query(
+        'UPDATE institucion_info SET equipo_drones_texto = $1, equipo_drones_portada_url = $2 WHERE id = (SELECT id FROM institucion_info ORDER BY id LIMIT 1)',
+        [texto || null, portada_url]
+    );
+    res.redirect('/admin/equipo-drones');
 };
 
 exports.crear = async (req, res) => {

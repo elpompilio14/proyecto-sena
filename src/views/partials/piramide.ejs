@@ -1,3 +1,4 @@
+<% const limiteResto = 3; let contadorResto = 0; %>
 <div class="piramide">
     <% if (grupos.punta.length > 0) { %>
         <div class="piramide-fila piramide-fila-punta">
@@ -13,8 +14,8 @@
     <% } %>
     <% if (grupos.medio.length > 0) { %>
         <div class="piramide-fila piramide-fila-medio">
-            <% grupos.medio.forEach(function(m) { %>
-                <div class="comunidad-lider-card">
+            <% grupos.medio.forEach(function(m) { contadorResto++; %>
+                <div class="comunidad-lider-card" data-piramide-extra<% if (contadorResto > limiteResto) { %> hidden<% } %>>
                     <% if (m.foto_url && m.visible) { %><img src="<%= m.foto_url %>" alt="<%= m.nombre %>" class="comunidad-lider-foto"><% } %>
                     <h3><%= m.nombre %></h3>
                     <% if (m.rol || m.cargo) { %><span class="badge"><%= m.rol || m.cargo %></span><% } %>
@@ -25,8 +26,8 @@
     <% } %>
     <% if (grupos.base.length > 0) { %>
         <div class="piramide-fila piramide-fila-base">
-            <% grupos.base.forEach(function(m) { %>
-                <div class="comunidad-lider-card">
+            <% grupos.base.forEach(function(m) { contadorResto++; %>
+                <div class="comunidad-lider-card" data-piramide-extra<% if (contadorResto > limiteResto) { %> hidden<% } %>>
                     <% if (m.foto_url && m.visible) { %><img src="<%= m.foto_url %>" alt="<%= m.nombre %>" class="comunidad-lider-foto"><% } %>
                     <h3><%= m.nombre %></h3>
                     <% if (m.rol || m.cargo) { %><span class="badge"><%= m.rol || m.cargo %></span><% } %>
@@ -34,5 +35,8 @@
                 </div>
             <% }) %>
         </div>
+    <% } %>
+    <% if (contadorResto > limiteResto) { %>
+        <button type="button" class="piramide-boton-expandir">Ver todos los integrantes (<%= contadorResto %>)</button>
     <% } %>
 </div>

@@ -5,13 +5,32 @@
 <h1><%= categoria.nombre %></h1>
 
 <% if (categoria.imagen_url && categoria.visible) { %>
-    <img src="<%= categoria.imagen_url %>" alt="<%= categoria.nombre %>" class="card-img">
+    <img src="<%= categoria.imagen_url %>" alt="<%= categoria.nombre %>" class="detalle-portada">
 <% } %>
 
 <% if (categoria.descripcion) { %>
     <p><%- formatearTexto(categoria.descripcion) %></p>
 <% } else { %>
     <p>Aún no se ha agregado una descripción para esta categoría.</p>
+<% } %>
+
+<% if (fotos.length > 0) { %>
+    <h2 class="evento-mural-titulo">Fotos de <%= categoria.nombre %></h2>
+    <div class="mural">
+        <% fotos.forEach(function(f, i) { %>
+            <figure class="aparece" style="transition-delay: <%= Math.min(i, 7) * 50 %>ms">
+                <% if (esVideo(f.url)) { %>
+                    <div class="miniatura-video">
+                        <video src="<%= f.url %>#t=0.5" data-url="<%= f.url %>" preload="metadata" muted playsinline></video>
+                        <span class="icono-play">&#9658;</span>
+                    </div>
+                <% } else { %>
+                    <img src="<%= f.url %>" data-url="<%= f.url %>" alt="<%= f.titulo || categoria.nombre %>">
+                <% } %>
+                <% if (f.titulo) { %><figcaption><%= f.titulo %></figcaption><% } %>
+            </figure>
+        <% }) %>
+    </div>
 <% } %>
 
 <%- include('partials/footer') %>

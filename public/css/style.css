@@ -1557,6 +1557,19 @@ button:hover { background: var(--azul-oscuro); transform: translateY(-1px); }
     box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
 }
 
+.nav-promocion-logo {
+    display: inline-flex;
+    align-items: center;
+    margin-left: 14px;
+}
+
+.nav-promocion-logo img {
+    height: 48px;
+    width: auto;
+    max-width: 90px;
+    object-fit: contain;
+}
+
 /* ===================== Botón hamburguesa (móvil) ===================== */
 
 .hamburger-btn {
@@ -1655,6 +1668,8 @@ button:hover { background: var(--azul-oscuro); transform: translateY(-1px); }
     .nav-dropdown-menu a:hover { background: rgba(10, 94, 196, 0.1); color: var(--azul-oscuro); }
 
     .nav-contacto-btn { justify-content: center; margin-top: 6px; }
+
+    .nav-promocion-logo { justify-content: center; margin: 6px 0 0; width: 100%; }
 }
 
 /* ===================== Portada grande ===================== */
@@ -2064,6 +2079,22 @@ button:hover { background: var(--azul-oscuro); transform: translateY(-1px); }
     height: 130px;
     border-color: var(--azul-claro);
     border-width: 3px;
+}
+
+.piramide-boton-expandir {
+    background: none;
+    border: 2px solid var(--azul);
+    color: var(--azul);
+    border-radius: 999px;
+    padding: 10px 24px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background .15s ease, color .15s ease;
+}
+
+.piramide-boton-expandir:hover {
+    background: var(--azul);
+    color: #fff;
 }
 
 .comunidad-docente-preview-grid {
