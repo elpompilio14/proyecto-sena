@@ -13,6 +13,9 @@
             {% endfor %}
         </div>
     {% endif %}
+    {% if grupos.punta|length > 0 and (grupos.medio|length > 0 or grupos.base|length > 0) %}
+        <div class="piramide-divisor" aria-hidden="true"><span class="piramide-divisor-linea"></span><span class="piramide-divisor-flecha">▾</span><span class="piramide-divisor-linea"></span></div>
+    {% endif %}
     {% if grupos.medio|length > 0 %}
         <div class="piramide-fila piramide-fila-medio">
             {% for m in grupos.medio %}
@@ -25,6 +28,9 @@
                 </div>
             {% endfor %}
         </div>
+    {% endif %}
+    {% if grupos.medio|length > 0 and grupos.base|length > 0 %}
+        <div class="piramide-divisor" aria-hidden="true"><span class="piramide-divisor-linea"></span><span class="piramide-divisor-flecha">▾</span><span class="piramide-divisor-linea"></span></div>
     {% endif %}
     {% if grupos.base|length > 0 %}
         <div class="piramide-fila piramide-fila-base">
