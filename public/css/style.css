@@ -1560,13 +1560,13 @@ button:hover { background: var(--azul-oscuro); transform: translateY(-1px); }
 .nav-promocion-logo {
     display: inline-flex;
     align-items: center;
-    margin-left: 14px;
+    margin-left: 16px;
 }
 
 .nav-promocion-logo img {
-    height: 48px;
+    height: 82px;
     width: auto;
-    max-width: 90px;
+    max-width: 150px;
     object-fit: contain;
 }
 
@@ -1670,6 +1670,7 @@ button:hover { background: var(--azul-oscuro); transform: translateY(-1px); }
     .nav-contacto-btn { justify-content: center; margin-top: 6px; }
 
     .nav-promocion-logo { justify-content: center; margin: 6px 0 0; width: 100%; }
+    .nav-promocion-logo img { height: 60px; }
 }
 
 /* ===================== Portada grande ===================== */
