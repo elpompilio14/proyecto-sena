@@ -14,6 +14,15 @@
 
     <label>Años del colegio (se muestra junto al logo y en la sección "Nuestra institución")<input type="number" name="anios_fundacion" min="0" value="{{ info.anios_fundacion if info and info.anios_fundacion else '' }}" placeholder="Ej: 63"></label>
 
+    <h2>Logo o insignia de promoción</h2>
+    <p>Aparece en la esquina superior derecha del menú, junto al botón "Contáctanos". Ideal para el logo de la promoción del año (ej: "Promoción 2026"). Usa una imagen con fondo transparente para que no se vea como un cuadro de color.</p>
+    {% if info and info.promocion_logo_url %}
+        <img src="{{ info.promocion_logo_url }}" alt="Logo de promoción actual" class="card-img" style="max-width:120px;">
+    {% endif %}
+    <label>Logo o foto de la promoción (opcional)<input type="file" name="promocion_logo" accept="image/*" data-recorte="rectangulo"></label>
+    <input type="hidden" name="promocion_logo_url_actual" value="{{ info.promocion_logo_url if info and info.promocion_logo_url else '' }}">
+    <label>Link al hacer clic (opcional, ej: a una página de esa promoción o red social)<input type="text" name="promocion_link_url" value="{{ info.promocion_link_url if info and info.promocion_link_url else '' }}" placeholder="https://..."></label>
+
     <h2>Estadísticas ("Nuestra Institución")</h2>
     <label>Cantidad de estudiantes<input type="number" name="num_estudiantes" min="0" value="{{ info.num_estudiantes if info and info.num_estudiantes else '' }}" placeholder="Ej: 819"></label>
     <label>Cantidad de profesores<input type="number" name="num_profesores" min="0" value="{{ info.num_profesores if info and info.num_profesores else '' }}" placeholder="Ej: 27"></label>

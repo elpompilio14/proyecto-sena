@@ -133,3 +133,25 @@ ALTER TABLE icfes_resultados ADD COLUMN IF NOT EXISTS visible BOOLEAN NOT NULL D
 ALTER TABLE noticias ADD COLUMN IF NOT EXISTS visible BOOLEAN NOT NULL DEFAULT true;
 ALTER TABLE eventos ADD COLUMN IF NOT EXISTS visible BOOLEAN NOT NULL DEFAULT true;
 ALTER TABLE galeria_fotos ADD COLUMN IF NOT EXISTS visible BOOLEAN NOT NULL DEFAULT true;
+
+-- Fotos propias de cada categoria de Media Tecnica (galeria igual que eventos/noticias)
+ALTER TABLE galeria_fotos ADD COLUMN IF NOT EXISTS media_tecnica_categoria_id INTEGER REFERENCES media_tecnica_categorias(id) ON DELETE SET NULL;
+
+-- Fotos relacionadas con una seccion fija (Coheteria, Comite Ecologico, Equipo de Drones, Equipo de Desarrollo)
+ALTER TABLE galeria_fotos ADD COLUMN IF NOT EXISTS seccion VARCHAR(30);
+
+-- Texto informativo general de cada seccion de equipo
+ALTER TABLE institucion_info ADD COLUMN IF NOT EXISTS coheteria_texto TEXT;
+ALTER TABLE institucion_info ADD COLUMN IF NOT EXISTS comite_ecologico_texto TEXT;
+ALTER TABLE institucion_info ADD COLUMN IF NOT EXISTS equipo_drones_texto TEXT;
+ALTER TABLE institucion_info ADD COLUMN IF NOT EXISTS equipo_desarrollo_texto TEXT;
+
+-- Foto de portada grande de cada seccion de equipo (igual que en Eventos/Noticias)
+ALTER TABLE institucion_info ADD COLUMN IF NOT EXISTS coheteria_portada_url TEXT;
+ALTER TABLE institucion_info ADD COLUMN IF NOT EXISTS comite_ecologico_portada_url TEXT;
+ALTER TABLE institucion_info ADD COLUMN IF NOT EXISTS equipo_drones_portada_url TEXT;
+ALTER TABLE institucion_info ADD COLUMN IF NOT EXISTS equipo_desarrollo_portada_url TEXT;
+
+-- Logo/insignia de promocion, se muestra junto al boton de Contactanos en el menu
+ALTER TABLE institucion_info ADD COLUMN IF NOT EXISTS promocion_logo_url TEXT;
+ALTER TABLE institucion_info ADD COLUMN IF NOT EXISTS promocion_link_url TEXT;

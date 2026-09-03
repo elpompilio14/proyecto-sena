@@ -4,6 +4,19 @@
 <p><a href="/admin">&larr; Panel admin</a></p>
 <h1>Equipo de Drones</h1>
 
+<form method="POST" action="/admin/equipo-drones/info" class="form" enctype="multipart/form-data">
+    {% if infoPortada %}
+        <img src="{{ infoPortada }}" alt="Portada actual" class="card-img">
+    {% endif %}
+    <label>Foto de portada (opcional, se ve grande arriba de la página)<input type="file" name="portada" accept="image/*" data-recorte="rectangulo" data-recorte-aspecto="1.7778"></label>
+    <input type="hidden" name="portada_actual" value="{{ infoPortada or '' }}">
+    <label>Información general (aparece en la página pública, debajo de los integrantes)<textarea name="texto" rows="4">{{ infoTexto or '' }}</textarea></label>
+    <button type="submit">Guardar información</button>
+</form>
+<p>Para agregar fotos relacionadas (aparecen debajo de la información), ve a <a href="/admin/fotos">Galería</a> y elige "Equipo de Drones" en el campo de sección.</p>
+
+<h2>Integrantes</h2>
+
 <form method="POST" action="/admin/equipo-drones" class="form" enctype="multipart/form-data">
     <label>Nombre<input type="text" name="nombre" required></label>
     <label>Rol (ej: Piloto, Integrante)<input type="text" name="rol"></label>

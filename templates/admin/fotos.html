@@ -27,6 +27,24 @@
             {% endfor %}
         </select>
     </label>
+    <label>
+        Categoría de Media Técnica relacionada (opcional)
+        <select name="media_tecnica_categoria_id">
+            <option value="">-- Ninguna --</option>
+            {% for c in categoriasMediaTecnica %}
+                <option value="{{ c.id }}">{{ c.nombre }}</option>
+            {% endfor %}
+        </select>
+    </label>
+    <label>
+        Sección relacionada (opcional)
+        <select name="seccion">
+            <option value="">-- Ninguna --</option>
+            {% for clave, nombre in secciones.items() %}
+                <option value="{{ clave }}">{{ nombre }}</option>
+            {% endfor %}
+        </select>
+    </label>
     <button type="submit">Agregar fotos</button>
 </form>
 <p>Tip: al seleccionar el archivo, mantén presionado Ctrl (o Shift para un rango) para elegir varias fotos de una vez.</p>
@@ -46,6 +64,24 @@
                     {% endfor %}
                 </select>
             </label>
+            <label>Nueva categoría de Media Técnica
+                <select name="media_tecnica_categoria_lote">
+                    <option value="__no_cambiar__">-- No cambiar --</option>
+                    <option value="">-- Quitar categoría --</option>
+                    {% for c in categoriasMediaTecnica %}
+                        <option value="{{ c.id }}">{{ c.nombre }}</option>
+                    {% endfor %}
+                </select>
+            </label>
+            <label>Nueva sección
+                <select name="seccion_lote">
+                    <option value="__no_cambiar__">-- No cambiar --</option>
+                    <option value="">-- Quitar sección --</option>
+                    {% for clave, nombre in secciones.items() %}
+                        <option value="{{ clave }}">{{ nombre }}</option>
+                    {% endfor %}
+                </select>
+            </label>
             <label>Nueva fecha<input type="date" name="fecha_lote"></label>
             <label>Nuevo título<input type="text" name="titulo_lote" placeholder="(dejar vacío = no cambiar)"></label>
             <label>Nuevo orden (0 = primera)<input type="number" name="orden_lote" placeholder="(dejar vacío = no cambiar)"></label>
@@ -53,7 +89,7 @@
         </div>
 
         <table class="tabla">
-            <thead><tr><th><input type="checkbox" id="check-todas-fotos"></th><th class="tabla-col-foto">Foto</th><th>Título</th><th>Fecha</th><th>Orden</th><th>Evento</th><th>Noticia</th><th></th></tr></thead>
+            <thead><tr><th><input type="checkbox" id="check-todas-fotos"></th><th class="tabla-col-foto">Foto</th><th>Título</th><th>Fecha</th><th>Orden</th><th>Evento</th><th>Noticia</th><th>Media Técnica</th><th>Sección</th><th></th></tr></thead>
             <tbody>
                 {% for f in fotos %}
                     <tr>
@@ -73,6 +109,8 @@
                         <td>{{ f.orden }}</td>
                         <td>{{ f.evento_titulo or '-' }}</td>
                         <td>{{ f.noticia_titulo or '-' }}</td>
+                        <td>{{ f.media_tecnica_nombre or '-' }}</td>
+                        <td>{{ f.seccion_nombre or '-' }}</td>
                         <td class="acciones">
                             <a href="/admin/fotos/{{ f.id }}/editar" class="btn-editar">Editar</a>
                             <button type="submit" formaction="/admin/fotos/{{ f.id }}/eliminar" class="btn-danger">Eliminar</button>

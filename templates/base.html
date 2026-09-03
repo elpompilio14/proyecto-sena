@@ -103,6 +103,18 @@
                 {% endif %}
 
                 <a href="/contacto" class="nav-contacto-btn">Contáctanos</a>
+
+                {% if sitio and sitio.promocion_logo_url %}
+                    {% if sitio.promocion_link_url %}
+                        <a href="{{ sitio.promocion_link_url }}" target="_blank" rel="noopener" class="nav-promocion-logo">
+                            <img src="{{ sitio.promocion_logo_url }}" alt="Logo de promoción">
+                        </a>
+                    {% else %}
+                        <span class="nav-promocion-logo">
+                            <img src="{{ sitio.promocion_logo_url }}" alt="Logo de promoción">
+                        </span>
+                    {% endif %}
+                {% endif %}
             </nav>
         </div>
     </header>
@@ -141,5 +153,6 @@
     <script src="https://cdn.jsdelivr.net/npm/cropperjs@1.6.2/dist/cropper.min.js"></script>
     <script src="/js/recorte-fotos.js"></script>
     <script src="/js/toggle-visibilidad.js"></script>
+    <script src="/js/piramide-expandir.js"></script>
 </body>
 </html>

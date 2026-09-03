@@ -89,7 +89,18 @@ def equipo_desarrollo():
         with conexion.cursor() as cur:
             cur.execute('SELECT * FROM equipo_desarrollo ORDER BY orden, nombre')
             miembros = cur.fetchall()
-    return render_template('equipo_desarrollo.html', titulo='Equipo de Desarrollo', grupos=_agrupar_por_nivel(miembros))
+            cur.execute('SELECT equipo_desarrollo_texto, equipo_desarrollo_portada_url FROM institucion_info ORDER BY id LIMIT 1')
+            info = cur.fetchone()
+            cur.execute("SELECT * FROM galeria_fotos WHERE seccion = 'equipo-desarrollo' AND visible = true ORDER BY orden, creado_en")
+            fotos = cur.fetchall()
+    return render_template(
+        'equipo_desarrollo.html',
+        titulo='Equipo de Desarrollo',
+        grupos=_agrupar_por_nivel(miembros),
+        texto=info['equipo_desarrollo_texto'] if info else None,
+        portada=info['equipo_desarrollo_portada_url'] if info else None,
+        fotos=fotos,
+    )
 
 
 @public_bp.route('/comite-ecologico')
@@ -98,7 +109,18 @@ def comite_ecologico():
         with conexion.cursor() as cur:
             cur.execute('SELECT * FROM comite_ecologico ORDER BY orden, nombre')
             miembros = cur.fetchall()
-    return render_template('comite_ecologico.html', titulo='Comité Ecológico', grupos=_agrupar_por_nivel(miembros))
+            cur.execute('SELECT comite_ecologico_texto, comite_ecologico_portada_url FROM institucion_info ORDER BY id LIMIT 1')
+            info = cur.fetchone()
+            cur.execute("SELECT * FROM galeria_fotos WHERE seccion = 'comite-ecologico' AND visible = true ORDER BY orden, creado_en")
+            fotos = cur.fetchall()
+    return render_template(
+        'comite_ecologico.html',
+        titulo='Comité Ecológico',
+        grupos=_agrupar_por_nivel(miembros),
+        texto=info['comite_ecologico_texto'] if info else None,
+        portada=info['comite_ecologico_portada_url'] if info else None,
+        fotos=fotos,
+    )
 
 
 @public_bp.route('/equipo-drones')
@@ -107,7 +129,18 @@ def equipo_drones():
         with conexion.cursor() as cur:
             cur.execute('SELECT * FROM equipo_drones ORDER BY orden, nombre')
             miembros = cur.fetchall()
-    return render_template('equipo_drones.html', titulo='Equipo de Drones', grupos=_agrupar_por_nivel(miembros))
+            cur.execute('SELECT equipo_drones_texto, equipo_drones_portada_url FROM institucion_info ORDER BY id LIMIT 1')
+            info = cur.fetchone()
+            cur.execute("SELECT * FROM galeria_fotos WHERE seccion = 'equipo-drones' AND visible = true ORDER BY orden, creado_en")
+            fotos = cur.fetchall()
+    return render_template(
+        'equipo_drones.html',
+        titulo='Equipo de Drones',
+        grupos=_agrupar_por_nivel(miembros),
+        texto=info['equipo_drones_texto'] if info else None,
+        portada=info['equipo_drones_portada_url'] if info else None,
+        fotos=fotos,
+    )
 
 
 @public_bp.route('/coheteria')
@@ -116,7 +149,18 @@ def coheteria():
         with conexion.cursor() as cur:
             cur.execute('SELECT * FROM coheteria ORDER BY orden, nombre')
             miembros = cur.fetchall()
-    return render_template('coheteria.html', titulo='Cohetería', grupos=_agrupar_por_nivel(miembros))
+            cur.execute('SELECT coheteria_texto, coheteria_portada_url FROM institucion_info ORDER BY id LIMIT 1')
+            info = cur.fetchone()
+            cur.execute("SELECT * FROM galeria_fotos WHERE seccion = 'coheteria' AND visible = true ORDER BY orden, creado_en")
+            fotos = cur.fetchall()
+    return render_template(
+        'coheteria.html',
+        titulo='Cohetería',
+        grupos=_agrupar_por_nivel(miembros),
+        texto=info['coheteria_texto'] if info else None,
+        portada=info['coheteria_portada_url'] if info else None,
+        fotos=fotos,
+    )
 
 
 @public_bp.route('/institucion')
@@ -150,9 +194,14 @@ def media_tecnica_detalle(id):
         with conexion.cursor() as cur:
             cur.execute('SELECT * FROM media_tecnica_categorias WHERE id = %s', (id,))
             categoria = cur.fetchone()
-    if not categoria:
-        abort(404)
-    return render_template('media_tecnica_detalle.html', titulo=categoria['nombre'], categoria=categoria)
+            if not categoria:
+                abort(404)
+            cur.execute(
+                'SELECT * FROM galeria_fotos WHERE media_tecnica_categoria_id = %s AND visible = true ORDER BY orden, creado_en',
+                (id,)
+            )
+            fotos = cur.fetchall()
+    return render_template('media_tecnica_detalle.html', titulo=categoria['nombre'], categoria=categoria, fotos=fotos)
 
 
 @public_bp.route('/investigacion')

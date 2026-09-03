@@ -10,7 +10,29 @@ def equipo_desarrollo_index():
         with conexion.cursor() as cur:
             cur.execute('SELECT * FROM equipo_desarrollo ORDER BY orden, nombre')
             miembros = cur.fetchall()
-    return render_template('admin/equipo_desarrollo.html', titulo='Admin · Equipo de Desarrollo', miembros=miembros)
+            cur.execute('SELECT equipo_desarrollo_texto, equipo_desarrollo_portada_url FROM institucion_info ORDER BY id LIMIT 1')
+            info = cur.fetchone()
+    return render_template(
+        'admin/equipo_desarrollo.html',
+        titulo='Admin · Equipo de Desarrollo',
+        miembros=miembros,
+        infoTexto=info['equipo_desarrollo_texto'] if info else '',
+        infoPortada=info['equipo_desarrollo_portada_url'] if info else None,
+    )
+
+
+@admin_bp.route('/equipo-desarrollo/info', methods=['POST'])
+def equipo_desarrollo_actualizar_info():
+    texto = request.form.get('texto')
+    portada_actual = request.form.get('portada_actual')
+    portada_url = guardar_archivo(request.files.get('portada')) or (portada_actual or None)
+    with obtener_conexion() as conexion:
+        with conexion.cursor() as cur:
+            cur.execute(
+                'UPDATE institucion_info SET equipo_desarrollo_texto = %s, equipo_desarrollo_portada_url = %s WHERE id = (SELECT id FROM institucion_info ORDER BY id LIMIT 1)',
+                (texto or None, portada_url),
+            )
+    return redirect('/admin/equipo-desarrollo')
 
 
 @admin_bp.route('/equipo-desarrollo', methods=['POST'])

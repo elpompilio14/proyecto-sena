@@ -10,7 +10,29 @@ def comite_ecologico_index():
         with conexion.cursor() as cur:
             cur.execute('SELECT * FROM comite_ecologico ORDER BY orden, nombre')
             miembros = cur.fetchall()
-    return render_template('admin/comite_ecologico.html', titulo='Admin · Comité Ecológico', miembros=miembros)
+            cur.execute('SELECT comite_ecologico_texto, comite_ecologico_portada_url FROM institucion_info ORDER BY id LIMIT 1')
+            info = cur.fetchone()
+    return render_template(
+        'admin/comite_ecologico.html',
+        titulo='Admin · Comité Ecológico',
+        miembros=miembros,
+        infoTexto=info['comite_ecologico_texto'] if info else '',
+        infoPortada=info['comite_ecologico_portada_url'] if info else None,
+    )
+
+
+@admin_bp.route('/comite-ecologico/info', methods=['POST'])
+def comite_ecologico_actualizar_info():
+    texto = request.form.get('texto')
+    portada_actual = request.form.get('portada_actual')
+    portada_url = guardar_archivo(request.files.get('portada')) or (portada_actual or None)
+    with obtener_conexion() as conexion:
+        with conexion.cursor() as cur:
+            cur.execute(
+                'UPDATE institucion_info SET comite_ecologico_texto = %s, comite_ecologico_portada_url = %s WHERE id = (SELECT id FROM institucion_info ORDER BY id LIMIT 1)',
+                (texto or None, portada_url),
+            )
+    return redirect('/admin/comite-ecologico')
 
 
 @admin_bp.route('/comite-ecologico', methods=['POST'])
