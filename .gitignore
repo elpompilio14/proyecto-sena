@@ -1,3 +1,7 @@
+# Fotos y videos subidos por el admin (contenido, no codigo)
+public/images/*
+!public/images/.gitkeep
+
 # Logs
 logs
 *.log

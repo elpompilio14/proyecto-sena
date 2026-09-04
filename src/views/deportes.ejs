@@ -1,0 +1,43 @@
+<%- include('partials/header') %>
+
+<h1>Equipos deportivos</h1>
+
+<% if (deportes.length === 0) { %>
+    <p>Aún no hay deportes registrados.</p>
+<% } else { %>
+    <div class="categorias-grid">
+        <% deportes.forEach(function(d) { %>
+            <a href="/deportes/<%= d.id %>" class="categoria-link-card">
+                <div class="categoria-link-card-img-wrap">
+                    <% if (d.imagen_url && d.visible) { %>
+                        <img src="<%= d.imagen_url %>" alt="<%= d.nombre %>">
+                    <% } else { %>
+                        <span class="categoria-link-card-sin-imagen">🏅</span>
+                    <% } %>
+                </div>
+                <h3><%= d.nombre %></h3>
+            </a>
+        <% }) %>
+    </div>
+<% } %>
+
+<% if (equipos.length === 0) { %>
+    <p>Aún no hay equipos registrados.</p>
+<% } else { %>
+    <div class="card-grid">
+        <% equipos.forEach(function(eq, i) { %>
+            <article class="card aparece" style="transition-delay: <%= Math.min(i, 5) * 70 %>ms">
+                <% if (eq.foto_url && eq.visible) { %>
+                    <img src="<%= eq.foto_url %>" alt="<%= eq.nombre %>" class="card-img">
+                <% } %>
+                <span class="badge"><%= eq.deporte_nombre %></span>
+                <h3><%= eq.nombre %></h3>
+                <% if (eq.categoria) { %><p class="fecha">Categoría: <%= eq.categoria %></p><% } %>
+                <% if (eq.entrenador) { %><p class="fecha">Entrenador: <%= eq.entrenador %></p><% } %>
+                <p><%- formatearTexto(eq.descripcion) %></p>
+            </article>
+        <% }) %>
+    </div>
+<% } %>
+
+<%- include('partials/footer') %>

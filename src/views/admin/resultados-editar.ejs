@@ -1,0 +1,37 @@
+<%- include('../partials/header') %>
+
+<p><a href="/admin/resultados">&larr; Resultados</a></p>
+<h1>Editar resultado</h1>
+
+<form method="POST" action="/admin/resultados/<%= resultado.id %>/editar" class="form">
+    <label>
+        Campeonato
+        <select name="campeonato_id" required>
+            <% campeonatos.forEach(function(c) { %>
+                <option value="<%= c.id %>" <%= resultado.campeonato_id === c.id ? 'selected' : '' %>><%= c.nombre %></option>
+            <% }) %>
+        </select>
+    </label>
+    <label>
+        Equipo local
+        <select name="equipo_local_id" required>
+            <% equipos.forEach(function(eq) { %>
+                <option value="<%= eq.id %>" <%= resultado.equipo_local_id === eq.id ? 'selected' : '' %>><%= eq.nombre %></option>
+            <% }) %>
+        </select>
+    </label>
+    <label>
+        Equipo visitante
+        <select name="equipo_visitante_id" required>
+            <% equipos.forEach(function(eq) { %>
+                <option value="<%= eq.id %>" <%= resultado.equipo_visitante_id === eq.id ? 'selected' : '' %>><%= eq.nombre %></option>
+            <% }) %>
+        </select>
+    </label>
+    <label>Marcador local<input type="number" name="marcador_local" min="0" value="<%= resultado.marcador_local %>" required></label>
+    <label>Marcador visitante<input type="number" name="marcador_visitante" min="0" value="<%= resultado.marcador_visitante %>" required></label>
+    <label>Fecha<input type="date" name="fecha" value="<%= resultado.fecha.toISOString().split('T')[0] %>" required></label>
+    <button type="submit">Guardar cambios</button>
+</form>
+
+<%- include('../partials/footer') %>

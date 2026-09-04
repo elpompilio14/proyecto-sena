@@ -1,0 +1,29 @@
+<%- include('partials/header') %>
+
+<section class="comunidad-intro aparece">
+    <span class="badge-pill">Convenios institucionales</span>
+    <h1>Nuestras Alianzas</h1>
+    <p>Instituciones y organizaciones que trabajan de la mano con nuestro colegio.</p>
+</section>
+
+<% if (alianzas.length === 0) { %>
+    <p>Aún no hay alianzas registradas.</p>
+<% } else { %>
+    <div class="alianzas-grid aparece">
+        <% alianzas.forEach(function(a) { %>
+            <% if (a.link_url) { %>
+<a href="<%= a.link_url %>" target="_blank" rel="noopener" class="alianza-card">
+                    <% if (a.logo_url && a.visible) { %><img src="<%= a.logo_url %>" alt="<%= a.nombre %>"><% } %>
+                    <span><%= a.nombre %></span>
+                </a>
+            <% } else { %>
+                <div class="alianza-card">
+                    <% if (a.logo_url && a.visible) { %><img src="<%= a.logo_url %>" alt="<%= a.nombre %>"><% } %>
+                    <span><%= a.nombre %></span>
+                </div>
+            <% } %>
+        <% }) %>
+    </div>
+<% } %>
+
+<%- include('partials/footer') %>

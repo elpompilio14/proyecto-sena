@@ -1,0 +1,52 @@
+<%- include('../partials/header') %>
+
+<p><a href="/admin">&larr; Panel admin</a></p>
+<h1>Estudiantes</h1>
+
+<form method="POST" action="/admin/estudiantes" class="form" enctype="multipart/form-data">
+    <label>Nombres<input type="text" name="nombres" required></label>
+    <label>Apellidos<input type="text" name="apellidos" required></label>
+    <label>
+        Grado
+        <select name="grado_id">
+            <option value="">-- Sin grado --</option>
+            <% grados.forEach(function(g) { %>
+                <option value="<%= g.id %>"><%= g.nombre %></option>
+            <% }) %>
+        </select>
+    </label>
+    <label>Foto (opcional)<input type="file" name="imagen" accept="image/*" data-recorte="rectangulo" data-recorte-aspecto="1"></label>
+    <button type="submit">Crear estudiante</button>
+</form>
+
+<% if (estudiantes.length === 0) { %>
+    <p>Aún no hay estudiantes.</p>
+<% } else { %>
+    <table class="tabla">
+        <thead><tr><th class="tabla-col-foto">Foto</th><th>Nombres</th><th>Apellidos</th><th>Grado</th><th></th></tr></thead>
+        <tbody>
+            <% estudiantes.forEach(function(e) { %>
+                <tr>
+                    <td>
+                        <% if (e.foto_url) { %>
+                            <img src="<%= e.foto_url %>" alt="<%= e.nombres %>" class="tabla-foto-mini">
+                        <% } else { %>
+                            <span class="tabla-foto-vacia">—</span>
+                        <% } %>
+                    </td>
+                    <td><%= e.nombres %></td>
+                    <td><%= e.apellidos %></td>
+                    <td><%= e.grado_nombre || '-' %></td>
+                    <td class="acciones">
+                        <a href="/admin/estudiantes/<%= e.id %>/editar" class="btn-editar">Editar</a>
+                        <form method="POST" action="/admin/estudiantes/<%= e.id %>/eliminar">
+                            <button type="submit" class="btn-danger">Eliminar</button>
+                        </form>
+                    </td>
+                </tr>
+            <% }) %>
+        </tbody>
+    </table>
+<% } %>
+
+<%- include('../partials/footer') %>

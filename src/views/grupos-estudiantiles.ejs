@@ -1,0 +1,31 @@
+<%- include('partials/header') %>
+
+<h1>Grupos y Semilleros</h1>
+
+<% if (grupos.length === 0) { %>
+    <p>Aún no hay grupos registrados.</p>
+<% } else { %>
+    <div class="categorias-grid">
+        <% grupos.forEach(function(g) { %>
+            <% var etiqueta = g.enlace_url ? 'a' : 'div'; %>
+            <<%= etiqueta %> class="categoria-link-card categoria-link-card--grupo"<% if (g.enlace_url) { %> href="<%= g.enlace_url %>"<% } %>>
+                <div class="categoria-link-card-img-wrap">
+                    <% if (g.foto_url && g.visible) { %>
+                        <img src="<%= g.foto_url %>" alt="<%= g.nombre %>">
+                    <% } else { %>
+                        <span class="categoria-link-card-sin-imagen">🧑‍🤝‍🧑</span>
+                    <% } %>
+                </div>
+                <h3><%= g.nombre %></h3>
+                <% if (g.encargado || g.descripcion) { %>
+                    <div class="grupos-card-info">
+                        <% if (g.encargado) { %><p class="fecha">Encargado: <%= g.encargado %></p><% } %>
+                        <% if (g.descripcion) { %><p><%- formatearTexto(g.descripcion) %></p><% } %>
+                    </div>
+                <% } %>
+            </<%= etiqueta %>>
+        <% }) %>
+    </div>
+<% } %>
+
+<%- include('partials/footer') %>

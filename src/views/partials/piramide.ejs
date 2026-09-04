@@ -1,0 +1,51 @@
+<% const limiteResto = 3; let contadorResto = 0; %>
+<div class="piramide">
+    <% if (grupos.punta.length > 0) { %>
+        <div class="piramide-fila piramide-fila-punta">
+            <% grupos.punta.forEach(function(m) { %>
+                <div class="comunidad-lider-card">
+                    <% if (m.foto_url && m.visible) { %><img src="<%= m.foto_url %>" alt="<%= m.nombre %>" class="comunidad-lider-foto"><% } %>
+                    <h3><%= m.nombre %></h3>
+                    <% if (m.rol || m.cargo) { %><span class="badge"><%= m.rol || m.cargo %></span><% } %>
+                    <% if (m.salon) { %><p class="fecha">Salón: <%= m.salon %></p><% } %>
+                    <% if (m.descripcion) { %><p><%- formatearTexto(m.descripcion) %></p><% } %>
+                </div>
+            <% }) %>
+        </div>
+    <% } %>
+    <% if (grupos.punta.length > 0 && (grupos.medio.length > 0 || grupos.base.length > 0)) { %>
+        <div class="piramide-divisor" aria-hidden="true"><span class="piramide-divisor-linea"></span><span class="piramide-divisor-flecha">▾</span><span class="piramide-divisor-linea"></span></div>
+    <% } %>
+    <% if (grupos.medio.length > 0) { %>
+        <div class="piramide-fila piramide-fila-medio">
+            <% grupos.medio.forEach(function(m) { contadorResto++; %>
+                <div class="comunidad-lider-card" data-piramide-extra<% if (contadorResto > limiteResto) { %> hidden<% } %>>
+                    <% if (m.foto_url && m.visible) { %><img src="<%= m.foto_url %>" alt="<%= m.nombre %>" class="comunidad-lider-foto"><% } %>
+                    <h3><%= m.nombre %></h3>
+                    <% if (m.rol || m.cargo) { %><span class="badge"><%= m.rol || m.cargo %></span><% } %>
+                    <% if (m.salon) { %><p class="fecha">Salón: <%= m.salon %></p><% } %>
+                    <% if (m.descripcion) { %><p><%- formatearTexto(m.descripcion) %></p><% } %>
+                </div>
+            <% }) %>
+        </div>
+    <% } %>
+    <% if (grupos.medio.length > 0 && grupos.base.length > 0) { %>
+        <div class="piramide-divisor" aria-hidden="true"><span class="piramide-divisor-linea"></span><span class="piramide-divisor-flecha">▾</span><span class="piramide-divisor-linea"></span></div>
+    <% } %>
+    <% if (grupos.base.length > 0) { %>
+        <div class="piramide-fila piramide-fila-base">
+            <% grupos.base.forEach(function(m) { contadorResto++; %>
+                <div class="comunidad-lider-card" data-piramide-extra<% if (contadorResto > limiteResto) { %> hidden<% } %>>
+                    <% if (m.foto_url && m.visible) { %><img src="<%= m.foto_url %>" alt="<%= m.nombre %>" class="comunidad-lider-foto"><% } %>
+                    <h3><%= m.nombre %></h3>
+                    <% if (m.rol || m.cargo) { %><span class="badge"><%= m.rol || m.cargo %></span><% } %>
+                    <% if (m.salon) { %><p class="fecha">Salón: <%= m.salon %></p><% } %>
+                    <% if (m.descripcion) { %><p><%- formatearTexto(m.descripcion) %></p><% } %>
+                </div>
+            <% }) %>
+        </div>
+    <% } %>
+    <% if (contadorResto > limiteResto) { %>
+        <button type="button" class="piramide-boton-expandir">Ver todos los integrantes (<%= contadorResto %>)</button>
+    <% } %>
+</div>

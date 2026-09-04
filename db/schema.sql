@@ -1,0 +1,339 @@
+-- Esquema de base de datos - Pagina web del colegio (Proyecto SENA)
+-- PostgreSQL
+
+DROP SCHEMA public CASCADE;
+CREATE SCHEMA public;
+
+CREATE TABLE usuarios (
+    id SERIAL PRIMARY KEY,
+    nombre VARCHAR(100) NOT NULL,
+    apellido VARCHAR(100),
+    email VARCHAR(150) UNIQUE NOT NULL,
+    password_hash VARCHAR(255), -- null para cuentas creadas con Google
+    rol VARCHAR(20) NOT NULL DEFAULT 'usuario' CHECK (rol IN ('admin', 'usuario')),
+    verificado BOOLEAN NOT NULL DEFAULT true, -- false mientras un registro por correo no confirme su codigo
+    codigo_verificacion VARCHAR(6),
+    codigo_expira TIMESTAMP,
+    google_id VARCHAR(255) UNIQUE,
+    creado_en TIMESTAMP NOT NULL DEFAULT NOW()
+);
+
+CREATE TABLE institucion_info (
+    id SERIAL PRIMARY KEY,
+    historia TEXT,
+    mision TEXT,
+    vision TEXT,
+    principios TEXT,
+    valores TEXT,
+    escudo_texto TEXT,
+    escudo_url TEXT,
+    bandera_texto TEXT,
+    bandera_url TEXT,
+    ubicacion TEXT,
+    ubicacion_sede1 TEXT,
+    ubicacion_sede2 TEXT,
+    telefono TEXT,
+    correo TEXT,
+    himno_url TEXT,
+    himno_letra TEXT,
+    fondo_url TEXT,
+    logo_url TEXT,
+    anios_fundacion INTEGER,
+    num_estudiantes INTEGER,
+    num_profesores INTEGER,
+    whatsapp_numero TEXT,
+    instagram_url TEXT,
+    instagram_imagen_url TEXT,
+    facebook_url TEXT,
+    facebook_imagen_url TEXT,
+    plataforma_virtual_url TEXT,
+    plataforma_virtual_logo_url TEXT,
+    manual_convivencia_url TEXT,
+    manual_convivencia_imagen_url TEXT,
+    articulado_texto TEXT,
+    investigacion_texto TEXT,
+    coheteria_texto TEXT,
+    comite_ecologico_texto TEXT,
+    equipo_drones_texto TEXT,
+    equipo_desarrollo_texto TEXT,
+    coheteria_portada_url TEXT,
+    comite_ecologico_portada_url TEXT,
+    equipo_drones_portada_url TEXT,
+    equipo_desarrollo_portada_url TEXT,
+    promocion_logo_url TEXT,
+    promocion_link_url TEXT,
+    actualizado_en TIMESTAMP NOT NULL DEFAULT NOW()
+);
+
+CREATE TABLE grados (
+    id SERIAL PRIMARY KEY,
+    nombre VARCHAR(20) NOT NULL UNIQUE, -- ej: "11-1", "10-2"
+    nivel INTEGER NOT NULL              -- ej: 11, 10
+);
+
+CREATE TABLE estudiantes (
+    id SERIAL PRIMARY KEY,
+    nombres VARCHAR(100) NOT NULL,
+    apellidos VARCHAR(100) NOT NULL,
+    grado_id INTEGER REFERENCES grados(id) ON DELETE SET NULL,
+    foto_url VARCHAR(255),
+    creado_en TIMESTAMP NOT NULL DEFAULT NOW()
+);
+
+CREATE TABLE noticias (
+    id SERIAL PRIMARY KEY,
+    titulo VARCHAR(150) NOT NULL,
+    contenido TEXT,
+    fecha DATE NOT NULL,
+    imagen_url VARCHAR(255),
+    visible BOOLEAN NOT NULL DEFAULT true, -- si esta en false, la foto no se muestra al publico
+    creado_por INTEGER REFERENCES usuarios(id) ON DELETE SET NULL,
+    creado_en TIMESTAMP NOT NULL DEFAULT NOW()
+);
+
+CREATE TABLE eventos (
+    id SERIAL PRIMARY KEY,
+    titulo VARCHAR(150) NOT NULL,
+    descripcion TEXT,
+    fecha DATE NOT NULL,
+    imagen_url VARCHAR(255),
+    visible BOOLEAN NOT NULL DEFAULT true,
+    creado_por INTEGER REFERENCES usuarios(id) ON DELETE SET NULL,
+    creado_en TIMESTAMP NOT NULL DEFAULT NOW()
+);
+
+CREATE TABLE deportes (
+    id SERIAL PRIMARY KEY,
+    nombre VARCHAR(80) NOT NULL UNIQUE, -- ej: "Futbol", "Voleibol", "Baloncesto"
+    imagen_url TEXT,
+    descripcion TEXT,
+    visible BOOLEAN NOT NULL DEFAULT true
+);
+
+CREATE TABLE equipos (
+    id SERIAL PRIMARY KEY,
+    nombre VARCHAR(100) NOT NULL,
+    deporte_id INTEGER NOT NULL REFERENCES deportes(id) ON DELETE CASCADE,
+    categoria VARCHAR(50),   -- ej: "Sub-15", "Mayores"
+    entrenador VARCHAR(100),
+    foto_url VARCHAR(255),
+    descripcion TEXT,
+    visible BOOLEAN NOT NULL DEFAULT true
+);
+
+-- Relacion N:M entre estudiantes y equipos
+CREATE TABLE integrantes_equipo (
+    id SERIAL PRIMARY KEY,
+    equipo_id INTEGER NOT NULL REFERENCES equipos(id) ON DELETE CASCADE,
+    estudiante_id INTEGER NOT NULL REFERENCES estudiantes(id) ON DELETE CASCADE,
+    UNIQUE (equipo_id, estudiante_id)
+);
+
+-- Grupos y equipos del colegio que no son deportivos (Comite Ecologico, Equipo de Desarrollo, etc.)
+-- Independiente de "equipos", que es solo para equipos deportivos
+CREATE TABLE grupos_estudiantiles (
+    id SERIAL PRIMARY KEY,
+    nombre VARCHAR(100) NOT NULL,
+    descripcion TEXT,
+    encargado VARCHAR(100),
+    foto_url VARCHAR(255),
+    enlace_url VARCHAR(255), -- pagina propia del grupo (opcional); si esta vacia la tarjeta no es clicable
+    visible BOOLEAN NOT NULL DEFAULT true,
+    creado_en TIMESTAMP NOT NULL DEFAULT NOW()
+);
+
+INSERT INTO grupos_estudiantiles (nombre, enlace_url) VALUES
+    ('Comité Ecológico', '/comite-ecologico'),
+    ('Equipo de Desarrollo', '/equipo-desarrollo'),
+    ('Equipo de Drones', '/equipo-drones'),
+    ('Cohetería', '/coheteria');
+
+CREATE TABLE campeonatos (
+    id SERIAL PRIMARY KEY,
+    nombre VARCHAR(150) NOT NULL, -- ej: "Intercursos 2026-1"
+    deporte_id INTEGER NOT NULL REFERENCES deportes(id) ON DELETE CASCADE,
+    fecha_inicio DATE,
+    fecha_fin DATE,
+    descripcion TEXT
+);
+
+-- Relacion N:M entre campeonatos y equipos, con resultado del enfrentamiento
+CREATE TABLE resultados (
+    id SERIAL PRIMARY KEY,
+    campeonato_id INTEGER NOT NULL REFERENCES campeonatos(id) ON DELETE CASCADE,
+    equipo_local_id INTEGER NOT NULL REFERENCES equipos(id) ON DELETE CASCADE,
+    equipo_visitante_id INTEGER NOT NULL REFERENCES equipos(id) ON DELETE CASCADE,
+    marcador_local INTEGER NOT NULL DEFAULT 0,
+    marcador_visitante INTEGER NOT NULL DEFAULT 0,
+    fecha DATE NOT NULL
+);
+
+CREATE TABLE mejores_puestos (
+    id SERIAL PRIMARY KEY,
+    estudiante_id INTEGER NOT NULL REFERENCES estudiantes(id) ON DELETE CASCADE,
+    grado_id INTEGER NOT NULL REFERENCES grados(id) ON DELETE CASCADE,
+    periodo VARCHAR(20) NOT NULL, -- ej: "2026-1"
+    puesto INTEGER NOT NULL,      -- 1, 2, 3
+    promedio NUMERIC(4,2),
+    UNIQUE (grado_id, periodo, puesto)
+);
+
+CREATE TABLE galeria_fotos (
+    id SERIAL PRIMARY KEY,
+    titulo VARCHAR(150),
+    url VARCHAR(255) NOT NULL,
+    evento_id INTEGER REFERENCES eventos(id) ON DELETE SET NULL,
+    noticia_id INTEGER REFERENCES noticias(id) ON DELETE SET NULL,
+    fecha DATE NOT NULL DEFAULT CURRENT_DATE, -- fecha de la foto (editable), se usa para agrupar en la galeria
+    orden INTEGER NOT NULL DEFAULT 1, -- posicion manual dentro de un evento/noticia (menor = primero; usa 0 para poner una foto de primera; si empatan, por creado_en)
+    visible BOOLEAN NOT NULL DEFAULT true, -- si esta en false, la foto no aparece en la galeria publica
+    creado_en TIMESTAMP NOT NULL DEFAULT NOW()
+);
+
+CREATE TABLE comunidad_educativa (
+    id SERIAL PRIMARY KEY,
+    nombre VARCHAR(150) NOT NULL,
+    cargo VARCHAR(150), -- ej: "Rectora", "Coordinadora", "Docente", "Servicios generales"
+    categoria VARCHAR(20) NOT NULL DEFAULT 'docente', -- 'rectoria', 'coordinacion' o 'docente'
+    area VARCHAR(50), -- ej: "Ciencias", "Humanidades", "Tecnología", "Artes y Ed. Física" (solo docentes, para filtrar)
+    materia VARCHAR(100), -- ej: "Física y Química" (etiqueta que se muestra en la tarjeta)
+    anios_experiencia INTEGER,
+    descripcion TEXT, -- biografía corta / frase
+    foto_url TEXT,
+    orden INTEGER NOT NULL DEFAULT 0, -- posicion manual (menor = primero)
+    nivel VARCHAR(10) NOT NULL DEFAULT 'base', -- 'punta', 'medio' o 'base' (piramide de rectoria/coordinacion)
+    visible BOOLEAN NOT NULL DEFAULT true,
+    creado_en TIMESTAMP NOT NULL DEFAULT NOW()
+);
+
+CREATE TABLE gobierno_escolar (
+    id SERIAL PRIMARY KEY,
+    nombre VARCHAR(150) NOT NULL,
+    rol VARCHAR(150),
+    salon VARCHAR(20), -- ej: "11-A" (opcional)
+    foto_url TEXT,
+    orden INTEGER NOT NULL DEFAULT 0, -- posicion manual (menor = primero)
+    nivel VARCHAR(10) NOT NULL DEFAULT 'base', -- 'punta', 'medio' o 'base' (piramide)
+    visible BOOLEAN NOT NULL DEFAULT true,
+    creado_en TIMESTAMP NOT NULL DEFAULT NOW()
+);
+
+CREATE TABLE equipo_desarrollo (
+    id SERIAL PRIMARY KEY,
+    nombre VARCHAR(150) NOT NULL,
+    rol VARCHAR(150),
+    salon VARCHAR(20), -- ej: "11-A" (opcional)
+    foto_url TEXT,
+    orden INTEGER NOT NULL DEFAULT 0, -- posicion manual (menor = primero)
+    nivel VARCHAR(10) NOT NULL DEFAULT 'base', -- 'punta', 'medio' o 'base' (piramide)
+    visible BOOLEAN NOT NULL DEFAULT true,
+    creado_en TIMESTAMP NOT NULL DEFAULT NOW()
+);
+
+CREATE TABLE comite_ecologico (
+    id SERIAL PRIMARY KEY,
+    nombre VARCHAR(150) NOT NULL,
+    rol VARCHAR(150),
+    salon VARCHAR(20), -- ej: "11-A" (opcional)
+    foto_url TEXT,
+    orden INTEGER NOT NULL DEFAULT 0, -- posicion manual (menor = primero)
+    nivel VARCHAR(10) NOT NULL DEFAULT 'base', -- 'punta', 'medio' o 'base' (piramide)
+    visible BOOLEAN NOT NULL DEFAULT true,
+    creado_en TIMESTAMP NOT NULL DEFAULT NOW()
+);
+
+CREATE TABLE equipo_drones (
+    id SERIAL PRIMARY KEY,
+    nombre VARCHAR(150) NOT NULL,
+    rol VARCHAR(150),
+    salon VARCHAR(20), -- ej: "11-A" (opcional)
+    foto_url TEXT,
+    orden INTEGER NOT NULL DEFAULT 0, -- posicion manual (menor = primero)
+    nivel VARCHAR(10) NOT NULL DEFAULT 'base', -- 'punta', 'medio' o 'base' (piramide)
+    visible BOOLEAN NOT NULL DEFAULT true,
+    creado_en TIMESTAMP NOT NULL DEFAULT NOW()
+);
+
+CREATE TABLE coheteria (
+    id SERIAL PRIMARY KEY,
+    nombre VARCHAR(150) NOT NULL,
+    rol VARCHAR(150),
+    salon VARCHAR(20), -- ej: "11-A" (opcional)
+    foto_url TEXT,
+    orden INTEGER NOT NULL DEFAULT 0, -- posicion manual (menor = primero)
+    nivel VARCHAR(10) NOT NULL DEFAULT 'base', -- 'punta', 'medio' o 'base' (piramide)
+    visible BOOLEAN NOT NULL DEFAULT true,
+    creado_en TIMESTAMP NOT NULL DEFAULT NOW()
+);
+
+CREATE TABLE media_tecnica_categorias (
+    id SERIAL PRIMARY KEY,
+    nombre VARCHAR(150) NOT NULL,
+    imagen_url TEXT,
+    descripcion TEXT,
+    orden INTEGER NOT NULL DEFAULT 0,
+    visible BOOLEAN NOT NULL DEFAULT true,
+    creado_en TIMESTAMP NOT NULL DEFAULT NOW()
+);
+
+-- Fotos de una categoria de Media Tecnica (galeria propia, igual que eventos/noticias)
+ALTER TABLE galeria_fotos ADD COLUMN media_tecnica_categoria_id INTEGER REFERENCES media_tecnica_categorias(id) ON DELETE SET NULL;
+
+-- Fotos relacionadas con una seccion fija (Coheteria, Comite Ecologico, Equipo de Drones, Equipo de Desarrollo)
+ALTER TABLE galeria_fotos ADD COLUMN seccion VARCHAR(30);
+
+CREATE TABLE mensajes_contacto (
+    id SERIAL PRIMARY KEY,
+    nombre VARCHAR(100) NOT NULL,
+    apellido VARCHAR(100),
+    email VARCHAR(150) NOT NULL,
+    mensaje TEXT NOT NULL,
+    leido BOOLEAN NOT NULL DEFAULT FALSE,
+    creado_en TIMESTAMP NOT NULL DEFAULT NOW()
+);
+
+CREATE TABLE alianzas (
+    id SERIAL PRIMARY KEY,
+    nombre VARCHAR(150) NOT NULL,
+    logo_url TEXT,
+    link_url TEXT,
+    visible BOOLEAN NOT NULL DEFAULT true,
+    creado_en TIMESTAMP NOT NULL DEFAULT NOW()
+);
+
+CREATE TABLE icfes_resultados (
+    id SERIAL PRIMARY KEY,
+    estudiante_nombre VARCHAR(150) NOT NULL,
+    puntaje INTEGER NOT NULL,
+    anio INTEGER NOT NULL,
+    foto_url TEXT,
+    descripcion TEXT,
+    visible BOOLEAN NOT NULL DEFAULT true,
+    creado_en TIMESTAMP NOT NULL DEFAULT NOW()
+);
+
+-- Datos de ejemplo minimos para poder ver la pagina funcionando
+INSERT INTO grados (nombre, nivel) VALUES
+    ('6-A', 6), ('6-B', 6),
+    ('7-A', 7), ('7-B', 7),
+    ('8-A', 8), ('8-B', 8),
+    ('9-A', 9), ('9-B', 9),
+    ('10-A', 10), ('10-B', 10),
+    ('11-A', 11), ('11-B', 11);
+
+INSERT INTO deportes (nombre) VALUES
+    ('Futbol'), ('Voleibol'), ('Baloncesto'), ('Bádminton');
+
+INSERT INTO media_tecnica_categorias (nombre, orden) VALUES
+    ('Sistemas Teleinformáticos', 1),
+    ('Internet de las Cosas', 2),
+    ('Programación de Software', 3);
+
+INSERT INTO institucion_info (historia, mision, vision, principios, valores, ubicacion) VALUES (
+    'La Institución Educativa Distrital Técnica para el Desarrollo del Talento Humano fue creada para brindar formación académica y técnica a la comunidad, en convenio con el SENA.',
+    'Formar personas integras, competentes y con proyección técnica, comprometidas con el desarrollo de su comunidad.',
+    'Ser reconocida como una institución líder en formación técnica y humana en la región.',
+    'Formación integral, mejoramiento continuo y compromiso con la comunidad educativa.',
+    'Respeto, responsabilidad, honestidad, trabajo en equipo y sentido de pertenencia.',
+    'Colombia'
+);

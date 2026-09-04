@@ -1,0 +1,44 @@
+<%- include('../partials/header') %>
+
+<p><a href="/admin">&larr; Panel admin</a></p>
+<h1>Media Técnica · Categorías</h1>
+
+<form method="POST" action="/admin/media-tecnica" class="form" enctype="multipart/form-data">
+    <label>Nombre de la categoría<input type="text" name="nombre" required></label>
+    <label>Imagen de la tarjeta (opcional)<input type="file" name="imagen" accept="image/*" data-recorte="rectangulo" data-recorte-aspecto="1.3333"></label>
+    <label>Descripción (para la página de la categoría)<textarea name="descripcion" rows="4"></textarea></label>
+    <label>Orden (los números más bajos salen primero)<input type="number" name="orden" value="0"></label>
+    <button type="submit">Crear categoría</button>
+</form>
+
+<% if (categorias.length === 0) { %>
+    <p>Aún no hay categorías registradas.</p>
+<% } else { %>
+    <table class="tabla">
+        <thead><tr><th class="tabla-col-foto">Imagen</th><th>Nombre</th><th>Orden</th><th></th></tr></thead>
+        <tbody>
+            <% categorias.forEach(function(c) { %>
+                <tr>
+                    <td class="tabla-col-foto-visible">
+                        <% if (c.imagen_url) { %>
+                            <img src="<%= c.imagen_url %>" alt="<%= c.nombre %>" class="tabla-foto-mini">
+                        <% } else { %>
+                            <span class="tabla-foto-vacia">—</span>
+                        <% } %>
+                        <%- include('../partials/boton-visibilidad', { urlToggle: '/admin/media-tecnica/' + c.id + '/visibilidad', visible: c.visible }) %>
+                    </td>
+                    <td><%= c.nombre %></td>
+                    <td><%= c.orden %></td>
+                    <td class="acciones">
+                        <a href="/admin/media-tecnica/<%= c.id %>/editar" class="btn-editar">Editar</a>
+                        <form method="POST" action="/admin/media-tecnica/<%= c.id %>/eliminar">
+                            <button type="submit" class="btn-danger">Eliminar</button>
+                        </form>
+                    </td>
+                </tr>
+            <% }) %>
+        </tbody>
+    </table>
+<% } %>
+
+<%- include('../partials/footer') %>

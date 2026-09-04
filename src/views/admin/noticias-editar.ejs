@@ -1,0 +1,18 @@
+<%- include('../partials/header') %>
+
+<p><a href="/admin/noticias">&larr; Noticias</a></p>
+<h1>Editar noticia</h1>
+
+<form method="POST" action="/admin/noticias/<%= noticia.id %>/editar" class="form" enctype="multipart/form-data">
+    <label>Título<input type="text" name="titulo" value="<%= noticia.titulo %>" required></label>
+    <label>Fecha<input type="date" name="fecha" value="<%= noticia.fecha.toISOString().split('T')[0] %>" required></label>
+    <label>Contenido<textarea name="contenido" rows="3"><%= noticia.contenido || '' %></textarea></label>
+    <% if (noticia.imagen_url) { %>
+        <img src="<%= noticia.imagen_url %>" alt="Foto actual" class="card-img">
+    <% } %>
+    <label>Cambiar foto (opcional)<input type="file" name="imagen" accept="image/*" data-recorte="rectangulo" data-recorte-aspecto="1.25"></label>
+    <input type="hidden" name="imagen_actual" value="<%= noticia.imagen_url || '' %>">
+    <button type="submit">Guardar cambios</button>
+</form>
+
+<%- include('../partials/footer') %>

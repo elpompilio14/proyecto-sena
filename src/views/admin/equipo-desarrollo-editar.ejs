@@ -1,0 +1,26 @@
+<%- include('../partials/header') %>
+
+<p><a href="/admin/equipo-desarrollo">&larr; Equipo de Desarrollo</a></p>
+<h1>Editar miembro</h1>
+
+<form method="POST" action="/admin/equipo-desarrollo/<%= miembro.id %>/editar" class="form" enctype="multipart/form-data">
+    <label>Nombre<input type="text" name="nombre" value="<%= miembro.nombre %>" required></label>
+    <label>Rol<input type="text" name="rol" value="<%= miembro.rol || '' %>"></label>
+    <label>Salón (opcional, ej: 11-A)<input type="text" name="salon" value="<%= miembro.salon || '' %>"></label>
+    <% if (miembro.foto_url) { %>
+        <img src="<%= miembro.foto_url %>" alt="Foto actual" class="card-img">
+    <% } %>
+    <label>Cambiar foto (opcional)<input type="file" name="imagen" accept="image/*" data-recorte="circulo" data-recorte-aspecto="1"></label>
+    <input type="hidden" name="foto_actual" value="<%= miembro.foto_url || '' %>">
+    <label>Orden (los números más bajos salen primero; si empatan, se ordenan por nombre)<input type="number" name="orden" value="<%= miembro.orden %>"></label>
+    <label>Nivel en la pirámide
+        <select name="nivel">
+            <option value="punta" <%= miembro.nivel === 'punta' ? 'selected' : '' %>>Punta (arriba de todo)</option>
+            <option value="medio" <%= miembro.nivel === 'medio' ? 'selected' : '' %>>Medio</option>
+            <option value="base" <%= miembro.nivel === 'base' ? 'selected' : '' %>>Base</option>
+        </select>
+    </label>
+    <button type="submit">Guardar cambios</button>
+</form>
+
+<%- include('../partials/footer') %>

@@ -1,0 +1,58 @@
+<%- include('../partials/header') %>
+
+<p><a href="/admin/fotos">&larr; Galería</a></p>
+<h1>Editar foto</h1>
+
+<form method="POST" action="/admin/fotos/<%= foto.id %>/editar" class="form" enctype="multipart/form-data">
+    <% const fFecha = new Date(foto.fecha); %>
+    <% const fFechaIso = `${fFecha.getFullYear()}-${String(fFecha.getMonth() + 1).padStart(2, '0')}-${String(fFecha.getDate()).padStart(2, '0')}`; %>
+    <label>Título (opcional)<input type="text" name="titulo" value="<%= foto.titulo || '' %>"></label>
+    <label>Fecha (se usa para agrupar por mes en la galería)<input type="date" name="fecha" value="<%= fFechaIso %>"></label>
+    <label>Orden dentro del evento/noticia (los números más bajos salen primero; si empatan, se ordenan por como se subieron. Usa 0 para dejarla de primera)<input type="number" name="orden" value="<%= foto.orden %>"></label>
+    <% if (esVideo(foto.url)) { %>
+        <video src="<%= foto.url %>" controls class="card-img"></video>
+    <% } else { %>
+        <img src="<%= foto.url %>" alt="Foto actual" class="card-img">
+    <% } %>
+    <label>Cambiar archivo (opcional)<input type="file" name="imagen" accept="image/*,video/*"></label>
+    <input type="hidden" name="url_actual" value="<%= foto.url %>">
+    <label>
+        Evento relacionado (opcional)
+        <select name="evento_id">
+            <option value="">-- Ninguno --</option>
+            <% eventos.forEach(function(ev) { %>
+                <option value="<%= ev.id %>" <%= foto.evento_id === ev.id ? 'selected' : '' %>><%= ev.titulo %></option>
+            <% }) %>
+        </select>
+    </label>
+    <label>
+        Noticia relacionada (opcional)
+        <select name="noticia_id">
+            <option value="">-- Ninguna --</option>
+            <% noticias.forEach(function(n) { %>
+                <option value="<%= n.id %>" <%= foto.noticia_id === n.id ? 'selected' : '' %>><%= n.titulo %></option>
+            <% }) %>
+        </select>
+    </label>
+    <label>
+        Categoría de Media Técnica relacionada (opcional)
+        <select name="media_tecnica_categoria_id">
+            <option value="">-- Ninguna --</option>
+            <% categoriasMediaTecnica.forEach(function(c) { %>
+                <option value="<%= c.id %>" <%= foto.media_tecnica_categoria_id === c.id ? 'selected' : '' %>><%= c.nombre %></option>
+            <% }) %>
+        </select>
+    </label>
+    <label>
+        Sección relacionada (opcional)
+        <select name="seccion">
+            <option value="">-- Ninguna --</option>
+            <% Object.keys(secciones).forEach(function(clave) { %>
+                <option value="<%= clave %>" <%= foto.seccion === clave ? 'selected' : '' %>><%= secciones[clave] %></option>
+            <% }) %>
+        </select>
+    </label>
+    <button type="submit">Guardar cambios</button>
+</form>
+
+<%- include('../partials/footer') %>

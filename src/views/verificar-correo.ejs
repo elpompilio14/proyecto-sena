@@ -1,0 +1,31 @@
+<%- include('partials/header') %>
+
+<div class="auth-wrapper">
+    <div class="auth-card-simple aparece">
+        <h1>Verifica tu correo</h1>
+        <p>Te enviamos un código de 6 dígitos a <strong><%= email %></strong>. Escríbelo aquí para activar tu cuenta.</p>
+
+        <% if (error) { %>
+            <p class="error"><%= error %></p>
+        <% } %>
+        <% if (typeof reenviado !== 'undefined' && reenviado) { %>
+            <p class="exito">Te reenviamos el código, revisa tu correo.</p>
+        <% } %>
+
+        <form method="POST" action="/verificar-correo" class="form">
+            <input type="hidden" name="email" value="<%= email %>">
+            <label>
+                Código de 6 dígitos
+                <input type="text" name="codigo" maxlength="6" pattern="[0-9]{6}" inputmode="numeric" required autofocus>
+            </label>
+            <button type="submit">Verificar</button>
+        </form>
+
+        <form method="POST" action="/verificar-correo/reenviar">
+            <input type="hidden" name="email" value="<%= email %>">
+            <button type="submit" class="btn-secondary">Reenviar código</button>
+        </form>
+    </div>
+</div>
+
+<%- include('partials/footer') %>

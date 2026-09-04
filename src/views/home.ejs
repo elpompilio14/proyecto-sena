@@ -1,0 +1,219 @@
+<%- include('partials/header') %>
+
+<% if (heroImagenes && heroImagenes.length > 1) { %>
+<section class="hero hero-grande hero-carrusel">
+    <% heroImagenes.forEach(function(url, i) { %>
+        <div class="hero-slide<% if (i === 0) { %> visible-estatica<% } %>" style="background-image: url('<%= url %>')"></div>
+    <% }) %>
+    <div class="hero-contenido hero-texto-animado">
+        <h1>Institución Educativa Distrital Técnica para el Desarrollo del Talento Humano</h1>
+        <p>Formando talento humano con proyección técnica y humana. Conoce nuestra comunidad educativa, sus logros, deportes y eventos.</p>
+    </div>
+    <div class="hero-dots">
+        <% heroImagenes.forEach(function(url, i) { %>
+            <button type="button" class="hero-dot<% if (i === 0) { %> activo<% } %>" aria-label="Foto <%= i + 1 %> de <%= heroImagenes.length %>"></button>
+        <% }) %>
+    </div>
+</section>
+<% } else { %>
+<section class="hero hero-grande" <% if ((heroImagenes && heroImagenes[0]) || fondoUrl) { %>style="background-image: url('<%= (heroImagenes && heroImagenes[0]) || fondoUrl %>')"<% } %>>
+    <div class="hero-contenido hero-texto-animado">
+        <h1>Institución Educativa Distrital Técnica para el Desarrollo del Talento Humano</h1>
+        <p>Formando talento humano con proyección técnica y humana. Conoce nuestra comunidad educativa, sus logros, deportes y eventos.</p>
+    </div>
+</section>
+<% } %>
+
+<div class="inicio-fondo-patron">
+
+<% if (sitio && (sitio.num_estudiantes || sitio.num_profesores || sitio.anios_fundacion)) { %>
+<section class="stats-section aparece">
+    <span class="badge-pill">En números</span>
+    <h2>Nuestra Institución</h2>
+    <div class="stats-grid">
+        <% if (sitio.num_estudiantes) { %>
+            <div class="stat-item">
+                <span class="stat-numero" data-meta="<%= sitio.num_estudiantes %>">0</span>
+                <span class="stat-etiqueta">Estudiantes</span>
+            </div>
+        <% } %>
+        <% if (sitio.num_profesores) { %>
+            <div class="stat-item">
+                <span class="stat-numero" data-meta="<%= sitio.num_profesores %>">0</span>
+                <span class="stat-etiqueta">Docentes</span>
+            </div>
+        <% } %>
+        <% if (sitio.anios_fundacion) { %>
+            <div class="stat-item">
+                <span class="stat-numero" data-meta="<%= sitio.anios_fundacion %>">0</span>
+                <span class="stat-etiqueta">Años de Trayectoria</span>
+            </div>
+        <% } %>
+    </div>
+</section>
+<% } %>
+
+<section class="grid-links aparece">
+    <a href="/eventos" class="card-link">Eventos del colegio</a>
+    <a href="/deportes" class="card-link">Equipos deportivos</a>
+    <a href="/campeonatos" class="card-link">Intercursos</a>
+    <a href="/mejores-puestos" class="card-link">Puestos de honor</a>
+    <a href="/icfes" class="card-link">Mejores ICFES</a>
+    <a href="/galeria" class="card-link">Galería de fotos</a>
+</section>
+
+<section class="seccion-plataforma aparece">
+    <div class="plataforma-caja">
+        <div class="plataforma-item">
+            <p class="plataforma-item-titulo">Plataforma Virtual</p>
+            <div class="plataforma-logo-wrap">
+                <% if (sitio && sitio.plataforma_virtual_logo_url) { %>
+                    <img src="<%= sitio.plataforma_virtual_logo_url %>" alt="Plataforma Virtual" class="plataforma-logo">
+                <% } %>
+            </div>
+            <a href="<%= (sitio && sitio.plataforma_virtual_url) ? sitio.plataforma_virtual_url : '#' %>" target="_blank" rel="noopener" class="plataforma-boton">
+                Ingresar
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M13 6l6 6-6 6"/></svg>
+            </a>
+        </div>
+        <% if (sitio && sitio.manual_convivencia_url) { %>
+            <div class="plataforma-item">
+                <p class="plataforma-item-titulo">Manual de Convivencia</p>
+                <div class="plataforma-logo-wrap">
+                    <% if (sitio.manual_convivencia_imagen_url) { %>
+                        <img src="<%= sitio.manual_convivencia_imagen_url %>" alt="Manual de Convivencia" class="plataforma-logo">
+                    <% } %>
+                </div>
+                <a href="<%= sitio.manual_convivencia_url %>" target="_blank" rel="noopener" download class="plataforma-boton">
+                    Descargar
+                    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="M7 10l5 5 5-5"/><path d="M5 21h14"/></svg>
+                </a>
+            </div>
+        <% } %>
+    </div>
+</section>
+
+<section class="seccion-himno aparece">
+    <h2>Himno Escolar</h2>
+    <% const embedUrl = himnoUrl ? youtubeEmbedUrl(himnoUrl) : null; %>
+    <% if (embedUrl) { %>
+        <div class="video-himno">
+            <iframe src="<%= embedUrl %>" title="Himno Escolar" allowfullscreen></iframe>
+        </div>
+    <% } else { %>
+        <p>Aún no se ha agregado el video del himno.</p>
+    <% } %>
+</section>
+
+<section>
+    <h2>Últimos eventos</h2>
+    <% if (eventos.length === 0) { %>
+        <p>Aún no hay eventos registrados.</p>
+    <% } else { %>
+        <div class="home-cards-grid">
+            <% eventos.forEach(function(ev, i) { %>
+                <article class="home-card-grande aparece" style="transition-delay: <%= Math.min(i, 5) * 70 %>ms">
+                    <a href="/eventos/<%= ev.id %>" class="home-card-img-wrap">
+                        <% if (ev.imagen_url && ev.visible) { %>
+                            <img src="<%= ev.imagen_url %>" alt="<%= ev.titulo %>">
+                        <% } %>
+                    </a>
+                    <div class="home-card-caption">
+                        <p class="fecha"><%= new Date(ev.fecha).toLocaleDateString('es-CO') %></p>
+                        <h3><a href="/eventos/<%= ev.id %>"><%= ev.titulo %></a></h3>
+                    </div>
+                </article>
+            <% }) %>
+        </div>
+        <p class="home-ver-todas"><a href="/eventos" class="btn-ver-todas">Ver todos los eventos</a></p>
+    <% } %>
+</section>
+
+<section>
+    <h2>Últimas noticias</h2>
+    <% if (noticias.length === 0) { %>
+        <p>Aún no hay noticias registradas.</p>
+    <% } else { %>
+        <div class="home-cards-grid">
+            <% noticias.forEach(function(n, i) { %>
+                <article class="home-card-grande aparece" style="transition-delay: <%= Math.min(i, 5) * 70 %>ms">
+                    <a href="/noticias/<%= n.id %>" class="home-card-img-wrap">
+                        <% if (n.imagen_url && n.visible) { %>
+                            <img src="<%= n.imagen_url %>" alt="<%= n.titulo %>">
+                        <% } %>
+                    </a>
+                    <div class="home-card-caption">
+                        <p class="fecha"><%= new Date(n.fecha).toLocaleDateString('es-CO') %></p>
+                        <h3><a href="/noticias/<%= n.id %>"><%= n.titulo %></a></h3>
+                    </div>
+                </article>
+            <% }) %>
+        </div>
+        <p class="home-ver-todas"><a href="/noticias" class="btn-ver-todas">Ver todas las noticias</a></p>
+    <% } %>
+</section>
+
+<% if (icfesResultados.length > 0) { %>
+<section class="aparece">
+    <h2>Mejores ICFES<% if (icfesAnio) { %> del <%= icfesAnio %><% } %></h2>
+    <div class="card-grid">
+        <% icfesResultados.forEach(function(r, i) { %>
+            <article class="card aparece icfes-card" style="transition-delay: <%= Math.min(i, 5) * 70 %>ms">
+                <% if (r.foto_url && r.visible) { %>
+                    <img src="<%= r.foto_url %>" alt="<%= r.estudiante_nombre %>" class="icfes-foto">
+                <% } %>
+                <span class="badge icfes-puntaje"><%= r.puntaje %> pts</span>
+                <h3><%= r.estudiante_nombre %></h3>
+                <% if (r.descripcion) { %>
+                    <p><%- formatearTexto(r.descripcion) %></p>
+                <% } %>
+            </article>
+        <% }) %>
+    </div>
+    <p class="home-ver-todas"><a href="/icfes" class="btn-ver-todas">Ver todos los resultados ICFES</a></p>
+</section>
+<% } %>
+
+<% if (gobiernoEscolar.punta.length + gobiernoEscolar.medio.length + gobiernoEscolar.base.length > 0) { %>
+<section class="comunidad-seccion comunidad-seccion--dorado aparece">
+    <h2>Gobierno Escolar</h2>
+    <%- include('partials/piramide', { grupos: gobiernoEscolar }) %>
+    <p class="home-ver-todas"><a href="/gobierno-escolar" class="btn-ver-todas">Ver Gobierno Escolar</a></p>
+</section>
+<% } %>
+
+<% if (equipoDesarrollo.punta.length + equipoDesarrollo.medio.length + equipoDesarrollo.base.length > 0) { %>
+<section class="comunidad-seccion comunidad-seccion--azul aparece">
+    <h2>Equipo de Desarrollo</h2>
+    <%- include('partials/piramide', { grupos: equipoDesarrollo }) %>
+    <p class="home-ver-todas"><a href="/equipo-desarrollo" class="btn-ver-todas">Ver Equipo de Desarrollo</a></p>
+</section>
+<% } %>
+
+<% if (comiteEcologico.punta.length + comiteEcologico.medio.length + comiteEcologico.base.length > 0) { %>
+<section class="comunidad-seccion comunidad-seccion--verde aparece">
+    <h2>Comité Ecológico</h2>
+    <%- include('partials/piramide', { grupos: comiteEcologico }) %>
+    <p class="home-ver-todas"><a href="/comite-ecologico" class="btn-ver-todas">Ver Comité Ecológico</a></p>
+</section>
+<% } %>
+
+<% if (equipoDrones.punta.length + equipoDrones.medio.length + equipoDrones.base.length > 0) { %>
+<section class="comunidad-seccion comunidad-seccion--acero aparece">
+    <h2>Equipo de Drones</h2>
+    <%- include('partials/piramide', { grupos: equipoDrones }) %>
+    <p class="home-ver-todas"><a href="/equipo-drones" class="btn-ver-todas">Ver Equipo de Drones</a></p>
+</section>
+<% } %>
+
+<% if (coheteria.punta.length + coheteria.medio.length + coheteria.base.length > 0) { %>
+<section class="comunidad-seccion comunidad-seccion--terracota aparece">
+    <h2>Cohetería</h2>
+    <%- include('partials/piramide', { grupos: coheteria }) %>
+    <p class="home-ver-todas"><a href="/coheteria" class="btn-ver-todas">Ver Cohetería</a></p>
+</section>
+<% } %>
+
+</div>
+
+<%- include('partials/footer') %>

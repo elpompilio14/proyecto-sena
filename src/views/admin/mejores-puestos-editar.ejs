@@ -1,0 +1,29 @@
+<%- include('../partials/header') %>
+
+<p><a href="/admin/mejores-puestos">&larr; Puestos de honor</a></p>
+<h1>Editar puesto de honor</h1>
+
+<form method="POST" action="/admin/mejores-puestos/<%= puesto.id %>/editar" class="form">
+    <label>
+        Estudiante
+        <select name="estudiante_id" required>
+            <% estudiantes.forEach(function(e) { %>
+                <option value="<%= e.id %>" <%= puesto.estudiante_id === e.id ? 'selected' : '' %>><%= e.nombres %> <%= e.apellidos %></option>
+            <% }) %>
+        </select>
+    </label>
+    <label>
+        Grado
+        <select name="grado_id" required>
+            <% grados.forEach(function(g) { %>
+                <option value="<%= g.id %>" <%= puesto.grado_id === g.id ? 'selected' : '' %>><%= g.nombre %></option>
+            <% }) %>
+        </select>
+    </label>
+    <label>Periodo<input type="text" name="periodo" value="<%= puesto.periodo %>" required></label>
+    <label>Puesto<input type="number" name="puesto" min="1" value="<%= puesto.puesto %>" required></label>
+    <label>Promedio<input type="number" name="promedio" step="0.01" min="0" max="10" value="<%= puesto.promedio || '' %>"></label>
+    <button type="submit">Guardar cambios</button>
+</form>
+
+<%- include('../partials/footer') %>

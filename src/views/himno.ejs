@@ -1,0 +1,20 @@
+<%- include('partials/header') %>
+
+<h1>Himno Escolar</h1>
+
+<% const embedUrl = himnoUrl ? youtubeEmbedUrl(himnoUrl) : null; %>
+<% if (embedUrl) { %>
+    <div class="video-himno aparece">
+        <iframe src="<%= embedUrl %>" title="Himno Escolar" allowfullscreen></iframe>
+    </div>
+<% } else { %>
+    <p>Aún no se ha agregado el video del himno.</p>
+<% } %>
+
+<% if (himnoLetra) { %>
+    <div class="letra-himno aparece">
+        <p><%- formatearTexto(himnoLetra) %></p>
+    </div>
+<% } %>
+
+<%- include('partials/footer') %>

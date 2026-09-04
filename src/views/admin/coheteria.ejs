@@ -1,0 +1,68 @@
+<%- include('../partials/header') %>
+
+<p><a href="/admin">&larr; Panel admin</a></p>
+<h1>Cohetería</h1>
+
+<form method="POST" action="/admin/coheteria/info" class="form" enctype="multipart/form-data">
+    <% if (infoPortada) { %>
+        <img src="<%= infoPortada %>" alt="Portada actual" class="card-img">
+    <% } %>
+    <label>Foto de portada (opcional, se ve grande arriba de la página)<input type="file" name="portada" accept="image/*" data-recorte="rectangulo" data-recorte-aspecto="1.7778"></label>
+    <input type="hidden" name="portada_actual" value="<%= infoPortada || '' %>">
+    <label>Información general (aparece en la página pública, debajo de los integrantes)<textarea name="texto" rows="4"><%= infoTexto || '' %></textarea></label>
+    <button type="submit">Guardar información</button>
+</form>
+<p>Para agregar fotos relacionadas (aparecen debajo de la información), ve a <a href="/admin/fotos">Galería</a> y elige "Cohetería" en el campo de sección.</p>
+
+<h2>Integrantes</h2>
+
+<form method="POST" action="/admin/coheteria" class="form" enctype="multipart/form-data">
+    <label>Nombre<input type="text" name="nombre" required></label>
+    <label>Rol (ej: Capitán, Integrante)<input type="text" name="rol"></label>
+    <label>Salón (opcional, ej: 11-A)<input type="text" name="salon"></label>
+    <label>Foto (opcional, se ve mejor si es cuadrada)<input type="file" name="imagen" accept="image/*" data-recorte="circulo" data-recorte-aspecto="1"></label>
+    <label>Orden (los números más bajos salen primero; si empatan, se ordenan por nombre)<input type="number" name="orden" value="0"></label>
+    <label>Nivel en la pirámide
+        <select name="nivel">
+            <option value="punta">Punta (arriba de todo)</option>
+            <option value="medio">Medio</option>
+            <option value="base" selected>Base</option>
+        </select>
+    </label>
+    <button type="submit">Agregar miembro</button>
+</form>
+
+<% if (miembros.length === 0) { %>
+    <p>Aún no hay miembros registrados.</p>
+<% } else { %>
+    <table class="tabla">
+        <thead><tr><th class="tabla-col-foto">Foto</th><th>Nombre</th><th>Rol</th><th>Salón</th><th>Orden</th><th>Nivel</th><th></th></tr></thead>
+        <tbody>
+            <% miembros.forEach(function(m) { %>
+                <tr>
+                    <td class="tabla-col-foto-visible">
+                        <% if (m.foto_url) { %>
+                            <img src="<%= m.foto_url %>" alt="<%= m.nombre %>" class="tabla-foto-mini">
+                        <% } else { %>
+                            <span class="tabla-foto-vacia">—</span>
+                        <% } %>
+                        <%- include('../partials/boton-visibilidad', { urlToggle: '/admin/coheteria/' + m.id + '/visibilidad', visible: m.visible }) %>
+                    </td>
+                    <td><%= m.nombre %></td>
+                    <td><%= m.rol || '-' %></td>
+                    <td><%= m.salon || '-' %></td>
+                    <td><%= m.orden %></td>
+                    <td><%= m.nivel %></td>
+                    <td class="acciones">
+                        <a href="/admin/coheteria/<%= m.id %>/editar" class="btn-editar">Editar</a>
+                        <form method="POST" action="/admin/coheteria/<%= m.id %>/eliminar">
+                            <button type="submit" class="btn-danger">Eliminar</button>
+                        </form>
+                    </td>
+                </tr>
+            <% }) %>
+        </tbody>
+    </table>
+<% } %>
+
+<%- include('../partials/footer') %>

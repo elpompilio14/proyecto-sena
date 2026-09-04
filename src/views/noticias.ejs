@@ -1,0 +1,27 @@
+<%- include('partials/header') %>
+
+<h1>Noticias</h1>
+
+<% if (noticias.length === 0) { %>
+    <p>Aún no hay noticias publicadas.</p>
+<% } else { %>
+    <div class="home-cards-grid">
+        <% noticias.forEach(function(n, i) { %>
+            <article class="home-card-grande aparece" style="transition-delay: <%= Math.min(i, 5) * 70 %>ms">
+                <a href="/noticias/<%= n.id %>" class="home-card-img-wrap">
+                    <% if (n.imagen_url && n.visible) { %>
+                        <img src="<%= n.imagen_url %>" alt="<%= n.titulo %>">
+                    <% } %>
+                </a>
+                <div class="home-card-caption">
+                    <p class="fecha"><%= new Date(n.fecha).toLocaleDateString('es-CO') %></p>
+                    <h3><a href="/noticias/<%= n.id %>"><%= n.titulo %></a></h3>
+                    <p><%- formatearTexto(n.contenido) %></p>
+                    <a href="/noticias/<%= n.id %>" class="home-card-ver-fotos">Ver fotos &rarr;</a>
+                </div>
+            </article>
+        <% }) %>
+    </div>
+<% } %>
+
+<%- include('partials/footer') %>

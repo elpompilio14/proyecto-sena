@@ -1,0 +1,42 @@
+<%- include('../partials/header') %>
+
+<p><a href="/admin">&larr; Panel admin</a></p>
+<h1>Deportes</h1>
+
+<form method="POST" action="/admin/deportes" class="form" enctype="multipart/form-data">
+    <label>Nombre del deporte<input type="text" name="nombre" required></label>
+    <label>Imagen de la tarjeta (opcional)<input type="file" name="imagen" accept="image/*" data-recorte="rectangulo" data-recorte-aspecto="1.3333"></label>
+    <label>Descripción (para la página del deporte)<textarea name="descripcion" rows="4"></textarea></label>
+    <button type="submit">Crear deporte</button>
+</form>
+
+<% if (deportes.length === 0) { %>
+    <p>Aún no hay deportes registrados.</p>
+<% } else { %>
+    <table class="tabla">
+        <thead><tr><th class="tabla-col-foto">Imagen</th><th>Nombre</th><th></th></tr></thead>
+        <tbody>
+            <% deportes.forEach(function(d) { %>
+                <tr>
+                    <td class="tabla-col-foto-visible">
+                        <% if (d.imagen_url) { %>
+                            <img src="<%= d.imagen_url %>" alt="<%= d.nombre %>" class="tabla-foto-mini">
+                        <% } else { %>
+                            <span class="tabla-foto-vacia">—</span>
+                        <% } %>
+                        <%- include('../partials/boton-visibilidad', { urlToggle: '/admin/deportes/' + d.id + '/visibilidad', visible: d.visible }) %>
+                    </td>
+                    <td><%= d.nombre %></td>
+                    <td class="acciones">
+                        <a href="/admin/deportes/<%= d.id %>/editar" class="btn-editar">Editar</a>
+                        <form method="POST" action="/admin/deportes/<%= d.id %>/eliminar">
+                            <button type="submit" class="btn-danger">Eliminar</button>
+                        </form>
+                    </td>
+                </tr>
+            <% }) %>
+        </tbody>
+    </table>
+<% } %>
+
+<%- include('../partials/footer') %>

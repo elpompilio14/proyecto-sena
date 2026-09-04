@@ -1,0 +1,35 @@
+<%- include('../partials/header') %>
+
+<p><a href="/admin">&larr; Panel admin</a></p>
+<h1>Mensajes de contacto</h1>
+
+<% if (mensajes.length === 0) { %>
+    <p>Aún no hay mensajes.</p>
+<% } else { %>
+    <table class="tabla">
+        <thead><tr><th>Nombre</th><th>Correo</th><th>Mensaje</th><th>Fecha</th><th>Estado</th><th></th></tr></thead>
+        <tbody>
+            <% mensajes.forEach(function(m) { %>
+                <tr>
+                    <td><%= m.nombre %> <%= m.apellido || '' %></td>
+                    <td><%= m.email %></td>
+                    <td><%= m.mensaje %></td>
+                    <td><%= new Date(m.creado_en).toLocaleDateString('es-CO') %></td>
+                    <td><%= m.leido ? 'Leído' : 'Nuevo' %></td>
+                    <td>
+                        <% if (!m.leido) { %>
+                            <form method="POST" action="/admin/mensajes/<%= m.id %>/leido">
+                                <button type="submit" class="btn-secondary">Marcar leído</button>
+                            </form>
+                        <% } %>
+                        <form method="POST" action="/admin/mensajes/<%= m.id %>/eliminar">
+                            <button type="submit" class="btn-danger">Eliminar</button>
+                        </form>
+                    </td>
+                </tr>
+            <% }) %>
+        </tbody>
+    </table>
+<% } %>
+
+<%- include('../partials/footer') %>

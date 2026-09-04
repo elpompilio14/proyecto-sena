@@ -1,0 +1,32 @@
+<%- include('partials/header') %>
+
+<h1>Articulado</h1>
+
+<% if (categorias.length === 0) { %>
+    <p>Aún no hay categorías registradas.</p>
+<% } else { %>
+    <div class="categorias-grid">
+        <% categorias.forEach(function(c) { %>
+            <a href="/articulado/<%= c.id %>" class="categoria-link-card">
+                <div class="categoria-link-card-img-wrap">
+                    <% if (c.imagen_url && c.visible) { %>
+                        <img src="<%= c.imagen_url %>" alt="<%= c.nombre %>">
+                    <% } else { %>
+                        <span class="categoria-link-card-sin-imagen">🖥️</span>
+                    <% } %>
+                </div>
+                <h3><%= c.nombre %></h3>
+            </a>
+        <% }) %>
+    </div>
+<% } %>
+
+<% if (!texto) { %>
+    <p>Aún no se ha agregado esta información.</p>
+<% } else { %>
+    <section class="card aparece">
+        <p><%- formatearTexto(texto) %></p>
+    </section>
+<% } %>
+
+<%- include('partials/footer') %>

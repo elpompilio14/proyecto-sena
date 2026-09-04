@@ -1,0 +1,42 @@
+<%- include('partials/header') %>
+
+<section class="comunidad-intro aparece">
+    <span class="badge-pill">Comunidad Académica</span>
+    <h1>Equipo Institucional</h1>
+    <p>Conoce a los líderes y educadores que guían nuestra institución hacia la excelencia.</p>
+</section>
+
+<% const totalDirectivos = directivos.punta.length + directivos.medio.length + directivos.base.length; %>
+<% if (totalDirectivos === 0 && docentesPreview.length === 0) { %>
+    <p>Aún no hay personas registradas.</p>
+<% } %>
+
+<% if (totalDirectivos > 0) { %>
+<section class="comunidad-seccion aparece">
+    <h2 class="comunidad-etiqueta">Directivos</h2>
+    <%- include('partials/piramide', { grupos: directivos }) %>
+</section>
+<% } %>
+
+<% if (totalDocentes > 0) { %>
+<section class="comunidad-seccion aparece">
+    <h2 class="comunidad-etiqueta">Cuerpo Docente</h2>
+    <div class="comunidad-docente-preview-grid">
+        <% docentesPreview.forEach(function(p) { %>
+            <div class="comunidad-docente-mini-card">
+                <% if (p.foto_url && p.visible) { %><img src="<%= p.foto_url %>" alt="<%= p.nombre %>" class="comunidad-lider-foto comunidad-lider-foto-chica"><% } %>
+                <h4><%= p.nombre %></h4>
+                <% if (p.materia) { %><span class="comunidad-materia-tag"><%= p.materia %></span><% } %>
+            </div>
+        <% }) %>
+        <a href="/comunidad-educativa/docentes" class="comunidad-ver-mas-card">
+            <span class="comunidad-ver-mas-icono">👥</span>
+            <h4>Conoce a Nuestro Equipo Docente</h4>
+            <p>Descubre a los educadores que forman parte de nuestra institución (<%= totalDocentes %> en total).</p>
+            <span class="comunidad-ver-mas-link">Ver Cuerpo Docentes &rarr;</span>
+        </a>
+    </div>
+</section>
+<% } %>
+
+<%- include('partials/footer') %>

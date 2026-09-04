@@ -1,0 +1,27 @@
+<%- include('partials/header') %>
+
+<h1>Eventos del colegio</h1>
+
+<% if (eventos.length === 0) { %>
+    <p>Aún no hay eventos registrados.</p>
+<% } else { %>
+    <div class="home-cards-grid">
+        <% eventos.forEach(function(ev, i) { %>
+            <article class="home-card-grande aparece" style="transition-delay: <%= Math.min(i, 5) * 70 %>ms">
+                <a href="/eventos/<%= ev.id %>" class="home-card-img-wrap">
+                    <% if (ev.imagen_url && ev.visible) { %>
+                        <img src="<%= ev.imagen_url %>" alt="<%= ev.titulo %>">
+                    <% } %>
+                </a>
+                <div class="home-card-caption">
+                    <p class="fecha"><%= new Date(ev.fecha).toLocaleDateString('es-CO') %></p>
+                    <h3><a href="/eventos/<%= ev.id %>"><%= ev.titulo %></a></h3>
+                    <p><%- formatearTexto(ev.descripcion) %></p>
+                    <a href="/eventos/<%= ev.id %>" class="home-card-ver-fotos">Ver fotos &rarr;</a>
+                </div>
+            </article>
+        <% }) %>
+    </div>
+<% } %>
+
+<%- include('partials/footer') %>

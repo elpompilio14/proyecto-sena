@@ -1,0 +1,108 @@
+<%- include('../partials/header') %>
+
+<p><a href="/admin">&larr; Panel admin</a></p>
+<h1>Información institucional</h1>
+
+<form method="POST" action="/admin/institucion" class="form form-ancho" enctype="multipart/form-data">
+    <h2>Encabezado del sitio</h2>
+    <% if (info && info.logo_url) { %>
+        <img src="<%= info.logo_url %>" alt="Logo actual" class="card-img" style="max-width:120px;">
+    <% } %>
+    <label>Logo del colegio (se muestra pequeño en la esquina superior izquierda)<input type="file" name="logo" accept="image/*"></label>
+    <input type="hidden" name="logo_url_actual" value="<%= info && info.logo_url ? info.logo_url : '' %>">
+
+    <label>Años del colegio (se muestra junto al logo y en la sección "Nuestra institución")<input type="number" name="anios_fundacion" min="0" value="<%= info && info.anios_fundacion ? info.anios_fundacion : '' %>" placeholder="Ej: 63"></label>
+
+    <h2>Logo o insignia de promoción</h2>
+    <p>Aparece en la esquina superior derecha del menú, junto al botón "Contáctanos". Ideal para el logo de la promoción del año (ej: "Promoción 2026"). Usa una imagen con fondo transparente para que no se vea como un cuadro de color.</p>
+    <% if (info && info.promocion_logo_url) { %>
+        <img src="<%= info.promocion_logo_url %>" alt="Logo de promoción actual" class="card-img" style="max-width:120px;">
+    <% } %>
+    <label>Logo o foto de la promoción (opcional)<input type="file" name="promocion_logo" accept="image/*" data-recorte="rectangulo"></label>
+    <input type="hidden" name="promocion_logo_url_actual" value="<%= info && info.promocion_logo_url ? info.promocion_logo_url : '' %>">
+    <label>Link al hacer clic (opcional, ej: a una página de esa promoción o red social)<input type="text" name="promocion_link_url" value="<%= info && info.promocion_link_url ? info.promocion_link_url : '' %>" placeholder="https://..."></label>
+
+    <h2>Estadísticas ("Nuestra Institución")</h2>
+    <label>Cantidad de estudiantes<input type="number" name="num_estudiantes" min="0" value="<%= info && info.num_estudiantes ? info.num_estudiantes : '' %>" placeholder="Ej: 819"></label>
+    <label>Cantidad de profesores<input type="number" name="num_profesores" min="0" value="<%= info && info.num_profesores ? info.num_profesores : '' %>" placeholder="Ej: 27"></label>
+
+    <h2>WhatsApp y redes sociales</h2>
+    <label>Número de WhatsApp institucional (celular a 10 dígitos, con o sin el indicativo 57, se limpia automáticamente. Ej: 3001234567)<input type="text" name="whatsapp_numero" value="<%= info && info.whatsapp_numero ? info.whatsapp_numero : '' %>" placeholder="3001234567"></label>
+
+    <label>Link de Instagram<input type="text" name="instagram_url" value="<%= info && info.instagram_url ? info.instagram_url : '' %>" placeholder="https://instagram.com/tuColegio"></label>
+    <% if (info && info.instagram_imagen_url) { %>
+        <img src="<%= info.instagram_imagen_url %>" alt="Imagen de Instagram actual" class="card-img">
+    <% } %>
+    <label>Imagen/captura de la página de Instagram (se muestra como tarjeta que lleva al perfil)<input type="file" name="instagram_imagen" accept="image/*"></label>
+    <input type="hidden" name="instagram_imagen_url_actual" value="<%= info && info.instagram_imagen_url ? info.instagram_imagen_url : '' %>">
+
+    <label>Link de Facebook<input type="text" name="facebook_url" value="<%= info && info.facebook_url ? info.facebook_url : '' %>" placeholder="https://facebook.com/tuColegio"></label>
+    <% if (info && info.facebook_imagen_url) { %>
+        <img src="<%= info.facebook_imagen_url %>" alt="Imagen de Facebook actual" class="card-img">
+    <% } %>
+    <label>Imagen/captura de la página de Facebook (se muestra como tarjeta que lleva al perfil)<input type="file" name="facebook_imagen" accept="image/*"></label>
+    <input type="hidden" name="facebook_imagen_url_actual" value="<%= info && info.facebook_imagen_url ? info.facebook_imagen_url : '' %>">
+
+    <h2>Plataforma Virtual</h2>
+    <label>Link de la plataforma virtual<input type="text" name="plataforma_virtual_url" value="<%= info && info.plataforma_virtual_url ? info.plataforma_virtual_url : '' %>" placeholder="https://..."></label>
+    <% if (info && info.plataforma_virtual_logo_url) { %>
+        <img src="<%= info.plataforma_virtual_logo_url %>" alt="Logo de la plataforma virtual actual" class="card-img" style="max-width:200px;">
+    <% } %>
+    <label>Logo de la plataforma virtual (usa una imagen con fondo transparente, se muestra en el inicio)<input type="file" name="plataforma_virtual_logo" accept="image/*"></label>
+    <input type="hidden" name="plataforma_virtual_logo_url_actual" value="<%= info && info.plataforma_virtual_logo_url ? info.plataforma_virtual_logo_url : '' %>">
+
+    <h2>Manual de Convivencia</h2>
+    <% if (info && info.manual_convivencia_url) { %>
+        <p><a href="<%= info.manual_convivencia_url %>" target="_blank">Ver el PDF actual</a></p>
+    <% } %>
+    <label>Archivo PDF del Manual de Convivencia (se muestra como botón de descarga en el inicio)<input type="file" name="manual_convivencia" accept="application/pdf"></label>
+    <input type="hidden" name="manual_convivencia_url_actual" value="<%= info && info.manual_convivencia_url ? info.manual_convivencia_url : '' %>">
+
+    <% if (info && info.manual_convivencia_imagen_url) { %>
+        <img src="<%= info.manual_convivencia_imagen_url %>" alt="Imagen del Manual de Convivencia actual" class="card-img" style="max-width:200px;">
+    <% } %>
+    <label>Imagen o sello para ese botón (opcional, usa una imagen con fondo transparente)<input type="file" name="manual_convivencia_imagen" accept="image/*"></label>
+    <input type="hidden" name="manual_convivencia_imagen_url_actual" value="<%= info && info.manual_convivencia_imagen_url ? info.manual_convivencia_imagen_url : '' %>">
+
+    <h2>Media Técnica</h2>
+    <label>Texto de Articulado<textarea name="articulado_texto" rows="6"><%= info ? info.articulado_texto : '' %></textarea></label>
+    <label>Texto de Investigación<textarea name="investigacion_texto" rows="6"><%= info ? info.investigacion_texto : '' %></textarea></label>
+
+    <h2>Portada e información general</h2>
+    <% if (info && info.fondo_url) { %>
+        <img src="<%= info.fondo_url %>" alt="Fondo actual" class="card-img">
+    <% } %>
+    <label>Foto de fondo del inicio (opcional, se ve detrás del título en la portada)<input type="file" name="fondo" accept="image/*"></label>
+    <input type="hidden" name="fondo_url_actual" value="<%= info && info.fondo_url ? info.fondo_url : '' %>">
+
+    <label>Historia<textarea name="historia" rows="4"><%= info ? info.historia : '' %></textarea></label>
+    <label>Misión<textarea name="mision" rows="3"><%= info ? info.mision : '' %></textarea></label>
+    <label>Visión<textarea name="vision" rows="3"><%= info ? info.vision : '' %></textarea></label>
+    <label>Principios<textarea name="principios" rows="3"><%= info ? info.principios : '' %></textarea></label>
+    <label>Valores<textarea name="valores" rows="3"><%= info ? info.valores : '' %></textarea></label>
+
+    <label>Texto del Escudo<textarea name="escudo_texto" rows="4"><%= info ? info.escudo_texto : '' %></textarea></label>
+    <% if (info && info.escudo_url) { %>
+        <img src="<%= info.escudo_url %>" alt="Escudo actual" class="card-img">
+    <% } %>
+    <label>Foto del escudo (opcional)<input type="file" name="escudo" accept="image/*"></label>
+    <input type="hidden" name="escudo_url_actual" value="<%= info && info.escudo_url ? info.escudo_url : '' %>">
+
+    <label>Texto de la Bandera<textarea name="bandera_texto" rows="4"><%= info ? info.bandera_texto : '' %></textarea></label>
+    <% if (info && info.bandera_url) { %>
+        <img src="<%= info.bandera_url %>" alt="Bandera actual" class="card-img">
+    <% } %>
+    <label>Foto de la bandera (opcional)<input type="file" name="bandera" accept="image/*"></label>
+    <input type="hidden" name="bandera_url_actual" value="<%= info && info.bandera_url ? info.bandera_url : '' %>">
+
+    <label>Dirección Sede 1<textarea name="ubicacion_sede1" rows="2"><%= info ? info.ubicacion_sede1 : '' %></textarea></label>
+    <label>Dirección Sede 2<textarea name="ubicacion_sede2" rows="2"><%= info ? info.ubicacion_sede2 : '' %></textarea></label>
+    <label>Teléfono de contacto<input type="text" name="telefono" value="<%= info && info.telefono ? info.telefono : '' %>" placeholder="Ej: 300 123 4567"></label>
+    <label>Correo de contacto<input type="text" name="correo" value="<%= info && info.correo ? info.correo : '' %>" placeholder="Ej: contacto@ideth.edu.co"></label>
+    <label>Link de YouTube del Himno Escolar (opcional)<input type="text" name="himno_url" value="<%= info && info.himno_url ? info.himno_url : '' %>" placeholder="https://www.youtube.com/watch?v=..."></label>
+    <label>Letra del Himno (pégala aquí, respeta los saltos de línea de cada estrofa)<textarea name="himno_letra" rows="10"><%= info ? info.himno_letra : '' %></textarea></label>
+
+    <button type="submit">Guardar cambios</button>
+</form>
+
+<%- include('../partials/footer') %>

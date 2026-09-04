@@ -1,0 +1,17 @@
+<%- include('partials/header') %>
+
+<section class="comunidad-intro aparece">
+    <span class="badge-pill">Gobierno Escolar</span>
+    <h1>Gobierno Escolar</h1>
+    <p>Conoce a los estudiantes que representan a la comunidad educativa.</p>
+</section>
+
+<% if (grupos.punta.length + grupos.medio.length + grupos.base.length === 0) { %>
+    <p>Aún no hay miembros registrados.</p>
+<% } else { %>
+<section class="comunidad-seccion aparece">
+    <%- include('partials/piramide', { grupos: grupos }) %>
+</section>
+<% } %>
+
+<%- include('partials/footer') %>

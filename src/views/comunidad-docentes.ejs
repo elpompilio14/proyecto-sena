@@ -1,0 +1,57 @@
+<%
+function claseArea(area) {
+    if (area === 'Ciencias') return 'docente-tag-ciencias';
+    if (area === 'Humanidades') return 'docente-tag-humanidades';
+    if (area === 'Tecnología') return 'docente-tag-tecnologia';
+    if (area === 'Artes y Ed. Física') return 'docente-tag-artes';
+    return 'docente-tag-otro';
+}
+%>
+<%- include('partials/header') %>
+
+<section class="docentes-hero aparece">
+    <div class="docentes-hero-contenido">
+        <span class="badge-pill">Institución Educativa Distrital Técnica</span>
+        <h1>Nuestro Cuerpo de Docentes</h1>
+        <p>Profesionales apasionados que inspiran, guían y transforman vidas a través de la educación de calidad.</p>
+        <div class="docentes-stats-pill">
+            <span><strong><%= docentes.length %></strong> Docentes</span>
+            <span class="docentes-stats-sep"></span>
+            <span><strong><%= totalAsignaturas %></strong> Asignaturas</span>
+            <span class="docentes-stats-sep"></span>
+            <span><strong><%= aniosCombinados %>+</strong> Años de experiencia combinada</span>
+        </div>
+    </div>
+</section>
+
+<p><a href="/comunidad-educativa">&larr; Comunidad Educativa</a></p>
+
+<% if (areas.length > 0) { %>
+<div class="docentes-filtros aparece">
+    <button type="button" class="docentes-filtro-btn activo" data-area="todos">Todos</button>
+    <% areas.forEach(function(a) { %>
+        <button type="button" class="docentes-filtro-btn" data-area="<%= a %>"><%= a %></button>
+    <% }) %>
+</div>
+<% } %>
+
+<% if (docentes.length === 0) { %>
+    <p>Aún no hay docentes registrados.</p>
+<% } else { %>
+    <div class="card-grid docentes-grid">
+        <% docentes.forEach(function(d, i) { %>
+            <article class="card docente-card aparece" data-area="<%= d.area || '' %>" style="transition-delay: <%= Math.min(i, 5) * 70 %>ms">
+                <div class="docente-foto-wrap">
+                    <% if (d.foto_url && d.visible) { %><img src="<%= d.foto_url %>" alt="<%= d.nombre %>" class="docente-foto"><% } %>
+                    <% if (d.materia) { %><span class="docente-tag <%= claseArea(d.area) %>"><%= d.materia %></span><% } %>
+                </div>
+                <h3><%= d.nombre %></h3>
+                <% if (d.materia) { %><p class="docente-linea">📘 <%= d.materia %></p><% } %>
+                <% if (d.anios_experiencia) { %><p class="docente-linea">🎓 <%= d.anios_experiencia %> años de experiencia</p><% } %>
+                <% if (d.descripcion) { %><p class="docente-quote">"<%- formatearTexto(d.descripcion) %>"</p><% } %>
+            </article>
+        <% }) %>
+    </div>
+<% } %>
+
+<%- include('partials/footer') %>

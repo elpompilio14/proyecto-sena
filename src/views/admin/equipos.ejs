@@ -1,0 +1,55 @@
+<%- include('../partials/header') %>
+
+<p><a href="/admin">&larr; Panel admin</a></p>
+<h1>Equipos deportivos</h1>
+
+<form method="POST" action="/admin/equipos" class="form" enctype="multipart/form-data">
+    <label>Nombre<input type="text" name="nombre" required></label>
+    <label>
+        Deporte
+        <select name="deporte_id" required>
+            <% deportes.forEach(function(d) { %>
+                <option value="<%= d.id %>"><%= d.nombre %></option>
+            <% }) %>
+        </select>
+    </label>
+    <label>Categoría (ej: Sub-15, Mayores)<input type="text" name="categoria"></label>
+    <label>Entrenador<input type="text" name="entrenador"></label>
+    <label>Foto (opcional)<input type="file" name="imagen" accept="image/*" data-recorte="rectangulo"></label>
+    <label>Descripción<textarea name="descripcion" rows="3"></textarea></label>
+    <button type="submit">Crear equipo</button>
+</form>
+
+<% if (equipos.length === 0) { %>
+    <p>Aún no hay equipos.</p>
+<% } else { %>
+    <table class="tabla">
+        <thead><tr><th class="tabla-col-foto">Foto</th><th>Nombre</th><th>Deporte</th><th>Categoría</th><th>Entrenador</th><th></th></tr></thead>
+        <tbody>
+            <% equipos.forEach(function(eq) { %>
+                <tr>
+                    <td class="tabla-col-foto-visible">
+                        <% if (eq.foto_url) { %>
+                            <img src="<%= eq.foto_url %>" alt="<%= eq.nombre %>" class="tabla-foto-mini">
+                        <% } else { %>
+                            <span class="tabla-foto-vacia">—</span>
+                        <% } %>
+                        <%- include('../partials/boton-visibilidad', { urlToggle: '/admin/equipos/' + eq.id + '/visibilidad', visible: eq.visible }) %>
+                    </td>
+                    <td><%= eq.nombre %></td>
+                    <td><%= eq.deporte_nombre %></td>
+                    <td><%= eq.categoria || '-' %></td>
+                    <td><%= eq.entrenador || '-' %></td>
+                    <td class="acciones">
+                        <a href="/admin/equipos/<%= eq.id %>/editar" class="btn-editar">Editar</a>
+                        <form method="POST" action="/admin/equipos/<%= eq.id %>/eliminar">
+                            <button type="submit" class="btn-danger">Eliminar</button>
+                        </form>
+                    </td>
+                </tr>
+            <% }) %>
+        </tbody>
+    </table>
+<% } %>
+
+<%- include('../partials/footer') %>

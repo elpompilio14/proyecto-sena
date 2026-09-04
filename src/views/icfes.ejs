@@ -1,0 +1,29 @@
+<%- include('partials/header') %>
+
+<h1>Mejores ICFES</h1>
+
+<% if (grupos.length === 0) { %>
+    <p>Aún no hay resultados ICFES registrados.</p>
+<% } else { %>
+    <% grupos.forEach(function(grupo) { %>
+        <section class="galeria-grupo">
+            <h2 class="galeria-mes-titulo">Año <%= grupo.anio %></h2>
+            <div class="card-grid">
+                <% grupo.resultados.forEach(function(r, i) { %>
+                    <article class="card aparece icfes-card" style="transition-delay: <%= Math.min(i, 5) * 70 %>ms">
+                        <% if (r.foto_url && r.visible) { %>
+                            <img src="<%= r.foto_url %>" alt="<%= r.estudiante_nombre %>" class="icfes-foto">
+                        <% } %>
+                        <span class="badge icfes-puntaje"><%= r.puntaje %> pts</span>
+                        <h3><%= r.estudiante_nombre %></h3>
+                        <% if (r.descripcion) { %>
+                            <p><%- formatearTexto(r.descripcion) %></p>
+                        <% } %>
+                    </article>
+                <% }) %>
+            </div>
+        </section>
+    <% }) %>
+<% } %>
+
+<%- include('partials/footer') %>

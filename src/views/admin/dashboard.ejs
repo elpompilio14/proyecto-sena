@@ -1,0 +1,40 @@
+<%- include('../partials/header') %>
+
+<div class="admin-header">
+    <h1>Panel de administración</h1>
+    <form method="POST" action="/logout">
+        <button type="submit" class="btn-secondary">Cerrar sesión</button>
+    </form>
+</div>
+
+<p>Hola, <%= usuario.nombre %>.</p>
+
+<div class="grid-links">
+    <a href="/admin/institucion" class="card-link">🏫 Información institucional</a>
+    <a href="/admin/comunidad-educativa" class="card-link">👥 Comunidad Educativa</a>
+    <a href="/admin/grupos-estudiantiles" class="card-link">🧑‍🤝‍🧑 Grupos y Semilleros</a>
+    <a href="/admin/gobierno-escolar" class="card-link">🏛️ Gobierno Escolar</a>
+    <a href="/admin/equipo-desarrollo" class="card-link">💻 Equipo de Desarrollo</a>
+    <a href="/admin/comite-ecologico" class="card-link">🌱 Comité Ecológico</a>
+    <a href="/admin/equipo-drones" class="card-link">🚁 Equipo de Drones</a>
+    <a href="/admin/coheteria" class="card-link">🚀 Cohetería</a>
+    <a href="/admin/noticias" class="card-link">📰 Noticias</a>
+    <a href="/admin/eventos" class="card-link">📅 Eventos</a>
+    <a href="/admin/fotos" class="card-link">📷 Galería</a>
+    <a href="/admin/equipos" class="card-link">🏆 Equipos deportivos</a>
+    <a href="/admin/deportes" class="card-link">🏸 Deportes</a>
+    <a href="/admin/media-tecnica" class="card-link">🖥️ Media Técnica</a>
+    <% mediaTecnicaCategorias.forEach(function(c) { %>
+        <a href="/admin/media-tecnica/<%= c.id %>/editar" class="card-link">🖥️ <%= c.nombre %></a>
+    <% }) %>
+    <a href="/admin/campeonatos" class="card-link">⚽ Campeonatos</a>
+    <a href="/admin/resultados" class="card-link">📊 Resultados</a>
+    <a href="/admin/estudiantes" class="card-link">🎓 Estudiantes</a>
+    <a href="/admin/grados" class="card-link">🏫 Grados y cursos</a>
+    <a href="/admin/mejores-puestos" class="card-link">🏅 Puestos de honor</a>
+    <a href="/admin/icfes" class="card-link">📈 Mejores ICFES</a>
+    <a href="/admin/alianzas" class="card-link">🤝 Alianzas</a>
+    <a href="/admin/mensajes" class="card-link">✉️ Mensajes de contacto <% if (mensajesNoLeidos > 0) { %>(<%= mensajesNoLeidos %> nuevos)<% } %></a>
+</div>
+
+<%- include('../partials/footer') %>

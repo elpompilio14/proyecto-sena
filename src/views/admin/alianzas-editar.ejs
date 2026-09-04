@@ -1,0 +1,17 @@
+<%- include('../partials/header') %>
+
+<p><a href="/admin/alianzas">&larr; Alianzas</a></p>
+<h1>Editar alianza</h1>
+
+<form method="POST" action="/admin/alianzas/<%= alianza.id %>/editar" class="form" enctype="multipart/form-data">
+    <label>Nombre<input type="text" name="nombre" value="<%= alianza.nombre %>" required></label>
+    <% if (alianza.logo_url) { %>
+        <img src="<%= alianza.logo_url %>" alt="Logo actual" class="card-img">
+    <% } %>
+    <label>Cambiar logo (opcional)<input type="file" name="imagen" accept="image/*" data-recorte="rectangulo"></label>
+    <input type="hidden" name="logo_actual" value="<%= alianza.logo_url || '' %>">
+    <label>Link (opcional)<input type="text" name="link_url" value="<%= alianza.link_url || '' %>" placeholder="https://..."></label>
+    <button type="submit">Guardar cambios</button>
+</form>
+
+<%- include('../partials/footer') %>
