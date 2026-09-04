@@ -8,6 +8,7 @@
                     {% if m.foto_url and m.visible %}<img src="{{ m.foto_url }}" alt="{{ m.nombre }}" class="comunidad-lider-foto">{% endif %}
                     <h3>{{ m.nombre }}</h3>
                     {% if m.rol or m.cargo %}<span class="badge">{{ m.rol or m.cargo }}</span>{% endif %}
+                    {% if m.salon %}<p class="fecha">Salón: {{ m.salon }}</p>{% endif %}
                     {% if m.descripcion %}<p>{{ formatearTexto(m.descripcion) | safe }}</p>{% endif %}
                 </div>
             {% endfor %}
@@ -24,6 +25,7 @@
                     {% if m.foto_url and m.visible %}<img src="{{ m.foto_url }}" alt="{{ m.nombre }}" class="comunidad-lider-foto">{% endif %}
                     <h3>{{ m.nombre }}</h3>
                     {% if m.rol or m.cargo %}<span class="badge">{{ m.rol or m.cargo }}</span>{% endif %}
+                    {% if m.salon %}<p class="fecha">Salón: {{ m.salon }}</p>{% endif %}
                     {% if m.descripcion %}<p>{{ formatearTexto(m.descripcion) | safe }}</p>{% endif %}
                 </div>
             {% endfor %}
@@ -40,6 +42,7 @@
                     {% if m.foto_url and m.visible %}<img src="{{ m.foto_url }}" alt="{{ m.nombre }}" class="comunidad-lider-foto">{% endif %}
                     <h3>{{ m.nombre }}</h3>
                     {% if m.rol or m.cargo %}<span class="badge">{{ m.rol or m.cargo }}</span>{% endif %}
+                    {% if m.salon %}<p class="fecha">Salón: {{ m.salon }}</p>{% endif %}
                     {% if m.descripcion %}<p>{{ formatearTexto(m.descripcion) | safe }}</p>{% endif %}
                 </div>
             {% endfor %}

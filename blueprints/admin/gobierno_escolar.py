@@ -17,6 +17,7 @@ def gobierno_escolar_index():
 def gobierno_escolar_crear():
     nombre = request.form.get('nombre')
     rol = request.form.get('rol') or None
+    salon = request.form.get('salon') or None
     foto_url = guardar_archivo(request.files.get('imagen'))
     orden = request.form.get('orden') or 0
     nivel = request.form.get('nivel') or 'base'
@@ -24,8 +25,8 @@ def gobierno_escolar_crear():
     with obtener_conexion() as conexion:
         with conexion.cursor() as cur:
             cur.execute(
-                'INSERT INTO gobierno_escolar (nombre, rol, foto_url, orden, nivel) VALUES (%s, %s, %s, %s, %s)',
-                (nombre, rol, foto_url, orden, nivel),
+                'INSERT INTO gobierno_escolar (nombre, rol, salon, foto_url, orden, nivel) VALUES (%s, %s, %s, %s, %s, %s)',
+                (nombre, rol, salon, foto_url, orden, nivel),
             )
     return redirect('/admin/gobierno-escolar')
 
@@ -45,6 +46,7 @@ def gobierno_escolar_editar_form(id):
 def gobierno_escolar_editar(id):
     nombre = request.form.get('nombre')
     rol = request.form.get('rol') or None
+    salon = request.form.get('salon') or None
     foto_actual = request.form.get('foto_actual')
     foto_url = guardar_archivo(request.files.get('imagen')) or (foto_actual or None)
     orden = request.form.get('orden') or 0
@@ -53,8 +55,8 @@ def gobierno_escolar_editar(id):
     with obtener_conexion() as conexion:
         with conexion.cursor() as cur:
             cur.execute(
-                'UPDATE gobierno_escolar SET nombre = %s, rol = %s, foto_url = %s, orden = %s, nivel = %s WHERE id = %s',
-                (nombre, rol, foto_url, orden, nivel, id),
+                'UPDATE gobierno_escolar SET nombre = %s, rol = %s, salon = %s, foto_url = %s, orden = %s, nivel = %s WHERE id = %s',
+                (nombre, rol, salon, foto_url, orden, nivel, id),
             )
     return redirect('/admin/gobierno-escolar')
 

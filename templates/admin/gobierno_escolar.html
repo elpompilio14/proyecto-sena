@@ -7,6 +7,7 @@
 <form method="POST" action="/admin/gobierno-escolar" class="form" enctype="multipart/form-data">
     <label>Nombre<input type="text" name="nombre" required></label>
     <label>Rol (ej: Personero, Contralor, Representante de curso)<input type="text" name="rol"></label>
+    <label>Salón (opcional, ej: 11-A)<input type="text" name="salon"></label>
     <label>Foto (opcional, se ve mejor si es cuadrada)<input type="file" name="imagen" accept="image/*" data-recorte="circulo" data-recorte-aspecto="1"></label>
     <label>Orden (los números más bajos salen primero; si empatan, se ordenan por nombre)<input type="number" name="orden" value="0"></label>
     <label>Nivel en la pirámide
@@ -23,7 +24,7 @@
     <p>Aún no hay miembros registrados.</p>
 {% else %}
     <table class="tabla">
-        <thead><tr><th class="tabla-col-foto">Foto</th><th>Nombre</th><th>Rol</th><th>Orden</th><th>Nivel</th><th></th></tr></thead>
+        <thead><tr><th class="tabla-col-foto">Foto</th><th>Nombre</th><th>Rol</th><th>Salón</th><th>Orden</th><th>Nivel</th><th></th></tr></thead>
         <tbody>
             {% for m in miembros %}
                 <tr>
@@ -39,6 +40,7 @@
                     </td>
                     <td>{{ m.nombre }}</td>
                     <td>{{ m.rol or '-' }}</td>
+                    <td>{{ m.salon or '-' }}</td>
                     <td>{{ m.orden }}</td>
                     <td>{{ m.nivel }}</td>
                     <td class="acciones">

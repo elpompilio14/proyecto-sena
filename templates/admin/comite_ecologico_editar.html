@@ -7,6 +7,7 @@
 <form method="POST" action="/admin/comite-ecologico/{{ miembro.id }}/editar" class="form" enctype="multipart/form-data">
     <label>Nombre<input type="text" name="nombre" value="{{ miembro.nombre }}" required></label>
     <label>Rol<input type="text" name="rol" value="{{ miembro.rol or '' }}"></label>
+    <label>Salón (opcional, ej: 11-A)<input type="text" name="salon" value="{{ miembro.salon or '' }}"></label>
     {% if miembro.foto_url %}
         <img src="{{ miembro.foto_url }}" alt="Foto actual" class="card-img">
     {% endif %}

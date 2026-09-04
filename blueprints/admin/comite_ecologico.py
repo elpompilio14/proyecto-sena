@@ -39,6 +39,7 @@ def comite_ecologico_actualizar_info():
 def comite_ecologico_crear():
     nombre = request.form.get('nombre')
     rol = request.form.get('rol') or None
+    salon = request.form.get('salon') or None
     foto_url = guardar_archivo(request.files.get('imagen'))
     orden = request.form.get('orden') or 0
     nivel = request.form.get('nivel') or 'base'
@@ -46,8 +47,8 @@ def comite_ecologico_crear():
     with obtener_conexion() as conexion:
         with conexion.cursor() as cur:
             cur.execute(
-                'INSERT INTO comite_ecologico (nombre, rol, foto_url, orden, nivel) VALUES (%s, %s, %s, %s, %s)',
-                (nombre, rol, foto_url, orden, nivel),
+                'INSERT INTO comite_ecologico (nombre, rol, salon, foto_url, orden, nivel) VALUES (%s, %s, %s, %s, %s, %s)',
+                (nombre, rol, salon, foto_url, orden, nivel),
             )
     return redirect('/admin/comite-ecologico')
 
@@ -67,6 +68,7 @@ def comite_ecologico_editar_form(id):
 def comite_ecologico_editar(id):
     nombre = request.form.get('nombre')
     rol = request.form.get('rol') or None
+    salon = request.form.get('salon') or None
     foto_actual = request.form.get('foto_actual')
     foto_url = guardar_archivo(request.files.get('imagen')) or (foto_actual or None)
     orden = request.form.get('orden') or 0
@@ -75,8 +77,8 @@ def comite_ecologico_editar(id):
     with obtener_conexion() as conexion:
         with conexion.cursor() as cur:
             cur.execute(
-                'UPDATE comite_ecologico SET nombre = %s, rol = %s, foto_url = %s, orden = %s, nivel = %s WHERE id = %s',
-                (nombre, rol, foto_url, orden, nivel, id),
+                'UPDATE comite_ecologico SET nombre = %s, rol = %s, salon = %s, foto_url = %s, orden = %s, nivel = %s WHERE id = %s',
+                (nombre, rol, salon, foto_url, orden, nivel, id),
             )
     return redirect('/admin/comite-ecologico')
 
