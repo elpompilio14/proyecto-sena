@@ -33,8 +33,12 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
-    // La primera foto ya sale visible desde el HTML (sin animacion de zoom), para que
-    // se vea desde el primer momento sin parpadeos. El carrusel solo se encarga de
-    // rotar a las siguientes fotos, que si tienen el cruce con zoom.
+    // La primera foto sale visible desde el HTML (sin fundido, para que no se vea un
+    // parpadeo azul al cargar), pero todavia sin zoom. Se fuerza al navegador a aplicar
+    // ese estado (reflow) y de inmediato se activa el zoom, asi arranca practicamente
+    // desde el primer instante, sin demora perceptible ni parpadeo.
+    void carrusel.offsetWidth;
+    slides[0].classList.remove('visible-estatica');
+    mostrar(0);
     reiniciarTemporizador();
 });
