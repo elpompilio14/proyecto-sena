@@ -36,6 +36,7 @@ app.use(session({
 }));
 
 const rutaCss = path.join(__dirname, '..', 'public', 'css', 'style.css');
+const rutaHeroJs = path.join(__dirname, '..', 'public', 'js', 'hero-carrusel.js');
 
 app.use((req, res, next) => {
     res.locals.usuario = req.session.usuario || null;
@@ -43,6 +44,11 @@ app.use((req, res, next) => {
         res.locals.cssVersion = fs.statSync(rutaCss).mtimeMs;
     } catch (err) {
         res.locals.cssVersion = Date.now();
+    }
+    try {
+        res.locals.heroJsVersion = fs.statSync(rutaHeroJs).mtimeMs;
+    } catch (err) {
+        res.locals.heroJsVersion = Date.now();
     }
     next();
 });
