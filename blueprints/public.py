@@ -57,6 +57,9 @@ def home():
             cur.execute('SELECT himno_url, fondo_url FROM institucion_info ORDER BY id LIMIT 1')
             info = cur.fetchone()
 
+            cur.execute("SELECT url FROM galeria_fotos WHERE seccion = 'inicio' AND visible = true ORDER BY orden, id")
+            hero_fotos = cur.fetchall()
+
     return render_template(
         'home.html',
         titulo='Inicio',
@@ -71,6 +74,7 @@ def home():
         coheteria=_recortar_para_inicio(_agrupar_por_nivel(coheteria)),
         himnoUrl=info['himno_url'] if info else None,
         fondoUrl=info['fondo_url'] if info else None,
+        heroImagenes=[f['url'] for f in hero_fotos],
     )
 
 

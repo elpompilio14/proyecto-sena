@@ -5,6 +5,7 @@ from db import obtener_conexion
 from uploads import guardar_archivo, TIPOS_IMAGEN_Y_VIDEO
 
 SECCIONES = {
+    'inicio': 'Inicio (carrusel del encabezado)',
     'coheteria': 'Cohetería',
     'comite-ecologico': 'Comité Ecológico',
     'equipo-drones': 'Equipo de Drones',
