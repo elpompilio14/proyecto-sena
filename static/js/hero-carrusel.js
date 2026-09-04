@@ -33,10 +33,10 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
-    requestAnimationFrame(function () {
-        requestAnimationFrame(function () {
-            mostrar(0);
-            reiniciarTemporizador();
-        });
-    });
+    // Fuerza al navegador a aplicar los estilos iniciales (sin zoom) antes de
+    // activar la primera foto, para que ese cambio si dispare la transicion de zoom
+    // (si no, el navegador la pinta directamente con el zoom ya puesto).
+    void carrusel.offsetWidth;
+    mostrar(0);
+    reiniciarTemporizador();
 });
