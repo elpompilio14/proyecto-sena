@@ -1726,6 +1726,16 @@ button:hover { background: var(--azul-oscuro); transform: translateY(-1px); }
     transform: scale(1.12);
 }
 
+/* Fotos impares (1a, 3a, 5a...) hacen zoom in; las pares (2a, 4a, 6a...) hacen zoom out.
+   Asi la escala coincide entre la foto que sale y la que entra al momento del cruce, sin salto. */
+.hero-slide:nth-child(even) {
+    transform: scale(1.12);
+}
+
+.hero-slide:nth-child(even).activa {
+    transform: scale(1);
+}
+
 .hero-dots {
     position: absolute;
     left: 0;
@@ -1756,11 +1766,7 @@ button:hover { background: var(--azul-oscuro); transform: translateY(-1px); }
 @media (prefers-reduced-motion: reduce) {
     .hero-slide {
         transition: opacity 1.5s ease;
-        transform: none;
-    }
-
-    .hero-slide.activa {
-        transform: none;
+        transform: none !important;
     }
 }
 
