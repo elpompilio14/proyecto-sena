@@ -1713,7 +1713,7 @@ button:hover { background: var(--azul-oscuro); transform: translateY(-1px); }
 .hero-escudo {
     display: block;
     margin: 30px auto 0;
-    max-height: 110px;
+    max-height: 240px;
     width: auto;
     filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.4));
 }
@@ -1732,6 +1732,16 @@ button:hover { background: var(--azul-oscuro); transform: translateY(-1px); }
 .hero-slide.activa {
     opacity: 1;
     transform: scale(1.12);
+}
+
+/* Al cargar la pagina, la primera foto y el texto aparecen rapido (sin la demora
+   de la transicion normal de 2s), para que no se sienta lento al entrar o recargar. */
+.hero-slide.entrada-rapida {
+    transition: opacity .4s ease, transform 8s ease-out;
+}
+
+.hero-contenido.aparece {
+    transition: opacity .35s ease, transform .35s ease;
 }
 
 /* Fotos impares (1a, 3a, 5a...) hacen zoom in; las pares (2a, 4a, 6a...) hacen zoom out.
