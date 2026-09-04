@@ -1902,7 +1902,7 @@ button:hover { background: var(--azul-oscuro); transform: translateY(-1px); }
 .whatsapp-flotante {
     position: fixed;
     right: 22px;
-    bottom: 22px;
+    bottom: 86px;
     width: 58px;
     height: 58px;
     background: #25d366;
@@ -1924,7 +1924,49 @@ button:hover { background: var(--azul-oscuro); transform: translateY(-1px); }
 }
 
 @media (max-width: 600px) {
-    .whatsapp-flotante { width: 50px; height: 50px; right: 14px; bottom: 14px; }
+    .whatsapp-flotante { width: 50px; height: 50px; right: 14px; bottom: 68px; }
+}
+
+/* Boton flotante "volver arriba": aparece con una animacion (desde abajo, con
+   desvanecido) despues de bajar un poco en la pagina, y lleva de vuelta al inicio. */
+.volver-arriba {
+    position: fixed;
+    right: 27px;
+    bottom: 20px;
+    width: 44px;
+    height: 44px;
+    background: #fff;
+    border: 1px solid var(--borde);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: var(--sombra);
+    color: var(--azul);
+    cursor: pointer;
+    z-index: 499;
+    opacity: 0;
+    transform: translateY(16px);
+    pointer-events: none;
+    transition: opacity .3s ease, transform .3s ease, background .2s ease;
+}
+
+.volver-arriba.visible {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+}
+
+.volver-arriba:hover {
+    background: var(--azul-pastel);
+}
+
+@media (max-width: 600px) {
+    .volver-arriba { width: 38px; height: 38px; right: 19px; bottom: 14px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .volver-arriba { transition: opacity .3s ease; transform: none; }
 }
 
 /* ===================== Página de contacto ===================== */
