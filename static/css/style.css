@@ -1995,7 +1995,30 @@ button:hover { background: var(--azul-oscuro); transform: translateY(-1px); }
 
 .comunidad-seccion {
     margin-bottom: 50px;
+    background: #fff;
+    border: 1px solid var(--borde);
+    border-radius: 14px;
+    padding: 32px 30px;
+    box-shadow: var(--sombra);
+    position: relative;
+    overflow: hidden;
 }
+
+.comunidad-seccion::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 6px;
+    background: var(--acento-seccion, var(--azul));
+}
+
+.comunidad-seccion--dorado { --acento-seccion: var(--dorado); }
+.comunidad-seccion--azul { --acento-seccion: var(--azul); }
+.comunidad-seccion--verde { --acento-seccion: #4a7c59; }
+.comunidad-seccion--acero { --acento-seccion: #3d7a8c; }
+.comunidad-seccion--terracota { --acento-seccion: #b5502e; }
 
 .comunidad-etiqueta {
     text-align: center;

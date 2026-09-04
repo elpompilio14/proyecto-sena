@@ -157,7 +157,7 @@
 {% endif %}
 
 {% if gobiernoEscolar.punta|length + gobiernoEscolar.medio|length + gobiernoEscolar.base|length > 0 %}
-<section class="comunidad-seccion aparece">
+<section class="comunidad-seccion comunidad-seccion--dorado aparece">
     <h2>Gobierno Escolar</h2>
     {% with grupos = gobiernoEscolar %}
         {% include "partials/piramide.html" %}
@@ -167,7 +167,7 @@
 {% endif %}
 
 {% if equipoDesarrollo.punta|length + equipoDesarrollo.medio|length + equipoDesarrollo.base|length > 0 %}
-<section class="comunidad-seccion aparece">
+<section class="comunidad-seccion comunidad-seccion--azul aparece">
     <h2>Equipo de Desarrollo</h2>
     {% with grupos = equipoDesarrollo %}
         {% include "partials/piramide.html" %}
@@ -177,7 +177,7 @@
 {% endif %}
 
 {% if comiteEcologico.punta|length + comiteEcologico.medio|length + comiteEcologico.base|length > 0 %}
-<section class="comunidad-seccion aparece">
+<section class="comunidad-seccion comunidad-seccion--verde aparece">
     <h2>Comité Ecológico</h2>
     {% with grupos = comiteEcologico %}
         {% include "partials/piramide.html" %}
@@ -187,7 +187,7 @@
 {% endif %}
 
 {% if equipoDrones.punta|length + equipoDrones.medio|length + equipoDrones.base|length > 0 %}
-<section class="comunidad-seccion aparece">
+<section class="comunidad-seccion comunidad-seccion--acero aparece">
     <h2>Equipo de Drones</h2>
     {% with grupos = equipoDrones %}
         {% include "partials/piramide.html" %}
@@ -197,7 +197,7 @@
 {% endif %}
 
 {% if coheteria.punta|length + coheteria.medio|length + coheteria.base|length > 0 %}
-<section class="comunidad-seccion aparece">
+<section class="comunidad-seccion comunidad-seccion--terracota aparece">
     <h2>Cohetería</h2>
     {% with grupos = coheteria %}
         {% include "partials/piramide.html" %}
