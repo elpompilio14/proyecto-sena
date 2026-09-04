@@ -1710,6 +1710,14 @@ button:hover { background: var(--azul-oscuro); transform: translateY(-1px); }
     margin: 0 auto;
 }
 
+.hero-escudo {
+    display: block;
+    margin: 30px auto 0;
+    max-height: 110px;
+    width: auto;
+    filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.4));
+}
+
 .hero-slide {
     position: absolute;
     inset: 0;
