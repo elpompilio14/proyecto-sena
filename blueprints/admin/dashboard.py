@@ -10,4 +10,12 @@ def dashboard_index():
             cur.execute('SELECT COUNT(*) AS total FROM mensajes_contacto WHERE leido = FALSE')
             mensajes_no_leidos = cur.fetchone()['total']
 
-    return render_template('admin/dashboard.html', titulo='Panel admin', mensajesNoLeidos=mensajes_no_leidos)
+            cur.execute('SELECT id, nombre FROM media_tecnica_categorias ORDER BY orden, nombre')
+            media_tecnica_categorias = cur.fetchall()
+
+    return render_template(
+        'admin/dashboard.html',
+        titulo='Panel admin',
+        mensajesNoLeidos=mensajes_no_leidos,
+        mediaTecnicaCategorias=media_tecnica_categorias,
+    )
