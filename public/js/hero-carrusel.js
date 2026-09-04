@@ -33,10 +33,17 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
-    // La primera foto ya sale "activa" desde el HTML del servidor (visible y con su
-    // zoom ya puesto), asi usa desde el primer instante el mismo sistema (transicion)
-    // que todas las demas fotos del carrusel. Esto evita mezclar una animacion con la
-    // transicion normal, que es lo que causaba el corte/pausa rara al pasar a la
-    // siguiente foto la primera vez.
-    reiniciarTemporizador();
+    // La primera foto ya sale visible desde el HTML (sin parpadeo azul, pase lo que
+    // pase con el JS a continuacion), pero todavia sin zoom. Se espera a que el
+    // navegador pinte esa version (dos requestAnimationFrame, para asegurar un pintado
+    // real de por medio) y recien ahi se activa el zoom con "activa": el mismo
+    // mecanismo (transicion) que usan todas las demas fotos, sin mezclarlo con
+    // animaciones aparte, que era lo que causaba el corte al pasar a la siguiente foto.
+    requestAnimationFrame(function () {
+        requestAnimationFrame(function () {
+            slides[0].classList.remove('visible-estatica');
+            mostrar(0);
+            reiniciarTemporizador();
+        });
+    });
 });
