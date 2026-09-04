@@ -271,7 +271,7 @@ function agruparPorMes(filas) {
 
 exports.galeria = async (req, res) => {
     const fotos = await pool.query(
-        'SELECT * FROM galeria_fotos WHERE visible = true ORDER BY fecha DESC, creado_en DESC'
+        "SELECT * FROM galeria_fotos WHERE visible = true AND (seccion IS NULL OR seccion <> 'inicio') ORDER BY fecha DESC, creado_en DESC"
     );
     res.render('galeria', { titulo: 'Galeria', grupos: agruparPorMes(fotos.rows) });
 };
