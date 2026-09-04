@@ -31,7 +31,7 @@ h1, h2, h3 {
 }
 
 .container {
-    max-width: 1100px;
+    max-width: 1240px;
     margin: 0 auto;
     padding: 0 20px;
 }
@@ -2010,7 +2010,7 @@ button:hover { background: var(--azul-oscuro); transform: translateY(-1px); }
     top: 0;
     left: 0;
     bottom: 0;
-    width: 6px;
+    width: 12px;
     background: var(--acento-seccion, var(--azul));
 }
 
