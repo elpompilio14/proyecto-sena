@@ -4,7 +4,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-from flask import Flask, session, render_template
+from flask import Flask, session, render_template, request
 
 from db import obtener_conexion
 from utils.formatear_texto import formatear_texto
@@ -68,6 +68,7 @@ def inyectar_datos_globales():
         'anio_actual': datetime.now().year, 'cssVersion': css_version,
         'heroJsVersion': hero_js_version,
         'volverArribaJsVersion': volver_arriba_js_version,
+        'esAdmin': request.path.startswith('/admin'),
     }
 
 

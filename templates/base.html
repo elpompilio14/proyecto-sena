@@ -119,7 +119,7 @@
         </div>
     </header>
     </div>
-    <main class="container main-content">
+    <main class="container main-content{% if not esAdmin %} fondo-patron-paginas{% endif %}">
         {% block content %}{% endblock %}
     </main>
     <footer class="site-footer">
