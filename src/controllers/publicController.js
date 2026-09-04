@@ -38,6 +38,9 @@ exports.home = async (req, res) => {
     const equipoDrones = await pool.query('SELECT * FROM equipo_drones ORDER BY orden, nombre');
     const coheteria = await pool.query('SELECT * FROM coheteria ORDER BY orden, nombre');
     const info = await pool.query('SELECT himno_url, fondo_url FROM institucion_info ORDER BY id LIMIT 1');
+    const heroFotos = await pool.query(
+        "SELECT url FROM galeria_fotos WHERE seccion = 'inicio' AND visible = true ORDER BY orden, id"
+    );
     res.render('home', {
         titulo: 'Inicio',
         eventos: eventos.rows,
@@ -51,6 +54,7 @@ exports.home = async (req, res) => {
         coheteria: recortarParaInicio(agruparPorNivel(coheteria.rows)),
         himnoUrl: info.rows[0] ? info.rows[0].himno_url : null,
         fondoUrl: info.rows[0] ? info.rows[0].fondo_url : null,
+        heroImagenes: heroFotos.rows.map((f) => f.url),
     });
 };
 

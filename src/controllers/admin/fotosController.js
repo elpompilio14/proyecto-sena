@@ -6,6 +6,7 @@ function hoyLocal() {
 }
 
 const SECCIONES = {
+    'inicio': 'Inicio (carrusel del encabezado)',
     'coheteria': 'Cohetería',
     'comite-ecologico': 'Comité Ecológico',
     'equipo-drones': 'Equipo de Drones',
