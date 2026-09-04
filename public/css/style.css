@@ -2005,10 +2005,9 @@ button:hover { background: var(--azul-oscuro); transform: translateY(-1px); }
     margin-right: calc(50% - 50vw);
     margin-bottom: 50px;
     background: #fff;
-    border-top: 1px solid var(--borde);
     border-bottom: 1px solid var(--borde);
     border-radius: 0;
-    padding: 40px 30px;
+    padding: 52px 30px 40px;
     box-shadow: var(--sombra);
     position: relative;
     overflow: hidden;
@@ -2019,9 +2018,13 @@ button:hover { background: var(--azul-oscuro); transform: translateY(-1px); }
     position: absolute;
     top: 0;
     left: 0;
-    bottom: 0;
-    width: 12px;
+    right: 0;
+    height: 12px;
     background: var(--acento-seccion, var(--azul));
+}
+
+.comunidad-seccion > h2 {
+    text-align: center;
 }
 
 .comunidad-seccion--dorado { --acento-seccion: var(--dorado); }
