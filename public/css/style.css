@@ -1734,6 +1734,20 @@ button:hover { background: var(--azul-oscuro); transform: translateY(-1px); }
     opacity: 1;
 }
 
+/* Fondo con simbolos decorativos (regla, libro, calculadora, etc.) detras de las
+   secciones del inicio, para que no se vea tan vacio. Las secciones que ya tienen su
+   propio fondo blanco o de color (tarjetas de grupos, "Nuestra Institucion", etc.) lo
+   tapan automaticamente, asi que el patron solo se nota en los espacios entre ellas. */
+.inicio-fondo-patron {
+    width: 100vw;
+    max-width: 100vw;
+    margin-left: calc(50% - 50vw);
+    margin-right: calc(50% - 50vw);
+    background-image: url('/assets/patron-fondo.svg');
+    background-repeat: repeat;
+    background-size: 340px 340px;
+}
+
 /* Igual que con la primera foto: se usa una animacion (no la clase .aparece basada en
    scroll) para que el texto entre desde el primer instante, sin esperar a que el
    observador de scroll lo detecte. */
