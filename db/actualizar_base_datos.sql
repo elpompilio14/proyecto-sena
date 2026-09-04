@@ -155,3 +155,10 @@ ALTER TABLE institucion_info ADD COLUMN IF NOT EXISTS equipo_desarrollo_portada_
 -- Logo/insignia de promocion, se muestra junto al boton de Contactanos en el menu
 ALTER TABLE institucion_info ADD COLUMN IF NOT EXISTS promocion_logo_url TEXT;
 ALTER TABLE institucion_info ADD COLUMN IF NOT EXISTS promocion_link_url TEXT;
+
+-- Salon (opcional) para los integrantes de los grupos/semilleros con piramide
+ALTER TABLE gobierno_escolar ADD COLUMN IF NOT EXISTS salon VARCHAR(20);
+ALTER TABLE equipo_desarrollo ADD COLUMN IF NOT EXISTS salon VARCHAR(20);
+ALTER TABLE comite_ecologico ADD COLUMN IF NOT EXISTS salon VARCHAR(20);
+ALTER TABLE equipo_drones ADD COLUMN IF NOT EXISTS salon VARCHAR(20);
+ALTER TABLE coheteria ADD COLUMN IF NOT EXISTS salon VARCHAR(20);

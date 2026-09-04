@@ -7,6 +7,7 @@
                     <% if (m.foto_url && m.visible) { %><img src="<%= m.foto_url %>" alt="<%= m.nombre %>" class="comunidad-lider-foto"><% } %>
                     <h3><%= m.nombre %></h3>
                     <% if (m.rol || m.cargo) { %><span class="badge"><%= m.rol || m.cargo %></span><% } %>
+                    <% if (m.salon) { %><p class="fecha">Salón: <%= m.salon %></p><% } %>
                     <% if (m.descripcion) { %><p><%- formatearTexto(m.descripcion) %></p><% } %>
                 </div>
             <% }) %>
@@ -22,6 +23,7 @@
                     <% if (m.foto_url && m.visible) { %><img src="<%= m.foto_url %>" alt="<%= m.nombre %>" class="comunidad-lider-foto"><% } %>
                     <h3><%= m.nombre %></h3>
                     <% if (m.rol || m.cargo) { %><span class="badge"><%= m.rol || m.cargo %></span><% } %>
+                    <% if (m.salon) { %><p class="fecha">Salón: <%= m.salon %></p><% } %>
                     <% if (m.descripcion) { %><p><%- formatearTexto(m.descripcion) %></p><% } %>
                 </div>
             <% }) %>
@@ -37,6 +39,7 @@
                     <% if (m.foto_url && m.visible) { %><img src="<%= m.foto_url %>" alt="<%= m.nombre %>" class="comunidad-lider-foto"><% } %>
                     <h3><%= m.nombre %></h3>
                     <% if (m.rol || m.cargo) { %><span class="badge"><%= m.rol || m.cargo %></span><% } %>
+                    <% if (m.salon) { %><p class="fecha">Salón: <%= m.salon %></p><% } %>
                     <% if (m.descripcion) { %><p><%- formatearTexto(m.descripcion) %></p><% } %>
                 </div>
             <% }) %>

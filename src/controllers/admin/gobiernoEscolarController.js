@@ -6,11 +6,11 @@ exports.index = async (req, res) => {
 };
 
 exports.crear = async (req, res) => {
-    const { nombre, rol, orden, nivel } = req.body;
+    const { nombre, rol, salon, orden, nivel } = req.body;
     const foto_url = req.file ? `/images/${req.file.filename}` : null;
     await pool.query(
-        'INSERT INTO gobierno_escolar (nombre, rol, foto_url, orden, nivel) VALUES ($1, $2, $3, $4, $5)',
-        [nombre, rol || null, foto_url, orden || 0, nivel || 'base']
+        'INSERT INTO gobierno_escolar (nombre, rol, salon, foto_url, orden, nivel) VALUES ($1, $2, $3, $4, $5, $6)',
+        [nombre, rol || null, salon || null, foto_url, orden || 0, nivel || 'base']
     );
     res.redirect('/admin/gobierno-escolar');
 };
@@ -34,11 +34,11 @@ exports.editarForm = async (req, res) => {
 };
 
 exports.editar = async (req, res) => {
-    const { nombre, rol, foto_actual, orden, nivel } = req.body;
+    const { nombre, rol, salon, foto_actual, orden, nivel } = req.body;
     const foto_url = req.file ? `/images/${req.file.filename}` : (foto_actual || null);
     await pool.query(
-        'UPDATE gobierno_escolar SET nombre = $1, rol = $2, foto_url = $3, orden = $4, nivel = $5 WHERE id = $6',
-        [nombre, rol || null, foto_url, orden || 0, nivel || 'base', req.params.id]
+        'UPDATE gobierno_escolar SET nombre = $1, rol = $2, salon = $3, foto_url = $4, orden = $5, nivel = $6 WHERE id = $7',
+        [nombre, rol || null, salon || null, foto_url, orden || 0, nivel || 'base', req.params.id]
     );
     res.redirect('/admin/gobierno-escolar');
 };
