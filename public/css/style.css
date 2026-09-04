@@ -1935,6 +1935,7 @@ button:hover { background: var(--azul-oscuro); transform: translateY(-1px); }
     bottom: 20px;
     width: 44px;
     height: 44px;
+    padding: 0;
     background: #fff;
     border: 1px solid var(--borde);
     border-radius: 50%;
