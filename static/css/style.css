@@ -1726,19 +1726,6 @@ button:hover { background: var(--azul-oscuro); transform: translateY(-1px); }
     transform: scale(1.12);
 }
 
-/* La primera foto usa una animacion (no una transicion) porque las animaciones si
-   corren desde el primer instante en que el navegador pinta la pagina, a diferencia
-   de las transiciones. Asi el zoom arranca desde el principio, sin parpadeo ni espera. */
-.hero-slide.primera-animada {
-    opacity: 1;
-    animation: hero-zoom-inicial 8000ms ease-out forwards;
-}
-
-@keyframes hero-zoom-inicial {
-    from { transform: scale(1); }
-    to { transform: scale(1.12); }
-}
-
 /* Igual que con la primera foto: se usa una animacion (no la clase .aparece basada en
    scroll) para que el texto entre desde el primer instante, sin esperar a que el
    observador de scroll lo detecte. */
@@ -1798,7 +1785,6 @@ button:hover { background: var(--azul-oscuro); transform: translateY(-1px); }
     .hero-slide {
         transition: opacity 1.5s ease;
         transform: none !important;
-        animation: none !important;
     }
 }
 

@@ -11,7 +11,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function mostrar(indice) {
         slides.forEach(function (slide, i) {
-            slide.classList.remove('primera-animada');
             slide.classList.toggle('activa', i === indice);
         });
         dots.forEach(function (dot, i) {
@@ -34,13 +33,10 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
-    // La primera foto arranca su zoom sola, con una animacion CSS (para que corra
-    // desde el primer instante, sin parpadeo ni espera). En cuanto ese zoom termina,
-    // pasa de inmediato a la siguiente foto (igual que las demas), sin quedarse quieta
-    // esperando. Si se cambiara de foto antes de que la animacion terminara, se veria
-    // un corte feo a mitad del zoom, por eso se espera al evento animationend.
-    slides[0].addEventListener('animationend', function () {
-        mostrar(1);
-        reiniciarTemporizador();
-    }, { once: true });
+    // La primera foto ya sale "activa" desde el HTML del servidor (visible y con su
+    // zoom ya puesto), asi usa desde el primer instante el mismo sistema (transicion)
+    // que todas las demas fotos del carrusel. Esto evita mezclar una animacion con la
+    // transicion normal, que es lo que causaba el corte/pausa rara al pasar a la
+    // siguiente foto la primera vez.
+    reiniciarTemporizador();
 });
