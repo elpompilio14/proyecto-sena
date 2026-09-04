@@ -475,7 +475,9 @@ def _agrupar_por_mes(filas):
 def galeria():
     with obtener_conexion() as conexion:
         with conexion.cursor() as cur:
-            cur.execute('SELECT * FROM galeria_fotos WHERE visible = true ORDER BY fecha DESC, creado_en DESC')
+            cur.execute(
+                "SELECT * FROM galeria_fotos WHERE visible = true AND (seccion IS NULL OR seccion <> 'inicio') ORDER BY fecha DESC, creado_en DESC"
+            )
             fotos = cur.fetchall()
     return render_template('galeria.html', titulo='Galeria', grupos=_agrupar_por_mes(fotos))
 
