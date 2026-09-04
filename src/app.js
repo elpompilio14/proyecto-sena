@@ -41,6 +41,7 @@ const rutaVolverArribaJs = path.join(__dirname, '..', 'public', 'js', 'volver-ar
 
 app.use((req, res, next) => {
     res.locals.usuario = req.session.usuario || null;
+    res.locals.esAdmin = req.path.startsWith('/admin');
     try {
         res.locals.cssVersion = fs.statSync(rutaCss).mtimeMs;
     } catch (err) {

@@ -1735,17 +1735,18 @@ button:hover { background: var(--azul-oscuro); transform: translateY(-1px); }
 }
 
 /* Fondo con simbolos decorativos (regla, libro, calculadora, etc.) detras de las
-   secciones del inicio, para que no se vea tan vacio. Las secciones que ya tienen su
+   paginas publicas, para que no se vean tan vacias. Las secciones que ya tienen su
    propio fondo blanco o de color (tarjetas de grupos, "Nuestra Institucion", etc.) lo
    tapan automaticamente, asi que el patron solo se nota en los espacios entre ellas.
-   El patron va en un ::before de ancho completo posicionado detras (no en el propio
-   contenedor), para no alterar el ancho normal de las secciones que van adentro
-   (grids de eventos, noticias, ICFES, etc. siguen con su ancho de siempre). */
-.inicio-fondo-patron {
+   Se aplica sobre .main-content (fuera del admin, ver header/base) en vez de repetirlo
+   pagina por pagina. El patron va en un ::before de ancho completo posicionado detras
+   (no en el propio contenedor), para no alterar el ancho normal de las secciones que
+   van adentro (grids de eventos, noticias, ICFES, etc. siguen con su ancho de siempre). */
+.fondo-patron-paginas {
     position: relative;
 }
 
-.inicio-fondo-patron::before {
+.fondo-patron-paginas::before {
     content: '';
     position: absolute;
     top: 0;
