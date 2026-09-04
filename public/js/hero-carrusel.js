@@ -11,6 +11,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function mostrar(indice) {
         slides.forEach(function (slide, i) {
+            slide.classList.remove('primera-animada');
             slide.classList.toggle('activa', i === indice);
         });
         dots.forEach(function (dot, i) {
@@ -33,12 +34,8 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
-    // La primera foto sale visible desde el HTML (sin fundido, para que no se vea un
-    // parpadeo azul al cargar), pero todavia sin zoom. Se fuerza al navegador a aplicar
-    // ese estado (reflow) y de inmediato se activa el zoom, asi arranca practicamente
-    // desde el primer instante, sin demora perceptible ni parpadeo.
-    void carrusel.offsetWidth;
-    slides[0].classList.remove('visible-estatica');
-    mostrar(0);
+    // La primera foto ya arranca su zoom sola, desde el HTML (usa una animacion CSS
+    // en vez de una transicion, asi corre desde el primer instante sin parpadeo ni
+    // espera). Aqui solo hace falta iniciar el conteo para pasar a la siguiente foto.
     reiniciarTemporizador();
 });

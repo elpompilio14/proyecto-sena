@@ -1726,11 +1726,17 @@ button:hover { background: var(--azul-oscuro); transform: translateY(-1px); }
     transform: scale(1.12);
 }
 
-/* Estado inicial de la primera foto: visible de inmediato, sin zoom todavia, para
-   que la pagina se vea completa desde el primer instante (sin parpadeo). El JS le
-   quita esta clase medio segundo despues para que arranque el zoom normal. */
-.hero-slide.visible-estatica {
+/* La primera foto usa una animacion (no una transicion) porque las animaciones si
+   corren desde el primer instante en que el navegador pinta la pagina, a diferencia
+   de las transiciones. Asi el zoom arranca desde el principio, sin parpadeo ni espera. */
+.hero-slide.primera-animada {
     opacity: 1;
+    animation: hero-zoom-inicial 8000ms ease-out forwards;
+}
+
+@keyframes hero-zoom-inicial {
+    from { transform: scale(1); }
+    to { transform: scale(1.12); }
 }
 
 .hero-contenido.aparece {
@@ -1778,6 +1784,7 @@ button:hover { background: var(--azul-oscuro); transform: translateY(-1px); }
     .hero-slide {
         transition: opacity 1.5s ease;
         transform: none !important;
+        animation: none !important;
     }
 }
 
