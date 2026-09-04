@@ -2007,7 +2007,7 @@ button:hover { background: var(--azul-oscuro); transform: translateY(-1px); }
     background: #fff;
     border-bottom: 1px solid var(--borde);
     border-radius: 0;
-    padding: 52px 30px 40px;
+    padding: 60px 30px 40px;
     box-shadow: var(--sombra);
     position: relative;
     overflow: hidden;
@@ -2019,7 +2019,7 @@ button:hover { background: var(--azul-oscuro); transform: translateY(-1px); }
     top: 0;
     left: 0;
     right: 0;
-    height: 12px;
+    height: 20px;
     background: var(--acento-seccion, var(--azul));
 }
 
