@@ -1726,12 +1726,6 @@ button:hover { background: var(--azul-oscuro); transform: translateY(-1px); }
     transform: scale(1.12);
 }
 
-/* Al cargar la pagina, la primera foto y el texto aparecen rapido (sin la demora
-   de la transicion normal de 2s), para que no se sienta lento al entrar o recargar. */
-.hero-slide.entrada-rapida {
-    transition: opacity .4s ease, transform 8s ease-out;
-}
-
 .hero-contenido.aparece {
     transition: opacity .35s ease, transform .35s ease;
 }
