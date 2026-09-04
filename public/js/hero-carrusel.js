@@ -33,17 +33,8 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
-    // Fuerza al navegador a aplicar los estilos iniciales (sin zoom) antes de
-    // activar la primera foto, para que ese cambio si dispare la transicion de zoom
-    // (si no, el navegador la pinta directamente con el zoom ya puesto).
-    slides.forEach(function (slide) { slide.classList.add('entrada-rapida'); });
-    void carrusel.offsetWidth;
-    mostrar(0);
+    // La primera foto ya sale visible desde el HTML (sin animacion de zoom), para que
+    // se vea desde el primer momento sin parpadeos. El carrusel solo se encarga de
+    // rotar a las siguientes fotos, que si tienen el cruce con zoom.
     reiniciarTemporizador();
-
-    // Despues de que la primera foto ya aparecio rapido, se quita la entrada rapida
-    // para que los siguientes cambios de foto usen el cruce normal, mas lento y suave.
-    setTimeout(function () {
-        slides.forEach(function (slide) { slide.classList.remove('entrada-rapida'); });
-    }, 500);
 });
