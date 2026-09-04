@@ -35,13 +35,12 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     // La primera foto arranca su zoom sola, con una animacion CSS (para que corra
-    // desde el primer instante, sin parpadeo ni espera). Cuando esa animacion termina
-    // del todo, recien ahi se pasa al mismo sistema de las demas fotos (clase "activa",
-    // con transicion) y arranca la rotacion normal del carrusel. Si se empezara a rotar
-    // antes de que la animacion terminara, se veria un corte feo a mitad del zoom.
+    // desde el primer instante, sin parpadeo ni espera). En cuanto ese zoom termina,
+    // pasa de inmediato a la siguiente foto (igual que las demas), sin quedarse quieta
+    // esperando. Si se cambiara de foto antes de que la animacion terminara, se veria
+    // un corte feo a mitad del zoom, por eso se espera al evento animationend.
     slides[0].addEventListener('animationend', function () {
-        slides[0].classList.remove('primera-animada');
-        slides[0].classList.add('activa');
+        mostrar(1);
         reiniciarTemporizador();
     }, { once: true });
 });
