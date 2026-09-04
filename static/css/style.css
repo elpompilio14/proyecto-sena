@@ -1739,8 +1739,22 @@ button:hover { background: var(--azul-oscuro); transform: translateY(-1px); }
     to { transform: scale(1.12); }
 }
 
-.hero-contenido.aparece {
-    transition: opacity .35s ease, transform .35s ease;
+/* Igual que con la primera foto: se usa una animacion (no la clase .aparece basada en
+   scroll) para que el texto entre desde el primer instante, sin esperar a que el
+   observador de scroll lo detecte. */
+.hero-texto-animado {
+    animation: hero-texto-entrada .7s ease-out forwards;
+}
+
+@keyframes hero-texto-entrada {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .hero-texto-animado {
+        animation: none;
+    }
 }
 
 /* Fotos impares (1a, 3a, 5a...) hacen zoom in; las pares (2a, 4a, 6a...) hacen zoom out.
