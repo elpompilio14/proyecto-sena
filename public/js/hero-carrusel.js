@@ -34,8 +34,14 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
-    // La primera foto ya arranca su zoom sola, desde el HTML (usa una animacion CSS
-    // en vez de una transicion, asi corre desde el primer instante sin parpadeo ni
-    // espera). Aqui solo hace falta iniciar el conteo para pasar a la siguiente foto.
-    reiniciarTemporizador();
+    // La primera foto arranca su zoom sola, con una animacion CSS (para que corra
+    // desde el primer instante, sin parpadeo ni espera). Cuando esa animacion termina
+    // del todo, recien ahi se pasa al mismo sistema de las demas fotos (clase "activa",
+    // con transicion) y arranca la rotacion normal del carrusel. Si se empezara a rotar
+    // antes de que la animacion terminara, se veria un corte feo a mitad del zoom.
+    slides[0].addEventListener('animationend', function () {
+        slides[0].classList.remove('primera-animada');
+        slides[0].classList.add('activa');
+        reiniciarTemporizador();
+    }, { once: true });
 });

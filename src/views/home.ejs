@@ -5,7 +5,7 @@
     <% heroImagenes.forEach(function(url, i) { %>
         <div class="hero-slide<% if (i === 0) { %> primera-animada<% } %>" style="background-image: url('<%= url %>')"></div>
     <% }) %>
-    <div class="hero-contenido aparece">
+    <div class="hero-contenido hero-texto-animado">
         <h1>Institución Educativa Distrital Técnica para el Desarrollo del Talento Humano</h1>
         <p>Formando talento humano con proyección técnica y humana. Conoce nuestra comunidad educativa, sus logros, deportes y eventos.</p>
     </div>
@@ -17,7 +17,7 @@
 </section>
 <% } else { %>
 <section class="hero hero-grande" <% if ((heroImagenes && heroImagenes[0]) || fondoUrl) { %>style="background-image: url('<%= (heroImagenes && heroImagenes[0]) || fondoUrl %>')"<% } %>>
-    <div class="hero-contenido aparece">
+    <div class="hero-contenido hero-texto-animado">
         <h1>Institución Educativa Distrital Técnica para el Desarrollo del Talento Humano</h1>
         <p>Formando talento humano con proyección técnica y humana. Conoce nuestra comunidad educativa, sus logros, deportes y eventos.</p>
     </div>
