@@ -33,6 +33,10 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
-    mostrar(0);
-    reiniciarTemporizador();
+    requestAnimationFrame(function () {
+        requestAnimationFrame(function () {
+            mostrar(0);
+            reiniciarTemporizador();
+        });
+    });
 });
