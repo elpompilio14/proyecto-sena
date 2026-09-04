@@ -1726,6 +1726,14 @@ button:hover { background: var(--azul-oscuro); transform: translateY(-1px); }
     transform: scale(1.12);
 }
 
+/* Estado inicial de la primera foto: visible de inmediato (nunca se ve un parpadeo
+   azul, pase lo que pase con el JS), pero todavia sin zoom. En cuanto el JS confirma
+   que el navegador ya pinto esta version, la cambia por "activa" (mismo mecanismo de
+   transicion que usan todas las demas fotos), y ahi arranca el zoom. */
+.hero-slide.visible-estatica {
+    opacity: 1;
+}
+
 /* Igual que con la primera foto: se usa una animacion (no la clase .aparece basada en
    scroll) para que el texto entre desde el primer instante, sin esperar a que el
    observador de scroll lo detecte. */
