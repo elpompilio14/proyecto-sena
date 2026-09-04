@@ -57,10 +57,17 @@ def inyectar_datos_globales():
     except OSError:
         hero_js_version = datetime.now().timestamp()
 
+    ruta_volver_arriba_js = os.path.join(app.static_folder, 'js', 'volver-arriba.js')
+    try:
+        volver_arriba_js_version = os.path.getmtime(ruta_volver_arriba_js)
+    except OSError:
+        volver_arriba_js_version = datetime.now().timestamp()
+
     return {
         'usuario': usuario, 'sitio': sitio, 'contacto': sitio,
         'anio_actual': datetime.now().year, 'cssVersion': css_version,
         'heroJsVersion': hero_js_version,
+        'volverArribaJsVersion': volver_arriba_js_version,
     }
 
 
