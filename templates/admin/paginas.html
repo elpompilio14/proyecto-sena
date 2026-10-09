@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block content %}
+
+<p><a href="/admin">&larr; Panel admin</a></p>
+<h1>Pestañas del sitio</h1>
+<p>Marca las pestañas que quieres que se vean en el menú. Las que desmarques desaparecen del menú y de los accesos del inicio, y nadie puede abrir esa página (tú sí, porque eres admin, para que puedas revisarla antes de volver a mostrarla).</p>
+
+{% if guardado %}
+    <p class="aviso-exito">Cambios guardados.</p>
+{% endif %}
+
+<form method="POST" action="/admin/paginas" class="form form-ancho" id="form-paginas">
+    <div class="paginas-acciones">
+        <button type="button" class="btn-secondary" data-marcar="todas">Mostrar todas</button>
+        <button type="button" class="btn-secondary" data-marcar="ninguna">Ocultar todas</button>
+    </div>
+
+    {% for grupo, paginas in menu %}
+        <fieldset class="paginas-grupo">
+            <legend>{{ grupo }}</legend>
+            {% for p in paginas %}
+                <label class="paginas-opcion">
+                    <input type="checkbox" name="visibles" value="{{ p.clave }}" {% if p.clave not in ocultas %}checked{% endif %}>
+                    {{ p.nombre }}
+                    <a href="{{ p.url }}" target="_blank" class="paginas-ver">ver</a>
+                </label>
+            {% endfor %}
+        </fieldset>
+    {% endfor %}
+
+    <button type="submit">Guardar</button>
+</form>
+
+<script>
+    document.querySelectorAll('[data-marcar]').forEach(function (boton) {
+        boton.addEventListener('click', function () {
+            const marcar = boton.dataset.marcar === 'todas';
+            document.querySelectorAll('#form-paginas input[name="visibles"]').forEach(function (casilla) {
+                casilla.checked = marcar;
+            });
+        });
+    });
+</script>
+
+{% endblock %}

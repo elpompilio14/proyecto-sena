@@ -592,6 +592,59 @@ h1, h2, h3 {
     margin: 12px 0 -4px;
 }
 
+/* Admin: pestanas visibles del sitio */
+.paginas-acciones {
+    grid-column: 1 / -1;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.paginas-grupo {
+    border: 1px solid var(--borde);
+    border-radius: 12px;
+    padding: 12px 18px 16px;
+    margin: 0;
+}
+
+.paginas-grupo legend {
+    font-weight: 800;
+    color: var(--azul-oscuro);
+    padding: 0 6px;
+}
+
+.form .paginas-opcion {
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+    padding: 6px 0;
+    cursor: pointer;
+}
+
+.form .paginas-opcion input {
+    width: 18px;
+    height: 18px;
+    padding: 0;
+    accent-color: var(--azul);
+}
+
+.paginas-ver {
+    margin-left: auto;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+#form-paginas > button[type="submit"] { grid-column: 1 / -1; justify-self: start; }
+
+.aviso-exito {
+    background: #e7f7ee;
+    border: 1px solid #9fd8b4;
+    color: #1d6b3f;
+    border-radius: 10px;
+    padding: 10px 14px;
+    font-weight: 600;
+}
+
 .form-ancho h2:first-child {
     margin-top: 0;
 }

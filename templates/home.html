@@ -53,14 +53,21 @@
 </section>
 {% endif %}
 
+{% set accesos = [
+    ('eventos', '/eventos', 'Eventos del colegio'),
+    ('deportes', '/deportes', 'Equipos deportivos'),
+    ('campeonatos', '/campeonatos', 'Intercursos'),
+    ('mejores-puestos', '/mejores-puestos', 'Puestos de honor'),
+    ('icfes', '/icfes', 'Mejores ICFES'),
+    ('galeria', '/galeria', 'Galería de fotos'),
+] | rejectattr(0, 'in', paginasOcultas) | list %}
+{% if accesos %}
 <section class="grid-links aparece">
-    <a href="/eventos" class="card-link">Eventos del colegio</a>
-    <a href="/deportes" class="card-link">Equipos deportivos</a>
-    <a href="/campeonatos" class="card-link">Intercursos</a>
-    <a href="/mejores-puestos" class="card-link">Puestos de honor</a>
-    <a href="/icfes" class="card-link">Mejores ICFES</a>
-    <a href="/galeria" class="card-link">Galería de fotos</a>
+    {% for clave, url, texto in accesos %}
+        <a href="{{ url }}" class="card-link">{{ texto }}</a>
+    {% endfor %}
 </section>
+{% endif %}
 
 <section class="seccion-plataforma aparece">
     <div class="plataforma-caja">
@@ -93,6 +100,7 @@
     </div>
 </section>
 
+{% if 'himno' not in paginasOcultas %}
 <section class="seccion-himno aparece">
     <h2>Himno Escolar</h2>
     {% set embed_url = youtubeEmbedUrl(himnoUrl) if himnoUrl else None %}
@@ -104,7 +112,9 @@
         <p>Aún no se ha agregado el video del himno.</p>
     {% endif %}
 </section>
+{% endif %}
 
+{% if 'eventos' not in paginasOcultas %}
 <section>
     <h2>Últimos eventos</h2>
     {% if eventos|length == 0 %}
@@ -128,7 +138,9 @@
         <p class="home-ver-todas"><a href="/eventos" class="btn-ver-todas">Ver todos los eventos</a></p>
     {% endif %}
 </section>
+{% endif %}
 
+{% if 'noticias' not in paginasOcultas %}
 <section>
     <h2>Últimas noticias</h2>
     {% if noticias|length == 0 %}
@@ -152,8 +164,9 @@
         <p class="home-ver-todas"><a href="/noticias" class="btn-ver-todas">Ver todas las noticias</a></p>
     {% endif %}
 </section>
+{% endif %}
 
-{% if icfesResultados|length > 0 %}
+{% if icfesResultados|length > 0 and 'icfes' not in paginasOcultas %}
 <section class="aparece">
     <h2>Mejores ICFES{% if icfesAnio %} del {{ icfesAnio }}{% endif %}</h2>
     <div class="card-grid">
@@ -174,7 +187,7 @@
 </section>
 {% endif %}
 
-{% if gobiernoEscolar.punta|length + gobiernoEscolar.medio|length + gobiernoEscolar.base|length > 0 %}
+{% if gobiernoEscolar.punta|length + gobiernoEscolar.medio|length + gobiernoEscolar.base|length > 0 and 'gobierno-escolar' not in paginasOcultas %}
 <section class="comunidad-seccion comunidad-seccion--dorado aparece">
     <h2>Gobierno Escolar</h2>
     {% with grupos = gobiernoEscolar %}

@@ -1,7 +1,17 @@
-from flask import Blueprint, render_template, request, abort
+from flask import Blueprint, render_template, request, abort, session
 from db import obtener_conexion
+from paginas import pagina_oculta_para
 
 public_bp = Blueprint('public', __name__)
+
+
+@public_bp.before_request
+def _bloquear_paginas_ocultas():
+    """Las pestanas ocultas desde el admin dan 404 al publico; el admin si puede verlas."""
+    usuario = session.get('usuario')
+    es_admin = usuario and usuario.get('rol') == 'admin'
+    if not es_admin and pagina_oculta_para(request.path):
+        abort(404)
 
 
 def _agrupar_por_nivel(filas):

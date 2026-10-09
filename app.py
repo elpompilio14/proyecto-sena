@@ -7,6 +7,7 @@ load_dotenv()
 from flask import Flask, session, render_template, request
 
 from db import obtener_conexion
+from paginas import MENU, paginas_ocultas
 from utils.formatear_texto import formatear_texto
 from utils.es_video import es_video
 from utils.youtube_embed_url import youtube_embed_url
@@ -74,6 +75,8 @@ def inyectar_datos_globales():
         'volverArribaJsVersion': volver_arriba_js_version,
         'esAdmin': request.path.startswith('/admin'),
         'promocionActualLogo': promocion_actual_logo,
+        'menuPaginas': MENU,
+        'paginasOcultas': paginas_ocultas(),
     }
 
 

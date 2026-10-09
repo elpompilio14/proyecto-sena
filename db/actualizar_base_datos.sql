@@ -185,3 +185,8 @@ INSERT INTO promociones (logo_url, actual)
 SELECT promocion_logo_url, true FROM institucion_info
 WHERE promocion_logo_url IS NOT NULL AND NOT EXISTS (SELECT 1 FROM promociones)
 ORDER BY id LIMIT 1;
+
+-- Pestanas del menu que el admin oculto desde /admin/paginas (las que no estan aqui se ven)
+CREATE TABLE IF NOT EXISTS paginas_ocultas (
+    clave VARCHAR(50) PRIMARY KEY
+);

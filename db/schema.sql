@@ -352,3 +352,8 @@ INSERT INTO institucion_info (historia, mision, vision, principios, valores, ubi
     'Respeto, responsabilidad, honestidad, trabajo en equipo y sentido de pertenencia.',
     'Colombia'
 );
+
+-- Pestanas del menu que el admin oculto desde /admin/paginas (las que no estan aqui se ven)
+CREATE TABLE paginas_ocultas (
+    clave VARCHAR(50) PRIMARY KEY
+);

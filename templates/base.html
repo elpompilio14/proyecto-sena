@@ -53,45 +53,21 @@
             <nav class="nav" id="nav-principal">
                 <a href="/">Inicio</a>
 
-                <div class="nav-dropdown">
-                    <button type="button" class="nav-dropdown-btn">Quiénes somos<span class="nav-caret">▾</span></button>
-                    <div class="nav-dropdown-menu">
-                        <div class="nav-dropdown-menu-tarjeta">
-                            <a href="/institucion">Institución</a>
-                            <a href="/comunidad-educativa">Comunidad Educativa</a>
-                            <a href="/gobierno-escolar">Gobierno Escolar</a>
-                            <a href="/himno">Himno Escolar</a>
-                            <a href="/alianzas">Alianzas</a>
+                {% for grupo, paginas in menuPaginas %}
+                    {% set visibles = paginas | rejectattr('clave', 'in', paginasOcultas) | list %}
+                    {% if visibles %}
+                        <div class="nav-dropdown">
+                            <button type="button" class="nav-dropdown-btn">{{ grupo }}<span class="nav-caret">▾</span></button>
+                            <div class="nav-dropdown-menu">
+                                <div class="nav-dropdown-menu-tarjeta">
+                                    {% for p in visibles %}
+                                        <a href="{{ p.url }}">{{ p.nombre }}</a>
+                                    {% endfor %}
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                </div>
-
-                <div class="nav-dropdown">
-                    <button type="button" class="nav-dropdown-btn">Conócenos<span class="nav-caret">▾</span></button>
-                    <div class="nav-dropdown-menu">
-                        <div class="nav-dropdown-menu-tarjeta">
-                            <a href="/noticias">Noticias</a>
-                            <a href="/eventos">Eventos</a>
-                            <a href="/grupos-estudiantiles">Grupos y Semilleros</a>
-                            <a href="/deportes">Deportes</a>
-                            <a href="/campeonatos">Intercursos</a>
-                            <a href="/galeria">Galería</a>
-                            <a href="/mejores-puestos">Puestos de honor</a>
-                            <a href="/promociones">Promociones</a>
-                            <a href="/icfes">Mejores ICFES</a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="nav-dropdown">
-                    <button type="button" class="nav-dropdown-btn">Media Técnica<span class="nav-caret">▾</span></button>
-                    <div class="nav-dropdown-menu">
-                        <div class="nav-dropdown-menu-tarjeta">
-                            <a href="/articulado">Articulado</a>
-                            <a href="/investigacion">Investigación</a>
-                        </div>
-                    </div>
-                </div>
+                    {% endif %}
+                {% endfor %}
 
                 {% if usuario and usuario.rol == 'admin' %}
                     <a href="/admin">Panel admin</a>
@@ -105,7 +81,7 @@
 
                 <a href="/contacto" class="nav-contacto-btn">Contáctanos</a>
 
-                {% if promocionActualLogo %}
+                {% if promocionActualLogo and 'promociones' not in paginasOcultas %}
                     <a href="/promocion" class="nav-promocion-logo" title="Ver la promoción actual">
                         <img src="{{ promocionActualLogo }}" alt="Promoción actual">
                     </a>
