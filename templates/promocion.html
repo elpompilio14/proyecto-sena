@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block content %}
+
+<section class="promocion-intro aparece">
+    <span class="badge-pill">Promoción actual</span>
+    {% if info.promocion_logo_url %}
+        <img src="{{ info.promocion_logo_url }}" alt="Logo de la promoción" class="promocion-logo-grande">
+    {% endif %}
+    <h1>
+        {% if info.promocion_nombre %}Promoción {{ info.promocion_nombre }}{% else %}Promoción actual{% endif %}
+        {% if info.promocion_anio %}<span class="promocion-anio">{{ info.promocion_anio }}</span>{% endif %}
+    </h1>
+    {% if info.promocion_lema %}
+        <p class="promocion-lema">“{{ info.promocion_lema }}”</p>
+    {% endif %}
+</section>
+
+{% if info.promocion_portada_url %}
+    <img src="{{ info.promocion_portada_url }}" alt="Promoción {{ info.promocion_nombre or '' }}" class="detalle-portada">
+{% endif %}
+
+{% if info.promocion_descripcion %}
+    <section class="card aparece">
+        <p>{{ formatearTexto(info.promocion_descripcion) | safe }}</p>
+    </section>
+{% endif %}
+
+{% if fotos|length > 0 %}
+    <h2 class="evento-mural-titulo">Fotos de la promoción</h2>
+    <div class="mural">
+        {% for f in fotos %}
+            <figure class="aparece" style="transition-delay: {{ [loop.index0, 7]|min * 50 }}ms">
+                {% if esVideo(f.url) %}
+                    <div class="miniatura-video">
+                        <video src="{{ f.url }}#t=0.5" data-url="{{ f.url }}" preload="metadata" muted playsinline></video>
+                        <span class="icono-play">&#9658;</span>
+                    </div>
+                {% else %}
+                    <img src="{{ f.url }}" data-url="{{ f.url }}" alt="{{ f.titulo or 'Foto de la promoción' }}">
+                {% endif %}
+                {% if f.titulo %}<figcaption>{{ f.titulo }}</figcaption>{% endif %}
+            </figure>
+        {% endfor %}
+    </div>
+{% elif not info.promocion_descripcion and not info.promocion_portada_url %}
+    <p class="promocion-vacia">Pronto encontrarás aquí las fotos y la historia de nuestra promoción.</p>
+{% endif %}
+
+{% endblock %}

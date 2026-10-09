@@ -1560,14 +1560,49 @@ button:hover { background: var(--azul-oscuro); transform: translateY(-1px); }
 .nav-promocion-logo {
     display: inline-flex;
     align-items: center;
-    margin-left: 16px;
+    margin-left: 40px;
+    transition: transform .2s ease;
 }
+
+.nav-promocion-logo:hover { transform: scale(1.06); }
 
 .nav-promocion-logo img {
     height: 82px;
     width: auto;
     max-width: 150px;
     object-fit: contain;
+}
+
+/* ===================== Página "Promoción actual" ===================== */
+
+.promocion-intro {
+    text-align: center;
+    max-width: 720px;
+    margin: 0 auto 30px;
+}
+
+.promocion-logo-grande {
+    display: block;
+    max-height: 220px;
+    width: auto;
+    margin: 10px auto 6px;
+    filter: drop-shadow(0 6px 14px rgba(0, 0, 0, 0.18));
+}
+
+.promocion-anio {
+    color: var(--dorado);
+    margin-left: 6px;
+}
+
+.promocion-lema {
+    font-style: italic;
+    font-size: 1.15rem;
+    color: var(--azul-oscuro);
+}
+
+.promocion-vacia {
+    text-align: center;
+    color: #5b6b80;
 }
 
 /* ===================== Botón hamburguesa (móvil) ===================== */

@@ -62,6 +62,11 @@ CREATE TABLE institucion_info (
     equipo_desarrollo_portada_url TEXT,
     promocion_logo_url TEXT,
     promocion_link_url TEXT,
+    promocion_nombre TEXT,
+    promocion_anio INTEGER,
+    promocion_lema TEXT,
+    promocion_descripcion TEXT,
+    promocion_portada_url TEXT,
     actualizado_en TIMESTAMP NOT NULL DEFAULT NOW()
 );
 

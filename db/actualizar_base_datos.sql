@@ -162,3 +162,11 @@ ALTER TABLE equipo_desarrollo ADD COLUMN IF NOT EXISTS salon VARCHAR(20);
 ALTER TABLE comite_ecologico ADD COLUMN IF NOT EXISTS salon VARCHAR(20);
 ALTER TABLE equipo_drones ADD COLUMN IF NOT EXISTS salon VARCHAR(20);
 ALTER TABLE coheteria ADD COLUMN IF NOT EXISTS salon VARCHAR(20);
+
+-- Pagina "Promocion actual": datos que se editan desde /admin/promocion
+-- (el logo sigue en promocion_logo_url; las fotos van en galeria_fotos con seccion = 'promocion')
+ALTER TABLE institucion_info ADD COLUMN IF NOT EXISTS promocion_nombre TEXT;
+ALTER TABLE institucion_info ADD COLUMN IF NOT EXISTS promocion_anio INTEGER;
+ALTER TABLE institucion_info ADD COLUMN IF NOT EXISTS promocion_lema TEXT;
+ALTER TABLE institucion_info ADD COLUMN IF NOT EXISTS promocion_descripcion TEXT;
+ALTER TABLE institucion_info ADD COLUMN IF NOT EXISTS promocion_portada_url TEXT;

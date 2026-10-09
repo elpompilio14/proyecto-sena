@@ -167,6 +167,21 @@ def coheteria():
     )
 
 
+@public_bp.route('/promocion')
+def promocion():
+    with obtener_conexion() as conexion:
+        with conexion.cursor() as cur:
+            cur.execute(
+                """SELECT promocion_nombre, promocion_anio, promocion_lema, promocion_descripcion,
+                          promocion_logo_url, promocion_portada_url
+                   FROM institucion_info ORDER BY id LIMIT 1"""
+            )
+            info = cur.fetchone() or {}
+            cur.execute("SELECT * FROM galeria_fotos WHERE seccion = 'promocion' AND visible = true ORDER BY orden, creado_en")
+            fotos = cur.fetchall()
+    return render_template('promocion.html', titulo='Promoción actual', info=info, fotos=fotos)
+
+
 @public_bp.route('/institucion')
 def institucion():
     with obtener_conexion() as conexion:
