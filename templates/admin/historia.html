@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% block content %}
+
+<p><a href="/admin" class="enlace-volver"><span class="enlace-volver-flecha" aria-hidden="true">&larr;</span>Panel admin</a></p>
+<h1>Historia</h1>
+<p>Se ve en <a href="/historia" target="_blank">/historia</a> (menú Quiénes somos → Historia). Todas las fotos se muestran con efecto de foto antigua.</p>
+
+<h2>Introducción</h2>
+<form method="POST" action="/admin/historia/intro" class="form" enctype="multipart/form-data">
+    <label>Texto de introducción (lo primero que se lee)<textarea name="texto" rows="8">{{ intro.historia or '' }}</textarea></label>
+    {% if intro.historia_foto_url %}
+        <img src="{{ intro.historia_foto_url }}" alt="Foto actual" class="card-img" style="max-width:260px;">
+    {% endif %}
+    <label>Foto grande de la introducción (ideal: una foto antigua del colegio)<input type="file" name="foto" accept="image/*"></label>
+    <input type="hidden" name="foto_actual" value="{{ intro.historia_foto_url or '' }}">
+    <button type="submit">Guardar introducción</button>
+</form>
+
+<h2>Bloques de la historia</h2>
+<p>Cada bloque es un momento de la historia: un texto con una foto al lado. Se van alternando (foto a la izquierda, luego a la derecha) en el orden que pongas.</p>
+
+<details class="form-plegable">
+    <summary>Agregar un bloque</summary>
+    <form method="POST" action="/admin/historia" class="form" enctype="multipart/form-data">
+        {% with b = {} %}{% include "partials/historia_bloque_campos.html" %}{% endwith %}
+        <button type="submit">Agregar bloque</button>
+    </form>
+</details>
+
+{% if bloques|length == 0 %}
+    <p>Aún no hay bloques. Agrega el primero arriba.</p>
+{% else %}
+    <table class="tabla">
+        <thead><tr><th class="tabla-col-foto">Foto</th><th>Orden</th><th>Título</th><th>Texto</th><th></th></tr></thead>
+        <tbody>
+            {% for b in bloques %}
+                <tr>
+                    <td class="tabla-col-foto-visible">
+                        {% if b.foto_url %}
+                            <img src="{{ b.foto_url }}" alt="{{ b.titulo or 'Foto' }}" class="tabla-foto-mini">
+                        {% else %}
+                            <span class="tabla-foto-vacia">—</span>
+                        {% endif %}
+                        {% with url_toggle = '/admin/historia/' ~ b.id ~ '/visibilidad', visible = b.visible %}
+                            {% include "partials/boton_visibilidad.html" %}
+                        {% endwith %}
+                    </td>
+                    <td>{{ b.orden }}</td>
+                    <td>{{ b.titulo or '-' }}</td>
+                    <td>{{ (b.texto or '')|truncate(90) }}</td>
+                    <td class="acciones">
+                        <a href="/admin/historia/{{ b.id }}/editar" class="btn-editar">Editar</a>
+                        <form method="POST" action="/admin/historia/{{ b.id }}/eliminar" onsubmit="return confirm('¿Eliminar este bloque de la historia?');">
+                            <button type="submit" class="btn-danger">Eliminar</button>
+                        </form>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endif %}
+
+{% endblock %}

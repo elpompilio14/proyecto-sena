@@ -36,4 +36,5 @@ from . import (  # noqa: E402  (import al final para evitar import circular con 
     coheteria,
     promociones,
     paginas,
+    historia,
 )

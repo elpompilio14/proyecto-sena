@@ -8,7 +8,12 @@
 {% else %}
     <section class="card aparece">
         <h2>Historia</h2>
-        <p>{{ formatearTexto(info.historia) | safe }}</p>
+        {% if 'historia' in paginasOcultas %}
+            <p>{{ formatearTexto(info.historia) | safe }}</p>
+        {% else %}
+            <p>{{ formatearTexto((info.historia or '') | truncate(320)) | safe }}</p>
+            <p class="home-ver-todas" style="text-align:left;"><a href="/historia" class="btn-ver-todas">Conoce nuestra historia completa</a></p>
+        {% endif %}
     </section>
     <section class="card aparece">
         <h2>Misión</h2>

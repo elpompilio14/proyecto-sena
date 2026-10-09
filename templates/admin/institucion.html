@@ -69,7 +69,7 @@
     <label>Foto de fondo del inicio (opcional, se ve detrás del título en la portada)<input type="file" name="fondo" accept="image/*"></label>
     <input type="hidden" name="fondo_url_actual" value="{{ info.fondo_url if info and info.fondo_url else '' }}">
 
-    <label>Historia<textarea name="historia" rows="4">{{ info.historia if info else '' }}</textarea></label>
+    <p>La historia del colegio ahora se edita en <a href="/admin/historia">Historia</a>.</p>
     <label>Misión<textarea name="mision" rows="3">{{ info.mision if info else '' }}</textarea></label>
     <label>Visión<textarea name="vision" rows="3">{{ info.vision if info else '' }}</textarea></label>
     <label>Principios<textarea name="principios" rows="3">{{ info.principios if info else '' }}</textarea></label>

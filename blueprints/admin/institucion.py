@@ -28,7 +28,7 @@ def institucion_actualizar():
     manual_convivencia_imagen_url = guardar_archivo(request.files.get('manual_convivencia_imagen')) or (f.get('manual_convivencia_imagen_url_actual') or None)
 
     valores = (
-        f.get('historia'), f.get('mision'), f.get('vision'), f.get('principios'), f.get('valores'),
+        f.get('mision'), f.get('vision'), f.get('principios'), f.get('valores'),
         f.get('ubicacion_sede1'), f.get('ubicacion_sede2'),
         f.get('telefono') or None, f.get('correo') or None,
         f.get('himno_url') or None, f.get('himno_letra') or None,
@@ -49,20 +49,20 @@ def institucion_actualizar():
             if not existente:
                 cur.execute(
                     """INSERT INTO institucion_info
-                        (historia, mision, vision, principios, valores, ubicacion_sede1, ubicacion_sede2,
+                        (mision, vision, principios, valores, ubicacion_sede1, ubicacion_sede2,
                          telefono, correo, himno_url, himno_letra, escudo_texto, escudo_url, bandera_texto, bandera_url, fondo_url,
                          logo_url, anios_fundacion, num_estudiantes, num_profesores, whatsapp_numero,
                          instagram_url, instagram_imagen_url, facebook_url, facebook_imagen_url,
                          plataforma_virtual_url, plataforma_virtual_logo_url,
                          manual_convivencia_url, manual_convivencia_imagen_url,
                          articulado_texto, investigacion_texto)
-                       VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)""",
+                       VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)""",
                     valores,
                 )
             else:
                 cur.execute(
                     """UPDATE institucion_info
-                       SET historia = %s, mision = %s, vision = %s, principios = %s, valores = %s,
+                       SET mision = %s, vision = %s, principios = %s, valores = %s,
                            ubicacion_sede1 = %s, ubicacion_sede2 = %s, telefono = %s, correo = %s,
                            himno_url = %s, himno_letra = %s,
                            escudo_texto = %s, escudo_url = %s, bandera_texto = %s, bandera_url = %s,

@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block content %}
+
+<section class="historia-intro{% if not intro.historia_foto_url %} historia-intro--sin-foto{% endif %}">
+    <div class="historia-intro-texto aparece">
+        <span class="badge-pill">Nuestra historia</span>
+        <h1>Somos la <span class="historia-azul">IED Técnica</span> para el <span class="historia-dorado">Desarrollo del Talento Humano</span></h1>
+        <span class="historia-separador" aria-hidden="true"><span></span><span></span></span>
+        {% if intro.historia %}
+            <p>{{ formatearTexto(intro.historia) | safe }}</p>
+        {% endif %}
+        {% if intro.anios_fundacion %}
+            <p class="historia-anios"><strong>{{ intro.anios_fundacion }}</strong> años formando talento humano</p>
+        {% endif %}
+    </div>
+    {% if intro.historia_foto_url %}
+        <figure class="historia-intro-foto aparece">
+            <img src="{{ intro.historia_foto_url }}" alt="Foto histórica del colegio">
+        </figure>
+    {% endif %}
+</section>
+
+{% for b in bloques %}
+    <section class="historia-bloque{% if loop.index is even %} historia-bloque--invertido{% endif %}{% if not b.foto_url %} historia-bloque--sin-foto{% endif %}">
+        {% if b.foto_url %}
+            <figure class="polaroid aparece" style="--giro: {{ ['-4deg', '3deg', '-2deg', '4deg'][loop.index0 % 4] }}">
+                <span class="polaroid-cinta" aria-hidden="true"></span>
+                <div class="polaroid-foto">
+                    <img loading="lazy" src="{{ b.foto_url }}" data-url="{{ b.foto_url }}" alt="{{ b.foto_pie or b.titulo or 'Foto histórica' }}">
+                </div>
+                {% if b.foto_pie %}<figcaption>{{ b.foto_pie }}</figcaption>{% endif %}
+            </figure>
+        {% endif %}
+        <div class="historia-bloque-texto aparece">
+            {% if b.titulo %}<h2>{{ b.titulo }}</h2>{% endif %}
+            {% if b.texto %}<p>{{ formatearTexto(b.texto) | safe }}</p>{% endif %}
+        </div>
+    </section>
+{% endfor %}
+
+{% endblock %}

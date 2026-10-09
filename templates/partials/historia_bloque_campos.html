@@ -1,0 +1,9 @@
+<label>Título o año (opcional, ej: "1963" o "Nuestros inicios")<input type="text" name="titulo" value="{{ b.titulo or '' }}"></label>
+<label>Texto<textarea name="texto" rows="6">{{ b.texto or '' }}</textarea></label>
+{% if b.foto_url %}
+    <img src="{{ b.foto_url }}" alt="Foto actual" class="card-img" style="max-width:220px;">
+{% endif %}
+<label>Foto (opcional; se verá como foto antigua tipo polaroid)<input type="file" name="foto" accept="image/*"></label>
+<input type="hidden" name="foto_actual" value="{{ b.foto_url or '' }}">
+<label>Texto debajo de la foto (opcional, ej: "Primera promoción, 1975")<input type="text" name="foto_pie" value="{{ b.foto_pie or '' }}"></label>
+<label>Orden (los números más bajos salen primero)<input type="number" name="orden" value="{{ b.orden or 0 }}"></label>

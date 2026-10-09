@@ -5,6 +5,7 @@ from db import obtener_conexion
 # grupo = menu desplegable donde aparece; rutas = paginas que se bloquean si se oculta
 MENU = [
     ('Quiénes somos', [
+        {'clave': 'historia', 'nombre': 'Historia', 'url': '/historia', 'rutas': ['/historia']},
         {'clave': 'institucion', 'nombre': 'Institución', 'url': '/institucion', 'rutas': ['/institucion']},
         {'clave': 'comunidad-educativa', 'nombre': 'Comunidad Educativa', 'url': '/comunidad-educativa', 'rutas': ['/comunidad-educativa']},
         {'clave': 'gobierno-escolar', 'nombre': 'Gobierno Escolar', 'url': '/gobierno-escolar', 'rutas': ['/gobierno-escolar']},

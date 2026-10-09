@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block content %}
+
+<p><a href="/admin/historia" class="enlace-volver"><span class="enlace-volver-flecha" aria-hidden="true">&larr;</span>Historia</a></p>
+<h1>Editar bloque</h1>
+
+<form method="POST" action="/admin/historia/{{ bloque.id }}/editar" class="form" enctype="multipart/form-data">
+    {% with b = bloque %}{% include "partials/historia_bloque_campos.html" %}{% endwith %}
+    <button type="submit">Guardar cambios</button>
+</form>
+
+{% endblock %}

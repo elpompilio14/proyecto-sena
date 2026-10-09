@@ -24,10 +24,7 @@
 </form>
 
 {% if anio or evento_id %}
-    <p class="galeria-resultado">
-        {{ total }} foto{{ '' if total == 1 else 's' }}
-        <a href="/galeria" class="galeria-limpiar">Quitar filtros ✕</a>
-    </p>
+    <p class="galeria-resultado"><span>{{ total }} foto{{ '' if total == 1 else 's' }}</span><a href="/galeria" class="galeria-limpiar">Quitar filtros ✕</a></p>
 {% endif %}
 
 {% if grupos|length == 0 %}

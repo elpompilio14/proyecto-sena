@@ -190,3 +190,16 @@ ORDER BY id LIMIT 1;
 CREATE TABLE IF NOT EXISTS paginas_ocultas (
     clave VARCHAR(50) PRIMARY KEY
 );
+
+-- Pagina /historia: foto de la introduccion y bloques (texto + foto antigua) que se editan en /admin/historia
+ALTER TABLE institucion_info ADD COLUMN IF NOT EXISTS historia_foto_url TEXT;
+CREATE TABLE IF NOT EXISTS historia_bloques (
+    id SERIAL PRIMARY KEY,
+    titulo VARCHAR(150),
+    texto TEXT,
+    foto_url TEXT,
+    foto_pie VARCHAR(200),
+    orden INTEGER NOT NULL DEFAULT 0,
+    visible BOOLEAN NOT NULL DEFAULT true,
+    creado_en TIMESTAMP NOT NULL DEFAULT NOW()
+);

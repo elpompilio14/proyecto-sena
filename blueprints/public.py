@@ -223,6 +223,17 @@ def promociones_pasadas():
     )
 
 
+@public_bp.route('/historia')
+def historia():
+    with obtener_conexion() as conexion:
+        with conexion.cursor() as cur:
+            cur.execute('SELECT historia, historia_foto_url, anios_fundacion FROM institucion_info ORDER BY id LIMIT 1')
+            intro = cur.fetchone() or {}
+            cur.execute('SELECT * FROM historia_bloques WHERE visible = true ORDER BY orden, id')
+            bloques = cur.fetchall()
+    return render_template('historia.html', titulo='Historia', intro=intro, bloques=bloques)
+
+
 @public_bp.route('/institucion')
 def institucion():
     with obtener_conexion() as conexion:

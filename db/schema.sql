@@ -21,6 +21,7 @@ CREATE TABLE usuarios (
 CREATE TABLE institucion_info (
     id SERIAL PRIMARY KEY,
     historia TEXT,
+    historia_foto_url TEXT,
     mision TEXT,
     vision TEXT,
     principios TEXT,
@@ -356,4 +357,16 @@ INSERT INTO institucion_info (historia, mision, vision, principios, valores, ubi
 -- Pestanas del menu que el admin oculto desde /admin/paginas (las que no estan aqui se ven)
 CREATE TABLE paginas_ocultas (
     clave VARCHAR(50) PRIMARY KEY
+);
+
+-- Pagina /historia: bloques (texto + foto antigua) que se editan en /admin/historia
+CREATE TABLE historia_bloques (
+    id SERIAL PRIMARY KEY,
+    titulo VARCHAR(150),     -- ej: "1963" o "Nuestros inicios"
+    texto TEXT,
+    foto_url TEXT,
+    foto_pie VARCHAR(200),   -- texto debajo de la foto, ej: "Primera promocion, 1975"
+    orden INTEGER NOT NULL DEFAULT 0,
+    visible BOOLEAN NOT NULL DEFAULT true,
+    creado_en TIMESTAMP NOT NULL DEFAULT NOW()
 );
