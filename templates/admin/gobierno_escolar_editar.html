@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block content %}
 
-<p><a href="/admin/gobierno-escolar">&larr; Gobierno Escolar</a></p>
+<p><a href="/admin/gobierno-escolar" class="enlace-volver"><span class="enlace-volver-flecha" aria-hidden="true">&larr;</span>Gobierno Escolar</a></p>
 <h1>Editar miembro</h1>
 
 <form method="POST" action="/admin/gobierno-escolar/{{ miembro.id }}/editar" class="form" enctype="multipart/form-data">

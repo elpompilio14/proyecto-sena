@@ -43,12 +43,12 @@
 <section class="redes-grid aparece">
     {% if sitio.instagram_imagen_url %}
         <a href="{{ sitio.instagram_url or '#' }}" target="_blank" rel="noopener" class="red-social-card red-social-card-difuminar-derecha">
-            <img src="{{ sitio.instagram_imagen_url }}" alt="Instagram del colegio">
+            <img loading="lazy" src="{{ sitio.instagram_imagen_url }}" alt="Instagram del colegio">
         </a>
     {% endif %}
     {% if sitio.facebook_imagen_url %}
         <a href="{{ sitio.facebook_url or '#' }}" target="_blank" rel="noopener" class="red-social-card">
-            <img src="{{ sitio.facebook_imagen_url }}" alt="Facebook del colegio">
+            <img loading="lazy" src="{{ sitio.facebook_imagen_url }}" alt="Facebook del colegio">
         </a>
     {% endif %}
 </section>

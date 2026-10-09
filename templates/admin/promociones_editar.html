@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block content %}
 
-<p><a href="/admin/promociones">&larr; Promociones</a></p>
+<p><a href="/admin/promociones" class="enlace-volver"><span class="enlace-volver-flecha" aria-hidden="true">&larr;</span>Promociones</a></p>
 <h1>Promoción {{ promocion.nombre or '' }} {{ promocion.anio or '' }}{% if promocion.actual %} <span class="badge">Actual</span>{% endif %}</h1>
 
 <form method="POST" action="/admin/promociones/{{ promocion.id }}" class="form" enctype="multipart/form-data">

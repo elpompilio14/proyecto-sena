@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block content %}
 
-<p><a href="/admin/estudiantes">&larr; Estudiantes</a></p>
+<p><a href="/admin/estudiantes" class="enlace-volver"><span class="enlace-volver-flecha" aria-hidden="true">&larr;</span>Estudiantes</a></p>
 <h1>Editar estudiante</h1>
 
 <form method="POST" action="/admin/estudiantes/{{ estudiante.id }}/editar" class="form" enctype="multipart/form-data">

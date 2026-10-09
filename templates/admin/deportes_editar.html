@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block content %}
 
-<p><a href="/admin/deportes">&larr; Deportes</a></p>
+<p><a href="/admin/deportes" class="enlace-volver"><span class="enlace-volver-flecha" aria-hidden="true">&larr;</span>Deportes</a></p>
 <h1>Editar deporte</h1>
 
 <form method="POST" action="/admin/deportes/{{ deporte.id }}/editar" class="form" enctype="multipart/form-data">

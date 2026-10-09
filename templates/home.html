@@ -9,6 +9,10 @@
     <div class="hero-contenido hero-texto-animado">
         <h1>Institución Educativa Distrital Técnica para el Desarrollo del Talento Humano</h1>
         <p>Formando talento humano con proyección técnica y humana. Conoce nuestra comunidad educativa, sus logros, deportes y eventos.</p>
+        <div class="hero-botones">
+            {% if 'institucion' not in paginasOcultas %}<a href="/institucion" class="hero-boton hero-boton-principal">Conócenos</a>{% endif %}
+            <a href="/contacto" class="hero-boton hero-boton-secundario">Contáctanos</a>
+        </div>
     </div>
     <div class="hero-dots">
         {% for url in heroImagenes %}
@@ -22,6 +26,10 @@
     <div class="hero-contenido hero-texto-animado">
         <h1>Institución Educativa Distrital Técnica para el Desarrollo del Talento Humano</h1>
         <p>Formando talento humano con proyección técnica y humana. Conoce nuestra comunidad educativa, sus logros, deportes y eventos.</p>
+        <div class="hero-botones">
+            {% if 'institucion' not in paginasOcultas %}<a href="/institucion" class="hero-boton hero-boton-principal">Conócenos</a>{% endif %}
+            <a href="/contacto" class="hero-boton hero-boton-secundario">Contáctanos</a>
+        </div>
     </div>
 </section>
 {% endif %}
@@ -75,7 +83,7 @@
             <p class="plataforma-item-titulo">Plataforma Virtual</p>
             <div class="plataforma-logo-wrap">
                 {% if sitio and sitio.plataforma_virtual_logo_url %}
-                    <img src="{{ sitio.plataforma_virtual_logo_url }}" alt="Plataforma Virtual" class="plataforma-logo">
+                    <img loading="lazy" src="{{ sitio.plataforma_virtual_logo_url }}" alt="Plataforma Virtual" class="plataforma-logo">
                 {% endif %}
             </div>
             <a href="{{ sitio.plataforma_virtual_url if sitio and sitio.plataforma_virtual_url else '#' }}" target="_blank" rel="noopener" class="plataforma-boton">
@@ -88,7 +96,7 @@
                 <p class="plataforma-item-titulo">Manual de Convivencia</p>
                 <div class="plataforma-logo-wrap">
                     {% if sitio.manual_convivencia_imagen_url %}
-                        <img src="{{ sitio.manual_convivencia_imagen_url }}" alt="Manual de Convivencia" class="plataforma-logo">
+                        <img loading="lazy" src="{{ sitio.manual_convivencia_imagen_url }}" alt="Manual de Convivencia" class="plataforma-logo">
                     {% endif %}
                 </div>
                 <a href="{{ sitio.manual_convivencia_url }}" target="_blank" rel="noopener" download class="plataforma-boton">
@@ -125,7 +133,7 @@
                 <article class="home-card-grande aparece" style="transition-delay: {{ [loop.index0, 5]|min * 70 }}ms">
                     <a href="/eventos/{{ ev.id }}" class="home-card-img-wrap">
                         {% if ev.imagen_url and ev.visible %}
-                            <img src="{{ ev.imagen_url }}" alt="{{ ev.titulo }}">
+                            <img loading="lazy" src="{{ ev.imagen_url }}" alt="{{ ev.titulo }}">
                         {% endif %}
                     </a>
                     <div class="home-card-caption">
@@ -151,7 +159,7 @@
                 <article class="home-card-grande aparece" style="transition-delay: {{ [loop.index0, 5]|min * 70 }}ms">
                     <a href="/noticias/{{ n.id }}" class="home-card-img-wrap">
                         {% if n.imagen_url and n.visible %}
-                            <img src="{{ n.imagen_url }}" alt="{{ n.titulo }}">
+                            <img loading="lazy" src="{{ n.imagen_url }}" alt="{{ n.titulo }}">
                         {% endif %}
                     </a>
                     <div class="home-card-caption">
@@ -173,7 +181,7 @@
         {% for r in icfesResultados %}
             <article class="card aparece icfes-card" style="transition-delay: {{ [loop.index0, 5]|min * 70 }}ms">
                 {% if r.foto_url and r.visible %}
-                    <img src="{{ r.foto_url }}" alt="{{ r.estudiante_nombre }}" class="icfes-foto">
+                    <img loading="lazy" src="{{ r.foto_url }}" alt="{{ r.estudiante_nombre }}" class="icfes-foto">
                 {% endif %}
                 <span class="badge icfes-puntaje">{{ r.puntaje }} pts</span>
                 <h3>{{ r.estudiante_nombre }}</h3>

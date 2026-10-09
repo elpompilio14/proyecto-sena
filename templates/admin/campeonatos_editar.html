@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block content %}
 
-<p><a href="/admin/campeonatos">&larr; Campeonatos</a></p>
+<p><a href="/admin/campeonatos" class="enlace-volver"><span class="enlace-volver-flecha" aria-hidden="true">&larr;</span>Campeonatos</a></p>
 <h1>Editar campeonato</h1>
 
 <form method="POST" action="/admin/campeonatos/{{ campeonato.id }}/editar" class="form">

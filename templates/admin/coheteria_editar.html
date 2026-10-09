@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block content %}
 
-<p><a href="/admin/coheteria">&larr; Cohetería</a></p>
+<p><a href="/admin/coheteria" class="enlace-volver"><span class="enlace-volver-flecha" aria-hidden="true">&larr;</span>Cohetería</a></p>
 <h1>Editar miembro</h1>
 
 <form method="POST" action="/admin/coheteria/{{ miembro.id }}/editar" class="form" enctype="multipart/form-data">

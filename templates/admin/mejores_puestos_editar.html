@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block content %}
 
-<p><a href="/admin/mejores-puestos">&larr; Puestos de honor</a></p>
+<p><a href="/admin/mejores-puestos" class="enlace-volver"><span class="enlace-volver-flecha" aria-hidden="true">&larr;</span>Puestos de honor</a></p>
 <h1>Editar puesto de honor</h1>
 
 <form method="POST" action="/admin/mejores-puestos/{{ puesto.id }}/editar" class="form">

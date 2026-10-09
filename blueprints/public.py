@@ -529,13 +529,34 @@ def _agrupar_por_mes(filas):
 
 @public_bp.route('/galeria')
 def galeria():
+    anio = request.args.get('anio', type=int)
+    evento_id = request.args.get('evento', type=int)
+
+    base = "FROM galeria_fotos WHERE visible = true AND (seccion IS NULL OR seccion <> 'inicio')"
+    condiciones, valores = '', []
+    if anio:
+        condiciones += ' AND extract(year FROM fecha) = %s'
+        valores.append(anio)
+    if evento_id:
+        condiciones += ' AND evento_id = %s'
+        valores.append(evento_id)
+
     with obtener_conexion() as conexion:
         with conexion.cursor() as cur:
-            cur.execute(
-                "SELECT * FROM galeria_fotos WHERE visible = true AND (seccion IS NULL OR seccion <> 'inicio') ORDER BY fecha DESC, creado_en DESC"
-            )
+            cur.execute(f'SELECT * {base}{condiciones} ORDER BY fecha DESC, creado_en DESC', valores)
             fotos = cur.fetchall()
-    return render_template('galeria.html', titulo='Galeria', grupos=_agrupar_por_mes(fotos))
+            cur.execute(f'SELECT DISTINCT extract(year FROM fecha)::int AS anio {base} ORDER BY anio DESC')
+            anios = [r['anio'] for r in cur.fetchall()]
+            cur.execute(
+                f"""SELECT e.id, e.titulo, e.fecha FROM eventos e
+                    WHERE e.id IN (SELECT evento_id {base} AND evento_id IS NOT NULL)
+                    ORDER BY e.fecha DESC"""
+            )
+            eventos = cur.fetchall()
+    return render_template(
+        'galeria.html', titulo='Galeria', grupos=_agrupar_por_mes(fotos), total=len(fotos),
+        anios=anios, eventos=eventos, anio=anio, evento_id=evento_id,
+    )
 
 
 @public_bp.route('/contacto', methods=['GET'])

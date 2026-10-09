@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block content %}
 
-<p><a href="/admin/equipo-desarrollo">&larr; Equipo de Desarrollo</a></p>
+<p><a href="/admin/equipo-desarrollo" class="enlace-volver"><span class="enlace-volver-flecha" aria-hidden="true">&larr;</span>Equipo de Desarrollo</a></p>
 <h1>Editar miembro</h1>
 
 <form method="POST" action="/admin/equipo-desarrollo/{{ miembro.id }}/editar" class="form" enctype="multipart/form-data">

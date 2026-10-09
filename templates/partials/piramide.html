@@ -5,7 +5,7 @@
         <div class="piramide-fila piramide-fila-punta">
             {% for m in grupos.punta %}
                 <div class="comunidad-lider-card">
-                    {% if m.foto_url and m.visible %}<img src="{{ m.foto_url }}" alt="{{ m.nombre }}" class="comunidad-lider-foto">{% endif %}
+                    {% if m.foto_url and m.visible %}<img loading="lazy" src="{{ m.foto_url }}" alt="{{ m.nombre }}" class="comunidad-lider-foto">{% endif %}
                     <h3>{{ m.nombre }}</h3>
                     {% if m.rol or m.cargo %}<span class="badge">{{ m.rol or m.cargo }}</span>{% endif %}
                     {% if m.salon %}<p class="fecha">Salón: {{ m.salon }}</p>{% endif %}
@@ -22,7 +22,7 @@
             {% for m in grupos.medio %}
                 {% set contador.valor = contador.valor + 1 %}
                 <div class="comunidad-lider-card" data-piramide-extra{% if contador.valor > limite_resto %} hidden{% endif %}>
-                    {% if m.foto_url and m.visible %}<img src="{{ m.foto_url }}" alt="{{ m.nombre }}" class="comunidad-lider-foto">{% endif %}
+                    {% if m.foto_url and m.visible %}<img loading="lazy" src="{{ m.foto_url }}" alt="{{ m.nombre }}" class="comunidad-lider-foto">{% endif %}
                     <h3>{{ m.nombre }}</h3>
                     {% if m.rol or m.cargo %}<span class="badge">{{ m.rol or m.cargo }}</span>{% endif %}
                     {% if m.salon %}<p class="fecha">Salón: {{ m.salon }}</p>{% endif %}
@@ -39,7 +39,7 @@
             {% for m in grupos.base %}
                 {% set contador.valor = contador.valor + 1 %}
                 <div class="comunidad-lider-card" data-piramide-extra{% if contador.valor > limite_resto %} hidden{% endif %}>
-                    {% if m.foto_url and m.visible %}<img src="{{ m.foto_url }}" alt="{{ m.nombre }}" class="comunidad-lider-foto">{% endif %}
+                    {% if m.foto_url and m.visible %}<img loading="lazy" src="{{ m.foto_url }}" alt="{{ m.nombre }}" class="comunidad-lider-foto">{% endif %}
                     <h3>{{ m.nombre }}</h3>
                     {% if m.rol or m.cargo %}<span class="badge">{{ m.rol or m.cargo }}</span>{% endif %}
                     {% if m.salon %}<p class="fecha">Salón: {{ m.salon }}</p>{% endif %}

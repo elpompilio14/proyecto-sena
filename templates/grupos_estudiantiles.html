@@ -12,7 +12,7 @@
             <{{ etiqueta }} class="categoria-link-card categoria-link-card--grupo"{% if g.enlace_url %} href="{{ g.enlace_url }}"{% endif %}>
                 <div class="categoria-link-card-img-wrap">
                     {% if g.foto_url and g.visible %}
-                        <img src="{{ g.foto_url }}" alt="{{ g.nombre }}">
+                        <img loading="lazy" src="{{ g.foto_url }}" alt="{{ g.nombre }}">
                     {% else %}
                         <span class="categoria-link-card-sin-imagen">🧑‍🤝‍🧑</span>
                     {% endif %}

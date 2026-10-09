@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block content %}
 
-<p><a href="/admin/grados">&larr; Grados</a></p>
+<p><a href="/admin/grados" class="enlace-volver"><span class="enlace-volver-flecha" aria-hidden="true">&larr;</span>Grados</a></p>
 <h1>Editar curso</h1>
 
 <form method="POST" action="/admin/grados/{{ grado.id }}/editar" class="form">

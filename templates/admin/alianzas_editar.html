@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block content %}
 
-<p><a href="/admin/alianzas">&larr; Alianzas</a></p>
+<p><a href="/admin/alianzas" class="enlace-volver"><span class="enlace-volver-flecha" aria-hidden="true">&larr;</span>Alianzas</a></p>
 <h1>Editar alianza</h1>
 
 <form method="POST" action="/admin/alianzas/{{ alianza.id }}/editar" class="form" enctype="multipart/form-data">

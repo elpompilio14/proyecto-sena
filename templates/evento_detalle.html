@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block content %}
 
-<p><a href="/eventos">&larr; Volver a Eventos</a></p>
+<p><a href="/eventos" class="enlace-volver"><span class="enlace-volver-flecha" aria-hidden="true">&larr;</span>Volver a Eventos</a></p>
 
 <h1>{{ evento.titulo }}</h1>
 <p class="fecha">{{ formatearFecha(evento.fecha) }}</p>
@@ -22,7 +22,7 @@
                         <span class="icono-play">&#9658;</span>
                     </div>
                 {% else %}
-                    <img src="{{ f.url }}" data-url="{{ f.url }}" alt="{{ f.titulo or evento.titulo }}">
+                    <img loading="lazy" src="{{ f.url }}" data-url="{{ f.url }}" alt="{{ f.titulo or evento.titulo }}">
                 {% endif %}
                 {% if f.titulo %}<figcaption>{{ f.titulo }}</figcaption>{% endif %}
             </figure>

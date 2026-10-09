@@ -1,12 +1,12 @@
 {% extends "base.html" %}
 {% block content %}
 
-<p><a href="/deportes">&larr; Volver a Deportes</a></p>
+<p><a href="/deportes" class="enlace-volver"><span class="enlace-volver-flecha" aria-hidden="true">&larr;</span>Volver a Deportes</a></p>
 
 <h1>{{ deporte.nombre }}</h1>
 
 {% if deporte.imagen_url and deporte.visible %}
-    <img src="{{ deporte.imagen_url }}" alt="{{ deporte.nombre }}" class="card-img">
+    <img loading="lazy" src="{{ deporte.imagen_url }}" alt="{{ deporte.nombre }}" class="card-img">
 {% endif %}
 
 {% if deporte.descripcion %}
@@ -21,7 +21,7 @@
         {% for eq in equipos %}
             <article class="card aparece" style="transition-delay: {{ [loop.index0, 5]|min * 70 }}ms">
                 {% if eq.foto_url and eq.visible %}
-                    <img src="{{ eq.foto_url }}" alt="{{ eq.nombre }}" class="card-img">
+                    <img loading="lazy" src="{{ eq.foto_url }}" alt="{{ eq.nombre }}" class="card-img">
                 {% endif %}
                 <h3>{{ eq.nombre }}</h3>
                 {% if eq.categoria %}<p class="fecha">Categoría: {{ eq.categoria }}</p>{% endif %}

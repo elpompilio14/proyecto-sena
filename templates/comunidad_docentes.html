@@ -16,7 +16,7 @@
     </div>
 </section>
 
-<p><a href="/comunidad-educativa">&larr; Comunidad Educativa</a></p>
+<p><a href="/comunidad-educativa" class="enlace-volver"><span class="enlace-volver-flecha" aria-hidden="true">&larr;</span>Comunidad Educativa</a></p>
 
 {% if areas|length > 0 %}
 <div class="docentes-filtros aparece">
@@ -34,7 +34,7 @@
         {% for d in docentes %}
             <article class="card docente-card aparece" data-area="{{ d.area or '' }}" style="transition-delay: {{ [loop.index0, 5]|min * 70 }}ms">
                 <div class="docente-foto-wrap">
-                    {% if d.foto_url and d.visible %}<img src="{{ d.foto_url }}" alt="{{ d.nombre }}" class="docente-foto">{% endif %}
+                    {% if d.foto_url and d.visible %}<img loading="lazy" src="{{ d.foto_url }}" alt="{{ d.nombre }}" class="docente-foto">{% endif %}
                     {% if d.materia %}<span class="docente-tag {{ claseArea(d.area) }}">{{ d.materia }}</span>{% endif %}
                 </div>
                 <h3>{{ d.nombre }}</h3>

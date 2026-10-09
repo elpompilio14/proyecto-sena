@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block content %}
 
-<p><a href="/admin/comite-ecologico">&larr; Comité Ecológico</a></p>
+<p><a href="/admin/comite-ecologico" class="enlace-volver"><span class="enlace-volver-flecha" aria-hidden="true">&larr;</span>Comité Ecológico</a></p>
 <h1>Editar miembro</h1>
 
 <form method="POST" action="/admin/comite-ecologico/{{ miembro.id }}/editar" class="form" enctype="multipart/form-data">

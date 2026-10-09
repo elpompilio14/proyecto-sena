@@ -14,7 +14,7 @@
 {% if grupos.punta|length + grupos.medio|length + grupos.base|length == 0 %}
     <p>Aún no hay miembros registrados.</p>
 {% else %}
-<section class="comunidad-seccion aparece">
+<section class="comunidad-seccion comunidad-seccion--acero aparece">
     {% include "partials/piramide.html" %}
 </section>
 {% endif %}
@@ -36,7 +36,7 @@
                         <span class="icono-play">&#9658;</span>
                     </div>
                 {% else %}
-                    <img src="{{ f.url }}" data-url="{{ f.url }}" alt="{{ f.titulo or 'Equipo de Drones' }}">
+                    <img loading="lazy" src="{{ f.url }}" data-url="{{ f.url }}" alt="{{ f.titulo or 'Equipo de Drones' }}">
                 {% endif %}
                 {% if f.titulo %}<figcaption>{{ f.titulo }}</figcaption>{% endif %}
             </figure>

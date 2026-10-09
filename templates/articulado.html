@@ -11,7 +11,7 @@
             <a href="/articulado/{{ c.id }}" class="categoria-link-card">
                 <div class="categoria-link-card-img-wrap">
                     {% if c.imagen_url and c.visible %}
-                        <img src="{{ c.imagen_url }}" alt="{{ c.nombre }}">
+                        <img loading="lazy" src="{{ c.imagen_url }}" alt="{{ c.nombre }}">
                     {% else %}
                         <span class="categoria-link-card-sin-imagen">🖥️</span>
                     {% endif %}

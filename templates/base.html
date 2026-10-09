@@ -8,7 +8,9 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/css/style.css?v={{ cssVersion }}">
+    {% if esAdmin %}
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cropperjs@1.6.2/dist/cropper.min.css">
+    {% endif %}
 </head>
 <body>
     <div class="encabezado-fijo">
@@ -93,18 +95,7 @@
     <main class="container main-content{% if not esAdmin %} fondo-patron-paginas{% endif %}">
         {% block content %}{% endblock %}
     </main>
-    <footer class="site-footer">
-        <div class="container">
-            {% if contacto and (contacto.telefono or contacto.correo) %}
-                <p class="footer-contacto">
-                    {% if contacto.telefono %}Tel: {{ contacto.telefono }}{% endif %}
-                    {% if contacto.telefono and contacto.correo %} · {% endif %}
-                    {% if contacto.correo %}{{ contacto.correo }}{% endif %}
-                </p>
-            {% endif %}
-            <p>&copy; {{ anio_actual }} Institución Educativa Distrital Técnica para el Desarrollo del Talento Humano. Proyecto SENA.</p>
-        </div>
-    </footer>
+    {% include "partials/footer.html" %}
 
     {% if sitio and sitio.whatsapp_numero %}
         <a href="https://wa.me/{{ whatsappNumero(sitio.whatsapp_numero) }}" target="_blank" rel="noopener" class="whatsapp-flotante" aria-label="Escríbenos por WhatsApp">
@@ -118,16 +109,18 @@
 
     <script src="/js/evitar-doble-envio.js"></script>
     <script src="/js/lightbox.js"></script>
-    <script src="/js/admin-tabla-fotos.js"></script>
-    <script src="/js/admin-fotos-lote.js"></script>
     <script src="/js/aparecer-al-scroll.js"></script>
     <script src="/js/auth-tabs.js"></script>
     <script src="/js/menu-nav.js"></script>
     <script src="/js/contador.js"></script>
     <script src="/js/filtro-docentes.js"></script>
+    {% if esAdmin %}
+    <script src="/js/admin-tabla-fotos.js"></script>
+    <script src="/js/admin-fotos-lote.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/cropperjs@1.6.2/dist/cropper.min.js"></script>
     <script src="/js/recorte-fotos.js"></script>
     <script src="/js/toggle-visibilidad.js"></script>
+    {% endif %}
     <script src="/js/piramide-expandir.js"></script>
     <script src="/js/hero-carrusel.js?v={{ heroJsVersion }}"></script>
     <script src="/js/volver-arriba.js?v={{ volverArribaJsVersion }}"></script>
