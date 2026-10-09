@@ -60,13 +60,6 @@ CREATE TABLE institucion_info (
     comite_ecologico_portada_url TEXT,
     equipo_drones_portada_url TEXT,
     equipo_desarrollo_portada_url TEXT,
-    promocion_logo_url TEXT,
-    promocion_link_url TEXT,
-    promocion_nombre TEXT,
-    promocion_anio INTEGER,
-    promocion_lema TEXT,
-    promocion_descripcion TEXT,
-    promocion_portada_url TEXT,
     actualizado_en TIMESTAMP NOT NULL DEFAULT NOW()
 );
 
@@ -286,6 +279,23 @@ ALTER TABLE galeria_fotos ADD COLUMN media_tecnica_categoria_id INTEGER REFERENC
 
 -- Fotos relacionadas con una seccion fija (Coheteria, Comite Ecologico, Equipo de Drones, Equipo de Desarrollo)
 ALTER TABLE galeria_fotos ADD COLUMN seccion VARCHAR(30);
+
+-- Promociones (la actual y las pasadas). Solo una puede estar marcada como actual a la vez.
+CREATE TABLE promociones (
+    id SERIAL PRIMARY KEY,
+    nombre VARCHAR(100),   -- ej: "POLARIS"
+    anio INTEGER,          -- ej: 2026
+    lema TEXT,
+    descripcion TEXT,
+    logo_url TEXT,         -- se muestra en el menu cuando es la actual
+    portada_url TEXT,
+    actual BOOLEAN NOT NULL DEFAULT false,
+    creado_en TIMESTAMP NOT NULL DEFAULT NOW()
+);
+CREATE UNIQUE INDEX promociones_una_sola_actual ON promociones (actual) WHERE actual;
+
+-- Fotos de cada promocion (se borran junto con la promocion)
+ALTER TABLE galeria_fotos ADD COLUMN promocion_id INTEGER REFERENCES promociones(id) ON DELETE CASCADE;
 
 CREATE TABLE mensajes_contacto (
     id SERIAL PRIMARY KEY,

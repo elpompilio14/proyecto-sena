@@ -163,10 +163,25 @@ ALTER TABLE comite_ecologico ADD COLUMN IF NOT EXISTS salon VARCHAR(20);
 ALTER TABLE equipo_drones ADD COLUMN IF NOT EXISTS salon VARCHAR(20);
 ALTER TABLE coheteria ADD COLUMN IF NOT EXISTS salon VARCHAR(20);
 
--- Pagina "Promocion actual": datos que se editan desde /admin/promocion
--- (el logo sigue en promocion_logo_url; las fotos van en galeria_fotos con seccion = 'promocion')
-ALTER TABLE institucion_info ADD COLUMN IF NOT EXISTS promocion_nombre TEXT;
-ALTER TABLE institucion_info ADD COLUMN IF NOT EXISTS promocion_anio INTEGER;
-ALTER TABLE institucion_info ADD COLUMN IF NOT EXISTS promocion_lema TEXT;
-ALTER TABLE institucion_info ADD COLUMN IF NOT EXISTS promocion_descripcion TEXT;
-ALTER TABLE institucion_info ADD COLUMN IF NOT EXISTS promocion_portada_url TEXT;
+-- Promociones (la actual y las pasadas). Solo una puede estar marcada como actual a la vez.
+CREATE TABLE IF NOT EXISTS promociones (
+    id SERIAL PRIMARY KEY,
+    nombre VARCHAR(100),
+    anio INTEGER,
+    lema TEXT,
+    descripcion TEXT,
+    logo_url TEXT,
+    portada_url TEXT,
+    actual BOOLEAN NOT NULL DEFAULT false,
+    creado_en TIMESTAMP NOT NULL DEFAULT NOW()
+);
+CREATE UNIQUE INDEX IF NOT EXISTS promociones_una_sola_actual ON promociones (actual) WHERE actual;
+
+-- Fotos de cada promocion (se borran junto con la promocion)
+ALTER TABLE galeria_fotos ADD COLUMN IF NOT EXISTS promocion_id INTEGER REFERENCES promociones(id) ON DELETE CASCADE;
+
+-- Pasa el logo de promocion que estaba en institucion_info a la nueva tabla como promocion actual
+INSERT INTO promociones (logo_url, actual)
+SELECT promocion_logo_url, true FROM institucion_info
+WHERE promocion_logo_url IS NOT NULL AND NOT EXISTS (SELECT 1 FROM promociones)
+ORDER BY id LIMIT 1;

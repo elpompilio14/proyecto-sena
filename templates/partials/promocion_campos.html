@@ -1,0 +1,16 @@
+<label>Nombre de la promoción (ej: POLARIS)<input type="text" name="nombre" value="{{ p.nombre or '' }}"></label>
+<label>Año (ej: 2026)<input type="number" name="anio" min="1950" max="2100" value="{{ p.anio or '' }}" required></label>
+<label>Lema o frase de la promoción (opcional)<input type="text" name="lema" value="{{ p.lema or '' }}"></label>
+<label>Descripción (historia, logros, mensaje de la promoción...)<textarea name="descripcion" rows="5">{{ p.descripcion or '' }}</textarea></label>
+
+{% if p.logo_url %}
+    <img src="{{ p.logo_url }}" alt="Logo actual" class="card-img" style="max-width:140px;">
+{% endif %}
+<label>Logo de la promoción (mejor con fondo transparente; el de la promoción actual sale en el menú)<input type="file" name="logo" accept="image/*" data-recorte="rectangulo"></label>
+<input type="hidden" name="logo_actual" value="{{ p.logo_url or '' }}">
+
+{% if p.portada_url %}
+    <img src="{{ p.portada_url }}" alt="Portada actual" class="card-img">
+{% endif %}
+<label>Foto de portada (se ve gigante en la página; si no pones una, se usa el logo)<input type="file" name="portada" accept="image/*" data-recorte="rectangulo" data-recorte-aspecto="1.7778"></label>
+<input type="hidden" name="portada_actual" value="{{ p.portada_url or '' }}">

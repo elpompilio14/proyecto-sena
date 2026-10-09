@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block content %}
+
+<section class="promocion-intro aparece">
+    <span class="badge-pill">Promociones</span>
+    <h1>Nuestras promociones</h1>
+    <p>Conoce a la promoción de este año y recorre las que ya dejaron huella en la institución.</p>
+</section>
+
+<div class="promociones-opciones">
+    <a href="/promocion" class="promociones-opcion aparece">
+        <div class="promociones-opcion-img">
+            {% if actual and (actual.logo_url or actual.portada_url) %}
+                <img src="{{ actual.logo_url or actual.portada_url }}" alt="Promoción actual">
+            {% else %}
+                <span class="promociones-opcion-icono">🎓</span>
+            {% endif %}
+        </div>
+        <h2>Promoción actual</h2>
+        <p>{% if actual %}Promoción {{ actual.nombre or '' }} {{ actual.anio or '' }}{% else %}Muy pronto{% endif %}</p>
+    </a>
+
+    <a href="/promociones/pasadas" class="promociones-opcion aparece">
+        <div class="promociones-opcion-img">
+            {% if ultima_pasada and (ultima_pasada.logo_url or ultima_pasada.portada_url) %}
+                <img src="{{ ultima_pasada.logo_url or ultima_pasada.portada_url }}" alt="Promociones pasadas">
+            {% else %}
+                <span class="promociones-opcion-icono">📜</span>
+            {% endif %}
+        </div>
+        <h2>Promociones pasadas</h2>
+        <p>Fotos y recuerdos de cada año</p>
+    </a>
+</div>
+
+{% endblock %}

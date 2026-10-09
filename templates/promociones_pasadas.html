@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block content %}
+
+<p><a href="/promociones">&larr; Promociones</a></p>
+
+<section class="promocion-intro aparece">
+    <span class="badge-pill">Promociones pasadas</span>
+    <h1>Promociones pasadas</h1>
+    <p>Cada año, una nueva generación deja su huella. Estas son las promociones que nos acompañaron.</p>
+</section>
+
+{% if pasadas|length == 0 %}
+    <p class="promocion-vacia">Aún no hay promociones pasadas.</p>
+{% else %}
+    {% if pasadas|length > 1 %}
+        <nav class="promociones-anios" aria-label="Ir a un año">
+            {% for p in pasadas %}
+                <a href="#promocion-{{ p.id }}">{{ p.anio or p.nombre }}</a>
+            {% endfor %}
+        </nav>
+    {% endif %}
+
+    {% for p in pasadas %}
+        <section class="promocion-pasada" id="promocion-{{ p.id }}">
+            <h2 class="promocion-pasada-anio">{{ p.anio or '' }}</h2>
+            {% if p.portada_url or p.logo_url %}
+                <img src="{{ p.portada_url or p.logo_url }}" alt="Promoción {{ p.nombre or '' }} {{ p.anio or '' }}"
+                     class="promocion-pasada-portada{% if not p.portada_url %} solo-logo{% endif %}" loading="lazy">
+            {% endif %}
+            <h3>Promoción {{ p.nombre or '' }}</h3>
+            {% if p.lema %}<p class="promocion-lema">“{{ p.lema }}”</p>{% endif %}
+            {% if p.descripcion %}
+                <div class="card"><p>{{ formatearTexto(p.descripcion) | safe }}</p></div>
+            {% endif %}
+            {% set fotos = fotos_por_promocion.get(p.id, []) %}
+            {% if fotos|length > 0 %}
+                {% include "partials/mural_promocion.html" %}
+            {% endif %}
+        </section>
+    {% endfor %}
+{% endif %}
+
+{% endblock %}

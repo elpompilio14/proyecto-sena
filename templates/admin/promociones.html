@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+{% block content %}
+
+<p><a href="/admin">&larr; Panel admin</a></p>
+<h1>Promociones</h1>
+<p>Se ven en <a href="/promociones" target="_blank">/promociones</a> (menú Conócenos → Promociones). El logo de la promoción actual también aparece en el menú.</p>
+
+<h2>Promoción actual</h2>
+
+{% if actual %}
+    <div class="card promocion-admin-actual">
+        {% if actual.logo_url %}<img src="{{ actual.logo_url }}" alt="Logo de la promoción actual" class="tabla-foto-mini">{% endif %}
+        <div>
+            <h3>Promoción {{ actual.nombre or '' }} {{ actual.anio or '' }}</h3>
+            <p>{{ actual.num_fotos }} foto(s)</p>
+        </div>
+        <div class="acciones">
+            <a href="/admin/promociones/{{ actual.id }}" class="btn-editar">Editar y subir fotos</a>
+            <form method="POST" action="/admin/promociones/{{ actual.id }}/archivar" onsubmit="return confirm('¿Pasar esta promoción (con todas sus fotos) a Promociones pasadas? Después podrás crear la nueva promoción actual.');">
+                <button type="submit" class="btn-secondary">Pasar a promociones pasadas</button>
+            </form>
+        </div>
+    </div>
+    <p>Cuando termine el año, usa "Pasar a promociones pasadas": la promoción se mueve con todo (fotos, logo, textos) y luego creas la del año nuevo aquí mismo.</p>
+{% else %}
+    <p>No hay una promoción actual. Créala aquí:</p>
+    <form method="POST" action="/admin/promociones" class="form" enctype="multipart/form-data">
+        <input type="hidden" name="es_actual" value="1">
+        {% with p = {} %}{% include "partials/promocion_campos.html" %}{% endwith %}
+        <button type="submit">Crear promoción actual</button>
+    </form>
+{% endif %}
+
+<h2>Promociones pasadas</h2>
+
+<details class="form-plegable">
+    <summary>Agregar una promoción pasada (de años anteriores)</summary>
+    <form method="POST" action="/admin/promociones" class="form" enctype="multipart/form-data">
+        <input type="hidden" name="es_actual" value="0">
+        {% with p = {} %}{% include "partials/promocion_campos.html" %}{% endwith %}
+        <button type="submit">Agregar promoción pasada</button>
+    </form>
+</details>
+
+{% if pasadas|length == 0 %}
+    <p>Aún no hay promociones pasadas.</p>
+{% else %}
+    <table class="tabla">
+        <thead><tr><th class="tabla-col-foto">Portada</th><th>Año</th><th>Nombre</th><th>Fotos</th><th></th></tr></thead>
+        <tbody>
+            {% for p in pasadas %}
+                <tr>
+                    <td>
+                        {% if p.portada_url or p.logo_url %}
+                            <img src="{{ p.portada_url or p.logo_url }}" alt="Promoción {{ p.anio }}" class="tabla-foto-mini">
+                        {% else %}
+                            <span class="tabla-foto-vacia">—</span>
+                        {% endif %}
+                    </td>
+                    <td>{{ p.anio or '-' }}</td>
+                    <td>{{ p.nombre or '-' }}</td>
+                    <td>{{ p.num_fotos }}</td>
+                    <td class="acciones">
+                        <a href="/admin/promociones/{{ p.id }}" class="btn-editar">Editar y fotos</a>
+                        <form method="POST" action="/admin/promociones/{{ p.id }}/eliminar" onsubmit="return confirm('¿Eliminar esta promoción y todas sus fotos?');">
+                            <button type="submit" class="btn-danger">Eliminar</button>
+                        </form>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endif %}
+
+{% endblock %}

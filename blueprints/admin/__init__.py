@@ -34,5 +34,5 @@ from . import (  # noqa: E402  (import al final para evitar import circular con 
     comite_ecologico,
     equipo_drones,
     coheteria,
-    promocion,
+    promociones,
 )

@@ -77,6 +77,7 @@
                             <a href="/campeonatos">Intercursos</a>
                             <a href="/galeria">Galería</a>
                             <a href="/mejores-puestos">Puestos de honor</a>
+                            <a href="/promociones">Promociones</a>
                             <a href="/icfes">Mejores ICFES</a>
                         </div>
                     </div>
@@ -104,9 +105,9 @@
 
                 <a href="/contacto" class="nav-contacto-btn">Contáctanos</a>
 
-                {% if sitio and sitio.promocion_logo_url %}
+                {% if promocionActualLogo %}
                     <a href="/promocion" class="nav-promocion-logo" title="Ver la promoción actual">
-                        <img src="{{ sitio.promocion_logo_url }}" alt="Promoción actual">
+                        <img src="{{ promocionActualLogo }}" alt="Promoción actual">
                     </a>
                 {% endif %}
             </nav>

@@ -167,19 +167,50 @@ def coheteria():
     )
 
 
+@public_bp.route('/promociones')
+def promociones():
+    with obtener_conexion() as conexion:
+        with conexion.cursor() as cur:
+            cur.execute('SELECT * FROM promociones WHERE actual LIMIT 1')
+            actual = cur.fetchone()
+            cur.execute('SELECT * FROM promociones WHERE NOT actual ORDER BY anio DESC NULLS LAST, id DESC LIMIT 1')
+            ultima_pasada = cur.fetchone()
+    return render_template('promociones.html', titulo='Promociones', actual=actual, ultima_pasada=ultima_pasada)
+
+
 @public_bp.route('/promocion')
 def promocion():
     with obtener_conexion() as conexion:
         with conexion.cursor() as cur:
+            cur.execute('SELECT * FROM promociones WHERE actual LIMIT 1')
+            promocion_actual = cur.fetchone()
+            fotos = []
+            if promocion_actual:
+                cur.execute(
+                    'SELECT * FROM galeria_fotos WHERE promocion_id = %s AND visible = true ORDER BY orden, creado_en',
+                    (promocion_actual['id'],),
+                )
+                fotos = cur.fetchall()
+    return render_template('promocion.html', titulo='Promoción actual', p=promocion_actual, fotos=fotos)
+
+
+@public_bp.route('/promociones/pasadas')
+def promociones_pasadas():
+    with obtener_conexion() as conexion:
+        with conexion.cursor() as cur:
+            cur.execute('SELECT * FROM promociones WHERE NOT actual ORDER BY anio DESC NULLS LAST, id DESC')
+            pasadas = cur.fetchall()
             cur.execute(
-                """SELECT promocion_nombre, promocion_anio, promocion_lema, promocion_descripcion,
-                          promocion_logo_url, promocion_portada_url
-                   FROM institucion_info ORDER BY id LIMIT 1"""
+                """SELECT g.* FROM galeria_fotos g JOIN promociones p ON p.id = g.promocion_id
+                   WHERE NOT p.actual AND g.visible = true ORDER BY g.orden, g.creado_en"""
             )
-            info = cur.fetchone() or {}
-            cur.execute("SELECT * FROM galeria_fotos WHERE seccion = 'promocion' AND visible = true ORDER BY orden, creado_en")
-            fotos = cur.fetchall()
-    return render_template('promocion.html', titulo='Promoción actual', info=info, fotos=fotos)
+            fotos_por_promocion = {}
+            for f in cur.fetchall():
+                fotos_por_promocion.setdefault(f['promocion_id'], []).append(f)
+    return render_template(
+        'promociones_pasadas.html', titulo='Promociones pasadas',
+        pasadas=pasadas, fotos_por_promocion=fotos_por_promocion,
+    )
 
 
 @public_bp.route('/institucion')

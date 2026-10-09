@@ -35,12 +35,16 @@ def inyectar_datos_globales():
     usuario = session.get('usuario')
 
     sitio = {}
+    promocion_actual_logo = None
     try:
         with obtener_conexion() as conexion:
             with conexion.cursor() as cur:
                 cur.execute('SELECT * FROM institucion_info ORDER BY id LIMIT 1')
                 fila = cur.fetchone()
                 sitio = fila or {}
+                cur.execute('SELECT logo_url FROM promociones WHERE actual LIMIT 1')
+                promocion = cur.fetchone()
+                promocion_actual_logo = promocion['logo_url'] if promocion else None
     except Exception as err:
         print('No se pudo cargar institucion_info:', err)
         sitio = {}
@@ -69,6 +73,7 @@ def inyectar_datos_globales():
         'heroJsVersion': hero_js_version,
         'volverArribaJsVersion': volver_arriba_js_version,
         'esAdmin': request.path.startswith('/admin'),
+        'promocionActualLogo': promocion_actual_logo,
     }
 
 
