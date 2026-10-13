@@ -10,7 +10,8 @@ def comunidad_index():
         with conexion.cursor() as cur:
             cur.execute("""
                 SELECT * FROM comunidad_educativa
-                ORDER BY CASE categoria WHEN 'rectoria' THEN 1 WHEN 'coordinacion' THEN 2 ELSE 3 END, orden, nombre
+                ORDER BY CASE categoria WHEN 'rectoria' THEN 1 WHEN 'coordinacion' THEN 2 WHEN 'orientacion' THEN 3 ELSE 4 END,
+                         orden, nombre
             """)
             personas = cur.fetchall()
     return render_template('admin/comunidad.html', titulo='Admin · Comunidad Educativa', personas=personas)
@@ -28,13 +29,15 @@ def comunidad_crear():
     foto_url = guardar_archivo(request.files.get('imagen'))
     orden = request.form.get('orden') or 0
     nivel = request.form.get('nivel') or 'base'
+    tarjeta_datos = (request.form.get('tarjeta_datos') or '').strip() or None
 
     with obtener_conexion() as conexion:
         with conexion.cursor() as cur:
             cur.execute(
-                """INSERT INTO comunidad_educativa (nombre, cargo, categoria, area, materia, anios_experiencia, descripcion, foto_url, orden, nivel)
-                   VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)""",
-                (nombre, cargo, categoria, area, materia, anios_experiencia, descripcion, foto_url, orden, nivel),
+                """INSERT INTO comunidad_educativa (nombre, cargo, categoria, area, materia, anios_experiencia, descripcion,
+                                                    foto_url, orden, nivel, tarjeta_datos)
+                   VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)""",
+                (nombre, cargo, categoria, area, materia, anios_experiencia, descripcion, foto_url, orden, nivel, tarjeta_datos),
             )
     return redirect('/admin/comunidad-educativa')
 
@@ -63,15 +66,17 @@ def comunidad_editar(id):
     foto_url = guardar_archivo(request.files.get('imagen')) or (foto_actual or None)
     orden = request.form.get('orden') or 0
     nivel = request.form.get('nivel') or 'base'
+    tarjeta_datos = (request.form.get('tarjeta_datos') or '').strip() or None
 
     with obtener_conexion() as conexion:
         with conexion.cursor() as cur:
             cur.execute(
                 """UPDATE comunidad_educativa
                    SET nombre = %s, cargo = %s, categoria = %s, area = %s, materia = %s,
-                       anios_experiencia = %s, descripcion = %s, foto_url = %s, orden = %s, nivel = %s
+                       anios_experiencia = %s, descripcion = %s, foto_url = %s, orden = %s, nivel = %s, tarjeta_datos = %s
                    WHERE id = %s""",
-                (nombre, cargo, categoria, area, materia, anios_experiencia, descripcion, foto_url, orden, nivel, id),
+                (nombre, cargo, categoria, area, materia, anios_experiencia, descripcion, foto_url, orden, nivel,
+                 tarjeta_datos, id),
             )
     return redirect('/admin/comunidad-educativa')
 

@@ -11,6 +11,7 @@
         <select name="categoria">
             <option value="rectoria" {{ 'selected' if persona.categoria == 'rectoria' else '' }}>Rectoría</option>
             <option value="coordinacion" {{ 'selected' if persona.categoria == 'coordinacion' else '' }}>Coordinación</option>
+            <option value="orientacion" {{ 'selected' if persona.categoria == 'orientacion' else '' }}>Orientación escolar (psicorientación)</option>
             <option value="docente" {{ 'selected' if persona.categoria == 'docente' else '' }}>Cuerpo docente</option>
         </select>
     </label>
@@ -25,7 +26,9 @@
     </label>
     <label>Materia o especialidad<input type="text" name="materia" value="{{ persona.materia or '' }}"></label>
     <label>Años de experiencia<input type="number" name="anios_experiencia" min="0" value="{{ persona.anios_experiencia or '' }}"></label>
-    <label>Descripción / frase corta (opcional)<textarea name="descripcion" rows="3">{{ persona.descripcion or '' }}</textarea></label>
+    <label>Frase (opcional; sale en el cuerpo docente y atrás de la tarjeta al darle la vuelta)<textarea name="descripcion" rows="3" maxlength="220">{{ persona.descripcion or '' }}</textarea></label>
+    <label>Datos de la tarjeta (opcional, uno por línea con el formato <em>Dato: valor</em>)<textarea name="tarjeta_datos" rows="3" placeholder="Sede: 1&#10;Jornada: Mañana">{{ persona.tarjeta_datos or '' }}</textarea></label>
+    <p class="form-ayuda">Si lo dejas vacío, la tarjeta muestra la materia y los años de experiencia. El cargo siempre sale debajo del nombre.</p>
     {% if persona.foto_url %}
         <img src="{{ persona.foto_url }}" alt="Foto actual" class="card-img">
     {% endif %}

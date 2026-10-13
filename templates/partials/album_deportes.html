@@ -1,0 +1,67 @@
+{# Album de deportes estilo Panini (inicio): una pagina por deporte con sus laminas.
+   Los jugadores salen de los grados mas altos hacia abajo (ver _album_deportes en public.py). #}
+{% set anioTexto = anioActual|string %}
+<section class="album-seccion">
+    <div class="album-intro aparece">
+        <span class="badge-pill">Nuestros deportistas</span>
+        <h2>Álbum Deportivo {{ anioActual }}</h2>
+        <p>Colecciona a los jugadores que representan al colegio en cada deporte. Empezamos por los de grados más altos.</p>
+    </div>
+
+    {% for pagina in albumDeportes %}
+        {% set d = pagina.deporte %}
+        <article class="album-pagina aparece" style="--album: {{ pagina.color[0] }}; --album2: {{ pagina.color[1] }}">
+            <header class="album-encabezado">
+                <div class="album-titulo">
+                    <span class="album-titulo-somos">Somos</span>
+                    <h3 class="album-titulo-deporte">{{ d.nombre }}</h3>
+                    <p class="album-subtitulo">
+                        <span class="album-bandera" aria-hidden="true">{{ pagina.icono }}</span>
+                        Selección de {{ d.nombre }} · IED Técnica para el Desarrollo del Talento Humano
+                    </p>
+                </div>
+                {# Lamina especial: la imagen del deporte (admin > Deportes > Editar); si no tiene, el logo del colegio #}
+                <div class="album-escudo" aria-hidden="true">
+                    <span class="album-lamina-numero">{{ pagina.sigla }} 0</span>
+                    {% if d.imagen_url and d.visible %}
+                        <img loading="lazy" src="{{ d.imagen_url }}" alt="" class="album-escudo-foto">
+                    {% elif sitio and sitio.logo_url %}
+                        <img loading="lazy" src="{{ sitio.logo_url }}" alt="">
+                    {% else %}
+                        <span class="album-escudo-icono">{{ pagina.icono }}</span>
+                    {% endif %}
+                    <span class="album-escudo-texto">Álbum {{ anioActual }}</span>
+                </div>
+            </header>
+
+            <div class="album-laminas">
+                {% for j in pagina.jugadores %}
+                    <a href="/deportes/{{ d.id }}" class="album-lamina" style="--giro: {{ ['-1.2deg', '0.8deg', '-0.5deg', '1.1deg', '-0.9deg'][loop.index0 % 5] }}">
+                        <span class="album-lamina-numero">{{ pagina.sigla }} {{ loop.index }}</span>
+                        <span class="album-lamina-anio" aria-hidden="true"><span>{{ anioTexto[:2] }}</span><span>{{ anioTexto[2:] }}</span></span>
+                        <span class="album-lamina-foto">
+                            {% if j.foto_url and j.visible %}
+                                <img loading="lazy" src="{{ j.foto_url }}" alt="{{ j.nombre }}">
+                            {% else %}
+                                <span class="album-lamina-sin-foto" aria-hidden="true">{{ pagina.icono }}</span>
+                            {% endif %}
+                        </span>
+                        <span class="album-lamina-pie">
+                            <strong>{{ j.nombre }}</strong>
+                            <small>
+                                {{ j.grado_nombre or 'Sin curso' }}
+                                {%- if j.altura %} · {{ '%.2f m'|format(j.altura) }}{% endif %}
+                                {%- if j.edad %} · {{ j.edad }} años{% endif %}
+                            </small>
+                            {% if j.posicion %}<em>{{ j.posicion }}</em>{% endif %}
+                        </span>
+                    </a>
+                {% endfor %}
+            </div>
+
+            <p class="album-ver">
+                <a href="/deportes/{{ d.id }}" class="btn-ver-todas">Ver {{ 'los ' ~ pagina.total ~ ' jugadores' if pagina.total > 1 else 'el jugador' }} de {{ d.nombre }}</a>
+            </p>
+        </article>
+    {% endfor %}
+</section>

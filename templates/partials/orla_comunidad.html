@@ -1,0 +1,44 @@
+{# Orla de la comunidad educativa en el inicio, como el cuadro de fotos de una graduacion:
+   rectoria arriba, luego coordinacion y orientacion, y despues todos los docentes. #}
+<section class="orla aparece" data-tarjeta-grupo="Comunidad Educativa" data-tarjeta-icono="🎓" data-tarjeta-variante="dorado"
+         data-tarjeta-lema="Educar con el corazón" data-tarjeta-frase="Educar es sembrar en cada estudiante la confianza de que puede lograrlo.">
+    {# Esquinas doradas decorativas del marco #}
+    <span class="orla-esquina orla-esquina--1" aria-hidden="true"></span>
+    <span class="orla-esquina orla-esquina--2" aria-hidden="true"></span>
+    <span class="orla-esquina orla-esquina--3" aria-hidden="true"></span>
+    <span class="orla-esquina orla-esquina--4" aria-hidden="true"></span>
+
+    <header class="orla-encabezado">
+        <p class="orla-antetitulo">IED Técnica para el Desarrollo del Talento Humano</p>
+        <h2 class="orla-titulo">Comunidad Educativa</h2>
+        <span class="orla-adorno" aria-hidden="true"><span>✦</span></span>
+        <p class="orla-subtitulo">Directivos y docentes · {{ anioActual }}</p>
+    </header>
+
+    {% if orlaRectoria %}
+        <div class="orla-fila">
+            {% for p in orlaRectoria %}{% with tam = 'grande' %}{% include "partials/orla_persona.html" %}{% endwith %}{% endfor %}
+        </div>
+    {% endif %}
+
+    {% if orlaDirectivos %}
+        <div class="orla-fila">
+            {% for p in orlaDirectivos %}{% with tam = 'mediano' %}{% include "partials/orla_persona.html" %}{% endwith %}{% endfor %}
+        </div>
+    {% endif %}
+
+    {% if orlaDocentes %}
+        <div class="orla-separador"><span>Cuerpo docente</span></div>
+        <div class="orla-docentes">
+            {% for p in orlaDocentes %}{% with tam = '' %}{% include "partials/orla_persona.html" %}{% endwith %}{% endfor %}
+        </div>
+    {% endif %}
+
+    <footer class="orla-pie">
+        <p class="orla-ayuda">Toca a cualquier persona para ver su tarjeta</p>
+        <a href="/comunidad-educativa" class="orla-boton">
+            Conoce a todo el equipo{% if orlaTotalDocentes > orlaDocentes|length %} ({{ orlaTotalDocentes }} docentes){% endif %} &rarr;
+        </a>
+    </footer>
+</section>
+<script src="/js/tarjetas.js?v={{ cssVersion }}"></script>

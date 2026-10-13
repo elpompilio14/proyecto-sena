@@ -203,3 +203,34 @@ CREATE TABLE IF NOT EXISTS historia_bloques (
     visible BOOLEAN NOT NULL DEFAULT true,
     creado_en TIMESTAMP NOT NULL DEFAULT NOW()
 );
+
+-- Tarjetas estilo FIFA: jugadores de cada deporte y frase atras de la tarjeta (tambien en el Comite Ecologico)
+CREATE TABLE IF NOT EXISTS deportistas (
+    id SERIAL PRIMARY KEY,
+    deporte_id INTEGER NOT NULL REFERENCES deportes(id) ON DELETE CASCADE,
+    grado_id INTEGER REFERENCES grados(id) ON DELETE SET NULL,
+    nombre VARCHAR(150) NOT NULL,
+    foto_url TEXT,
+    altura NUMERIC(3,2),
+    edad INTEGER,
+    posicion VARCHAR(60),
+    frase TEXT,
+    orden INTEGER NOT NULL DEFAULT 0,
+    visible BOOLEAN NOT NULL DEFAULT true,
+    creado_en TIMESTAMP NOT NULL DEFAULT NOW()
+);
+ALTER TABLE comite_ecologico ADD COLUMN IF NOT EXISTS frase TEXT;
+ALTER TABLE comite_ecologico ADD COLUMN IF NOT EXISTS tarjeta_datos TEXT;
+
+-- Tarjetas que se voltean (frase atras y datos personalizados) en los demas grupos
+ALTER TABLE gobierno_escolar ADD COLUMN IF NOT EXISTS frase TEXT;
+ALTER TABLE gobierno_escolar ADD COLUMN IF NOT EXISTS tarjeta_datos TEXT;
+ALTER TABLE equipo_desarrollo ADD COLUMN IF NOT EXISTS frase TEXT;
+ALTER TABLE equipo_desarrollo ADD COLUMN IF NOT EXISTS tarjeta_datos TEXT;
+ALTER TABLE equipo_drones ADD COLUMN IF NOT EXISTS frase TEXT;
+ALTER TABLE equipo_drones ADD COLUMN IF NOT EXISTS tarjeta_datos TEXT;
+ALTER TABLE coheteria ADD COLUMN IF NOT EXISTS frase TEXT;
+ALTER TABLE coheteria ADD COLUMN IF NOT EXISTS tarjeta_datos TEXT;
+
+-- Comunidad educativa: datos personalizados de la tarjeta que se voltea
+ALTER TABLE comunidad_educativa ADD COLUMN IF NOT EXISTS tarjeta_datos TEXT;

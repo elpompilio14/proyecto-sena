@@ -1,26 +1,61 @@
 {% extends "base.html" %}
 {% block content %}
 
-<h1>Mejores ICFES</h1>
+{# Ramita de laurel que va a los lados de cada foto (se dibuja una vez y se reutiliza) #}
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <symbol id="icfes-laurel" viewBox="0 0 40 100">
+        <path d="M24 98 C 12 76, 11 36, 27 4" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
+        <ellipse cx="11" cy="80" rx="4" ry="9.5" transform="rotate(-38 11 80)"/>
+        <ellipse cx="25" cy="72" rx="4" ry="9.5" transform="rotate(38 25 72)"/>
+        <ellipse cx="9" cy="60" rx="4" ry="9.5" transform="rotate(-30 9 60)"/>
+        <ellipse cx="23" cy="52" rx="4" ry="9.5" transform="rotate(40 23 52)"/>
+        <ellipse cx="10" cy="40" rx="4" ry="9" transform="rotate(-22 10 40)"/>
+        <ellipse cx="25" cy="32" rx="4" ry="9" transform="rotate(45 25 32)"/>
+        <ellipse cx="15" cy="20" rx="3.6" ry="8.5" transform="rotate(-12 15 20)"/>
+        <ellipse cx="29" cy="9" rx="3.4" ry="7.5" transform="rotate(30 29 9)"/>
+    </symbol>
+</svg>
 
 {% if grupos|length == 0 %}
+    <h1>Mejores ICFES</h1>
     <p>Aún no hay resultados ICFES registrados.</p>
 {% else %}
     {% for grupo in grupos %}
-        <section class="galeria-grupo">
-            <h2 class="galeria-mes-titulo">Año {{ grupo.anio }}</h2>
-            <div class="card-grid">
-                {% for r in grupo.resultados %}
-                    <article class="card aparece icfes-card" style="transition-delay: {{ [loop.index0, 5]|min * 70 }}ms">
-                        {% if r.foto_url and r.visible %}
-                            <img loading="lazy" src="{{ r.foto_url }}" alt="{{ r.estudiante_nombre }}" class="icfes-foto">
-                        {% endif %}
-                        <span class="badge icfes-puntaje">{{ r.puntaje }} pts</span>
-                        <h3>{{ r.estudiante_nombre }}</h3>
-                        {% if r.descripcion %}
-                            <p>{{ formatearTexto(r.descripcion) | safe }}</p>
-                        {% endif %}
-                    </article>
+        {% set etiqueta = 'h1' if loop.first else 'h2' %}
+        <section class="icfes-panel aparece">
+            <div class="icfes-encabezado">
+                <span class="icfes-encabezado-anio">{{ grupo.anio }}</span>
+                <{{ etiqueta }} class="icfes-encabezado-titulo">
+                    <span class="icfes-encabezado-linea1">Nuestros estudiantes con los</span>
+                    <span class="icfes-encabezado-linea2">mejores puntajes</span>
+                    <span class="icfes-encabezado-linea3">en el <strong>ICFES</strong></span>
+                </{{ etiqueta }}>
+            </div>
+
+            <div class="icfes-piramide">
+                {% set puesto = namespace(n=0) %}
+                {% for fila in grupo.filas %}
+                    <div class="icfes-piramide-fila icfes-piramide-fila--{{ loop.index }}">
+                        {% for r in fila %}
+                            {% set puesto.n = puesto.n + 1 %}
+                            <article class="icfes-pir-item aparece" style="transition-delay: {{ (puesto.n - 1) * 80 }}ms"{% if r.descripcion %} title="{{ r.descripcion }}"{% endif %}>
+                                <div class="icfes-pir-foto-fila">
+                                    <svg class="icfes-pir-laurel" aria-hidden="true"><use href="#icfes-laurel"/></svg>
+                                    <div class="icfes-pir-foto">
+                                        <span class="icfes-pir-puesto{% if puesto.n <= 3 %} icfes-pir-puesto--podio{% endif %}">{{ puesto.n }}°</span>
+                                        {% if r.foto_url and r.visible %}
+                                            <img loading="lazy" src="{{ r.foto_url }}" alt="{{ r.estudiante_nombre }}">
+                                        {% else %}
+                                            <svg class="icfes-pir-sin-foto" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 3 1 8.5 12 14l9-4.5V16h2V8.5L12 3Z"/><path d="M5 12.2V16c0 1.9 3.1 3.5 7 3.5s7-1.6 7-3.5v-3.8l-7 3.5-7-3.5Z"/></svg>
+                                        {% endif %}
+                                    </div>
+                                    <svg class="icfes-pir-laurel icfes-pir-laurel--derecha" aria-hidden="true"><use href="#icfes-laurel"/></svg>
+                                </div>
+                                <p class="icfes-pir-nombre">{{ r.estudiante_nombre }}</p>
+                                <p class="icfes-pir-puntaje"><span class="icfes-pir-puntaje-pastilla">Puntaje: <strong>{{ r.puntaje }}</strong></span></p>
+                            </article>
+                        {% endfor %}
+                    </div>
                 {% endfor %}
             </div>
         </section>

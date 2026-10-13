@@ -1,0 +1,20 @@
+<label>Nombre del jugador<input type="text" name="nombre" value="{{ j.nombre or '' }}" required></label>
+<label>Curso (salón)
+    <select name="grado_id">
+        <option value="">— Sin curso —</option>
+        {% for g in grados %}
+            <option value="{{ g.id }}" {{ 'selected' if j.grado_id == g.id else '' }}>{{ g.nombre }}</option>
+        {% endfor %}
+    </select>
+</label>
+<p class="form-ayuda">¿Falta un salón (por ejemplo 9-C)? Agrégalo en <a href="/admin/grados">Grados</a> y aparecerá aquí y en la página del deporte.</p>
+<label>Altura en metros (ej: 1.75)<input type="text" name="altura" inputmode="decimal" value="{{ j.altura or '' }}" placeholder="1.75"></label>
+<label>Edad<input type="number" name="edad" min="5" max="30" value="{{ j.edad or '' }}"></label>
+<label>Posición (opcional, ej: Delantero, Base, Arquero)<input type="text" name="posicion" value="{{ j.posicion or '' }}"></label>
+{% if j.foto_url %}
+    <img src="{{ j.foto_url }}" alt="Foto actual" class="card-img">
+{% endif %}
+<label>{{ 'Cambiar foto (opcional)' if j.foto_url else 'Foto del jugador (se ve mejor de frente, del pecho para arriba)' }}<input type="file" name="imagen" accept="image/*" data-recorte="rectangulo" data-recorte-aspecto="0.8"></label>
+<input type="hidden" name="foto_actual" value="{{ j.foto_url or '' }}">
+<label>Frase favorita (sale atrás de la tarjeta al darle la vuelta)<textarea name="frase" rows="3" maxlength="220" placeholder="Ej: El talento gana partidos, pero el trabajo en equipo gana campeonatos.">{{ j.frase or '' }}</textarea></label>
+<label>Orden (los números más bajos salen primero dentro de su salón)<input type="number" name="orden" value="{{ j.orden or 0 }}"></label>

@@ -11,4 +11,5 @@ static/images/*.webp
 static/images/*.mp4
 static/images/*.webm
 static/images/*.mov
+static/images/*.pdf
 !static/images/.gitkeep

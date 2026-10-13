@@ -15,8 +15,13 @@
     <p>Aún no hay miembros registrados.</p>
 {% else %}
 <section class="comunidad-seccion comunidad-seccion--acero aparece">
-    {% include "partials/piramide.html" %}
+    <p class="tarjetas-ayuda">🚁 Toca una tarjeta para verla en grande y vuelve a tocarla para descubrir su frase.</p>
+    {% with tarjetasVolteables = true, tarjetaGrupo = 'Equipo de Drones', tarjetaIcono = '🚁', tarjetaVariante = 'acero',
+            tarjetaLema = 'Volamos más alto', tarjetaFrase = 'El cielo no es el límite, es el comienzo.' %}
+        {% include "partials/piramide.html" %}
+    {% endwith %}
 </section>
+<script src="/js/tarjetas.js?v={{ cssVersion }}"></script>
 {% endif %}
 
 {% if texto %}

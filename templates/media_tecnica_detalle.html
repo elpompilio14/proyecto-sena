@@ -5,15 +5,19 @@
 
 <h1>{{ categoria.nombre }}</h1>
 
-{% if categoria.imagen_url and categoria.visible %}
-    <img src="{{ categoria.imagen_url }}" alt="{{ categoria.nombre }}" class="detalle-portada">
-{% endif %}
-
-{% if categoria.descripcion %}
-    <p>{{ formatearTexto(categoria.descripcion) | safe }}</p>
-{% else %}
-    <p>Aún no se ha agregado una descripción para esta categoría.</p>
-{% endif %}
+{# Imagen completa (sin recortar) al lado de la descripcion #}
+<section class="mt-detalle{% if not (categoria.imagen_url and categoria.visible) %} mt-detalle--sin-imagen{% endif %}">
+    {% if categoria.imagen_url and categoria.visible %}
+        <img src="{{ categoria.imagen_url }}" data-url="{{ categoria.imagen_url }}" alt="{{ categoria.nombre }}" class="mt-detalle-imagen aparece">
+    {% endif %}
+    {% if categoria.descripcion %}
+        <div class="card mt-texto mt-detalle-texto aparece">
+            <p>{{ formatearTexto(categoria.descripcion) | safe }}</p>
+        </div>
+    {% else %}
+        <p>Aún no se ha agregado una descripción para este programa.</p>
+    {% endif %}
+</section>
 
 {% if fotos|length > 0 %}
     <h2 class="evento-mural-titulo">Fotos de {{ categoria.nombre }}</h2>

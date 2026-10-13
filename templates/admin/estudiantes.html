@@ -28,7 +28,7 @@
         <tbody>
             {% for e in estudiantes %}
                 <tr>
-                    <td>
+                    <td class="tabla-col-foto-visible">
                         {% if e.foto_url %}
                             <img src="{{ e.foto_url }}" alt="{{ e.nombres }}" class="tabla-foto-mini">
                         {% else %}

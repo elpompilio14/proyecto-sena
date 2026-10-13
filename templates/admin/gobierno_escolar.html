@@ -9,6 +9,9 @@
     <label>Rol (ej: Personero, Contralor, Representante de curso)<input type="text" name="rol"></label>
     <label>Salón (opcional, ej: 11-A)<input type="text" name="salon"></label>
     <label>Foto (opcional, se ve mejor si es cuadrada)<input type="file" name="imagen" accept="image/*" data-recorte="circulo" data-recorte-aspecto="1"></label>
+    <label>Datos de la tarjeta (opcional, uno por línea con el formato <em>Dato: valor</em>)<textarea name="tarjeta_datos" rows="3" placeholder="Cargo: Docente&#10;Área: Tecnología"></textarea></label>
+    <p class="form-ayuda">Si lo dejas vacío, la tarjeta muestra el salón (si tiene). El rol siempre sale debajo del nombre.</p>
+    <label>Frase (sale atrás de la tarjeta al darle la vuelta)<textarea name="frase" rows="3" maxlength="220"></textarea></label>
     <label>Orden (los números más bajos salen primero; si empatan, se ordenan por nombre)<input type="number" name="orden" value="0"></label>
     <label>Nivel en la pirámide
         <select name="nivel">

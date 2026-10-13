@@ -59,8 +59,8 @@
     <input type="hidden" name="manual_convivencia_imagen_url_actual" value="{{ info.manual_convivencia_imagen_url if info and info.manual_convivencia_imagen_url else '' }}">
 
     <h2>Media Técnica</h2>
-    <label>Texto de Articulado<textarea name="articulado_texto" rows="6">{{ info.articulado_texto if info else '' }}</textarea></label>
-    <label>Texto de Investigación<textarea name="investigacion_texto" rows="6">{{ info.investigacion_texto if info else '' }}</textarea></label>
+    <label>Texto de Articulado<textarea name="articulado_texto" rows="6">{{ (info.articulado_texto or '') if info else '' }}</textarea></label>
+    <label>Texto de Investigación<textarea name="investigacion_texto" rows="6">{{ (info.investigacion_texto or '') if info else '' }}</textarea></label>
 
     <h2>Portada e información general</h2>
     {% if info and info.fondo_url %}
@@ -70,31 +70,31 @@
     <input type="hidden" name="fondo_url_actual" value="{{ info.fondo_url if info and info.fondo_url else '' }}">
 
     <p>La historia del colegio ahora se edita en <a href="/admin/historia">Historia</a>.</p>
-    <label>Misión<textarea name="mision" rows="3">{{ info.mision if info else '' }}</textarea></label>
-    <label>Visión<textarea name="vision" rows="3">{{ info.vision if info else '' }}</textarea></label>
-    <label>Principios<textarea name="principios" rows="3">{{ info.principios if info else '' }}</textarea></label>
-    <label>Valores<textarea name="valores" rows="3">{{ info.valores if info else '' }}</textarea></label>
+    <label>Misión<textarea name="mision" rows="3">{{ (info.mision or '') if info else '' }}</textarea></label>
+    <label>Visión<textarea name="vision" rows="3">{{ (info.vision or '') if info else '' }}</textarea></label>
+    <label>Principios<textarea name="principios" rows="3">{{ (info.principios or '') if info else '' }}</textarea></label>
+    <label>Valores<textarea name="valores" rows="3">{{ (info.valores or '') if info else '' }}</textarea></label>
 
-    <label>Texto del Escudo<textarea name="escudo_texto" rows="4">{{ info.escudo_texto if info else '' }}</textarea></label>
+    <label>Texto del Escudo<textarea name="escudo_texto" rows="4">{{ (info.escudo_texto or '') if info else '' }}</textarea></label>
     {% if info and info.escudo_url %}
         <img src="{{ info.escudo_url }}" alt="Escudo actual" class="card-img">
     {% endif %}
     <label>Foto del escudo (opcional)<input type="file" name="escudo" accept="image/*"></label>
     <input type="hidden" name="escudo_url_actual" value="{{ info.escudo_url if info and info.escudo_url else '' }}">
 
-    <label>Texto de la Bandera<textarea name="bandera_texto" rows="4">{{ info.bandera_texto if info else '' }}</textarea></label>
+    <label>Texto de la Bandera<textarea name="bandera_texto" rows="4">{{ (info.bandera_texto or '') if info else '' }}</textarea></label>
     {% if info and info.bandera_url %}
         <img src="{{ info.bandera_url }}" alt="Bandera actual" class="card-img">
     {% endif %}
     <label>Foto de la bandera (opcional)<input type="file" name="bandera" accept="image/*"></label>
     <input type="hidden" name="bandera_url_actual" value="{{ info.bandera_url if info and info.bandera_url else '' }}">
 
-    <label>Dirección Sede 1<textarea name="ubicacion_sede1" rows="2">{{ info.ubicacion_sede1 if info else '' }}</textarea></label>
-    <label>Dirección Sede 2<textarea name="ubicacion_sede2" rows="2">{{ info.ubicacion_sede2 if info else '' }}</textarea></label>
+    <label>Dirección Sede 1<textarea name="ubicacion_sede1" rows="2">{{ (info.ubicacion_sede1 or '') if info else '' }}</textarea></label>
+    <label>Dirección Sede 2<textarea name="ubicacion_sede2" rows="2">{{ (info.ubicacion_sede2 or '') if info else '' }}</textarea></label>
     <label>Teléfono de contacto<input type="text" name="telefono" value="{{ info.telefono if info and info.telefono else '' }}" placeholder="Ej: 300 123 4567"></label>
     <label>Correo de contacto<input type="text" name="correo" value="{{ info.correo if info and info.correo else '' }}" placeholder="Ej: contacto@ideth.edu.co"></label>
     <label>Link de YouTube del Himno Escolar (opcional)<input type="text" name="himno_url" value="{{ info.himno_url if info and info.himno_url else '' }}" placeholder="https://www.youtube.com/watch?v=..."></label>
-    <label>Letra del Himno (pégala aquí, respeta los saltos de línea de cada estrofa)<textarea name="himno_letra" rows="10">{{ info.himno_letra if info else '' }}</textarea></label>
+    <label>Letra del Himno (pégala aquí, respeta los saltos de línea de cada estrofa)<textarea name="himno_letra" rows="10">{{ (info.himno_letra or '') if info else '' }}</textarea></label>
 
     <button type="submit">Guardar cambios</button>
 </form>

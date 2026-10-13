@@ -11,8 +11,66 @@
 
 {% if deporte.descripcion %}
     <p>{{ formatearTexto(deporte.descripcion) | safe }}</p>
-{% else %}
-    <p>Aún no se ha agregado una descripción para este deporte.</p>
+{% endif %}
+
+{% if niveles %}
+<section class="jugadores-seccion" data-pestanas>
+    <div class="jugadores-encabezado">
+        <span class="badge-pill">Nuestros jugadores</span>
+        <h2>Jugadores de {{ deporte.nombre }}</h2>
+        <p>Elige un grado y un salón. Toca una tarjeta para verla en grande y vuelve a tocarla para darle la vuelta.</p>
+    </div>
+
+    {# Primer grado/salon que se abre: el primero que tenga jugadores #}
+    {% set inicial = namespace(nivel=None, salon={}) %}
+    {% for n in niveles %}
+        {% if inicial.nivel is none and n.total > 0 %}{% set inicial.nivel = loop.index0 %}{% endif %}
+    {% endfor %}
+    {% if inicial.nivel is none %}{% set inicial.nivel = 0 %}{% endif %}
+
+    <div class="jugadores-grados" role="tablist" aria-label="Grados">
+        {% for n in niveles %}
+            <button type="button" class="jugadores-grado{% if loop.index0 == inicial.nivel %} activo{% endif %}" role="tab"
+                    data-pestana="grado-{{ loop.index0 }}" aria-selected="{{ 'true' if loop.index0 == inicial.nivel else 'false' }}">
+                <span class="jugadores-grado-numero">{{ n.etiqueta }}</span>
+                <span class="jugadores-grado-nombre">{{ n.nombre }}</span>
+                <span class="jugadores-grado-total">{{ n.total }} jugador{{ '' if n.total == 1 else 'es' }}</span>
+            </button>
+        {% endfor %}
+    </div>
+
+    {% for n in niveles %}
+        {% set ni = loop.index0 %}
+        <div class="jugadores-panel-grado" data-panel="grado-{{ ni }}" role="tabpanel"{% if ni != inicial.nivel %} hidden{% endif %}>
+            {% set primero = namespace(i=None) %}
+            {% for s in n.salones %}{% if primero.i is none and s.jugadores %}{% set primero.i = loop.index0 %}{% endif %}{% endfor %}
+            {% if primero.i is none %}{% set primero.i = 0 %}{% endif %}
+
+            <div class="jugadores-salones" role="tablist" aria-label="Salones de {{ n.nombre }}">
+                {% for s in n.salones %}
+                    <button type="button" class="jugadores-salon{% if loop.index0 == primero.i %} activo{% endif %}" role="tab"
+                            data-pestana="salon-{{ ni }}-{{ loop.index0 }}" aria-selected="{{ 'true' if loop.index0 == primero.i else 'false' }}">
+                        {{ s.nombre }} <span>{{ s.jugadores|length }}</span>
+                    </button>
+                {% endfor %}
+            </div>
+
+            {% for s in n.salones %}
+                <div class="jugadores-panel-salon" data-panel="salon-{{ ni }}-{{ loop.index0 }}" role="tabpanel"{% if loop.index0 != primero.i %} hidden{% endif %}>
+                    {% if s.jugadores %}
+                        <div class="tarjetas-grid">
+                            {% for j in s.jugadores %}
+                                {% with icono = iconoDeporte, idx = loop.index0, banda = deporte.nombre %}{% include "partials/tarjeta_fifa.html" %}{% endwith %}
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        <p class="jugadores-vacio">Aún no hay jugadores de {{ s.nombre }} en {{ deporte.nombre }}.</p>
+                    {% endif %}
+                </div>
+            {% endfor %}
+        </div>
+    {% endfor %}
+</section>
 {% endif %}
 
 {% if equipos|length > 0 %}
@@ -31,5 +89,7 @@
         {% endfor %}
     </div>
 {% endif %}
+
+<script src="/js/tarjetas.js?v={{ cssVersion }}"></script>
 
 {% endblock %}

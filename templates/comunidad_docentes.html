@@ -30,20 +30,36 @@
 {% if docentes|length == 0 %}
     <p>Aún no hay docentes registrados.</p>
 {% else %}
-    <div class="card-grid docentes-grid">
+    <p class="tarjetas-ayuda">🎓 Toca una tarjeta para verla en grande y vuelve a tocarla para descubrir su frase.</p>
+    <div class="card-grid docentes-grid" data-tarjeta-grupo="Cuerpo Docente" data-tarjeta-icono="🎓" data-tarjeta-variante="dorado"
+         data-tarjeta-lema="Educar con el corazón" data-tarjeta-frase="Educar es sembrar en cada estudiante la confianza de que puede lograrlo.">
         {% for d in docentes %}
-            <article class="card docente-card aparece" data-area="{{ d.area or '' }}" style="transition-delay: {{ [loop.index0, 5]|min * 70 }}ms">
+            <article class="card docente-card tarjeta-volteable aparece" data-area="{{ d.area or '' }}" style="transition-delay: {{ [loop.index0, 5]|min * 70 }}ms"
+                     tabindex="0" role="button" aria-label="Ver la tarjeta de {{ d.nombre }}"
+                     data-nombre="{{ d.nombre }}" data-rol="{{ d.cargo or 'Docente' }}" data-datos='{{ d.datos_tarjeta|tojson }}'
+                     data-foto="{{ d.foto_url if (d.foto_url and d.visible) else '' }}" data-frase="{{ d.descripcion or '' }}">
+                {# Todas las tarjetas tienen el mismo espacio de foto; si no hay foto sale una silueta #}
                 <div class="docente-foto-wrap">
-                    {% if d.foto_url and d.visible %}<img loading="lazy" src="{{ d.foto_url }}" alt="{{ d.nombre }}" class="docente-foto">{% endif %}
+                    {% if d.foto_url and d.visible %}
+                        <img loading="lazy" src="{{ d.foto_url }}" alt="{{ d.nombre }}" class="docente-foto">
+                    {% else %}
+                        <span class="docente-sin-foto" aria-hidden="true">
+                            <svg viewBox="0 0 80 100"><circle cx="40" cy="36" r="18"/><path d="M8 100c0-22 14-36 32-36s32 14 32 36Z"/></svg>
+                        </span>
+                    {% endif %}
                     {% if d.materia %}<span class="docente-tag {{ claseArea(d.area) }}">{{ d.materia }}</span>{% endif %}
                 </div>
-                <h3>{{ d.nombre }}</h3>
-                {% if d.materia %}<p class="docente-linea">📘 {{ d.materia }}</p>{% endif %}
-                {% if d.anios_experiencia %}<p class="docente-linea">🎓 {{ d.anios_experiencia }} años de experiencia</p>{% endif %}
-                {% if d.descripcion %}<p class="docente-quote">"{{ formatearTexto(d.descripcion) | safe }}"</p>{% endif %}
+                <div class="docente-cuerpo">
+                    <h3>{{ d.nombre }}</h3>
+                    <p class="docente-cargo">{{ d.cargo or 'Docente' }}</p>
+                    {% if d.anios_experiencia %}<p class="docente-linea">🎓 {{ d.anios_experiencia }} años de experiencia</p>{% endif %}
+                    {% if d.descripcion %}<p class="docente-quote">"{{ formatearTexto(d.descripcion) | safe }}"</p>{% endif %}
+                </div>
             </article>
         {% endfor %}
     </div>
 {% endif %}
+
+<script src="/js/tarjetas.js?v={{ cssVersion }}"></script>
 
 {% endblock %}

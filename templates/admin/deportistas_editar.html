@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block content %}
+
+<p><a href="/admin/deportes/{{ jugador.deporte_id }}/jugadores" class="enlace-volver"><span class="enlace-volver-flecha" aria-hidden="true">&larr;</span>Jugadores de {{ jugador.deporte_nombre }}</a></p>
+<h1>Editar jugador</h1>
+
+<form method="POST" action="/admin/jugadores/{{ jugador.id }}/editar" class="form" enctype="multipart/form-data">
+    {% with j = jugador %}{% include "partials/deportista_campos.html" %}{% endwith %}
+    <button type="submit">Guardar cambios</button>
+</form>
+
+{% endblock %}

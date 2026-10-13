@@ -15,8 +15,13 @@
     <p>Aún no hay miembros registrados.</p>
 {% else %}
 <section class="comunidad-seccion comunidad-seccion--verde aparece">
-    {% include "partials/piramide.html" %}
+    <p class="tarjetas-ayuda">🌱 Toca una tarjeta para verla en grande y vuelve a tocarla para descubrir su frase.</p>
+    {% with tarjetasVolteables = true, tarjetaGrupo = 'Comité Ecológico', tarjetaIcono = '🌿', tarjetaVariante = 'verde',
+            tarjetaLema = 'Guardianes del planeta', tarjetaFrase = 'Cuidar la naturaleza es cuidar nuestro hogar.' %}
+        {% include "partials/piramide.html" %}
+    {% endwith %}
 </section>
+<script src="/js/tarjetas.js?v={{ cssVersion }}"></script>
 {% endif %}
 
 {% if texto %}

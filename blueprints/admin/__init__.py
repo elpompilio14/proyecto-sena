@@ -37,4 +37,5 @@ from . import (  # noqa: E402  (import al final para evitar import circular con 
     promociones,
     paginas,
     historia,
+    deportistas,
 )

@@ -15,8 +15,13 @@
     <p>Aún no hay miembros registrados.</p>
 {% else %}
 <section class="comunidad-seccion comunidad-seccion--terracota aparece">
-    {% include "partials/piramide.html" %}
+    <p class="tarjetas-ayuda">🚀 Toca una tarjeta para verla en grande y vuelve a tocarla para descubrir su frase.</p>
+    {% with tarjetasVolteables = true, tarjetaGrupo = 'Cohetería', tarjetaIcono = '🚀', tarjetaVariante = 'terracota',
+            tarjetaLema = 'Rumbo a las estrellas', tarjetaFrase = 'Cada lanzamiento nos acerca a las estrellas.' %}
+        {% include "partials/piramide.html" %}
+    {% endwith %}
 </section>
+<script src="/js/tarjetas.js?v={{ cssVersion }}"></script>
 {% endif %}
 
 {% if texto %}

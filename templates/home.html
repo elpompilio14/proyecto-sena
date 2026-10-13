@@ -1,23 +1,53 @@
 {% extends "base.html" %}
 {% block content %}
 
-{% if heroImagenes and heroImagenes|length > 1 %}
-<section class="hero hero-grande hero-carrusel">
-    {% for url in heroImagenes %}
-        <div class="hero-slide{% if loop.first %} visible-estatica{% endif %}" style="background-image: url('{{ url }}')"></div>
-    {% endfor %}
-    <div class="hero-contenido hero-texto-animado">
-        <h1>Institución Educativa Distrital Técnica para el Desarrollo del Talento Humano</h1>
-        <p>Formando talento humano con proyección técnica y humana. Conoce nuestra comunidad educativa, sus logros, deportes y eventos.</p>
-        <div class="hero-botones">
-            {% if 'institucion' not in paginasOcultas %}<a href="/institucion" class="hero-boton hero-boton-principal">Conócenos</a>{% endif %}
-            <a href="/contacto" class="hero-boton hero-boton-secundario">Contáctanos</a>
-        </div>
-    </div>
-    <div class="hero-dots">
-        {% for url in heroImagenes %}
-            <button type="button" class="hero-dot{% if loop.first %} activo{% endif %}" aria-label="Foto {{ loop.index }} de {{ heroImagenes|length }}"></button>
+{% if heroFotos and heroFotos|length > 1 %}
+{# Frases que salen sobre cada foto cuando el admin no le puso titulo #}
+{% set frasesHero = [
+    'Bienvenidos a la IED Técnica para el Desarrollo del Talento Humano.',
+    'Media Técnica articulada con el SENA.',
+    'Semilleros de investigación, drones y cohetería.',
+    'Dos sedes, una sola familia educativa.',
+    'Deportes, intercursos y vida en comunidad.',
+] %}
+<section class="hero-carrusel" aria-roledescription="carrusel" aria-label="Fotos del colegio">
+    <h1 class="solo-lectores">Institución Educativa Distrital Técnica para el Desarrollo del Talento Humano</h1>
+    <div class="hero-marco">
+        {# Cada foto pone el texto en un lugar distinto (se van turnando), como en la referencia #}
+        {% set posicionesTexto = ['izquierda', 'izquierda', 'arriba', 'derecha'] %}
+        {% for f in heroFotos %}
+            <div class="hero-slide hero-slide--{{ posicionesTexto[loop.index0 % 4] }}{% if loop.first %} activa hero-inicial{% endif %}" role="group" aria-roledescription="diapositiva" aria-label="{{ loop.index }} de {{ heroFotos|length }}"{% if not loop.first %} aria-hidden="true"{% endif %}>
+                <img src="{{ f.url }}" alt="" class="hero-slide-foto"{% if not loop.first %} decoding="async"{% endif %}>
+                <div class="hero-slide-texto">
+                    <p class="hero-slide-titulo">
+                        <span class="hero-slide-icono" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3 1 8.5 12 14l9-4.5V16h2V8.5L12 3Z"/><path d="M5 12.2V16c0 1.9 3.1 3.5 7 3.5s7-1.6 7-3.5v-3.8l-7 3.5-7-3.5Z"/></svg>
+                        </span>
+                        <span>{{ f.titulo or frasesHero[loop.index0 % frasesHero|length] }}</span>
+                    </p>
+                    {% if loop.first %}
+                        <div class="hero-botones">
+                            {% if 'institucion' not in paginasOcultas %}<a href="/institucion" class="hero-boton hero-boton-principal">Conócenos</a>{% endif %}
+                            <a href="/contacto" class="hero-boton hero-boton-secundario">Contáctanos</a>
+                        </div>
+                    {% endif %}
+                </div>
+                <p class="hero-slide-pie">Formando talento humano con proyección técnica y humana.</p>
+            </div>
         {% endfor %}
+
+        <button type="button" class="hero-flecha hero-flecha-anterior" aria-label="Foto anterior">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5 7 12l8 7Z"/></svg>
+        </button>
+        <button type="button" class="hero-flecha hero-flecha-siguiente" aria-label="Foto siguiente">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 8 7-8 7Z"/></svg>
+        </button>
+
+        <div class="hero-dots">
+            {% for f in heroFotos %}
+                <button type="button" class="hero-dot{% if loop.first %} activo{% endif %}" aria-label="Ir a la foto {{ loop.index }}"></button>
+            {% endfor %}
+        </div>
     </div>
 </section>
 {% else %}
@@ -107,6 +137,10 @@
         {% endif %}
     </div>
 </section>
+
+{% if (orlaRectoria or orlaDirectivos or orlaDocentes) and 'comunidad-educativa' not in paginasOcultas %}
+    {% include "partials/orla_comunidad.html" %}
+{% endif %}
 
 {% if 'himno' not in paginasOcultas %}
 <section class="seccion-himno aparece">
@@ -243,6 +277,10 @@
     {% endwith %}
     <p class="home-ver-todas"><a href="/coheteria" class="btn-ver-todas">Ver Cohetería</a></p>
 </section>
+{% endif %}
+
+{% if albumDeportes and 'deportes' not in paginasOcultas %}
+    {% include "partials/album_deportes.html" %}
 {% endif %}
 
 {% endblock %}

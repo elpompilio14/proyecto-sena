@@ -35,10 +35,17 @@
     <p>Aún no hay registros.</p>
 {% else %}
     <table class="tabla">
-        <thead><tr><th>Grado</th><th>Periodo</th><th>Puesto</th><th>Estudiante</th><th>Promedio</th><th></th></tr></thead>
+        <thead><tr><th class="tabla-col-foto">Foto</th><th>Grado</th><th>Periodo</th><th>Puesto</th><th>Estudiante</th><th>Promedio</th><th></th></tr></thead>
         <tbody>
             {% for p in puestos %}
                 <tr>
+                    <td class="tabla-col-foto-visible">
+                        {% if p.foto_url %}
+                            <img src="{{ p.foto_url }}" alt="{{ p.nombres }}" class="tabla-foto-mini">
+                        {% else %}
+                            <span class="tabla-foto-vacia">—</span>
+                        {% endif %}
+                    </td>
                     <td>{{ p.grado_nombre }}</td>
                     <td>{{ p.periodo }}</td>
                     <td>{{ p.puesto }}</td>

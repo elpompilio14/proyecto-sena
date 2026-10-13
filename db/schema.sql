@@ -193,11 +193,12 @@ CREATE TABLE comunidad_educativa (
     id SERIAL PRIMARY KEY,
     nombre VARCHAR(150) NOT NULL,
     cargo VARCHAR(150), -- ej: "Rectora", "Coordinadora", "Docente", "Servicios generales"
-    categoria VARCHAR(20) NOT NULL DEFAULT 'docente', -- 'rectoria', 'coordinacion' o 'docente'
+    categoria VARCHAR(20) NOT NULL DEFAULT 'docente', -- 'rectoria', 'coordinacion', 'orientacion' o 'docente'
     area VARCHAR(50), -- ej: "Ciencias", "Humanidades", "Tecnología", "Artes y Ed. Física" (solo docentes, para filtrar)
     materia VARCHAR(100), -- ej: "Física y Química" (etiqueta que se muestra en la tarjeta)
     anios_experiencia INTEGER,
-    descripcion TEXT, -- biografía corta / frase
+    descripcion TEXT, -- frase: sale en el cuerpo docente y atras de la tarjeta al darle la vuelta
+    tarjeta_datos TEXT, -- datos de la tarjeta, uno por linea "Etiqueta: valor" (si esta vacio salen materia y experiencia)
     foto_url TEXT,
     orden INTEGER NOT NULL DEFAULT 0, -- posicion manual (menor = primero)
     nivel VARCHAR(10) NOT NULL DEFAULT 'base', -- 'punta', 'medio' o 'base' (piramide de rectoria/coordinacion)
@@ -213,6 +214,8 @@ CREATE TABLE gobierno_escolar (
     foto_url TEXT,
     orden INTEGER NOT NULL DEFAULT 0, -- posicion manual (menor = primero)
     nivel VARCHAR(10) NOT NULL DEFAULT 'base', -- 'punta', 'medio' o 'base' (piramide)
+    frase TEXT, -- sale atras de la tarjeta al darle la vuelta
+    tarjeta_datos TEXT, -- datos de la tarjeta, uno por linea "Etiqueta: valor"
     visible BOOLEAN NOT NULL DEFAULT true,
     creado_en TIMESTAMP NOT NULL DEFAULT NOW()
 );
@@ -225,6 +228,8 @@ CREATE TABLE equipo_desarrollo (
     foto_url TEXT,
     orden INTEGER NOT NULL DEFAULT 0, -- posicion manual (menor = primero)
     nivel VARCHAR(10) NOT NULL DEFAULT 'base', -- 'punta', 'medio' o 'base' (piramide)
+    frase TEXT, -- sale atras de la tarjeta al darle la vuelta
+    tarjeta_datos TEXT, -- datos de la tarjeta, uno por linea "Etiqueta: valor"
     visible BOOLEAN NOT NULL DEFAULT true,
     creado_en TIMESTAMP NOT NULL DEFAULT NOW()
 );
@@ -237,6 +242,8 @@ CREATE TABLE comite_ecologico (
     foto_url TEXT,
     orden INTEGER NOT NULL DEFAULT 0, -- posicion manual (menor = primero)
     nivel VARCHAR(10) NOT NULL DEFAULT 'base', -- 'punta', 'medio' o 'base' (piramide)
+    frase TEXT, -- sale atras de la tarjeta al darle la vuelta
+    tarjeta_datos TEXT, -- datos de la tarjeta, uno por linea "Etiqueta: valor" (si esta vacio salen rol y salon)
     visible BOOLEAN NOT NULL DEFAULT true,
     creado_en TIMESTAMP NOT NULL DEFAULT NOW()
 );
@@ -249,6 +256,8 @@ CREATE TABLE equipo_drones (
     foto_url TEXT,
     orden INTEGER NOT NULL DEFAULT 0, -- posicion manual (menor = primero)
     nivel VARCHAR(10) NOT NULL DEFAULT 'base', -- 'punta', 'medio' o 'base' (piramide)
+    frase TEXT, -- sale atras de la tarjeta al darle la vuelta
+    tarjeta_datos TEXT, -- datos de la tarjeta, uno por linea "Etiqueta: valor"
     visible BOOLEAN NOT NULL DEFAULT true,
     creado_en TIMESTAMP NOT NULL DEFAULT NOW()
 );
@@ -261,6 +270,8 @@ CREATE TABLE coheteria (
     foto_url TEXT,
     orden INTEGER NOT NULL DEFAULT 0, -- posicion manual (menor = primero)
     nivel VARCHAR(10) NOT NULL DEFAULT 'base', -- 'punta', 'medio' o 'base' (piramide)
+    frase TEXT, -- sale atras de la tarjeta al darle la vuelta
+    tarjeta_datos TEXT, -- datos de la tarjeta, uno por linea "Etiqueta: valor"
     visible BOOLEAN NOT NULL DEFAULT true,
     creado_en TIMESTAMP NOT NULL DEFAULT NOW()
 );
@@ -366,6 +377,22 @@ CREATE TABLE historia_bloques (
     texto TEXT,
     foto_url TEXT,
     foto_pie VARCHAR(200),   -- texto debajo de la foto, ej: "Primera promocion, 1975"
+    orden INTEGER NOT NULL DEFAULT 0,
+    visible BOOLEAN NOT NULL DEFAULT true,
+    creado_en TIMESTAMP NOT NULL DEFAULT NOW()
+);
+
+-- Jugadores de cada deporte (tarjetas estilo FIFA en /deportes/<id>, organizados por grado y salon)
+CREATE TABLE deportistas (
+    id SERIAL PRIMARY KEY,
+    deporte_id INTEGER NOT NULL REFERENCES deportes(id) ON DELETE CASCADE,
+    grado_id INTEGER REFERENCES grados(id) ON DELETE SET NULL, -- salon, ej: 10-A
+    nombre VARCHAR(150) NOT NULL,
+    foto_url TEXT,
+    altura NUMERIC(3,2),     -- en metros, ej: 1.75
+    edad INTEGER,
+    posicion VARCHAR(60),    -- ej: "Delantero" (opcional)
+    frase TEXT,              -- sale atras de la tarjeta al darle la vuelta
     orden INTEGER NOT NULL DEFAULT 0,
     visible BOOLEAN NOT NULL DEFAULT true,
     creado_en TIMESTAMP NOT NULL DEFAULT NOW()

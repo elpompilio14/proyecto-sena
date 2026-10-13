@@ -1,3 +1,4 @@
+from datetime import date
 from flask import Blueprint, render_template, request, abort, session
 from db import obtener_conexion
 from paginas import pagina_oculta_para
@@ -20,6 +21,29 @@ def _agrupar_por_nivel(filas):
         nivel = r['nivel'] if r['nivel'] in ('punta', 'medio', 'base') else 'base'
         grupos[nivel].append(r)
     return grupos
+
+
+def _con_datos_tarjeta(personas):
+    """Agrega a cada persona de la comunidad educativa las filas de su tarjeta que se voltea:
+    lo que el admin escribio en 'Datos de la tarjeta' ("Dato: valor" por linea) o, si esta vacio,
+    la materia y los anos de experiencia."""
+    for p in personas:
+        filas = []
+        if p.get('tarjeta_datos'):
+            for linea in p['tarjeta_datos'].splitlines():
+                if not linea.strip():
+                    continue
+                etiqueta, _, valor = linea.partition(':')
+                filas.append([etiqueta.strip(), valor.strip()] if valor else ['', linea.strip()])
+        else:
+            if p.get('materia'):
+                filas.append(['Materia', p['materia']])
+            elif p.get('area'):
+                filas.append(['Área', p['area']])
+            if p.get('anios_experiencia'):
+                filas.append(['Experiencia', f"{p['anios_experiencia']} años"])
+        p['datos_tarjeta'] = filas
+    return personas
 
 
 def _recortar_para_inicio(grupos):
@@ -67,8 +91,28 @@ def home():
             cur.execute('SELECT himno_url, fondo_url FROM institucion_info ORDER BY id LIMIT 1')
             info = cur.fetchone()
 
-            cur.execute("SELECT url FROM galeria_fotos WHERE seccion = 'inicio' AND visible = true ORDER BY orden, id")
+            cur.execute("SELECT url, titulo FROM galeria_fotos WHERE seccion = 'inicio' AND visible = true ORDER BY orden, id")
             hero_fotos = cur.fetchall()
+
+            # Orla de la comunidad educativa: directivos (rectoria, coordinacion, orientacion) y docentes
+            cur.execute(f"""
+                SELECT * FROM comunidad_educativa WHERE categoria IN {DIRECTIVOS}
+                ORDER BY {ORDEN_DIRECTIVOS}, orden, nombre
+            """)
+            orla_directivos = _con_datos_tarjeta(cur.fetchall())
+            cur.execute("SELECT * FROM comunidad_educativa WHERE categoria = 'docente' ORDER BY orden, nombre")
+            orla_docentes = _con_datos_tarjeta(cur.fetchall())
+
+            # Album de deportes (estilo Panini): los jugadores de los grados mas altos primero
+            cur.execute('SELECT * FROM deportes ORDER BY nombre')
+            lista_deportes = cur.fetchall()
+            cur.execute("""
+                SELECT deportistas.*, grados.nombre AS grado_nombre, grados.nivel AS grado_nivel
+                FROM deportistas
+                LEFT JOIN grados ON grados.id = deportistas.grado_id
+                ORDER BY grados.nivel DESC NULLS LAST, grados.nombre, deportistas.orden, deportistas.nombre
+            """)
+            deportistas = cur.fetchall()
 
     return render_template(
         'home.html',
@@ -85,7 +129,62 @@ def home():
         himnoUrl=info['himno_url'] if info else None,
         fondoUrl=info['fondo_url'] if info else None,
         heroImagenes=[f['url'] for f in hero_fotos],
+        heroFotos=hero_fotos,
+        albumDeportes=_album_deportes(lista_deportes, deportistas),
+        orlaRectoria=[p for p in orla_directivos if p['categoria'] == 'rectoria'],
+        orlaDirectivos=[p for p in orla_directivos if p['categoria'] != 'rectoria'],
+        orlaDocentes=orla_docentes[:24],
+        orlaTotalDocentes=len(orla_docentes),
+        anioActual=date.today().year,
     )
+
+
+def _album_deportes(deportes, deportistas, por_pagina=10):
+    """Una 'pagina de album' por deporte con hasta 10 jugadores (los de grados mas altos primero).
+    Los deportes sin jugadores no salen."""
+    paginas = []
+    for d in deportes:
+        jugadores = [j for j in deportistas if j['deporte_id'] == d['id']]
+        if jugadores:
+            paginas.append({
+                'deporte': d,
+                'sigla': _sigla_deporte(d['nombre']),
+                'icono': _icono_deporte(d['nombre']),
+                'color': _color_deporte(d['nombre']),
+                'jugadores': jugadores[:por_pagina],
+                'total': len(jugadores),
+            })
+    return paginas
+
+
+def _sigla_deporte(nombre):
+    """Codigo corto del deporte para numerar las laminas (como los codigos de pais del album)."""
+    nombre = (nombre or '').lower()
+    for clave, sigla in (
+        ('fut', 'FUT'), ('balonc', 'BSK'), ('basket', 'BSK'), ('balonm', 'BMN'),
+        ('vole', 'VOL'), ('badm', 'BDM'), ('bádm', 'BDM'), ('tenis', 'TEN'),
+    ):
+        if clave in nombre:
+            return sigla
+    return (nombre[:3] or 'DEP').upper()
+
+
+def _color_deporte(nombre):
+    """Colores de la pagina del album de cada deporte: (principal, acento)."""
+    nombre = (nombre or '').lower()
+    for clave, colores in (
+        ('fut', ('#141414', '#ffffff')),       # negro y blanco
+        ('balonc', ('#e8641a', '#141414')),    # naranja y negro
+        ('basket', ('#e8641a', '#141414')),
+        ('balonm', ('#c8102e', '#ffc61a')),    # rojo y amarillo
+        ('vole', ('#0d2b5e', '#ffc61a')),
+        ('badm', ('#0d2b5e', '#ffffff')),      # azul oscuro y blanco
+        ('bádm', ('#0d2b5e', '#ffffff')),
+        ('tenis', ('#2e7d32', '#ffffff')),
+    ):
+        if clave in nombre:
+            return colores
+    return ('#0a5ec4', '#ffffff')
 
 
 @public_bp.route('/gobierno-escolar')
@@ -281,15 +380,38 @@ def investigacion():
         with conexion.cursor() as cur:
             cur.execute('SELECT investigacion_texto FROM institucion_info ORDER BY id LIMIT 1')
             info = cur.fetchone()
-    return render_template('investigacion.html', titulo='Investigación', texto=info['investigacion_texto'] if info else None)
+            semilleros = []
+            for tabla, nombre, url, icono, resumen in SEMILLEROS:
+                cur.execute(f'SELECT COUNT(*) AS total FROM {tabla}')
+                semilleros.append({
+                    'nombre': nombre, 'url': url, 'icono': icono, 'resumen': resumen,
+                    'integrantes': cur.fetchone()['total'],
+                })
+    return render_template(
+        'investigacion.html', titulo='Investigación',
+        texto=info['investigacion_texto'] if info else None, semilleros=semilleros,
+    )
+
+
+# Grupos que salen como tarjetas en /investigacion: (tabla, nombre, url, icono, resumen)
+SEMILLEROS = [
+    ('coheteria', 'Cohetería', '/coheteria', '🚀',
+     'Diseñan, construyen y lanzan cohetes poniendo en práctica la física y las matemáticas.'),
+    ('equipo_drones', 'Equipo de Drones', '/equipo-drones', '🚁',
+     'Aprenden a pilotear, programar y cuidar drones, y los usan en retos y proyectos.'),
+    ('equipo_desarrollo', 'Equipo de Desarrollo', '/equipo-desarrollo', '💻',
+     'Crean software y herramientas digitales para el colegio, como esta página web.'),
+    ('comite_ecologico', 'Comité Ecológico', '/comite-ecologico', '🌱',
+     'Promueven el cuidado del medio ambiente con campañas y acciones en la institución.'),
+]
 
 
 @public_bp.route('/comunidad-educativa')
 def comunidad_educativa():
     with obtener_conexion() as conexion:
         with conexion.cursor() as cur:
-            cur.execute("SELECT * FROM comunidad_educativa WHERE categoria IN ('rectoria', 'coordinacion') ORDER BY orden, nombre")
-            directivos = cur.fetchall()
+            cur.execute(f"SELECT * FROM comunidad_educativa WHERE categoria IN {DIRECTIVOS} ORDER BY orden, nombre")
+            directivos = _con_datos_tarjeta(cur.fetchall())
             cur.execute("SELECT * FROM comunidad_educativa WHERE categoria = 'docente' ORDER BY orden, nombre LIMIT 4")
             docentes_preview = cur.fetchall()
             cur.execute("SELECT COUNT(*) AS total FROM comunidad_educativa WHERE categoria = 'docente'")
@@ -304,12 +426,17 @@ def comunidad_educativa():
     )
 
 
+# Categorias que salen como directivos (arriba en Comunidad Educativa y en la orla del inicio)
+DIRECTIVOS = "('rectoria', 'coordinacion', 'orientacion')"
+ORDEN_DIRECTIVOS = "CASE categoria WHEN 'rectoria' THEN 1 WHEN 'coordinacion' THEN 2 ELSE 3 END"
+
+
 @public_bp.route('/comunidad-educativa/docentes')
 def docentes():
     with obtener_conexion() as conexion:
         with conexion.cursor() as cur:
             cur.execute("SELECT * FROM comunidad_educativa WHERE categoria = 'docente' ORDER BY orden, nombre")
-            lista_docentes = cur.fetchall()
+            lista_docentes = _con_datos_tarjeta(cur.fetchall())
 
     areas = list(dict.fromkeys(d['area'] for d in lista_docentes if d['area']))
     materias = set(d['materia'] for d in lista_docentes if d['materia'])
@@ -421,7 +548,69 @@ def deporte_detalle(id):
                 abort(404)
             cur.execute('SELECT * FROM equipos WHERE deporte_id = %s ORDER BY nombre', (id,))
             equipos = cur.fetchall()
-    return render_template('deporte_detalle.html', titulo=deporte['nombre'], deporte=deporte, equipos=equipos)
+            cur.execute('SELECT * FROM grados ORDER BY nivel, nombre')
+            grados = cur.fetchall()
+            cur.execute("""
+                SELECT deportistas.*, grados.nombre AS grado_nombre
+                FROM deportistas
+                LEFT JOIN grados ON grados.id = deportistas.grado_id
+                WHERE deportistas.deporte_id = %s
+                ORDER BY deportistas.orden, deportistas.nombre
+            """, (id,))
+            jugadores = cur.fetchall()
+    return render_template(
+        'deporte_detalle.html', titulo=deporte['nombre'], deporte=deporte, equipos=equipos,
+        niveles=_jugadores_por_grado(grados, jugadores), totalJugadores=len(jugadores),
+        iconoDeporte=_icono_deporte(deporte['nombre']),
+    )
+
+
+NOMBRES_GRADO = {
+    1: 'Primero', 2: 'Segundo', 3: 'Tercero', 4: 'Cuarto', 5: 'Quinto', 6: 'Sexto',
+    7: 'Séptimo', 8: 'Octavo', 9: 'Noveno', 10: 'Décimo', 11: 'Once',
+}
+
+
+def _jugadores_por_grado(grados, jugadores):
+    """Arma grado -> salones -> jugadores. Salen todos los salones creados en /admin/grados,
+    aunque todavia no tengan jugadores; los jugadores sin curso van al final en 'Otros'."""
+    por_salon = {}
+    for j in jugadores:
+        por_salon.setdefault(j['grado_id'], []).append(j)
+
+    niveles = []
+    for g in grados:
+        if not niveles or niveles[-1]['nivel'] != g['nivel']:
+            niveles.append({
+                'nivel': g['nivel'],
+                'etiqueta': f"{g['nivel']}°",
+                'nombre': NOMBRES_GRADO.get(g['nivel'], f"Grado {g['nivel']}"),
+                'salones': [],
+            })
+        niveles[-1]['salones'].append({'grado': g, 'nombre': g['nombre'], 'jugadores': por_salon.get(g['id'], [])})
+
+    if por_salon.get(None):
+        niveles.append({
+            'nivel': None, 'etiqueta': '★', 'nombre': 'Otros',
+            'salones': [{'grado': None, 'nombre': 'Sin curso', 'jugadores': por_salon[None]}],
+        })
+
+    for n in niveles:
+        n['total'] = sum(len(s['jugadores']) for s in n['salones'])
+    return niveles
+
+
+def _icono_deporte(nombre):
+    """Emoji del deporte para la esquina de las tarjetas."""
+    nombre = (nombre or '').lower()
+    for clave, icono in (
+        ('fut', '⚽'), ('micro', '⚽'), ('balonc', '🏀'), ('basket', '🏀'), ('vole', '🏐'),
+        ('balonm', '🤾'), ('badm', '🏸'), ('bádm', '🏸'), ('tenis', '🎾'), ('ajedrez', '♟️'),
+        ('atlet', '🏃'), ('nata', '🏊'), ('beis', '⚾'),
+    ):
+        if clave in nombre:
+            return icono
+    return '🏅'
 
 
 @public_bp.route('/campeonatos')
@@ -495,13 +684,29 @@ def _agrupar_por_anio(filas):
     return grupos
 
 
+def _filas_piramide_icfes(resultados):
+    """Los 10 mejores puntajes en forma de piramide: 1 arriba, luego 2, 3 y 4."""
+    mejores = resultados[:10]
+    filas = []
+    inicio = 0
+    tamanio = 1
+    while inicio < len(mejores):
+        filas.append(mejores[inicio:inicio + tamanio])
+        inicio += tamanio
+        tamanio += 1
+    return filas
+
+
 @public_bp.route('/icfes')
 def icfes():
     with obtener_conexion() as conexion:
         with conexion.cursor() as cur:
-            cur.execute('SELECT * FROM icfes_resultados ORDER BY anio DESC, puntaje DESC')
+            cur.execute('SELECT * FROM icfes_resultados ORDER BY anio DESC, puntaje DESC, creado_en ASC')
             resultados = cur.fetchall()
-    return render_template('icfes.html', titulo='Mejores ICFES', grupos=_agrupar_por_anio(resultados))
+    grupos = _agrupar_por_anio(resultados)
+    for grupo in grupos:
+        grupo['filas'] = _filas_piramide_icfes(grupo['resultados'])
+    return render_template('icfes.html', titulo='Mejores ICFES', grupos=grupos)
 
 
 @public_bp.route('/alianzas')

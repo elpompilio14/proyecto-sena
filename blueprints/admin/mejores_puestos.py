@@ -8,7 +8,8 @@ def mejores_puestos_index():
     with obtener_conexion() as conexion:
         with conexion.cursor() as cur:
             cur.execute("""
-                SELECT mejores_puestos.*, estudiantes.nombres, estudiantes.apellidos, grados.nombre AS grado_nombre
+                SELECT mejores_puestos.*, estudiantes.nombres, estudiantes.apellidos, estudiantes.foto_url,
+                       grados.nombre AS grado_nombre
                 FROM mejores_puestos
                 JOIN estudiantes ON estudiantes.id = mejores_puestos.estudiante_id
                 JOIN grados ON grados.id = mejores_puestos.grado_id

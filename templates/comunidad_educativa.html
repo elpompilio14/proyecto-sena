@@ -15,7 +15,9 @@
 {% if totalDirectivos > 0 %}
 <section class="comunidad-seccion aparece">
     <h2 class="comunidad-etiqueta">Directivos</h2>
-    {% with grupos = directivos %}
+    <p class="tarjetas-ayuda">🎓 Toca una tarjeta para verla en grande y vuelve a tocarla para descubrir su frase.</p>
+    {% with grupos = directivos, tarjetasVolteables = true, tarjetaGrupo = 'Comunidad Educativa', tarjetaIcono = '🎓',
+            tarjetaVariante = 'dorado', tarjetaLema = 'Educar con el corazón', tarjetaFrase = 'Educar es sembrar en cada estudiante la confianza de que puede lograrlo.' %}
         {% include "partials/piramide.html" %}
     {% endwith %}
 </section>
@@ -41,5 +43,7 @@
     </div>
 </section>
 {% endif %}
+
+<script src="/js/tarjetas.js?v={{ cssVersion }}"></script>
 
 {% endblock %}

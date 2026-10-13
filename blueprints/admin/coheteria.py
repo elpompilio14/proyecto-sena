@@ -43,12 +43,15 @@ def coheteria_crear():
     foto_url = guardar_archivo(request.files.get('imagen'))
     orden = request.form.get('orden') or 0
     nivel = request.form.get('nivel') or 'base'
+    frase = (request.form.get('frase') or '').strip() or None
+    tarjeta_datos = (request.form.get('tarjeta_datos') or '').strip() or None
 
     with obtener_conexion() as conexion:
         with conexion.cursor() as cur:
             cur.execute(
-                'INSERT INTO coheteria (nombre, rol, salon, foto_url, orden, nivel) VALUES (%s, %s, %s, %s, %s, %s)',
-                (nombre, rol, salon, foto_url, orden, nivel),
+                'INSERT INTO coheteria (nombre, rol, salon, foto_url, orden, nivel, frase, tarjeta_datos) '
+                'VALUES (%s, %s, %s, %s, %s, %s, %s, %s)',
+                (nombre, rol, salon, foto_url, orden, nivel, frase, tarjeta_datos),
             )
     return redirect('/admin/coheteria')
 
@@ -73,12 +76,15 @@ def coheteria_editar(id):
     foto_url = guardar_archivo(request.files.get('imagen')) or (foto_actual or None)
     orden = request.form.get('orden') or 0
     nivel = request.form.get('nivel') or 'base'
+    frase = (request.form.get('frase') or '').strip() or None
+    tarjeta_datos = (request.form.get('tarjeta_datos') or '').strip() or None
 
     with obtener_conexion() as conexion:
         with conexion.cursor() as cur:
             cur.execute(
-                'UPDATE coheteria SET nombre = %s, rol = %s, salon = %s, foto_url = %s, orden = %s, nivel = %s WHERE id = %s',
-                (nombre, rol, salon, foto_url, orden, nivel, id),
+                'UPDATE coheteria SET nombre = %s, rol = %s, salon = %s, foto_url = %s, orden = %s, nivel = %s, '
+                'frase = %s, tarjeta_datos = %s WHERE id = %s',
+                (nombre, rol, salon, foto_url, orden, nivel, frase, tarjeta_datos, id),
             )
     return redirect('/admin/coheteria')
 

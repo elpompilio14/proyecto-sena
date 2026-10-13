@@ -1,0 +1,15 @@
+{# Una persona de la orla del inicio (cuadrito con foto, nombre y cargo/materia).
+   Al tocarla se abre su tarjeta dorada que se voltea (tarjetas.js). tam: 'grande', 'mediano' o '' (docente) #}
+<button type="button" class="orla-persona{% if tam %} orla-persona--{{ tam }}{% endif %} tarjeta-volteable" aria-label="Ver la tarjeta de {{ p.nombre }}"
+        data-nombre="{{ p.nombre }}" data-rol="{{ p.cargo or 'Docente' }}" data-datos='{{ p.datos_tarjeta|tojson }}'
+        data-foto="{{ p.foto_url if (p.foto_url and p.visible) else '' }}" data-frase="{{ p.descripcion or '' }}">
+    <span class="orla-foto">
+        {% if p.foto_url and p.visible %}
+            <img loading="lazy" src="{{ p.foto_url }}" alt="{{ p.nombre }}">
+        {% else %}
+            <svg class="orla-silueta" viewBox="0 0 80 100" aria-hidden="true"><circle cx="40" cy="36" r="18"/><path d="M8 100c0-22 14-36 32-36s32 14 32 36Z"/></svg>
+        {% endif %}
+    </span>
+    <span class="orla-nombre">{{ p.nombre }}</span>
+    <span class="orla-cargo">{{ (p.materia or p.cargo or 'Docente') if not tam else (p.cargo or 'Directivo') }}</span>
+</button>

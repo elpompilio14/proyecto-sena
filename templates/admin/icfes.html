@@ -17,17 +17,24 @@
     <p>Aún no hay resultados ICFES registrados.</p>
 {% else %}
     <table class="tabla">
-        <thead><tr><th>Estudiante</th><th>Puntaje</th><th>Año</th><th></th></tr></thead>
+        <thead><tr><th class="tabla-col-foto">Foto</th><th>Estudiante</th><th>Puntaje</th><th>Año</th><th></th></tr></thead>
         <tbody>
             {% for r in resultados %}
                 <tr>
+                    <td class="tabla-col-foto-visible">
+                        {% if r.foto_url %}
+                            <img src="{{ r.foto_url }}" alt="{{ r.estudiante_nombre }}" class="tabla-foto-mini">
+                        {% else %}
+                            <span class="tabla-foto-vacia">—</span>
+                        {% endif %}
+                        {% with url_toggle = '/admin/icfes/' ~ r.id ~ '/visibilidad', visible = r.visible %}
+                            {% include "partials/boton_visibilidad.html" %}
+                        {% endwith %}
+                    </td>
                     <td>{{ r.estudiante_nombre }}</td>
                     <td>{{ r.puntaje }}</td>
                     <td>{{ r.anio }}</td>
                     <td class="acciones">
-                        {% with url_toggle = '/admin/icfes/' ~ r.id ~ '/visibilidad', visible = r.visible %}
-                            {% include "partials/boton_visibilidad.html" %}
-                        {% endwith %}
                         <a href="/admin/icfes/{{ r.id }}/editar" class="btn-editar">Editar</a>
                         <form method="POST" action="/admin/icfes/{{ r.id }}/eliminar">
                             <button type="submit" class="btn-danger">Eliminar</button>

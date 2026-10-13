@@ -1,14 +1,33 @@
 {% extends "base.html" %}
 {% block content %}
 
-<h1>Investigación</h1>
+<section class="comunidad-intro aparece">
+    <span class="badge-pill">Media Técnica</span>
+    <h1>Investigación</h1>
+    <p>Semilleros y grupos donde nuestros estudiantes preguntan, experimentan y convierten sus ideas en proyectos reales.</p>
+</section>
 
-{% if not texto %}
-    <p>Aún no se ha agregado esta información.</p>
-{% else %}
-    <section class="card aparece">
+{% if texto %}
+    <section class="card mt-texto aparece">
         <p>{{ formatearTexto(texto) | safe }}</p>
     </section>
 {% endif %}
+
+<section class="mt-seccion">
+    <h2 class="mt-subtitulo">Nuestros semilleros y grupos</h2>
+    <div class="semilleros-grid">
+        {% for s in semilleros %}
+            <a href="{{ s.url }}" class="semillero-card aparece" style="transition-delay: {{ loop.index0 * 80 }}ms">
+                <span class="semillero-icono" aria-hidden="true">{{ s.icono }}</span>
+                <h3>{{ s.nombre }}</h3>
+                <p>{{ s.resumen }}</p>
+                <span class="semillero-pie">
+                    {% if s.integrantes %}<span>{{ s.integrantes }} integrante{{ '' if s.integrantes == 1 else 's' }}</span>{% endif %}
+                    <span class="semillero-ver">Conocer más &rarr;</span>
+                </span>
+            </a>
+        {% endfor %}
+    </div>
+</section>
 
 {% endblock %}

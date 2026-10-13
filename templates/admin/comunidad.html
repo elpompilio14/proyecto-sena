@@ -11,6 +11,7 @@
         <select name="categoria">
             <option value="rectoria">Rectoría</option>
             <option value="coordinacion">Coordinación</option>
+            <option value="orientacion">Orientación escolar (psicorientación)</option>
             <option value="docente" selected>Cuerpo docente</option>
         </select>
     </label>
@@ -25,7 +26,9 @@
     </label>
     <label>Materia o especialidad (ej: Física y Química)<input type="text" name="materia"></label>
     <label>Años de experiencia<input type="number" name="anios_experiencia" min="0"></label>
-    <label>Descripción / frase corta (opcional)<textarea name="descripcion" rows="3"></textarea></label>
+    <label>Frase (opcional; sale en el cuerpo docente y atrás de la tarjeta al darle la vuelta)<textarea name="descripcion" rows="3" maxlength="220"></textarea></label>
+    <label>Datos de la tarjeta (opcional, uno por línea con el formato <em>Dato: valor</em>)<textarea name="tarjeta_datos" rows="3" placeholder="Sede: 1&#10;Jornada: Mañana"></textarea></label>
+    <p class="form-ayuda">Si lo dejas vacío, la tarjeta muestra la materia y los años de experiencia. El cargo siempre sale debajo del nombre.</p>
     <label>Foto (opcional, se ve mejor si es cuadrada)<input type="file" name="imagen" accept="image/*" data-recorte="circulo" data-recorte-aspecto="1"></label>
     <label>Orden (los números más bajos salen primero; si empatan, se ordenan por nombre)<input type="number" name="orden" value="0"></label>
     <label>Nivel en la pirámide (solo aplica a Rectoría/Coordinación)

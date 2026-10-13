@@ -1,0 +1,37 @@
+{# Tarjeta estilo FIFA de un jugador. Al pasar el mouse se levanta y brilla; al hacer clic
+   se agranda y, con otro clic, se da la vuelta y muestra la frase (ver tarjetas.js).
+   Las filas de datos solo salen si tienen algo escrito. #}
+{% set filas = [] %}
+{% if j.altura %}{% set _ = filas.append(['Altura', '%.2f m'|format(j.altura)]) %}{% endif %}
+{% if j.edad %}{% set _ = filas.append(['Edad', j.edad ~ ' años']) %}{% endif %}
+{% if j.grado_nombre %}{% set _ = filas.append(['Curso', j.grado_nombre]) %}{% endif %}
+<button type="button" class="tarjeta-fifa aparece" style="transition-delay: {{ [idx or 0, 8]|min * 60 }}ms" aria-label="Ver la tarjeta de {{ j.nombre }}">
+    <span class="tarjeta-fifa-giro">
+        <span class="tarjeta-fifa-cara tarjeta-fifa-frente">
+            {% if banda %}<span class="tarjeta-fifa-banda">{{ banda }}</span>{% endif %}
+            <span class="tarjeta-fifa-foto">
+                {% if j.foto_url and j.visible %}
+                    <img loading="lazy" src="{{ j.foto_url }}" alt="{{ j.nombre }}">
+                {% else %}
+                    <span class="tarjeta-fifa-sin-foto" aria-hidden="true">{{ icono }}</span>
+                {% endif %}
+                <span class="tarjeta-fifa-insignia" aria-hidden="true">{{ icono }}</span>
+            </span>
+            <span class="tarjeta-fifa-nombre">{{ j.nombre }}</span>
+            {% if j.posicion %}<span class="tarjeta-fifa-rol">{{ j.posicion }}</span>{% endif %}
+            {% if filas %}
+                <span class="tarjeta-fifa-datos">
+                    {% for etiqueta, valor in filas %}
+                        <span class="tarjeta-fifa-dato"><span class="tarjeta-fifa-etiqueta">{{ etiqueta }}</span><span class="tarjeta-fifa-valor">{{ valor }}</span></span>
+                    {% endfor %}
+                </span>
+            {% endif %}
+        </span>
+        <span class="tarjeta-fifa-cara tarjeta-fifa-reverso">
+            <span class="tarjeta-fifa-comillas" aria-hidden="true">&ldquo;</span>
+            <span class="tarjeta-fifa-frase">{{ j.frase or 'Juego con el corazón y por mi colegio.' }}</span>
+            <span class="tarjeta-fifa-firma">— {{ j.nombre }}</span>
+            <span class="tarjeta-fifa-icono-reverso" aria-hidden="true">{{ icono }}</span>
+        </span>
+    </span>
+</button>

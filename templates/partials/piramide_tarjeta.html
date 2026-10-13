@@ -1,0 +1,31 @@
+{# Una tarjeta de la piramide. Si la pagina pide tarjetasVolteables (Comite Ecologico), la tarjeta
+   se puede seleccionar: se agranda y, con otro clic, se da la vuelta mostrando su frase (tarjetas.js). #}
+{% set datosTarjeta = [] %}
+{% if tarjetasVolteables and m.datos_tarjeta is defined %}
+    {# Comunidad educativa: las filas ya vienen armadas desde public.py (_con_datos_tarjeta) #}
+    {% set datosTarjeta = m.datos_tarjeta %}
+{% elif tarjetasVolteables %}
+    {% if m.tarjeta_datos %}
+        {# Cada linea "Dato: valor" del admin es una fila de la tarjeta #}
+        {% for linea in m.tarjeta_datos.splitlines() if linea.strip() %}
+            {% if ':' in linea %}
+                {% set partes = linea.split(':', 1) %}
+                {% set _ = datosTarjeta.append([partes[0].strip(), partes[1].strip()]) %}
+            {% else %}
+                {% set _ = datosTarjeta.append(['', linea.strip()]) %}
+            {% endif %}
+        {% endfor %}
+    {% elif m.salon %}
+        {% set _ = datosTarjeta.append(['Salón', m.salon]) %}
+    {% endif %}
+{% endif %}
+<div class="comunidad-lider-card{% if tarjetasVolteables %} tarjeta-volteable{% endif %}"{% if extra %} data-piramide-extra{% endif %}{% if oculto %} hidden{% endif %}
+     {%- if tarjetasVolteables %} tabindex="0" role="button" aria-label="Ver la tarjeta de {{ m.nombre }}"
+     data-nombre="{{ m.nombre }}" data-rol="{{ m.rol or m.cargo or '' }}" data-datos='{{ datosTarjeta|tojson }}'
+     data-foto="{{ m.foto_url if (m.foto_url and m.visible) else '' }}" data-frase="{{ m.frase or m.descripcion or '' }}"{% endif %}>
+    {% if m.foto_url and m.visible %}<img loading="lazy" src="{{ m.foto_url }}" alt="{{ m.nombre }}" class="comunidad-lider-foto">{% endif %}
+    <h3>{{ m.nombre }}</h3>
+    {% if m.rol or m.cargo %}<span class="badge">{{ m.rol or m.cargo }}</span>{% endif %}
+    {% if m.salon %}<p class="fecha">Salón: {{ m.salon }}</p>{% endif %}
+    {% if m.descripcion %}<p>{{ formatearTexto(m.descripcion) | safe }}</p>{% endif %}
+</div>

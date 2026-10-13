@@ -1,33 +1,42 @@
 {% extends "base.html" %}
 {% block content %}
 
-<h1>Articulado</h1>
+<section class="comunidad-intro aparece">
+    <span class="badge-pill">Media Técnica</span>
+    <h1>Articulación con el SENA</h1>
+    <p>Terminar el bachillerato con formación técnica: tecnología, proyectos reales y nuevas oportunidades.</p>
+</section>
 
-{% if categorias|length == 0 %}
-    <p>Aún no hay categorías registradas.</p>
-{% else %}
-    <div class="categorias-grid">
-        {% for c in categorias %}
-            <a href="/articulado/{{ c.id }}" class="categoria-link-card">
-                <div class="categoria-link-card-img-wrap">
-                    {% if c.imagen_url and c.visible %}
-                        <img loading="lazy" src="{{ c.imagen_url }}" alt="{{ c.nombre }}">
-                    {% else %}
-                        <span class="categoria-link-card-sin-imagen">🖥️</span>
-                    {% endif %}
-                </div>
-                <h3>{{ c.nombre }}</h3>
-            </a>
-        {% endfor %}
-    </div>
-{% endif %}
-
-{% if not texto %}
-    <p>Aún no se ha agregado esta información.</p>
-{% else %}
-    <section class="card aparece">
+{% if texto %}
+    <section class="card mt-texto aparece">
         <p>{{ formatearTexto(texto) | safe }}</p>
     </section>
 {% endif %}
+
+<section class="mt-seccion">
+    <h2 class="mt-subtitulo">Nuestros programas</h2>
+    {% if categorias|length == 0 %}
+        <p>Aún no hay programas registrados.</p>
+    {% else %}
+        <div class="categorias-grid">
+            {% for c in categorias %}
+                <a href="/articulado/{{ c.id }}" class="categoria-link-card aparece" style="transition-delay: {{ loop.index0 * 80 }}ms">
+                    <div class="categoria-link-card-img-wrap">
+                        {% if c.imagen_url and c.visible %}
+                            <img loading="lazy" src="{{ c.imagen_url }}" alt="{{ c.nombre }}">
+                        {% else %}
+                            <span class="categoria-link-card-sin-imagen">🖥️</span>
+                        {% endif %}
+                    </div>
+                    <h3>{{ c.nombre }}</h3>
+                    {% if c.descripcion %}
+                        <p class="categoria-link-card-resumen">{{ c.descripcion.split('\n')[0] | truncate(150) }}</p>
+                    {% endif %}
+                    <span class="semillero-ver">Ver programa &rarr;</span>
+                </a>
+            {% endfor %}
+        </div>
+    {% endif %}
+</section>
 
 {% endblock %}

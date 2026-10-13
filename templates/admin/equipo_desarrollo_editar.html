@@ -13,6 +13,9 @@
     {% endif %}
     <label>Cambiar foto (opcional)<input type="file" name="imagen" accept="image/*" data-recorte="circulo" data-recorte-aspecto="1"></label>
     <input type="hidden" name="foto_actual" value="{{ miembro.foto_url or '' }}">
+    <label>Datos de la tarjeta (opcional, uno por línea con el formato <em>Dato: valor</em>)<textarea name="tarjeta_datos" rows="3" placeholder="Cargo: Docente&#10;Área: Tecnología">{{ miembro.tarjeta_datos or '' }}</textarea></label>
+    <p class="form-ayuda">Si lo dejas vacío, la tarjeta muestra el salón (si tiene). El rol siempre sale debajo del nombre.</p>
+    <label>Frase (sale atrás de la tarjeta al darle la vuelta)<textarea name="frase" rows="3" maxlength="220">{{ miembro.frase or '' }}</textarea></label>
     <label>Orden (los números más bajos salen primero; si empatan, se ordenan por nombre)<input type="number" name="orden" value="{{ miembro.orden }}"></label>
     <label>Nivel en la pirámide
         <select name="nivel">

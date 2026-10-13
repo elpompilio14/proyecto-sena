@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', function () {
-    const elementos = Array.from(document.querySelectorAll('.mural img, .mural video, .polaroid-foto img'));
+    const elementos = Array.from(document.querySelectorAll('.mural img, .mural video, .polaroid-foto img, .icfes-pir-foto img'));
     if (elementos.length === 0) return;
 
     const overlay = document.createElement('div');
