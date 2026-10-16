@@ -82,6 +82,17 @@ def promociones_archivar(id):
     return redirect('/admin/promociones')
 
 
+@admin_bp.route('/promociones/<int:id>/hacer-actual', methods=['POST'])
+def promociones_hacer_actual(id):
+    """Devuelve una promocion pasada a ser la actual (con todas sus fotos).
+    Si ya habia una promocion actual, esa pasa a promociones pasadas."""
+    with obtener_conexion() as conexion:
+        with conexion.cursor() as cur:
+            cur.execute('UPDATE promociones SET actual = false WHERE actual AND id <> %s', (id,))
+            cur.execute('UPDATE promociones SET actual = true WHERE id = %s', (id,))
+    return redirect('/admin/promociones')
+
+
 @admin_bp.route('/promociones/<int:id>/eliminar', methods=['POST'])
 def promociones_eliminar(id):
     with obtener_conexion() as conexion:

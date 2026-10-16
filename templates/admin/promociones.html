@@ -62,6 +62,9 @@
                     <td>{{ p.num_fotos }}</td>
                     <td class="acciones">
                         <a href="/admin/promociones/{{ p.id }}" class="btn-editar">Editar y fotos</a>
+                        <form method="POST" action="/admin/promociones/{{ p.id }}/hacer-actual" onsubmit="return confirm('{% if actual %}¿Volver esta promoción a ser la actual? La promoción actual de ahora pasará a Promociones pasadas.{% else %}¿Volver esta promoción a ser la promoción actual?{% endif %}');">
+                            <button type="submit" class="btn-secondary">Volver a actual</button>
+                        </form>
                         <form method="POST" action="/admin/promociones/{{ p.id }}/eliminar" onsubmit="return confirm('¿Eliminar esta promoción y todas sus fotos?');">
                             <button type="submit" class="btn-danger">Eliminar</button>
                         </form>
