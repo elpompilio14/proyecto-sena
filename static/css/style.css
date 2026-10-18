@@ -44,10 +44,15 @@ h1, h2, h3 {
 }
 
 /* Barra escondida: se desliza hacia arriba y el margen negativo (altura medida por
-   ocultar-encabezado.js) hace que el contenido suba al mismo tiempo, sin dejar hueco. */
+   ocultar-encabezado.js) quita el hueco que deja. Si ya se bajo en la pagina, el JS
+   cambia el margen sin animacion y compensa el scroll para que el contenido no se mueva. */
 .encabezado-fijo.encabezado-oculto {
     transform: translateY(-100%);
     margin-bottom: calc(-1 * var(--altura-encabezado, 0px));
+}
+
+.encabezado-fijo.encabezado-margen-instantaneo {
+    transition: transform .3s ease;
 }
 
 /* Al terminar de esconderse, los enlaces dejan de recibir foco con el teclado. */
@@ -62,32 +67,53 @@ h1, h2, h3 {
     transition: visibility 0s linear .3s;
 }
 
-/* Pestañita centrada pegada al borde inferior de la barra; al esconderse la barra
-   queda pegada arriba de la pantalla para poder mostrarla de nuevo. */
+/* Flechita discreta centrada dentro del encabezado, abajo. Al esconderse la barra baja
+   un poco y se vuelve una pestañita pegada arriba de la pantalla para mostrarla de nuevo. */
 .encabezado-toggle {
     position: absolute;
-    top: 100%;
+    bottom: 2px;
     left: 50%;
-    transform: translateX(-50%);
-    width: 46px;
-    height: 22px;
+    transform: translate(-50%, 0);
+    width: 34px;
+    height: 18px;
     padding: 0;
-    background: var(--blanco-header);
-    border: 1px solid var(--borde);
-    border-top: none;
-    border-radius: 0 0 12px 12px;
-    box-shadow: 0 4px 10px rgba(10, 40, 80, 0.12);
-    color: var(--azul);
+    background: transparent;
+    border: none;
+    border-radius: 6px;
+    box-shadow: none;
+    color: var(--texto);
+    opacity: 0.35;
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    transition: background .2s ease;
+    transition: transform .3s ease, opacity .2s ease, color .2s ease, background .3s ease, box-shadow .3s ease, border-radius .3s ease;
 }
 
-.encabezado-toggle:hover { background: var(--azul-pastel); }
+/* Se repite el transform para anular el saltico de button:hover, que si no le quita
+   el translate(-50%) y la flecha se corre hacia la derecha. */
+.encabezado-toggle:hover {
+    opacity: 1;
+    color: var(--azul);
+    background: transparent;
+    transform: translate(-50%, 0);
+}
+
+.encabezado-oculto .encabezado-toggle {
+    transform: translate(-50%, calc(100% + 2px));
+    background: var(--blanco-header);
+    border-radius: 0 0 10px 10px;
+    box-shadow: 0 2px 6px rgba(10, 40, 80, 0.1);
+    opacity: 0.8;
+}
+
+.encabezado-oculto .encabezado-toggle:hover {
+    opacity: 1;
+    background: var(--blanco-header);
+}
 
 .encabezado-toggle:focus-visible {
+    opacity: 1;
     outline: 2px solid var(--azul);
     outline-offset: 2px;
 }
@@ -107,6 +133,7 @@ h1, h2, h3 {
     .encabezado-fijo > .topbar,
     .encabezado-fijo > .site-header,
     .encabezado-toggle svg { transition: none; }
+    .encabezado-toggle { transition: opacity .2s ease, color .2s ease; }
 }
 
 .topbar {

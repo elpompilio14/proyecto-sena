@@ -73,7 +73,26 @@
             });
         }
 
+        // Arriba del todo, el contenido sube junto con la barra (margen animado).
+        // Si ya se bajo en la pagina, el hueco de la barra no se ve: el margen cambia de
+        // una vez y se compensa el scroll para que el contenido se quede quieto.
+        // El scroll se lee ANTES de cambiar la clase: algunos navegadores (scroll anchoring)
+        // ya lo ajustan solos y leerlo despues haria que se compense dos veces.
+        var altura = encabezado.offsetHeight;
+        var scrollInicial = window.scrollY;
+        var yaBajo = scrollInicial >= altura;
+        if (yaBajo) {
+            encabezado.classList.add('encabezado-margen-instantaneo');
+        }
+
         aplicarEstado(ocultar);
         guardarPreferencia(ocultar);
+
+        if (yaBajo) {
+            window.scrollTo({ top: scrollInicial + (ocultar ? -altura : altura), behavior: 'instant' });
+            setTimeout(function () {
+                encabezado.classList.remove('encabezado-margen-instantaneo');
+            }, 350);
+        }
     });
 })();
