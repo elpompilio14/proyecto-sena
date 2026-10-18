@@ -91,7 +91,11 @@
             </nav>
         </div>
     </header>
+    <button type="button" class="encabezado-toggle" aria-label="Ocultar menú" aria-expanded="true" title="Ocultar menú">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 15l6-6 6 6"/></svg>
+    </button>
     </div>
+    <script src="/js/ocultar-encabezado.js?v={{ ocultarEncabezadoJsVersion }}"></script>
     <main class="container main-content{% if not esAdmin %} fondo-patron-paginas{% endif %}">
         {% block content %}{% endblock %}
     </main>

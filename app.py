@@ -68,11 +68,18 @@ def inyectar_datos_globales():
     except OSError:
         volver_arriba_js_version = datetime.now().timestamp()
 
+    ruta_ocultar_encabezado_js = os.path.join(app.static_folder, 'js', 'ocultar-encabezado.js')
+    try:
+        ocultar_encabezado_js_version = os.path.getmtime(ruta_ocultar_encabezado_js)
+    except OSError:
+        ocultar_encabezado_js_version = datetime.now().timestamp()
+
     return {
         'usuario': usuario, 'sitio': sitio, 'contacto': sitio,
         'anio_actual': datetime.now().year, 'cssVersion': css_version,
         'heroJsVersion': hero_js_version,
         'volverArribaJsVersion': volver_arriba_js_version,
+        'ocultarEncabezadoJsVersion': ocultar_encabezado_js_version,
         'esAdmin': request.path.startswith('/admin'),
         'promocionActualLogo': promocion_actual_logo,
         'menuPaginas': MENU,

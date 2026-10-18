@@ -40,6 +40,73 @@ h1, h2, h3 {
     position: sticky;
     top: 0;
     z-index: 1000;
+    transition: transform .3s ease, margin-bottom .3s ease;
+}
+
+/* Barra escondida: se desliza hacia arriba y el margen negativo (altura medida por
+   ocultar-encabezado.js) hace que el contenido suba al mismo tiempo, sin dejar hueco. */
+.encabezado-fijo.encabezado-oculto {
+    transform: translateY(-100%);
+    margin-bottom: calc(-1 * var(--altura-encabezado, 0px));
+}
+
+/* Al terminar de esconderse, los enlaces dejan de recibir foco con el teclado. */
+.encabezado-fijo > .topbar,
+.encabezado-fijo > .site-header {
+    transition: visibility 0s linear 0s;
+}
+
+.encabezado-oculto > .topbar,
+.encabezado-oculto > .site-header {
+    visibility: hidden;
+    transition: visibility 0s linear .3s;
+}
+
+/* Pestañita centrada pegada al borde inferior de la barra; al esconderse la barra
+   queda pegada arriba de la pantalla para poder mostrarla de nuevo. */
+.encabezado-toggle {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 46px;
+    height: 22px;
+    padding: 0;
+    background: var(--blanco-header);
+    border: 1px solid var(--borde);
+    border-top: none;
+    border-radius: 0 0 12px 12px;
+    box-shadow: 0 4px 10px rgba(10, 40, 80, 0.12);
+    color: var(--azul);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background .2s ease;
+}
+
+.encabezado-toggle:hover { background: var(--azul-pastel); }
+
+.encabezado-toggle:focus-visible {
+    outline: 2px solid var(--azul);
+    outline-offset: 2px;
+}
+
+.encabezado-toggle svg { transition: transform .3s ease; }
+
+.encabezado-oculto .encabezado-toggle svg { transform: rotate(180deg); }
+
+/* Al cargar una pagina con la barra ya escondida, no se anima. */
+.encabezado-sin-animacion,
+.encabezado-sin-animacion * {
+    transition: none !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .encabezado-fijo,
+    .encabezado-fijo > .topbar,
+    .encabezado-fijo > .site-header,
+    .encabezado-toggle svg { transition: none; }
 }
 
 .topbar {
