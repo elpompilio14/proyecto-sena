@@ -1397,6 +1397,46 @@ button:hover { background: var(--azul-oscuro); transform: translateY(-1px); }
     pointer-events: none;
 }
 
+/* ===== Ojito para mostrar/ocultar la contrasena (ver-contrasena.js) ===== */
+.campo-contrasena { position: relative; display: block; }
+
+.con-ver-contrasena input { padding-right: 48px !important; }
+
+/* Edge trae su propio ojito; se esconde para que no salgan dos */
+.con-ver-contrasena input::-ms-reveal,
+.con-ver-contrasena input::-ms-clear { display: none; }
+
+.ver-contrasena,
+.ver-contrasena:hover {
+    position: absolute;
+    top: 1px;
+    right: 1px;
+    bottom: 1px;
+    width: 44px;
+    display: grid;
+    place-items: center;
+    padding: 0;
+    border: none;
+    border-left: 1px solid var(--borde);
+    border-radius: 0 7px 7px 0;
+    background: #f4f7fc;
+    color: #8a99ad;
+    cursor: pointer;
+    transform: none;
+    transition: color .2s ease, background .2s ease;
+}
+
+.ver-contrasena:hover { color: var(--azul); background: #e8f0fb; }
+.ver-contrasena.activo { color: var(--azul); }
+.ver-contrasena:focus-visible { outline: 2px solid var(--azul); outline-offset: -2px; }
+
+/* El icono del ojito no usa la posicion de los iconos de la izquierda (candado, sobre) */
+.auth-input-wrap .ver-contrasena svg {
+    position: static;
+    transform: none;
+    color: currentColor;
+}
+
 .auth-form input {
     width: 100%;
     font: inherit;
